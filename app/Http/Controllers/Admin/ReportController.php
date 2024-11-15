@@ -51,7 +51,7 @@ class ReportController extends Controller
         $requestDateTime = Carbon::now('UTC')->format('Y-m-d H:i:s');
 
         // Generate the signature using MD5 hashing
-        $secretKey = 's4fZpFsRfGp3VMeG';
+        $secretKey = '1OMJXOf88RHKpcuT';
         $functionName = 'GetTransactionDetails';
         $signatureString = $functionName.$requestDateTime.$operatorId.$secretKey;
         $signature = md5($signatureString);
