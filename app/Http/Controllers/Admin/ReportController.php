@@ -44,7 +44,8 @@ class ReportController extends Controller
     {
         $operatorId = 'delightMMK';
 
-        $url = 'https://api.sm-sspi-uat.com/api/opgateway/v1/op/GetTransactionDetails';
+        //$url = 'https://api.sm-sspi-uat.com/api/opgateway/v1/op/GetTransactionDetails';
+        $url = 'https://api.sm-sspi-prod.com/api/opgateway/v1/op/GetTransactionDetails';
 
         // Generate the RequestDateTime in UTC
         $requestDateTime = Carbon::now('UTC')->format('Y-m-d H:i:s');

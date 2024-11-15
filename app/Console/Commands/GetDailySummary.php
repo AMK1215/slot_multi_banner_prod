@@ -23,7 +23,10 @@ class GetDailySummary extends Command
             'Date' => now()->subDay()->format('Y-m-d\TH:i:s\Z'), // yesterday's date
         ];
 
-        $response = Http::post('https://api.sm-sspi-uat.com/api/opgateway/v1/op/GetDaySummary', $payload);
+        //$response = Http::post('https://api.sm-sspi-uat.com/api/opgateway/v1/op/GetDaySummary', $payload);
+
+        $response = Http::post('https://api.sm-sspi-prod.com/api/opgateway/v1/op/GetDaySummary', $payload);
+
 
         if ($response->successful()) {
             $data = $response->json()['Trans'][0]; // Assuming a single entry in Trans
