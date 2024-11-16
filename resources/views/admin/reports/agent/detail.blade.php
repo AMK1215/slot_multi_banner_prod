@@ -33,7 +33,7 @@
                                         <th>User Name</th>
                                         <th>Player Name</th>
                                         <th>Game Name</th>
-                                        <th>Operator ID</th>
+                                        <th>Provider</th>
                                         <th>ResultID</th>
                                         <th>DateTime</th>
                                         <th>Currency</th>
@@ -50,7 +50,7 @@
                                             <td>{{ $detail->user_name }}</td>
                                             <td>{{ $detail->player_name }}</td>
                                             <td>{{ $detail->game_name }}</td>
-                                            <td>{{ $detail->operator_id }}</td>
+                                            <td>{{ $detail->game_provide_name }}</td>
                                             {{-- <td><a href="https://delightmyanmar99.pro/api/transaction-details/{{ $detail->round_id }}"
                                                     target="_blank"
                                                     style="color: blueviolet; text-decoration: underline;">{{ $detail->round_id }}</a>
