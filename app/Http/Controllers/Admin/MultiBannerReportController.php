@@ -41,4 +41,49 @@ class MultiBannerReportController extends Controller
     return view('admin.reports.senior.index', compact('data'));
 }
 
+public function getAdminReport()
+{
+    $adminId = auth()->id();
+
+    // Get all Agents under this Admin
+    $agents = User::where('agent_id', $adminId)->get();
+
+    // Aggregate data for each Agent
+    $data = [];
+    foreach ($agents as $agent) {
+        $players = User::where('agent_id', $agent->id)->get();
+
+        $results = Result::whereIn('user_id', $players->pluck('id'))
+            ->selectRaw('SUM(total_bet_amount) as total_bets, SUM(win_amount) as total_wins, SUM(net_win) as total_net')
+            ->first();
+
+        $data[] = [
+            'agent_name' => $agent->name,
+            'total_bets' => $results->total_bets ?? 0,
+            'total_wins' => $results->total_wins ?? 0,
+            'total_net' => $results->total_net ?? 0,
+        ];
+    }
+
+    return view('admin.reports.owner.index', compact('data'));
+}
+
+public function getAgentReport()
+{
+    $agentId = auth()->id();
+
+    // Get all Players under this Agent
+    $players = User::where('agent_id', $agentId)->get();
+
+    // Aggregate data for Players
+    $results = Result::whereIn('user_id', $players->pluck('id'))
+        ->selectRaw('user_id, SUM(total_bet_amount) as total_bets, SUM(win_amount) as total_wins, SUM(net_win) as total_net')
+        ->groupBy('user_id')
+        ->get();
+
+    return view('admin.reports.agent.index', compact('results'));
+}
+
+
+
 }

@@ -149,7 +149,7 @@ Route::group([
         Route::get('/daily-summaries', [DailySummaryController::class, 'index'])->name('daily_summaries.index');
 
         Route::get('/reports/senior', [MultiBannerReportController::class, 'getSeniorReport'])->name('reports.senior');
-    Route::get('/reports/admin', [MultiBannerReportController::class, 'getAdminReport'])->name('reports.admin');
+    Route::get('/reports/owner', [MultiBannerReportController::class, 'getAdminReport'])->name('reports.admin');
     Route::get('/reports/agent', [MultiBannerReportController::class, 'getAgentReport'])->name('reports.agent');
     });
 });
