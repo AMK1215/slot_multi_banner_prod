@@ -58,9 +58,9 @@
 
                                             <td>
                                                 <a href="javascript:void(0);"
-                                                    onclick="getTransactionDetails('{{ $detail->result_id }}')"
+                                                    onclick="getTransactionDetails('{{ $detail->round_id }}')"
                                                     style="color: blueviolet; text-decoration: underline;">
-                                                    {{ $detail->result_id }}
+                                                    {{ $detail->round_id }}
                                                 </a>
                                             </td>
                                             <td>{{ $detail->request_date_time }}</td>
@@ -68,7 +68,7 @@
                                             <td>{{ number_format($detail->total_bet_amount, 2) }}</td>
                                             <td>{{ number_format($detail->win_amount, 2) }}</td>
                                             <td>{{ number_format($detail->net_win, 2) }}</td>
-                                            <td>{{ $detail->round_id }}</td>
+                                            <td>{{ $detail->result_id }}</td>
                                             <td>{{ $detail->tran_date_time }}</td>
                                         </tr>
                                     @endforeach
