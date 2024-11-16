@@ -37,7 +37,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($data as $row)
+                                    @foreach ($results as $row)
                                         <tr>
                                             <td>{{ $result->user->name }}</td>
                                             <td>{{ $result->total_bets }}</td>
