@@ -122,7 +122,7 @@ class GameProductSeeder extends Seeder
                 'provider_name' => 'BNG',
                 'is_active' => true,
                 'order' => 14,
-                'status' => 1,
+                'status' => 0,
                 'game_list_status' => 1,
             ],
             [
@@ -130,7 +130,7 @@ class GameProductSeeder extends Seeder
                 'provider_name' => 'YGR',
                 'is_active' => true,
                 'order' => 15,
-                'status' => 1,
+                'status' => 0,
                 'game_list_status' => 1,
             ],
             [
@@ -138,7 +138,7 @@ class GameProductSeeder extends Seeder
                 'provider_name' => 'Hacksaw',
                 'is_active' => true,
                 'order' => 16,
-                'status' => 1,
+                'status' => 0,
                 'game_list_status' => 1,
             ],
             [
@@ -146,7 +146,7 @@ class GameProductSeeder extends Seeder
                 'provider_name' => 'Funta',
                 'is_active' => true,
                 'order' => 17,
-                'status' => 1,
+                'status' => 0,
                 'game_list_status' => 1,
             ],
             [
@@ -154,7 +154,7 @@ class GameProductSeeder extends Seeder
                 'provider_name' => 'SimplePlay',
                 'is_active' => true,
                 'order' => 18,
-                'status' => 1,
+                'status' => 0,
                 'game_list_status' => 1,
             ],
         ];

@@ -17,7 +17,7 @@ class WithDrawRequestController extends Controller
     public function withdraw(Request $request)
     {
         $request->validate([
-            'account_name' => ['required', 'integer'],
+            'account_name' => ['required', 'string'],
             'amount' => ['required', 'integer', 'min: 3000'],
             'account_number' => ['required', 'regex:/^[0-9]+$/'],
             'payment_type_id' => ['required', 'integer']

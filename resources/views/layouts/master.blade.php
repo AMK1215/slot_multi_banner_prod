@@ -85,11 +85,18 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="{{ route('home') }}" class="brand-link">
+            {{-- <a href="{{ route('home') }}" class="brand-link">
                 <img src="{{ asset('img/slot_maker.jpg') }}" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">SlotMaker</span>
+                <span class="brand-text font-weight-light">GoldenJack</span>
+            </a> --}}
+            <!-- Brand Logo -->
+            <a href="{{ route('home') }}" class="brand-link">
+                <img src="{{ $adminLogo }}" alt="Admin Logo" class="brand-image img-circle elevation-3"
+                    style="opacity: .8">
+                <span class="brand-text font-weight-light">GoldenJack</span>
             </a>
+
 
             <!-- Sidebar -->
             <div class="sidebar">
@@ -104,7 +111,7 @@
                                 </p>
                             </a>
                         </li>
-                        @can('owner_index')
+                        @can('senior_access')
                             <li class="nav-item">
                                 <a href="{{ route('admin.owner.index') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
@@ -114,7 +121,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('owner_index')
+                        @can('senior_access')
                             <li class="nav-item">
                                 <a href="{{ url('admin/slot/daily-summaries') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
@@ -124,7 +131,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('owner_index')
+                        @can('senior_access')
                             <li class="nav-item">
                                 <a href="{{ url('admin/slot/report') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
@@ -135,7 +142,7 @@
                             </li>
                         @endcan
 
-                        @can('owner_index')
+                        @can('senior_access')
                             <li class="nav-item">
                                 <a href="{{ url('admin/slot/reports/senior') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
@@ -146,7 +153,7 @@
                             </li>
                         @endcan
 
-                        @can('admin_access')
+                        @can('owner_access')
                             <li class="nav-item">
                                 <a href="{{ url('admin/slot/report') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
@@ -156,25 +163,6 @@
                                 </a>
                             </li>
 
-                            <li class="nav-item">
-                                <a href="{{ url('admin/slot/reports/owner') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
-                                    <p>
-                                        W/L Report V2
-                                    </p>
-                                </a>
-                            </li>
-                        @endcan
-
-                        @can('agent_index')
-                            <li class="nav-item">
-                                <a href="{{ url('admin/slot/report') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
-                                    <p>
-                                        W/L Report V1
-                                    </p>
-                                </a>
-                            </li>
                             <li class="nav-item">
                                 <a href="{{ url('admin/slot/reports/owner') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
@@ -191,8 +179,18 @@
                                     </p>
                                 </a>
                             </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('admin.GetOwnerPlayerList') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        Player List
+                                    </p>
+                                </a>
+                            </li>
                         @endcan
-                        @can('player_index')
+
+                        @can('contact')
                             <li class="nav-item">
                                 <a href="{{ route('admin.player.index') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
@@ -201,7 +199,6 @@
                                     </p>
                                 </a>
                             </li>
-
                             <li class="nav-item">
                                 <a href="{{ url('admin/slot/report') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
@@ -219,9 +216,6 @@
                                     </p>
                                 </a>
                             </li>
-                        @endcan
-
-                        @can('contact')
                             <li class="nav-item">
                                 <a href="{{ route('admin.contact.index') }}" class="nav-link">
                                     <i class="fas fa-address-book"></i>
@@ -269,31 +263,34 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tools"></i>
-                                <p>
-                                    GSC Settings
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.gameLists.index') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>GSC GameList</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.gametypes.index') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>GSC GameProvider</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                        @can('senior_access')
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-tools"></i>
+                                    <p>
+                                        GSC Settings
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.gameLists.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>GSC GameList</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.gametypes.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>GSC GameProvider</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endcan
+
                         {{-- senior  --}}
-                        @can('owner_index')
+                        @can('owner_access')
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-tools"></i>
@@ -331,7 +328,7 @@
                             </li>
                         @endcan
                         {{-- senior --}}
-                        @can('admin_access')
+                        @can('player_index')
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-tools"></i>

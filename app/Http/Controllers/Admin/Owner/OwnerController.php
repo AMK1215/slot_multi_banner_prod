@@ -46,6 +46,25 @@ class OwnerController extends Controller
         return view('admin.owner.index', compact('users'));
     }
 
+    public function OwnerPlayerList()
+{
+    abort_if(
+        Gate::denies('owner_access'),
+        Response::HTTP_FORBIDDEN,
+        '403 Forbidden | You cannot access this page because you do not have permission'
+    );
+
+    $adminId = auth()->id(); // Get the authenticated admin's ID
+
+    // Fetch agents and their related players for this admin
+    $agents = User::with(['createdAgents', 'createdAgents.players'])
+        ->where('id', $adminId) // Only fetch data for the current admin
+        ->get();
+
+    return view('admin.player.list', compact('agents'));
+}
+
+
     /**
      * Store a newly created resource in storage.
      */
@@ -287,36 +306,85 @@ class OwnerController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    // public function update(Request $request, string $id)
+    // {
+    //     abort_if(
+    //         Gate::denies('owner_edit') || ! $this->ifChildOfParent($request->user()->id, $id),
+    //         Response::HTTP_FORBIDDEN,
+    //         '403 Forbidden |You cannot  Access this page because you do not have permission'
+    //     );
+
+    //     $user = User::find($id);
+
+    //     if ($request->file('agent_logo')) {
+    //         File::delete(public_path('assets/img/logo/'.$user->agent_logo));
+    //         // image
+    //         $image = $request->file('agent_logo');
+    //         $ext = $image->getClientOriginalExtension();
+    //         $filename = uniqid('banner').'.'.$ext; // Generate a unique filename
+    //         $image->move(public_path('assets/img/logo/'), $filename); // Save the file
+    //         $request->agent_logo = $filename;
+    //     }
+
+    //     $user->update([
+    //         'name' => $request->name,
+    //         'phone' => $request->phone,
+    //         'player_name' => $request->player_name,
+    //         'agent_logo' => $request->agent_logo,
+    //     ]);
+
+    //     return redirect()->back()
+    //         ->with('success', 'Owner Updated successfully');
+    // }
     public function update(Request $request, string $id)
-    {
-        abort_if(
-            Gate::denies('owner_edit') || ! $this->ifChildOfParent($request->user()->id, $id),
-            Response::HTTP_FORBIDDEN,
-            '403 Forbidden |You cannot  Access this page because you do not have permission'
-        );
+{
+    abort_if(
+        Gate::denies('owner_edit') || ! $this->ifChildOfParent($request->user()->id, $id),
+        Response::HTTP_FORBIDDEN,
+        '403 Forbidden |You cannot Access this page because you do not have permission'
+    );
 
-        $user = User::find($id);
+    // Find the user to update
+    $user = User::findOrFail($id);
 
-        if ($request->file('agent_logo')) {
-            File::delete(public_path('assets/img/logo/'.$user->agent_logo));
-            // image
-            $image = $request->file('agent_logo');
-            $ext = $image->getClientOriginalExtension();
-            $filename = uniqid('banner').'.'.$ext; // Generate a unique filename
-            $image->move(public_path('assets/img/logo/'), $filename); // Save the file
-            $request->agent_logo = $filename;
+    // Validate the input
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'phone' => 'required|numeric|digits_between:10,15|unique:users,phone,' . $id,
+        'player_name' => 'nullable|string|max:255',
+        'agent_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
+    // Handle the logo file if uploaded
+    if ($request->file('agent_logo')) {
+        // Delete the old logo if it exists
+        if ($user->agent_logo && File::exists(public_path('assets/img/logo/' . $user->agent_logo))) {
+            File::delete(public_path('assets/img/logo/' . $user->agent_logo));
         }
 
-        $user->update([
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'player_name' => $request->player_name,
-            'agent_logo' => $request->agent_logo,
-        ]);
+        // Upload the new logo
+        $image = $request->file('agent_logo');
+        $ext = $image->getClientOriginalExtension();
+        $filename = uniqid('logo') . '.' . $ext;
+        $image->move(public_path('assets/img/logo/'), $filename);
 
-        return redirect()->back()
-            ->with('success', 'Owner Updated successfully');
+        // Update the logo field
+        $user->agent_logo = $filename;
     }
+
+    // Update other user fields
+    $user->update([
+        'name' => $request->name,
+        'phone' => $request->phone,
+        'player_name' => $request->player_name,
+        'agent_logo' => $user->agent_logo, // Set the updated logo
+    ]);
+
+    // Redirect back with a success message
+    return redirect()->back()
+        ->with('success', 'Owner updated successfully!');
+}
+
 
     public function getChangePassword($id)
     {
