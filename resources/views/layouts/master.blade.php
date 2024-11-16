@@ -217,6 +217,45 @@
                                 </li>
                             </ul>
                         </li>
+                        {{-- senior  --}}
+                        @can('owner_index')
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-tools"></i>
+                                    <p>
+                                        General Settings
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.text.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>BannerText</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.banners.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Banner</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.adsbanners.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Banner Ads</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.promotions.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Promotions</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endcan
+                        {{-- senior --}}
                         @can('admin_access')
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
