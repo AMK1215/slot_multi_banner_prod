@@ -84,6 +84,19 @@ public function getAgentReport()
     return view('admin.reports.agent.index', compact('results'));
 }
 
+// related agent's player report detail
+public function getAgentDetail($userId)
+{
+    // Fetch the player details
+    $player = User::findOrFail($userId);
+
+    // Fetch all results for the player
+    $details = Result::where('user_id', $userId)->get();
+
+    return view('admin.reports.agent.detail', compact('player', 'details'));
+}
+
+
 
 
 }

@@ -34,6 +34,7 @@
                                         <th>Total Bets</th>
                                         <th>Total Wins</th>
                                         <th>Total Net</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -43,6 +44,10 @@
                                             <td>{{ $result->total_bets }}</td>
                                             <td>{{ $result->total_wins }}</td>
                                             <td>{{ $result->total_net }}</td>
+                                            <td>
+                                                <a href="{{ route('admin.slot.reports.agent.detail', $result->user_id) }}"
+                                                    class="btn btn-info">Details</a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
