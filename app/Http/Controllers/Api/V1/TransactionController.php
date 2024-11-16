@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TransactionResource;
-use App\Models\User;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -23,11 +23,10 @@ class TransactionController extends Controller
             default => [now()->startOfDay(), now()],
         };
 
-        $user = auth()->user();
-
-        $transactions = $user->transactions()->whereBetween('created_at', [$from, $to])
-            ->orderBy('id', 'DESC')
-            ->paginate();
+        $transactions = Auth::user()->transactions()
+            ->whereIn('transactions.type', ['withdraw', 'deposit'])
+            ->whereIn('transactions.name', ['credit_transfer', 'debit_transfer'])
+            ->latest()->get();
 
         return $this->success(TransactionResource::collection($transactions));
     }

@@ -73,7 +73,7 @@ class GameController extends Controller
 
     public function gameFilter(Request $request)
     {
-        $gameLists = GameList::where('game_name', 'like', '%'.$request->name.'%')->get();
+        $gameLists = GameList::where('game_name',$request->name)->get();
 
         return $this->success(GameDetailResource::collection($gameLists), 'Game Detail Successfully');
 

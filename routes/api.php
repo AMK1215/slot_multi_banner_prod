@@ -47,24 +47,19 @@ Route::post('CancelBet', [CancelBetController::class, 'handleCancelBet']);
 Route::post('Adjustment', [AdjustmentController::class, 'handleAdjustment']);
 Route::post('Reward', [RewardController::class, 'handleReward']);
 
-// sameless route
-
-//Route::post('/transaction-details', [ReportController::class, 'getTransactionDetails']);
-// routes/api.php or routes/web.php
-Route::post('/transaction-details/{tranId}', [App\Http\Controllers\Admin\ReportController::class, 'getTransactionDetails']);
 
 Route::post('/GetDaySummary', [GetDaySummaryController::class, 'getDaySummary']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('GameLogin', [LaunchGameController::class, 'LaunchGame']);
-    // Route::get('wager-logs', [WagerController::class, 'index']); //GSC
-    // Route::get('transactions', [TransactionController::class, 'index'])->middleware('transaction');
+    Route::get('wager-logs', [WagerController::class, 'index']); //GSC
+    Route::get('transactions', [TransactionController::class, 'index']);
 
     Route::get('user', [AuthController::class, 'getUser']);
     Route::get('contact', [AuthController::class, 'getContact']);
     Route::get('agent', [AuthController::class, 'getAgent']);
     Route::post('logout', [AuthController::class, 'logout']);
-    Route::post('change-password/{player}', [AuthController::class, 'changePassword']);
+    Route::post('change-password', [AuthController::class, 'changePassword']);
     Route::post('profile', [AuthController::class, 'profile']);
     Route::get('agentPaymentType', [BankController::class, 'all']);
     Route::post('deposit', [DepositRequestController::class, 'deposit']);
