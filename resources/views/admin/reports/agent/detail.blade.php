@@ -56,13 +56,22 @@
                                                     style="color: blueviolet; text-decoration: underline;">{{ $detail->round_id }}</a>
                                             </td> --}}
 
-                                            <td>
+                                            {{-- <td>
                                                 <a href="javascript:void(0);"
                                                     onclick="getTransactionDetails('{{ $detail->round_id }}')"
                                                     style="color: blueviolet; text-decoration: underline;">
                                                     {{ $detail->round_id }}
                                                 </a>
+                                            </td> --}}
+
+                                            <td>
+                                                <a href="javascript:void(0);"
+                                                    onclick="getTransactionDetails('{{ $detail->round_id ? $detail->result_id : null }}')"
+                                                    style="color: blueviolet; text-decoration: underline;">
+                                                    {{ $detail->round_id }}
+                                                </a>
                                             </td>
+
                                             <td>{{ $detail->request_date_time }}</td>
                                             <td>{{ $detail->currency }}</td>
                                             <td>{{ number_format($detail->total_bet_amount, 2) }}</td>
