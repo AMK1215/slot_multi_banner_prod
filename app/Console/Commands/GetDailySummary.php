@@ -7,7 +7,6 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
-
 class GetDailySummary extends Command
 {
     protected $signature = 'summary:fetch';
@@ -26,7 +25,6 @@ class GetDailySummary extends Command
         //$response = Http::post('https://api.sm-sspi-uat.com/api/opgateway/v1/op/GetDaySummary', $payload);
 
         $response = Http::post('https://api.sm-sspi-prod.com/api/opgateway/v1/op/GetDaySummary', $payload);
-
 
         if ($response->successful()) {
             $data = $response->json()['Trans'][0]; // Assuming a single entry in Trans

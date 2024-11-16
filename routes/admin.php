@@ -7,27 +7,26 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BannerTextController;
 use App\Http\Controllers\Admin\Bonu\BonusController;
 use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\DailySummaryController;
 use App\Http\Controllers\Admin\Deposit\DepositRequestController;
 use App\Http\Controllers\Admin\GameListController;
 use App\Http\Controllers\Admin\GameTypeProductController;
 use App\Http\Controllers\Admin\GetBetDetailController;
 use App\Http\Controllers\Admin\GSCReportController;
 use App\Http\Controllers\Admin\Master\MasterController;
+use App\Http\Controllers\Admin\MultiBannerReportController;
 use App\Http\Controllers\Admin\Owner\OwnerController;
 use App\Http\Controllers\Admin\PaymentTypeController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\Player\PlayerController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\ReportController;
-use App\Http\Controllers\Admin\MultiBannerReportController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\TransferLog\TransferLogController;
 use App\Http\Controllers\Admin\WithDraw\WithDrawRequestController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\DailySummaryController;
-
 
 Route::group([
     'prefix' => 'admin',
@@ -63,8 +62,8 @@ Route::group([
     Route::resource('paymentTypes', PaymentTypeController::class);
     Route::resource('bank', BankController::class);
 
-     // provider Game Type Start
-     Route::get('gametypes', [GameTypeProductController::class, 'index'])->name('gametypes.index');
+    // provider Game Type Start
+    Route::get('gametypes', [GameTypeProductController::class, 'index'])->name('gametypes.index');
     Route::get('gametypes/{game_type_id}/product/{product_id}', [GameTypeProductController::class, 'edit'])->name('gametypes.edit');
     Route::post('gametypes/{game_type_id}/product/{product_id}', [GameTypeProductController::class, 'update'])->name('gametypes.update');
     // provider Game Type End
@@ -98,7 +97,6 @@ Route::group([
     Route::put('owner/{id}/ban', [OwnerController::class, 'banOwner'])->name('owner.ban');
     Route::get('owner-changepassword/{id}', [OwnerController::class, 'getChangePassword'])->name('owner.getChangePassword');
     Route::post('owner-changepassword/{id}', [OwnerController::class, 'makeChangePassword'])->name('owner.makeChangePassword');
-
 
     Route::get('agent-to-player-deplogs', [AgentController::class, 'AgentToPlayerDepositLog'])->name('agent.AgentToPlayerDepLog');
 
@@ -141,16 +139,14 @@ Route::group([
 
     Route::resource('/product_code', App\Http\Controllers\Admin\ProductCodeController::class);
 
-
-
     Route::group(['prefix' => 'slot'], function () {
         Route::get('report', [ReportController::class, 'getReportGroupedByGameProvider'])->name('report.index');
         Route::get('reports/details/{game_provide_name}', [ReportController::class, 'getReportDetails'])->name('reports.details');
         Route::get('/daily-summaries', [DailySummaryController::class, 'index'])->name('daily_summaries.index');
 
         Route::get('/reports/senior', [MultiBannerReportController::class, 'getSeniorReport'])->name('reports.senior');
-    Route::get('/reports/owner', [MultiBannerReportController::class, 'getAdminReport'])->name('reports.owner');
-    Route::get('/reports/agent', [MultiBannerReportController::class, 'getAgentReport'])->name('reports.agent');
+        Route::get('/reports/owner', [MultiBannerReportController::class, 'getAdminReport'])->name('reports.owner');
+        Route::get('/reports/agent', [MultiBannerReportController::class, 'getAgentReport'])->name('reports.agent');
         Route::get('/reports/agent/detail/{user_id}', [MultiBannerReportController::class, 'getAgentDetail'])->name('reports.agent.detail');
 
     });

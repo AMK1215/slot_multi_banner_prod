@@ -43,7 +43,7 @@
                                             <th class="bg-danger text-white">Product</th>
                                             <th class="bg-info text-white">Game Name</th>
                                             <th class="bg-warning text-white">Image</th>
-                                            <th class="bg-success text-white">Status</th>
+                                            <th class="bg-success text-white">CloseStatus</th>
                                             <th class="bg-info text-white">Hot Status</th>
                                             <th class="bg-warning text-white">Actions</th>
                                         </tr>
