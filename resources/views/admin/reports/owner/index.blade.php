@@ -24,13 +24,12 @@
                     </div>
                     <div class="card " style="border-radius: 20px;">
                         <div class="card-header">
-                            <h3>Senior Report</h3>
+                            <h3>Owner Report</h3>
                         </div>
                         <div class="card-body">
                             <table id="mytable" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Admin</th>
                                         <th>Agent</th>
                                         <th>Total Bets</th>
                                         <th>Total Wins</th>
@@ -40,7 +39,6 @@
                                 <tbody>
                                     @foreach ($data as $row)
                                         <tr>
-                                            <td>{{ $row['admin_name'] }}</td>
                                             <td>{{ $row['agent_name'] }}</td>
                                             <td>{{ $row['total_bets'] }}</td>
                                             <td>{{ $row['total_wins'] }}</td>
