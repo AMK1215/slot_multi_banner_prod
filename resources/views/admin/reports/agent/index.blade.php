@@ -45,7 +45,7 @@
                                             <td>{{ $result->total_wins }}</td>
                                             <td>{{ $result->total_net }}</td>
                                             <td>
-                                                <a href="{{ route('admin.slot.reports.agent.detail', $result->user_id) }}"
+                                                <a href="{{ route('admin.reports.agent.detail', $result->user_id) }}"
                                                     class="btn btn-info">Details</a>
                                             </td>
                                         </tr>
