@@ -30,6 +30,7 @@
                             <table id="mytable" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
+                                        <th>AgentName</th>
                                         <th>UserName</th>
                                         <th>ProviderName</th>
                                         <th>TotalStake</th>
@@ -42,6 +43,7 @@
                                 <tbody>
                                     @foreach ($report as $row)
                                         <tr>
+                                            <td>{{ $row->agent_name }}</td>
                                             <td>{{ $row->user_name }}</td>
                                             <td>{{ $row->game_provide_name }}</td>
                                             <td>{{ $row->total_games }}</td>
