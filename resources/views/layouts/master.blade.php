@@ -167,14 +167,14 @@
                         @endcan
 
                         @can('agent_index')
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ url('admin/slot/reports/owner') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
                                     <p>
                                         W/L Report V2
                                     </p>
                                 </a>
-                            </li>
+                            </li> --}}
                             <li class="nav-item">
                                 <a href="{{ route('admin.agent.index') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
