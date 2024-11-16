@@ -88,7 +88,7 @@
             <a href="{{ route('home') }}" class="brand-link">
                 <img src="{{ asset('img/slot_maker.jpg') }}" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">SlotMaker</span>
+                <span class="brand-text font-weight-light">GoldenJack</span>
             </a>
 
             <!-- Sidebar -->
@@ -104,7 +104,7 @@
                                 </p>
                             </a>
                         </li>
-                        @can('owner_index')
+                        @can('senior_access')
                             <li class="nav-item">
                                 <a href="{{ route('admin.owner.index') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
@@ -114,7 +114,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('owner_index')
+                        @can('senior_access')
                             <li class="nav-item">
                                 <a href="{{ url('admin/slot/daily-summaries') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
@@ -124,7 +124,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('owner_index')
+                        @can('senior_access')
                             <li class="nav-item">
                                 <a href="{{ url('admin/slot/report') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
@@ -135,7 +135,7 @@
                             </li>
                         @endcan
 
-                        @can('owner_index')
+                        @can('senior_access')
                             <li class="nav-item">
                                 <a href="{{ url('admin/slot/reports/senior') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
@@ -146,7 +146,7 @@
                             </li>
                         @endcan
 
-                        @can('admin_access')
+                        @can('owner_access')
                             <li class="nav-item">
                                 <a href="{{ url('admin/slot/report') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
@@ -166,7 +166,7 @@
                             </li>
                         @endcan
 
-                        @can('agent_index')
+                        @can('agent_access')
                             <li class="nav-item">
                                 <a href="{{ url('admin/slot/report') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
@@ -192,7 +192,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('player_index')
+                        @can('agent_access')
                             <li class="nav-item">
                                 <a href="{{ route('admin.player.index') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
