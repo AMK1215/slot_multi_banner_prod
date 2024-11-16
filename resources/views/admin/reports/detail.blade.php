@@ -30,7 +30,7 @@
                             <table id="mytable" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>User Name</th>
+                                        {{-- <th>User Name</th> --}}
                                         <th>Player Name</th>
                                         <th>Game Name</th>
                                         {{-- <th>Operator ID</th> --}}
@@ -48,7 +48,7 @@
                                 <tbody>
                                     @foreach ($details as $detail)
                                         <tr>
-                                            <td>{{ $detail->user_name }}</td>
+                                            {{-- <td>{{ $detail->user_name }}</td> --}}
                                             <td>{{ $detail->player_name }}</td>
                                             <td>{{ $detail->game_name }}</td>
                                             {{-- <td>{{ $detail->operator_id }}</td> --}}
