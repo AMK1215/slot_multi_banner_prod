@@ -32,7 +32,7 @@
                     <a href="#" class="small-box-footer"> <i class="fas "></i></a>
                 </div>
             </div>
-            @if($role['0'] == 'Admin')
+            @if($role['0'] == 'Senior')
             <!-- ./col -->
             <div class="col-lg-4 col-6">
                 <!-- small box -->
@@ -40,7 +40,7 @@
                     <div class="inner">
                         <h3>{{ number_format($totalBalance->balance / 100, 2) }}</h3>
 
-                        <p>Agent Total Balance</p>
+                        <p>Owner Total Balance</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
@@ -50,7 +50,7 @@
                 </div>
             </div>
             @endif
-            @if($role['0'] == 'Agent')
+            @if($role['0'] == 'Owner')
 
             <div class="col-lg-4 col-6">
                 <!-- small box -->
@@ -72,9 +72,12 @@
                 <!-- small box -->
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>{{$player_count}}</h3>
-
-                        <p>Player Count</p>
+                        @if($playerBalance)
+                        <h3>{{number_format($playerBalance->balance/100, 2)}}</h3>
+                        @else
+                         <h3>0.00</h3>
+                         @endif
+                        <p>Player Balance</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>

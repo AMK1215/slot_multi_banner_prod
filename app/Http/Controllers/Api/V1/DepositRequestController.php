@@ -17,7 +17,7 @@ class DepositRequestController extends Controller
     {
         $data = $request->validate([
             'agent_payment_type_id' => ['required', 'integer'],
-            'amount' => ['required', 'integer'],
+            'amount' => ['required', 'integer', 'min: 3000'],
             'refrence_no' => ['required', 'digits:6'],
         ]);
         $player = Auth::user();

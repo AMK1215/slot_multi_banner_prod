@@ -24,7 +24,7 @@ class HomeController extends Controller
      *
      * @return void
      */
-    private const AGENT_ROLE = 2;
+    private const OWNER_ROLE = 2;
 
     public function __construct()
     {
@@ -41,36 +41,41 @@ class HomeController extends Controller
         $user = Auth::user();
         $role = $user->roles->pluck('title');
 
-        $agent_count = User::where('type', UserType::Agent)->when($role[0] != 'Admin', function ($query) use ($user) {
-            $query->where('agent_id', $user->id);
-        })->count();
-
-        $player_count = User::where('type', UserType::Player)
-            ->when($role[0] === 'Agent', function ($query) use ($user) {
-                return $query->where('agent_id', $user->id);
-            })
-            ->count();
-
         $totalBalance = DB::table('users')
             ->join('role_user', 'role_user.user_id', '=', 'users.id')
             ->join('roles', 'roles.id', '=', 'role_user.role_id')
             ->join('wallets', 'wallets.holder_id', '=', 'users.id')
-            ->when($role[0] === 'Admin', function ($query) {
+            ->when($role[0] === 'Senior', function ($query) {
                 return $query->where('users.agent_id', Auth::id());
+            })
+            ->when($role[0] === 'Owner', function ($query) use ($user) {
+                return $query->where('users.agent_id', $user->id);
             })
             ->when($role[0] === 'Agent', function ($query) use ($user) {
                 return $query->where('users.agent_id', $user->id);
             })
-            ->where('roles.id', self::AGENT_ROLE)
             ->select(DB::raw('SUM(wallets.balance) as balance'))
             ->first();
 
+        $playerBalance = DB::table('users')
+            ->join('wallets', 'wallets.holder_id', '=', 'users.id')
+            ->when($role[0] === 'Senior', function ($query) {
+                return $query->where('users.type', 40);
+            })
+            ->when($role[0] === 'Owner', function ($query) use ($user) {
+                return $query->where('users.type', 40)->where('users.id', $user->id);
+            })
+            ->when($role[0] === 'Agent', function ($query) use ($user) {
+                return $query->where('users.type', 40)->where('users.agent_id', $user->id);
+            })->first();
+        
+
+
         return view('admin.dashboard', compact(
-            'agent_count',
-            'player_count',
             'user',
             'totalBalance',
-            'role'
+            'role',
+            'playerBalance'
         ));
     }
 

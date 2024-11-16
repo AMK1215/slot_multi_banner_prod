@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Api\V1\Auth\AuthController;
 use App\Http\Controllers\Api\V1\Bank\BankController;
 use App\Http\Controllers\Api\V1\BannerController;
+use App\Http\Controllers\Api\V1\ContactController;
 use App\Http\Controllers\Api\V1\DepositRequestController;
 use App\Http\Controllers\Api\V1\GetBalanceController;
 use App\Http\Controllers\Api\V1\PromotionController;
@@ -31,6 +32,7 @@ Route::get('promotion', [PromotionController::class, 'index']);
 Route::get('banner', [BannerController::class, 'index']);
 Route::get('bannerText', [BannerController::class, 'bannerText']);
 Route::get('popup-ads-banner', [BannerController::class, 'AdsBannerIndex']);
+Route::get('contact', [ContactController::class, 'get']);
 
 // sameless route
 
