@@ -241,6 +241,26 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('withdraw')
+                            <li class="nav-item">
+                                <a href="{{ route('admin.agent.withdraw') }}" class="nav-link">
+                                    <i class="fas fa-address-book"></i>
+                                    <p>
+                                        WithDraw Request
+                                    </p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('deposit')
+                            <li class="nav-item">
+                                <a href="{{ route('admin.agent.deposit') }}" class="nav-link">
+                                    <i class="fas fa-address-book"></i>
+                                    <p>
+                                        Deposit Request
+                                    </p>
+                                </a>
+                            </li>
+                        @endcan
                         <li class="nav-item">
                             <a href="{{ route('admin.transferLog') }}" class="nav-link">
                                 <i class="fas fa-address-book"></i>
