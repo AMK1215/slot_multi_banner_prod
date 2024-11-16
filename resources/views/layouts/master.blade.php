@@ -181,8 +181,18 @@
                                     </p>
                                 </a>
                             </li>
+                        @endcan
 
-                            {{-- <li class="nav-item">
+                        @can('contact')
+                            <li class="nav-item">
+                                <a href="{{ route('admin.player.index') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        Player List
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ url('admin/slot/report') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
                                     <p>
@@ -198,10 +208,7 @@
                                         W/L Report V2
                                     </p>
                                 </a>
-                            </li> --}}
-                        @endcan
-
-                        @can('contact')
+                            </li>
                             <li class="nav-item">
                                 <a href="{{ route('admin.contact.index') }}" class="nav-link">
                                     <i class="fas fa-address-book"></i>
