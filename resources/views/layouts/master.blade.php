@@ -164,25 +164,10 @@
                                     </p>
                                 </a>
                             </li>
-                        @endcan
 
-                        @can('agent_access')
-                            <li class="nav-item">
-                                <a href="{{ url('admin/slot/report') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
-                                    <p>
-                                        W/L Report V1
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('admin/slot/reports/owner') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
-                                    <p>
-                                        W/L Report V2
-                                    </p>
-                                </a>
-                            </li>
+
+
+
                             <li class="nav-item">
                                 <a href="{{ route('admin.agent.index') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
@@ -191,8 +176,7 @@
                                     </p>
                                 </a>
                             </li>
-                        @endcan
-                        @can('agent_access')
+
                             <li class="nav-item">
                                 <a href="{{ route('admin.player.index') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
@@ -202,7 +186,7 @@
                                 </a>
                             </li>
 
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ url('admin/slot/report') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
                                     <p>
@@ -218,7 +202,7 @@
                                         W/L Report V2
                                     </p>
                                 </a>
-                            </li>
+                            </li> --}}
                         @endcan
 
                         @can('contact')
