@@ -26,6 +26,39 @@
                             <table id="mytable" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
+                                        <th>#</th>
+                                        <th>Player Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Status</th>
+                                        <th>Balance</th>
+                                        <th>CreatedAt</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($agent->createdAgents as $createdAgent)
+                                        @foreach ($createdAgent->players as $player)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $player->name }}</td>
+                                                <td>{{ $player->email }}</td>
+                                                <td>{{ $player->phone }}</td>
+                                                <td>
+                                                    @if ($player->status == 1)
+                                                        <p>Active</p>
+                                                    @else
+                                                        <p>Inactive</p>
+                                                    @endif
+                                                </td>
+                                                <td>{{ number_format($player->balanceFloat) }}</td>
+                                                <td>{{ $player->created_at->setTimezone('Asia/Yangon')->format('d-m-Y H:i:s') }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endforeach
+                                </tbody>
+                                {{-- <thead>
+                                    <tr>
                                         <th>ID</th>
                                         <th>User Name</th>
                                         <th>User Phone</th>
@@ -46,7 +79,7 @@
                                             </td>
                                         </tr>
                                     @endforeach
-                                </tbody>
+                                </tbody> --}}
 
                             </table>
                         </div>
