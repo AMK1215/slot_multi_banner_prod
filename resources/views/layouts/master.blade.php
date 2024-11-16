@@ -195,6 +195,15 @@
                             </li>
 
                             <li class="nav-item">
+                                <a href="{{ url('admin/slot/report') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        W/L Report V1
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
                                 <a href="{{ url('admin/slot/reports/agent') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
                                     <p>
