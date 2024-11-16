@@ -34,13 +34,14 @@
                                         <th>Player Name</th>
                                         <th>Game Name</th>
                                         <th>Provider</th>
-                                        <th>ResultID</th>
+                                        <th>History1</th>
+                                        <th>History2</th>
                                         <th>DateTime</th>
                                         <th>Currency</th>
                                         <th>Bet</th>
                                         <th>Win</th>
                                         <th>NetWin</th>
-                                        <th>RoundID</th>
+                                        {{-- <th>RoundID</th> --}}
                                         <th>TransactionDateTime</th>
                                     </tr>
                                 </thead>
@@ -63,6 +64,13 @@
                                                     {{ $detail->round_id }}
                                                 </a>
                                             </td>
+                                            <td>
+                                                <a href="javascript:void(0);"
+                                                    onclick="getTransactionDetails('{{ $detail->result_id }}')"
+                                                    style="color: blueviolet; text-decoration: underline;">
+                                                    {{ $detail->result_id }}
+                                                </a>
+                                            </td>
 
                                             {{-- <td>
                                                 <a href="javascript:void(0);"
@@ -77,7 +85,7 @@
                                             <td>{{ number_format($detail->total_bet_amount, 2) }}</td>
                                             <td>{{ number_format($detail->win_amount, 2) }}</td>
                                             <td>{{ number_format($detail->net_win, 2) }}</td>
-                                            <td>{{ $detail->result_id }}</td>
+                                            {{-- <td>{{ $detail->result_id }}</td> --}}
                                             <td>{{ $detail->tran_date_time }}</td>
                                         </tr>
                                     @endforeach
