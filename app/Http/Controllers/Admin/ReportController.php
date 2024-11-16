@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Webhook\Result;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use App\Models\User;
 
 class ReportController extends Controller
 {
@@ -31,66 +31,64 @@ class ReportController extends Controller
     //     return view('admin.reports.index', compact('report'));
     // }
 
-//     public function getReportGroupedByGameProvider()
-// {
-//     // Get the authenticated admin's ID
-//     $adminId = auth()->id();
+    //     public function getReportGroupedByGameProvider()
+    // {
+    //     // Get the authenticated admin's ID
+    //     $adminId = auth()->id();
 
-//     // Get the agents associated with this admin
-//     $agents = User::where('agent_id', $adminId)->pluck('id');
+    //     // Get the agents associated with this admin
+    //     $agents = User::where('agent_id', $adminId)->pluck('id');
 
-//     // Get players associated with those agents
-//     $players = User::whereIn('agent_id', $agents)->pluck('id');
+    //     // Get players associated with those agents
+    //     $players = User::whereIn('agent_id', $agents)->pluck('id');
 
-//     // Fetch the report grouped by game provider and player
-//     $report = Result::select(
-//         'game_provide_name',
-//         DB::raw('SUM(total_bet_amount) as total_bet_amount'),
-//         DB::raw('SUM(win_amount) as total_win_amount'),
-//         DB::raw('SUM(net_win) as total_net_win'),
-//         DB::raw('COUNT(*) as total_games'),
-//         'users.name as user_name'
-//     )
-//         ->join('users', 'results.user_id', '=', 'users.id') // Join with the users table
-//         ->whereIn('results.user_id', $players) // Filter by the players under this admin
-//         ->groupBy('game_provide_name', 'users.name') // Group by both game provider and user name
-//         ->get();
+    //     // Fetch the report grouped by game provider and player
+    //     $report = Result::select(
+    //         'game_provide_name',
+    //         DB::raw('SUM(total_bet_amount) as total_bet_amount'),
+    //         DB::raw('SUM(win_amount) as total_win_amount'),
+    //         DB::raw('SUM(net_win) as total_net_win'),
+    //         DB::raw('COUNT(*) as total_games'),
+    //         'users.name as user_name'
+    //     )
+    //         ->join('users', 'results.user_id', '=', 'users.id') // Join with the users table
+    //         ->whereIn('results.user_id', $players) // Filter by the players under this admin
+    //         ->groupBy('game_provide_name', 'users.name') // Group by both game provider and user name
+    //         ->get();
 
-//     // Return the view with the report
-//     return view('admin.reports.index', compact('report'));
-// }
-public function getReportGroupedByGameProvider()
-{
-    // Get the authenticated admin's ID
-    $adminId = auth()->id();
+    //     // Return the view with the report
+    //     return view('admin.reports.index', compact('report'));
+    // }
+    public function getReportGroupedByGameProvider()
+    {
+        // Get the authenticated admin's ID
+        $adminId = auth()->id();
 
-    // Get the agents associated with this admin
-    $agents = User::where('agent_id', $adminId)->pluck('id');
+        // Get the agents associated with this admin
+        $agents = User::where('agent_id', $adminId)->pluck('id');
 
-    // Get players associated with those agents
-    $players = User::whereIn('agent_id', $agents)->pluck('id');
+        // Get players associated with those agents
+        $players = User::whereIn('agent_id', $agents)->pluck('id');
 
-    // Fetch the report grouped by game provider, player, and agent
-    $report = Result::select(
-        'game_provide_name',
-        DB::raw('SUM(total_bet_amount) as total_bet_amount'),
-        DB::raw('SUM(win_amount) as total_win_amount'),
-        DB::raw('SUM(net_win) as total_net_win'),
-        DB::raw('COUNT(*) as total_games'),
-        'players.name as player_name', // Player's name
-        'agents.name as agent_name'    // Agent's name
-    )
-        ->join('users as players', 'results.user_id', '=', 'players.id') // Join with the users table for players
-        ->join('users as agents', 'players.agent_id', '=', 'agents.id')  // Join with the users table for agents
-        ->whereIn('results.user_id', $players) // Filter by the players under this admin
-        ->groupBy('game_provide_name', 'players.name', 'agents.name') // Group by game provider, player, and agent
-        ->get();
+        // Fetch the report grouped by game provider, player, and agent
+        $report = Result::select(
+            'game_provide_name',
+            DB::raw('SUM(total_bet_amount) as total_bet_amount'),
+            DB::raw('SUM(win_amount) as total_win_amount'),
+            DB::raw('SUM(net_win) as total_net_win'),
+            DB::raw('COUNT(*) as total_games'),
+            'players.name as player_name', // Player's name
+            'agents.name as agent_name'    // Agent's name
+        )
+            ->join('users as players', 'results.user_id', '=', 'players.id') // Join with the users table for players
+            ->join('users as agents', 'players.agent_id', '=', 'agents.id')  // Join with the users table for agents
+            ->whereIn('results.user_id', $players) // Filter by the players under this admin
+            ->groupBy('game_provide_name', 'players.name', 'agents.name') // Group by game provider, player, and agent
+            ->get();
 
-    // Return the view with the report
-    return view('admin.reports.index', compact('report'));
-}
-
-
+        // Return the view with the report
+        return view('admin.reports.index', compact('report'));
+    }
 
     public function getReportDetails($game_provide_name)
     {
