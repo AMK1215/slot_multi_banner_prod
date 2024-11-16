@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\Player\PlayerController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\MultiBannerReportController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\TransferLog\TransferLogController;
@@ -146,5 +147,9 @@ Route::group([
         Route::get('report', [ReportController::class, 'getReportGroupedByGameProvider'])->name('report.index');
         Route::get('reports/details/{game_provide_name}', [ReportController::class, 'getReportDetails'])->name('reports.details');
         Route::get('/daily-summaries', [DailySummaryController::class, 'index'])->name('daily_summaries.index');
+
+        Route::get('/reports/senior', [MultiBannerReportController::class, 'getSeniorReport'])->name('reports.senior');
+    Route::get('/reports/admin', [MultiBannerReportController::class, 'getAdminReport'])->name('reports.admin');
+    Route::get('/reports/agent', [MultiBannerReportController::class, 'getAgentReport'])->name('reports.agent');
     });
 });

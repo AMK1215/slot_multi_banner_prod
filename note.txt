@@ -3,10 +3,10 @@ php artisan migrate --path=/database/migrations/2024_10_14_042230_add_version_to
 php artisan make:migration add_balance_column_to_wallets_table --table=wallets
 
 // to remove laravel log
-php -r "file_put_contents('/var/www/SlotMaster/storage/logs/laravel.log', '');"
+php -r "file_put_contents('/var/www/slot_multi_banner_prod/storage/logs/laravel.log', '');"
 // created dev branch for kzt
 
-tail -f /var/www/SlotMaster/storage/logs/laravel.log
+tail -f /var/www/slot_multi_banner_prod/storage/logs/laravel.log
 sudo su ubuntu
 crontab -e
 
