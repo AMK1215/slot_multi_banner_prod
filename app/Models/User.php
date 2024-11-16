@@ -204,4 +204,17 @@ class User extends Authenticatable implements Wallet
     {
         return $this->hasMany(Bet::class, 'user_id');
     }
+
+    // Fetch agents created by an admin
+    // public function createdAgents()
+    // {
+    //     return $this->hasMany(User::class, 'agent_id');
+    // }
+
+    // Fetch players managed by an agent
+    public function players()
+    {
+        return $this->hasMany(User::class, 'agent_id');
+    }
+
 }

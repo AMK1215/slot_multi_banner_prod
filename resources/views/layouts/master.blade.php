@@ -174,7 +174,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{ route('admin.player.index') }}" class="nav-link">
+                                <a href="{{ route('admin.GetOwnerPlayerList') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
                                     <p>
                                         Player List

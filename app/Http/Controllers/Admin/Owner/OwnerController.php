@@ -46,6 +46,25 @@ class OwnerController extends Controller
         return view('admin.owner.index', compact('users'));
     }
 
+    public function OwnerPlayerList()
+{
+    abort_if(
+        Gate::denies('owner_access'),
+        Response::HTTP_FORBIDDEN,
+        '403 Forbidden | You cannot access this page because you do not have permission'
+    );
+
+    $adminId = auth()->id(); // Get the authenticated admin's ID
+
+    // Fetch agents and their related players for this admin
+    $agents = User::with(['createdAgents', 'createdAgents.players'])
+        ->where('id', $adminId) // Only fetch data for the current admin
+        ->get();
+
+    return view('admin.player.list', compact('agents'));
+}
+
+
     /**
      * Store a newly created resource in storage.
      */
