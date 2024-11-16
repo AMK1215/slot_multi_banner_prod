@@ -44,7 +44,7 @@
                                     @foreach ($report as $row)
                                         <tr>
                                             <td>{{ $row->agent_name }}</td>
-                                            <td>{{ $row->user_name }}</td>
+                                            <td>{{ $row->player_name }}</td>
                                             <td>{{ $row->game_provide_name }}</td>
                                             <td>{{ $row->total_games }}</td>
                                             <td>{{ number_format($row->total_bet_amount, 2) }}</td>
