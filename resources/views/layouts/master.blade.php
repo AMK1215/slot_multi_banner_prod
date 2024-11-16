@@ -166,7 +166,7 @@
                             </li>
                         @endcan
 
-                        @can('admin_access')
+                        @can('agent_index')
                             <li class="nav-item">
                                 <a href="{{ url('admin/slot/report') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
