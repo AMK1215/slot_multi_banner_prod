@@ -62,12 +62,7 @@ class HomeController extends Controller
             ->when($role[0] === 'Senior', function ($query) {
                 return $query->where('users.type', 40);
             })
-            ->when($role[0] === 'Owner', function ($query) use ($user) {
-                return $query->where('users.type', 40)->where('users.id', $user->id);
-            })
-            ->when($role[0] === 'Agent', function ($query) use ($user) {
-                return $query->where('users.type', 40)->where('users.agent_id', $user->id);
-            })->first();
+            ->first();
         
 
 
