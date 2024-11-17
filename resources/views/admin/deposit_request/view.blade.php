@@ -26,7 +26,7 @@
                         <a href="{{ route('admin.agent.deposit') }}" class="btn btn-primary " style="width: 100px;"><i
                                 class="fas fa-plus text-white  mr-2"></i>Back</a>
                     </div>
-                    <div class="card">
+                    <div class="card col-lg-6 offset-lg-3 col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-10 offset-1">
                         <!-- Card header -->
                         <div class="card-header">
                             <h4>Deposit Request Detail</h4>
