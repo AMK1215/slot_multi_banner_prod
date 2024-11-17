@@ -17,39 +17,40 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <div class="card col-lg-6 offset-lg-3 col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-10 offset-1" style="border-radius: 20px;">
+            <div class="card col-lg-6 offset-lg-3 col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-10 offset-1"
+                style="border-radius: 20px;">
                 <div class="card-header ">
                     <div class="card-title  col-12 my-3">
                         <h5 class="d-inline">Change Password</h5>
                         <a href="{{ route('admin.player.index') }}" class="btn btn-danger float-right">
-                             <i class="fas fa-arrow-left" ></i> Back
+                            <i class="fas fa-arrow-left"></i> Back
                         </a>
 
                     </div>
                 </div>
 
                 <div class="card-body ">
-                        <form role="form" method="POST" class="text-start"
+                    <form role="form" method="POST" class="text-start"
                         action="{{ route('admin.player.makeChangePassword', $player->id) }}">
-                            @csrf
-                            <div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-8 offset-sm-2 col-10 offset-1">
-                                <div class="custom-form-group mb-3">
-                                    <label for="title">New Password <span class="text-danger">*</span></label>
-                                    <input type="text" name="password" class="form-control">
-                                    @error('password')
-                                        <span class="text-danger d-block">*{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="custom-form-group mb-3">
-                                    <label for="title">Confirm Password <span class="text-danger">*</span></label>
-                                    <input type="text" name="password_confirmation" class="form-control">
-                                </div>
+                        @csrf
+                        <div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-8 offset-sm-2 col-10 offset-1">
+                            <div class="custom-form-group mb-3">
+                                <label for="title">New Password <span class="text-danger">*</span></label>
+                                <input type="text" name="password" class="form-control">
+                                @error('password')
+                                    <span class="text-danger d-block">*{{ $message }}</span>
+                                @enderror
                             </div>
+                            <div class="custom-form-group mb-3">
+                                <label for="title">Confirm Password <span class="text-danger">*</span></label>
+                                <input type="text" name="password_confirmation" class="form-control">
+                            </div>
+                        </div>
                 </div>
-                            <div class="card-footer bg-white col-12">
-                                <button type="submit" class="btn btn-success float-right" type="button">Confirm</button>
-                            </div>
-                        </form>
+                <div class="card-footer bg-white col-12">
+                    <button type="submit" class="btn btn-success float-right" type="button">Confirm</button>
+                </div>
+                </form>
 
             </div>
         </div>
@@ -61,7 +62,7 @@
     <script>
         var errorMessage = @json(session('error'));
         var successMessage = @json(session('success'));
-        var url = 'https://maxwinmyanmar.com/login';
+        var url = 'https://goldenjacks.pro/login';
         var name = @json(session('username'));
         var pw = @json(session('password'));
 
