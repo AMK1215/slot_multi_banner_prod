@@ -15,14 +15,14 @@ class AdminLogoMiddleware
             $logoFilename = Auth::user()->agent_logo;
             $siteName = Auth::user()->site_name ?? 'DelightMyanmar'; // Default site name
 
-            Log::info('Auth User Logo:', ['logo' => $logoFilename]);
-            Log::info('Site Name:', ['site_name' => $siteName]);
+            //Log::info('Auth User Logo:', ['logo' => $logoFilename]);
+            //Log::info('Site Name:', ['site_name' => $siteName]);
 
             $adminLogo = $logoFilename
                 ? asset('assets/img/logo/' . $logoFilename)
                 : asset('assets/img/logo/default-logo.jpg');
 
-            Log::info('Admin Logo Path:', ['path' => $adminLogo]);
+            //Log::info('Admin Logo Path:', ['path' => $adminLogo]);
 
             View::share([
                 'adminLogo' => $adminLogo,
