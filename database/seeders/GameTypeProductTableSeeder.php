@@ -34,7 +34,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 4,  // JILI
                 'game_type_id' => 2,  // Slots
-                'image' => 'jili.png',
+                'image' => 'jl_slot.png',
                 'rate' => '1.0000',
             ],
             [
@@ -52,7 +52,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 7,  // CQ9
                 'game_type_id' => 2,  // Arcade
-                'image' => 'cq_9.png',
+                'image' => 'CQ_9.png',
                 'rate' => '1.0000',
             ],
             [
