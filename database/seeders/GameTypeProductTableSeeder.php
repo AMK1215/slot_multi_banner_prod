@@ -28,7 +28,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 3,  // PGSOFT
                 'game_type_id' => 2,  // Slots
-                'image' => 'PG_soft.png',
+                'image' => 'pg_soft.png',
                 'rate' => '1.0000',
             ],
             [
