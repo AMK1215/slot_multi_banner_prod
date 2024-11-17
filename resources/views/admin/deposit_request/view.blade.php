@@ -37,7 +37,8 @@
                                     <img src="{{ asset('assets/img/deposit/' . $deposit->image) }}"
                                         class="img-fluid rounded" alt="">
                                 </div>
-                                <div class="col-md-6">
+                                <div
+                                    class="card-body col-lg-12 offset-lg-0 col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-10 offset-1">
                                     <div class="custom-form-group">
                                         <label class="form-label">User Name</label>
                                         <input type="text" class="form-control" name="name"
