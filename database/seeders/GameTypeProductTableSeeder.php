@@ -64,7 +64,7 @@ class GameTypeProductTableSeeder extends Seeder
             [
                 'product_id' => 8,  // UUS
                 'game_type_id' => 2,  // Slots
-                'image' => 'UU.png',
+                'image' => 'UUslot.png',
                 'rate' => '1.0000',
             ],
             [
