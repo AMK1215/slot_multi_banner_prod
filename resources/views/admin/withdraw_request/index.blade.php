@@ -19,7 +19,8 @@
             <div class="row">
                 <div class="col-12">
                     <div class="d-flex justify-content-end mb-3">
-                        <a href="{{ route('admin.agent.withdraw') }}" class="btn btn-primary " style="width: 100px;"> <i class="fas fa-arrow-left mr-2"></i>Back</a>
+                        <a href="{{ route('admin.agent.withdraw') }}" class="btn btn-primary " style="width: 100px;"> <i
+                                class="fas fa-arrow-left mr-2"></i>Back</a>
                     </div>
                     <div class="card " style="border-radius: 20px;">
                         <div class="card-header">
@@ -27,33 +28,38 @@
                         </div>
 
                         <div class="card-body">
-                        <form action="{{ route('admin.agent.withdraw') }}" method="GET">
-                            <div class="row mt-3">
-                                <div class="col-md-3">
-                                    <div class="input-group input-group-static mb-4">
-                                        <label for="exampleFormControlSelect1" class="ms-0">Select Status</label>
-                                        <select class="form-control" id="" name="status">
-                                            <option value="all" {{ request()->get('status') == 'all' ? 'selected' : '' }}>All
-                                            </option>
-                                            <option value="0" {{ request()->get('status') == '0' ? 'selected' : '' }}>Pending
-                                            </option>
-                                            <option value="1" {{ request()->get('status') == '1' ? 'selected' : '' }}>Approved
-                                            </option>
-                                            <option value="2" {{ request()->get('status') == '2' ? 'selected' : '' }}>Rejected
-                                            </option>
-                                        </select>
+                            <form action="{{ route('admin.agent.withdraw') }}" method="GET">
+                                <div class="row mt-3">
+                                    <div class="col-md-3">
+                                        <div class="input-group input-group-static mb-4">
+                                            <label for="exampleFormControlSelect1" class="ms-0">Select Status</label>
+                                            <select class="form-control" id="" name="status">
+                                                <option value="all"
+                                                    {{ request()->get('status') == 'all' ? 'selected' : '' }}>All
+                                                </option>
+                                                <option value="0"
+                                                    {{ request()->get('status') == '0' ? 'selected' : '' }}>Pending
+                                                </option>
+                                                <option value="1"
+                                                    {{ request()->get('status') == '1' ? 'selected' : '' }}>Approved
+                                                </option>
+                                                <option value="2"
+                                                    {{ request()->get('status') == '2' ? 'selected' : '' }}>Rejected
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button class="btn btn-sm btn-primary" id="search" type="submit">Search</button>
+                                        <a href="{{ route('admin.agent.withdraw') }}"
+                                            class="btn btn-link text-primary ms-auto border-0" data-bs-toggle="tooltip"
+                                            data-bs-placement="bottom" title="Refresh">
+                                            <i class="material-icons text-lg">refresh</i>
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <button class="btn btn-sm btn-primary" id="search" type="submit">Search</button>
-                                    <a href="{{ route('admin.agent.withdraw') }}" class="btn btn-link text-primary ms-auto border-0"
-                                        data-bs-toggle="tooltip" data-bs-placement="bottom" title="Refresh">
-                                        <i class="material-icons text-lg">refresh</i>
-                                    </a>
-                                </div>
-                            </div>
-                        </form>
-                        <table id="mytable" class="table table-bordered table-hover">
+                            </form>
+                            <table id="mytable" class="table table-bordered table-hover">
                                 <thead>
                                     <th>#</th>
                                     <th>PlayerName</th>
@@ -73,7 +79,9 @@
                                                 <span class="d-block">{{ $withdraw->user->name }}</span>
                                             </td>
                                             <td>{{ number_format($withdraw->amount) }}</td>
-                                            <td>{{ $withdraw->bank->paymentType->name }}</td>
+                                            {{-- <td>{{ $withdraw->bank->paymentType->name }}</td> --}}
+                                            <td>{{ $withdraw->paymentType->name ?? 'N/A' }}</td>
+
                                             <td>{{ $withdraw->account_name }}</td>
                                             <td>{{ $withdraw->account_number }}</td>
                                             <td>
