@@ -27,6 +27,7 @@ class OwnerRequest extends FormRequest
             'phone' => ['required', 'regex:/^[0-9]+$/'],
             'password' => 'required|min:6',
             'amount' => 'nullable|numeric',
+            'site_name' => 'nullable|string',
         ];
     }
 }

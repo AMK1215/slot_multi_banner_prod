@@ -88,6 +88,7 @@ class OwnerController extends Controller
                 'password' => Hash::make($inputs['password']),
                 'agent_id' => Auth()->user()->id,
                 'type' => UserType::Owner,
+                'site_name' => $inputs['site_name'],
             ]
         );
 
