@@ -23,6 +23,8 @@ use App\Http\Controllers\Api\V1\Webhook\RewardController;
 use App\Http\Controllers\Api\V1\WithDrawRequestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\V1\GetAdminSiteLogoNameController;
+
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -65,6 +67,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('paymentType', [BankController::class, 'paymentType']);
     Route::post('withdraw', [WithDrawRequestController::class, 'withdraw']);
     Route::get('withdrawlog', [WithDrawRequestController::class, 'log']);
+    Route::get('sitelogo-name', [GetAdminSiteLogoNameController::class, 'GetSiteLogoAndSiteName']);
 });
 
 Route::get('gameTypeProducts/{id}', [GameController::class, 'gameTypeProducts']);

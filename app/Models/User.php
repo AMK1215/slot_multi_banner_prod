@@ -218,4 +218,9 @@ class User extends Authenticatable implements Wallet
         return $this->hasMany(User::class, 'agent_id');
     }
 
+    public function admin()
+{
+    return $this->belongsTo(User::class, 'agent_id');
+}
+
 }
