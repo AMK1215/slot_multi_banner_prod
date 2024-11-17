@@ -86,11 +86,11 @@
                                             <td>{{ $withdraw->account_number }}</td>
                                             <td>
                                                 @if ($withdraw->status == 0)
-                                                    <span class="badge text-bg-warning text-white mb-2">Pending</span>
+                                                    <span class="badge text-bg-warning text-warning mb-2">Pending</span>
                                                 @elseif ($withdraw->status == 1)
-                                                    <span class="badge text-bg-success text-white mb-2">Approved</span>
+                                                    <span class="badge text-bg-success text-success mb-2">Approved</span>
                                                 @elseif ($withdraw->status == 2)
-                                                    <span class="badge text-bg-danger text-white mb-2">Rejected</span>
+                                                    <span class="badge text-bg-danger text-danger mb-2">Rejected</span>
                                                 @endif
                                             </td>
 
@@ -109,7 +109,7 @@
                                                         @if ($withdraw->status == 0)
                                                             <button class="btn btn-success p-1 me-1" type="submit">
                                                                 <i class="fas fa-check"></i>
-                                                            </button>
+                                                            </button> &nbsp; &nbsp;
                                                         @endif
                                                     </form>
                                                     <form
