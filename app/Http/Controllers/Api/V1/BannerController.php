@@ -23,12 +23,7 @@ class BannerController extends Controller
     public function index()
     {
         $user = Auth::user();
-        dd([
-    'Logged-in User' => $user,
-    'Parent' => $user->parent,
-    'Admin' => $user->parent->parent ?? $user->parent,
-    'Banners' => $user->parent->parent ? $user->parent->parent->banners : $user->parent->banners,
-]);
+        dd($user);
 
         if (! $user) {
             return $this->error(null, 'Unauthorized', 401);
