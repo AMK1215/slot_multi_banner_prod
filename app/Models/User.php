@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\UserType;
 use App\Events\UserCreatedEvent;
 use App\Models\Admin\Bank;
+use App\Models\Admin\Banner;
 use App\Models\Admin\Permission;
 use App\Models\Admin\Role;
 use App\Models\Report;
@@ -21,8 +22,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
-
-use App\Models\Admin\Banner;
 
 class User extends Authenticatable implements Wallet
 {
@@ -51,7 +50,7 @@ class User extends Authenticatable implements Wallet
         'is_changed_password',
         'referral_code',
         'agent_logo',
-        'site_name'
+        'site_name',
     ];
 
     protected $dispatchesEvents = [
@@ -221,11 +220,11 @@ class User extends Authenticatable implements Wallet
     }
 
     public function admin()
-{
-    return $this->belongsTo(User::class, 'agent_id');
-}
+    {
+        return $this->belongsTo(User::class, 'agent_id');
+    }
 
-// A user can have a parent (e.g., Agent belongs to an Admin)
+    // A user can have a parent (e.g., Agent belongs to an Admin)
     public function parent()
     {
         return $this->belongsTo(User::class, 'agent_id');
@@ -249,6 +248,4 @@ class User extends Authenticatable implements Wallet
     {
         return $this->hasMany(Banner::class, 'admin_id'); // Banners owned by this admin
     }
-
-
 }

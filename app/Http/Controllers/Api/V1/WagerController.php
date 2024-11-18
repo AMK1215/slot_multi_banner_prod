@@ -25,9 +25,9 @@ class WagerController extends Controller
         };
 
         $user = auth()->user();
-   
+
         $transactions = DB::table('users')->join('results', 'results.user_id', '=', 'users.id')->select(
-            'results.player_name','results.game_provide_name',
+            'results.player_name', 'results.game_provide_name',
             DB::raw('MIN(results.tran_date_time) as from_date'),
             DB::raw('MAX(results.tran_date_time) as to_date'),
             DB::raw('COUNT(results.game_provide_name) as total_count'),
@@ -37,7 +37,7 @@ class WagerController extends Controller
             ->where('results.user_id', $user->id)
             ->whereBetween('results.tran_date_time', [$from, $to])
             ->paginate();
-        
+
         return $this->success(SeamlessTransactionResource::collection($transactions));
     }
 
@@ -45,6 +45,7 @@ class WagerController extends Controller
     {
         $query = User::query();
         $query->join('results', 'results.user_id', '=', 'users.id');
+
         return $query;
     }
 }

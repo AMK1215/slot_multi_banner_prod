@@ -1,11 +1,11 @@
 <?php
+
 namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\View;
 
 class AdminLogoMiddleware
 {
@@ -19,7 +19,7 @@ class AdminLogoMiddleware
             //Log::info('Site Name:', ['site_name' => $siteName]);
 
             $adminLogo = $logoFilename
-                ? asset('assets/img/logo/' . $logoFilename)
+                ? asset('assets/img/logo/'.$logoFilename)
                 : asset('assets/img/logo/default-logo.jpg');
 
             //Log::info('Admin Logo Path:', ['path' => $adminLogo]);

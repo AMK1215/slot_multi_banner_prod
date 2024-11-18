@@ -3,20 +3,21 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Traits\HttpResponses;
 
 class GetAdminSiteLogoNameController extends Controller
 {
     use HttpResponses;
-     public function GetSiteLogoAndSiteName()
+
+    public function GetSiteLogoAndSiteName()
     {
         if (Auth::check()) {
             $user = Auth::user();
 
             $adminLogo = $user->agent_logo
-                ? asset('assets/img/logo/' . $user->agent_logo)
+                ? asset('assets/img/logo/'.$user->agent_logo)
                 : asset('assets/img/logo/default-logo.jpg');
 
             $siteName = $user->site_name ?? 'GoldenJack';

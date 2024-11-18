@@ -28,22 +28,22 @@ class WithDrawRequestController extends Controller
     public function statusChangeIndex(Request $request, WithDrawRequest $withdraw)
     {
 
-            $agent = Auth::user();
-            $player = User::find($request->player);
+        $agent = Auth::user();
+        $player = User::find($request->player);
 
-            if ($request->status == 1 && $player->balanceFloat < $request->amount) {
-                return redirect()->back()->with('error', 'Insufficient Balance!');
-            }
+        if ($request->status == 1 && $player->balanceFloat < $request->amount) {
+            return redirect()->back()->with('error', 'Insufficient Balance!');
+        }
 
-            $withdraw->update([
-                'status' => $request->status,
-            ]);
+        $withdraw->update([
+            'status' => $request->status,
+        ]);
 
-            if ($request->status == 1) {
-                app(WalletService::class)->transfer($player, $agent, $request->amount, TransactionName::DebitTransfer);
-            }
+        if ($request->status == 1) {
+            app(WalletService::class)->transfer($player, $agent, $request->amount, TransactionName::DebitTransfer);
+        }
 
-            return redirect()->route('admin.agent.withdraw')->with('success', 'Withdraw status updated successfully!');
+        return redirect()->route('admin.agent.withdraw')->with('success', 'Withdraw status updated successfully!');
     }
 
     public function statusChangeReject(Request $request, WithDrawRequest $withdraw)

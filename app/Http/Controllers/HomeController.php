@@ -63,8 +63,6 @@ class HomeController extends Controller
                 return $query->where('users.type', 40);
             })
             ->first();
-        
-
 
         return view('admin.dashboard', compact(
             'user',

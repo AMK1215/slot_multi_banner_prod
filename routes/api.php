@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\Bank\BankController;
 use App\Http\Controllers\Api\V1\BannerController;
 use App\Http\Controllers\Api\V1\ContactController;
 use App\Http\Controllers\Api\V1\DepositRequestController;
+use App\Http\Controllers\Api\V1\GetAdminSiteLogoNameController;
 use App\Http\Controllers\Api\V1\GetBalanceController;
 use App\Http\Controllers\Api\V1\PromotionController;
 use App\Http\Controllers\Api\V1\Slot\GameController;
@@ -23,8 +24,6 @@ use App\Http\Controllers\Api\V1\Webhook\RewardController;
 use App\Http\Controllers\Api\V1\WithDrawRequestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\GetAdminSiteLogoNameController;
-
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -46,7 +45,6 @@ Route::post('Result', [BetResultController::class, 'handleResult']);
 Route::post('CancelBet', [CancelBetController::class, 'handleCancelBet']);
 Route::post('Adjustment', [AdjustmentController::class, 'handleAdjustment']);
 Route::post('Reward', [RewardController::class, 'handleReward']);
-
 
 Route::post('/GetDaySummary', [GetDaySummaryController::class, 'getDaySummary']);
 

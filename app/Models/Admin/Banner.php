@@ -2,9 +2,9 @@
 
 namespace App\Models\Admin;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
 
 class Banner extends Model
 {
@@ -12,7 +12,7 @@ class Banner extends Model
 
     protected $fillable = [
         'image',
-        'admin_id'
+        'admin_id',
     ];
 
     protected $appends = ['img_url'];

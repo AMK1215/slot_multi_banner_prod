@@ -20,23 +20,23 @@ class WithDrawRequestController extends Controller
             'account_name' => ['required', 'string'],
             'amount' => ['required', 'integer', 'min: 3000'],
             'account_number' => ['required', 'regex:/^[0-9]+$/'],
-            'payment_type_id' => ['required', 'integer']
+            'payment_type_id' => ['required', 'integer'],
         ]);
 
-            $player = Auth::user();
-            if ($request->amount > $player->balanceFloat) {
-                return $this->error('', 'Insufficient Balance', 401);
-            }
-            $withdraw = WithDrawRequest::create([
-                'user_id' => $player->id,
-                'agent_id' => $player->agent_id,
-                'amount' => $request->amount,
-                'account_name' => $request->account_name,
-                'account_number' => $request->account_number,
-                'payment_type_id' => $request->payment_type_id,
-            ]);
+        $player = Auth::user();
+        if ($request->amount > $player->balanceFloat) {
+            return $this->error('', 'Insufficient Balance', 401);
+        }
+        $withdraw = WithDrawRequest::create([
+            'user_id' => $player->id,
+            'agent_id' => $player->agent_id,
+            'amount' => $request->amount,
+            'account_name' => $request->account_name,
+            'account_number' => $request->account_number,
+            'payment_type_id' => $request->payment_type_id,
+        ]);
 
-            return $this->success($withdraw, 'Withdraw Request Success');
+        return $this->success($withdraw, 'Withdraw Request Success');
     }
 
     public function log()

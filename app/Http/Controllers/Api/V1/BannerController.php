@@ -9,7 +9,6 @@ use App\Models\Admin\BannerText;
 use App\Traits\HttpResponses;
 use Illuminate\Support\Facades\Auth;
 
-
 class BannerController extends Controller
 {
     use HttpResponses;
@@ -24,8 +23,14 @@ class BannerController extends Controller
     public function index()
     {
         $user = Auth::user();
+        dd([
+    'Logged-in User' => $user,
+    'Parent' => $user->parent,
+    'Admin' => $user->parent->parent ?? $user->parent,
+    'Banners' => $user->parent->parent ? $user->parent->parent->banners : $user->parent->banners,
+]);
 
-        if (!$user) {
+        if (! $user) {
             return $this->error(null, 'Unauthorized', 401);
         }
 
