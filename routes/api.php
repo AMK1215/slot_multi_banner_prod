@@ -30,7 +30,6 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/player-change-password', [AuthController::class, 'playerChangePassword']);
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('promotion', [PromotionController::class, 'index']);
-Route::get('banner', [BannerController::class, 'index']);
 Route::get('bannerText', [BannerController::class, 'bannerText']);
 Route::get('popup-ads-banner', [BannerController::class, 'AdsBannerIndex']);
 Route::get('contact', [ContactController::class, 'get']);
@@ -66,6 +65,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('withdraw', [WithDrawRequestController::class, 'withdraw']);
     Route::get('withdrawlog', [WithDrawRequestController::class, 'log']);
     Route::get('sitelogo-name', [GetAdminSiteLogoNameController::class, 'GetSiteLogoAndSiteName']);
+    Route::get('banner', [BannerController::class, 'index']);
+
 });
 
 Route::get('gameTypeProducts/{id}', [GameController::class, 'gameTypeProducts']);

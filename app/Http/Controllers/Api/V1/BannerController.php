@@ -23,7 +23,7 @@ class BannerController extends Controller
     public function index()
     {
         $user = Auth::user();
-        dd($user);
+        //dd($user);
 
         if (! $user) {
             return $this->error(null, 'Unauthorized', 401);
