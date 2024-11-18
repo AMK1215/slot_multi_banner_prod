@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Api\Shan\ShanTransactionController;
 use App\Http\Controllers\Api\V1\Auth\AuthController;
 use App\Http\Controllers\Api\V1\Bank\BankController;
 use App\Http\Controllers\Api\V1\BannerController;
@@ -45,7 +46,7 @@ Route::post('CancelBet', [CancelBetController::class, 'handleCancelBet']);
 Route::post('Adjustment', [AdjustmentController::class, 'handleAdjustment']);
 Route::post('Reward', [RewardController::class, 'handleReward']);
 
-Route::post('/GetDaySummary', [GetDaySummaryController::class, 'getDaySummary']);
+Route::post('transactions', [ShanTransactionController::class, 'index'])->middleware('transaction');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('GameLogin', [LaunchGameController::class, 'LaunchGame']);
@@ -74,4 +75,3 @@ Route::get('allGameProducts', [GameController::class, 'allGameProducts']);
 Route::get('gameType', [GameController::class, 'gameType']);
 Route::get('hotgamelist', [GameController::class, 'HotgameList']);
 Route::get('gamelist/{provider_id}/{game_type_id}/', [GameController::class, 'gameList']);
-Route::get('gameFilter', [GameController::class, 'gameFilter']);
