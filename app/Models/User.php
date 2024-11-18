@@ -22,6 +22,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 
+use App\Models\Admin\Banner;
+
 class User extends Authenticatable implements Wallet
 {
     use HasApiTokens, HasFactory, HasWalletFloat, Notifiable;
@@ -151,10 +153,10 @@ class User extends Authenticatable implements Wallet
         return $this->hasMany(Wager::class);
     }
 
-    public function parent()
-    {
-        return $this->belongsTo(User::class, 'agent_id');
-    }
+    // public function parent()
+    // {
+    //     return $this->belongsTo(User::class, 'agent_id');
+    // }
 
     public function scopeRoleLimited($query)
     {
@@ -222,5 +224,31 @@ class User extends Authenticatable implements Wallet
 {
     return $this->belongsTo(User::class, 'agent_id');
 }
+
+// A user can have a parent (e.g., Agent belongs to an Admin)
+    public function parent()
+    {
+        return $this->belongsTo(User::class, 'agent_id');
+    }
+
+    // A user can have children (e.g., Admin has many Agents, or Agent has many Players)
+    public function children()
+    {
+        return $this->hasMany(User::class, 'agent_id');
+    }
+
+    // Get all players under an agent
+    public function Agentplayers()
+    {
+        return $this->children()->whereHas('roles', function ($query) {
+            $query->where('name', 'Player'); // Assuming you have roles for users
+        });
+    }
+
+    public function banners()
+    {
+        return $this->hasMany(Banner::class, 'admin_id'); // Banners owned by this admin
+    }
+
 
 }
