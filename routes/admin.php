@@ -13,19 +13,17 @@ use App\Http\Controllers\Admin\GameListController;
 use App\Http\Controllers\Admin\GameTypeProductController;
 use App\Http\Controllers\Admin\GetBetDetailController;
 use App\Http\Controllers\Admin\GSCReportController;
-use App\Http\Controllers\Admin\Master\MasterController;
 use App\Http\Controllers\Admin\MultiBannerReportController;
 use App\Http\Controllers\Admin\Owner\OwnerController;
 use App\Http\Controllers\Admin\PaymentTypeController;
-use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\Player\PlayerController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\ReportController;
-use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\TransferLog\TransferLogController;
 use App\Http\Controllers\Admin\WithDraw\WithDrawRequestController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\Shan\ShanReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -121,6 +119,11 @@ Route::group([
     Route::get('/win-lose/details/{product_name}', [GSCReportController::class, 'ReportDetails'])->name('Reportproduct.details');
 
     Route::get('agent-slot-win-lose', [GSCReportController::class, 'AgentWinLoseindex'])->name('GscReport.AgentWLindex');
+
+    Route::get('shan-report', [ShanReportController::class, 'index'])->name('shan.reports.index');
+    Route::get('shan-reports/{user_id}', [ShanReportController::class, 'show'])->name('shanreport.show');
+    // for agent shan report
+    Route::get('agent-shan-report', [ShanReportController::class, 'ShanAgentReportIndex'])->name('shanreports_index');
 
     Route::get('deposit', [DepositRequestController::class, 'index'])->name('agent.deposit');
     Route::get('deposit/{deposit}', [DepositRequestController::class, 'view'])->name('agent.depositView');

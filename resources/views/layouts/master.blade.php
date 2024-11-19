@@ -125,8 +125,6 @@
                                     </p>
                                 </a>
                             </li>
-                        @endcan
-                        @can('senior_access')
                             <li class="nav-item">
                                 <a href="{{ url('admin/slot/daily-summaries') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
@@ -135,8 +133,6 @@
                                     </p>
                                 </a>
                             </li>
-                        @endcan
-                        @can('senior_access')
                             <li class="nav-item">
                                 <a href="{{ url('admin/slot/report') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
@@ -145,9 +141,6 @@
                                     </p>
                                 </a>
                             </li>
-                        @endcan
-
-                        @can('senior_access')
                             <li class="nav-item">
                                 <a href="{{ url('admin/slot/reports/senior') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
@@ -156,8 +149,26 @@
                                     </p>
                                 </a>
                             </li>
-                        @endcan
+                 
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-tools"></i>
+                                <p>
+                                    Shan
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('admin/shan-report') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Win/Lose</p>
+                                    </a>
+                                </li>
 
+                            </ul>
+                        </li>
+                        @endcan
                         @can('owner_access')
                             <li class="nav-item">
                                 <a href="{{ url('admin/slot/report') }}" class="nav-link">
