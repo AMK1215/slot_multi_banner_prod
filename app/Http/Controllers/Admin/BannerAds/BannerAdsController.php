@@ -27,7 +27,6 @@ class BannerAdsController extends Controller
         return view('admin.banner_ads.index', compact('banners'));
     }
 
-
     /**
      * Show the form for creating a new resource.
      */

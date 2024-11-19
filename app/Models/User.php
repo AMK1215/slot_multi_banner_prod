@@ -6,8 +6,10 @@ use App\Enums\UserType;
 use App\Events\UserCreatedEvent;
 use App\Models\Admin\Bank;
 use App\Models\Admin\Banner;
+use App\Models\Admin\BannerAds;
 use App\Models\Admin\BannerText;
 use App\Models\Admin\Permission;
+use App\Models\Admin\Promotion;
 use App\Models\Admin\Role;
 use App\Models\Report;
 use App\Models\SeamlessTransaction;
@@ -23,7 +25,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\Admin\BannerAds;
 
 class User extends Authenticatable implements Wallet
 {
@@ -255,8 +256,14 @@ class User extends Authenticatable implements Wallet
     {
         return $this->hasMany(BannerText::class, 'admin_id'); // Banners owned by this admin
     }
+
     public function bannerads()
     {
         return $this->hasMany(BannerAds::class, 'admin_id'); // Banners owned by this admin
+    }
+
+    public function promotions()
+    {
+        return $this->hasMany(Promotion::class, 'admin_id'); // Banners owned by this admin
     }
 }

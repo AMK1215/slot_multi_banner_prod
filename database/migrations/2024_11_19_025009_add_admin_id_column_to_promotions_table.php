@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('banner_ads', function (Blueprint $table) {
+        Schema::table('promotions', function (Blueprint $table) {
             $table->unsignedBigInteger('admin_id')->nullable(); // Reference to admin
             $table->foreign('admin_id')->references('id')->on('users')->onDelete('cascade'); // Foreign key constraint
         });
@@ -22,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('banner_ads', function (Blueprint $table) {
+        Schema::table('promotions', function (Blueprint $table) {
             //
         });
     }

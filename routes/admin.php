@@ -19,11 +19,11 @@ use App\Http\Controllers\Admin\PaymentTypeController;
 use App\Http\Controllers\Admin\Player\PlayerController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\Shan\ShanReportController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\TransferLog\TransferLogController;
 use App\Http\Controllers\Admin\WithDraw\WithDrawRequestController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Admin\Shan\ShanReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([

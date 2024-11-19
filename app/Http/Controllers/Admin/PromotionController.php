@@ -12,9 +12,17 @@ class PromotionController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function index()
+    // {
+    //     $promotions = Promotion::latest()->get();
+
+    //     return view('admin.promotions.index', compact('promotions'));
+    // }
+
     public function index()
     {
-        $promotions = Promotion::latest()->get();
+        $promotions = Promotion::where('admin_id', auth()->id())->get(); // Fetch banners for the logged-in admin
+        //return $banners;
 
         return view('admin.promotions.index', compact('promotions'));
     }
@@ -47,6 +55,7 @@ class PromotionController extends Controller
             'image' => $filename,
             'title' => $request->title,
             'description' => $request->description,
+            'admin_id' => auth()->id(),
         ]);
 
         return redirect()->route('admin.promotions.index')->with('success', 'New Promotion Created Successfully.');
