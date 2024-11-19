@@ -94,286 +94,36 @@ sudo systemctl enable redis-server
 sudo systemctl restart redis-server
 sudo systemctl status redis-server
 
+shan db setup
 
+mysql> CREATE DATABASE shan;
+Query OK, 1 row affected (0.01 sec)
 
-//     public function createWagerTransactions(array $betBatch, SeamlessEvent $event)
-// {
-//     $retryCount = 0;
-//     $maxRetries = 5;
-//     $userId = $event->user_id;// Get user_id from the SeamlessEvent
+mysql> CREATE USER 'shan_user'@'localhost' IDENTIFIED BY 'StrongPassword123!';
+Query OK, 0 rows affected (0.02 sec)
 
-//     // Retry logic for deadlock handling
-//     do {
-//         try {
-//             DB::transaction(function () use ($betBatch, $userId) {
-//                 // Initialize arrays for batch inserts
-//                 $wagerData = [];
-//                 $seamlessTransactionsData = [];
+mysql> GRANT ALL PRIVILEGES ON shan.* TO 'new_user'@'localhost';
+Query OK, 0 rows affected (0.01 sec)
 
-//                 // Loop through each bet in the batch
-//                 foreach ($betBatch as $transaction) {
-//                     // If transaction is an instance of the RequestTransaction object, extract the data
-//                     if ($transaction instanceof \App\Services\Slot\Dto\RequestTransaction) {
-//                         $transactionData = [
-//                             'Status' => $transaction->Status,
-//                             'ProductID' => $transaction->ProductID,
-//                             'GameType' => $transaction->GameType,
-//                             'TransactionID' => $transaction->TransactionID,
-//                             'WagerID' => $transaction->WagerID,
-//                             'BetAmount' => $transaction->BetAmount,
-//                             'TransactionAmount' => $transaction->TransactionAmount,
-//                             'PayoutAmount' => $transaction->PayoutAmount,
-//                             'ValidBetAmount' => $transaction->ValidBetAmount,
-//                             'Rate' => $transaction->Rate,
-//                             'ActualGameTypeID' => $transaction->ActualGameTypeID,
-//                             'ActualProductID' => $transaction->ActualProductID,
-//                         ];
-//                     } else {
-//                         throw new \Exception('Invalid transaction data format.');
-//                     }
+mysql> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.01 sec)
 
-//                     // Now, use the $transactionData array as expected
-//                     $existingWager = Wager::where('seamless_wager_id', $transactionData['WagerID'])->lockForUpdate()->first();
+mysql> exit;
+Bye
 
-//                     if (!$existingWager) {
-//                         // Collect wager data for batch insert
-//                         $wagerData[] = [
-//                             'user_id' => $userId,  // Use user_id from the SeamlessEvent
-//                             'seamless_wager_id' => $transactionData['WagerID'],
-//                             'status' => $transactionData['TransactionAmount'] > 0 ? WagerStatus::Win : WagerStatus::Lose,
-//                             'created_at' => now(),
-//                             'updated_at' => now(),
-//                         ];
-//                     }
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+change bind-address 127.0.0.1 to 0.0.0.0
 
-//                     // Collect seamless transaction data for batch insert
-//                     $seamlessTransactionsData[] = [
-//                         'user_id' => $userId,  // Use user_id from the SeamlessEvent
-//                         'wager_id' => $existingWager ? $existingWager->id : null,
-//                         'game_type_id' => $transactionData['ActualGameTypeID'],
-//                         'product_id' => $transactionData['ActualProductID'],
-//                         'seamless_transaction_id' => $transactionData['TransactionID'],
-//                         'rate' => $transactionData['Rate'],
-//                         'transaction_amount' => $transactionData['TransactionAmount'],
-//                         'bet_amount' => $transactionData['BetAmount'],
-//                         'valid_amount' => $transactionData['ValidBetAmount'],
-//                         'status' => $transactionData['Status'],
-//                         'created_at' => now(),
-//                         'updated_at' => now(),
-//                     ];
-//                 }
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+set up
+01 - GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+02- GRANT ALL PRIVILEGES ON slot_maker.* TO 'shan_remote_user'@'1.2.165.234';
+03 - GRANT ALL PRIVILEGES ON slot_maker.* TO 'shan_remote_user'@'1.2.165.234' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
 
-//                 // Perform batch inserts
-//                 if (!empty($wagerData)) {
-//                     DB::table('wagers')->insert($wagerData); // Insert wagers in bulk
-//                 }
+1 - CREATE USER 'shan_remote_user'@'1.2.165.234' IDENTIFIED BY 'StrongPassword123!';
+2 - GRANT ALL PRIVILEGES ON slot_maker.* TO 'shan_remote_user'@'1.2.165.234';
+3 - FLUSH PRIVILEGES;
 
-//                 if (!empty($seamlessTransactionsData)) {
-//                     DB::table('seamless_transactions')->insert($seamlessTransactionsData); // Insert transactions in bulk
-//                 }
-//             });
-
-//             break; // Exit the retry loop if successful
-
-//         } catch (\Illuminate\Database\QueryException $e) {
-//             if ($e->getCode() === '40001') { // Deadlock error code
-//                 $retryCount++;
-//                 if ($retryCount >= $maxRetries) {
-//                     throw $e; // Max retries reached, fail
-//                 }
-//                 sleep(1); // Wait for a second before retrying
-//             } else {
-//                 throw $e; // Rethrow if it's not a deadlock exception
-//             }
-//         }
-//     } while ($retryCount < $maxRetries);
-// }
-
-//         public function createWagerTransactions(array $betBatch, SeamlessEvent $event)
-// {
-//     $retryCount = 0;
-//     $maxRetries = 5;
-//     $userId = $event->user_id; // Use the user_id from the SeamlessEvent
-
-//     // Retry logic for deadlock handling
-//     do {
-//         try {
-//             DB::transaction(function () use ($betBatch, $userId) {
-//                 // Initialize arrays for batch inserts
-//                 $wagerData = [];
-//                 $seamlessTransactionsData = [];
-
-//                 // Loop through each bet in the batch
-//                 foreach ($betBatch as $transaction) {
-//                     // Ensure that $transaction is an associative array
-//                     if (!is_array($transaction)) {
-//                         throw new \Exception('Invalid transaction data format.');
-//                     }
-
-//                     // Create the RequestTransaction object using the user_id from SeamlessEvent
-//                     $requestTransaction = new \App\Services\Slot\Dto\RequestTransaction(
-//                         $userId,  // Use user_id from the SeamlessEvent
-//                         $transaction['Status'],
-//                         $transaction['ProductID'],
-//                         $transaction['GameType'],
-//                         $transaction['TransactionID'],
-//                         $transaction['WagerID'],
-//                         $transaction['BetAmount'],
-//                         $transaction['TransactionAmount'],
-//                         $transaction['PayoutAmount'],
-//                         $transaction['ValidBetAmount'],
-//                         $transaction['Rate'],
-//                         $transaction['ActualGameTypeID'],
-//                         $transaction['ActualProductID']
-//                     );
-
-//                     $this->requestTransactions[] = $requestTransaction;
-
-//                     // Example of handling wagers and transactions (batch insert):
-//                     $existingWager = Wager::where('seamless_wager_id', $transaction['WagerID'])->lockForUpdate()->first();
-
-//                     if (!$existingWager) {
-//                         // Collect wager data for batch insert
-//                         $wagerData[] = [
-//                             'user_id' => $userId,  // Use user_id from the SeamlessEvent
-//                             'seamless_wager_id' => $transaction['WagerID'],
-//                             'status' => $transaction['TransactionAmount'] > 0 ? WagerStatus::Win : WagerStatus::Lose,
-//                             'created_at' => now(),
-//                             'updated_at' => now(),
-//                         ];
-//                     }
-
-//                     // Collect seamless transaction data for batch insert
-//                     $seamlessTransactionsData[] = [
-//                         'user_id' => $userId,  // Use user_id from the SeamlessEvent
-//                         'wager_id' => $existingWager ? $existingWager->id : null,
-//                         'game_type_id' => $transaction['ActualGameTypeID'],
-//                         'product_id' => $transaction['ActualProductID'],
-//                         'seamless_transaction_id' => $transaction['TransactionID'],
-//                         'rate' => $transaction['Rate'],
-//                         'transaction_amount' => $transaction['TransactionAmount'],
-//                         'bet_amount' => $transaction['BetAmount'],
-//                         'valid_amount' => $transaction['ValidBetAmount'],
-//                         'status' => $transaction['Status'],
-//                         'created_at' => now(),
-//                         'updated_at' => now(),
-//                     ];
-//                 }
-
-//                 // Perform batch inserts
-//                 if (!empty($wagerData)) {
-//                     DB::table('wagers')->insert($wagerData); // Insert wagers in bulk
-//                 }
-
-//                 if (!empty($seamlessTransactionsData)) {
-//                     DB::table('seamless_transactions')->insert($seamlessTransactionsData); // Insert transactions in bulk
-//                 }
-//             });
-
-//             break; // Exit the retry loop if successful
-
-//         } catch (\Illuminate\Database\QueryException $e) {
-//             if ($e->getCode() === '40001') { // Deadlock error code
-//                 $retryCount++;
-//                 if ($retryCount >= $maxRetries) {
-//                     throw $e; // Max retries reached, fail
-//                 }
-//                 sleep(1); // Wait for a second before retrying
-//             } else {
-//                 throw $e; // Rethrow if it's not a deadlock exception
-//             }
-//         }
-//     } while ($retryCount < $maxRetries);
-// }
-
---------------
-public function createWagerTransactions(array $betBatch, SeamlessEvent $event)
-{
-    $retryCount = 0;
-    $maxRetries = 5; // Number of retries before failing
-    $backoffTime = 1; // Start with 1 second delay
-
-    do {
-        try {
-            DB::transaction(function () use ($betBatch, $event) {
-                // Process wager and transaction logic here
-            });
-
-            break; // Exit retry loop if successful
-
-        } catch (\Illuminate\Database\QueryException $e) {
-            if ($e->getCode() === '40001') { // Deadlock error code
-                $retryCount++;
-                if ($retryCount >= $maxRetries) {
-                    throw $e; // If max retries reached, throw the error
-                }
-                sleep($backoffTime); // Wait for a backoff time before retrying
-                $backoffTime *= 2; // Exponential backoff (increase wait time)
-            } else {
-                throw $e; // If not a deadlock error, throw it immediately
-            }
-        }
-    } while ($retryCount < $maxRetries);
-}
-
-public function processTransfer(User $from, User $to, TransactionName $transactionName, float $amount, int $rate, array $meta)
-{
-    DB::transaction(function () use ($from, $to, $amount, $transactionName, $meta) {
-        // Fetch the wallet and lock it for update
-        $wallet = $from->wallet()->lockForUpdate()->firstOrFail();
-
-        // Ensure version matches for optimistic locking
-        if ($wallet->version !== $from->wallet->version) {
-            throw new \Exception('Version mismatch detected.');
-        }
-
-        // Update wallet balance
-        $wallet->balance -= $amount;
-
-        // Increment the version
-        $wallet->version += 1;
-
-        // Save the wallet
-        $wallet->save();
-
-        // Perform the transfer
-        app(WalletService::class)->transfer($from, $to, abs($amount), $transactionName, $meta);
-    });
-}
----------------
-
- // // Check if the transaction has already been canceled
-                // if ($existingTransaction && $existingTransaction->status === 'cancelled') {
-                //     Log::warning('Duplicate cancellation request detected', ['RoundId' => $transaction['RoundId']]);
-
-                //     return $this->buildErrorResponse(StatusCode::DuplicateTransaction);
-                // }
-
-
-                // $request->getMember()->wallet->refreshBalance();
-                    // $NewBalance = $request->getMember()->balanceFloat;
-
-                    // $game_code = GameList::where('game_code', $transaction['GameCode'])->first();
-                    // $game_name = $game_code->game_name;
-                    // $provider_name = $game_code->game_provide_name;
-
-                    // // Create the transaction record
-                    // Bet::create([
-                    //     'user_id' => $player->id,
-                    //     'game_provide_name' => $provider_name,
-                    //     'game_name' => $game_name,
-                    //     'operator_id' => $transaction['OperatorId'],
-                    //     'request_date_time' => $transaction['RequestDateTime'],
-                    //     'signature' => $transaction['Signature'],
-                    //     'player_id' => $transaction['PlayerId'],
-                    //     'currency' => $transaction['Currency'],
-                    //     'round_id' => $transaction['RoundId'],
-                    //     'bet_id' => $transaction['BetId'],
-                    //     'game_code' => $transaction['GameCode'],
-                    //     'bet_amount' => $transaction['BetAmount'],
-                    //     'tran_date_time' => Carbon::parse($transaction['TranDateTime'])->format('Y-m-d H:i:s'),
-                    //     'status' => 'cancelled',
-                    //     'cancelled_at' => now(),
-                    // ]);
-
-agdashboard.pro
