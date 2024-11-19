@@ -12,12 +12,21 @@ class BannerAdsController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function index()
+    // {
+    //     $banners = BannerAds::latest()->get();
+
+    //     return view('admin.banner_ads.index', compact('banners'));
+    // }
+
     public function index()
     {
-        $banners = BannerAds::latest()->get();
+        $banners = BannerAds::where('admin_id', auth()->id())->get(); // Fetch banners for the logged-in admin
+        //return $banners;
 
         return view('admin.banner_ads.index', compact('banners'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -42,6 +51,8 @@ class BannerAdsController extends Controller
         $image->move(public_path('assets/img/banners_ads/'), $filename); // Save the file
         BannerAds::create([
             'image' => $filename,
+            'admin_id' => auth()->id(), // Associate with the authenticated admin
+
         ]);
 
         return redirect(route('admin.adsbanners.index'))->with('success', 'New Ads Banner Image Added.');

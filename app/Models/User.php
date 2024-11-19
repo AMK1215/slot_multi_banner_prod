@@ -23,6 +23,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Admin\BannerAds;
 
 class User extends Authenticatable implements Wallet
 {
@@ -253,5 +254,9 @@ class User extends Authenticatable implements Wallet
     public function bannertexts()
     {
         return $this->hasMany(BannerText::class, 'admin_id'); // Banners owned by this admin
+    }
+    public function bannerads()
+    {
+        return $this->hasMany(BannerAds::class, 'admin_id'); // Banners owned by this admin
     }
 }
