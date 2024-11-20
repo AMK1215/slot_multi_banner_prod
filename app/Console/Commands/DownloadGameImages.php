@@ -30,7 +30,7 @@ class DownloadGameImages extends Command
     public function handle()
 {
     // Path to the JSON file
-    $jsonFilePath = base_path('database/seeders/data/JDB.json');
+    $jsonFilePath = base_path('database/seeders/data/JILI.json');
 
     // Check if the JSON file exists
     if (! File::exists($jsonFilePath)) {
@@ -51,7 +51,7 @@ class DownloadGameImages extends Command
     $games = $gamesData['Game']; // Adjusted for the correct JSON structure
 
     // Create directory to store images
-    $directoryPath = public_path('assets/img/game_list/jdb');
+    $directoryPath = public_path('assets/img/game_list/jl_slot');
     if (! File::exists($directoryPath)) {
         File::makeDirectory($directoryPath, 0755, true);
     }
