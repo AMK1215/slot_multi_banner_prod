@@ -124,6 +124,16 @@ FLUSH PRIVILEGES;
 FLUSH PRIVILEGES;
 
 1 - CREATE USER 'shan_remote_user'@'1.2.165.234' IDENTIFIED BY 'StrongPassword123!';
-2 - GRANT ALL PRIVILEGES ON slot_maker.* TO 'shan_remote_user'@'1.2.165.234';
+2 - GRANT ALL PRIVILEGES ON slot_maker.* TO 'shan_remote_user'@'52.77.209.90';
 3 - FLUSH PRIVILEGES;
+
+GRANT ALL PRIVILEGES ON slot_maker.* TO 'shan_remote_user_prod'@'%' IDENTIFIED BY 'StrongPassword123!';
+
+GRANT ALL PRIVILEGES ON slot_maker.* TO 'shan_remote_user_prod'@'%';
+
+CREATE USER 'shan_remote_user_prod'@'%' IDENTIFIED BY 'StrongPassword123!';
+
+SHOW GRANTS FOR 'shan_remote_user'@'1.2.165.234';
+SHOW GRANTS FOR 'shan_remote_user'@'52.77.209.90';
+SHOW GRANTS FOR 'shan_remote_user_prod'@'%';
 
