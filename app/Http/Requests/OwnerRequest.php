@@ -24,7 +24,7 @@ class OwnerRequest extends FormRequest
         return [
             'user_name' => 'required', 'string', 'unique:users,user_name',
             'name' => 'required|min:3|string',
-            'phone' => ['required', 'regex:/^[0-9]+$/'],
+            'phone' => ['required', 'regex:/^[0-9]+$/', 'unique:users,phone'],
             'password' => 'required|min:6',
             'amount' => 'nullable|numeric',
             'site_name' => 'nullable|string',
