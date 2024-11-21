@@ -114,7 +114,8 @@
             var amount = $(button).data('amount');
             var url = $(button).data('url');
 
-            var textToCopy = "Phone: " + phone + "\nPassword: " + password + "\nAmount: " + amount + "\nURL: " + url;
+            // var textToCopy = "Phone: " + phone + "\nPassword: " + password + "\nAmount: " + amount + "\nURL: " + url;
+            var textToCopy = "Phone: " + phone + "\nPassword: " + password + "\nAmount: " + amount;
 
             navigator.clipboard.writeText(textToCopy).then(function() {
                 toastr.success("Credentials copied to clipboard!");
