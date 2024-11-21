@@ -9,7 +9,11 @@ class Kernel extends ConsoleKernel
 {
     protected $commands = [
         Commands\GetDailySummary::class,
+        Commands\DownloadGameImages::class,
     ];
+
+
+
 
     /**
      * Define the application's command schedule.

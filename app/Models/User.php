@@ -6,7 +6,10 @@ use App\Enums\UserType;
 use App\Events\UserCreatedEvent;
 use App\Models\Admin\Bank;
 use App\Models\Admin\Banner;
+use App\Models\Admin\BannerAds;
+use App\Models\Admin\BannerText;
 use App\Models\Admin\Permission;
+use App\Models\Admin\Promotion;
 use App\Models\Admin\Role;
 use App\Models\Report;
 use App\Models\SeamlessTransaction;
@@ -247,5 +250,20 @@ class User extends Authenticatable implements Wallet
     public function banners()
     {
         return $this->hasMany(Banner::class, 'admin_id'); // Banners owned by this admin
+    }
+
+    public function bannertexts()
+    {
+        return $this->hasMany(BannerText::class, 'admin_id'); // Banners owned by this admin
+    }
+
+    public function bannerads()
+    {
+        return $this->hasMany(BannerAds::class, 'admin_id'); // Banners owned by this admin
+    }
+
+    public function promotions()
+    {
+        return $this->hasMany(Promotion::class, 'admin_id'); // Banners owned by this admin
     }
 }

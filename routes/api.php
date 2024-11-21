@@ -30,9 +30,6 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/player-change-password', [AuthController::class, 'playerChangePassword']);
 Route::post('/logout', [AuthController::class, 'logout']);
-Route::get('promotion', [PromotionController::class, 'index']);
-Route::get('bannerText', [BannerController::class, 'bannerText']);
-Route::get('popup-ads-banner', [BannerController::class, 'AdsBannerIndex']);
 Route::get('contact', [ContactController::class, 'get']);
 
 // sameless route
@@ -67,6 +64,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('withdrawlog', [WithDrawRequestController::class, 'log']);
     Route::get('sitelogo-name', [GetAdminSiteLogoNameController::class, 'GetSiteLogoAndSiteName']);
     Route::get('banner', [BannerController::class, 'index']);
+    Route::get('promotion', [PromotionController::class, 'index']);
+    Route::get('bannerText', [BannerController::class, 'bannerText']);
+    Route::get('popup-ads-banner', [BannerController::class, 'AdsBannerIndex']);
 
 });
 
@@ -75,3 +75,4 @@ Route::get('allGameProducts', [GameController::class, 'allGameProducts']);
 Route::get('gameType', [GameController::class, 'gameType']);
 Route::get('hotgamelist', [GameController::class, 'HotgameList']);
 Route::get('gamelist/{provider_id}/{game_type_id}/', [GameController::class, 'gameList']);
+Route::get('gameFilter', [GameController::class, 'gameFilter']);

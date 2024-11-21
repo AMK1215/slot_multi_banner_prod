@@ -11,9 +11,16 @@ class BannerTextController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function index()
+    // {
+    //     $texts = BannerText::latest()->get();
+
+    //     return view('admin.banner_text.index', compact('texts'));
+    // }
+
     public function index()
     {
-        $texts = BannerText::latest()->get();
+        $texts = BannerText::where('admin_id', auth()->id())->get(); // Fetch banners for the logged-in admin
 
         return view('admin.banner_text.index', compact('texts'));
     }
@@ -36,6 +43,8 @@ class BannerTextController extends Controller
         ]);
         BannerText::create([
             'text' => $request->text,
+            'admin_id' => auth()->id(), // Associate with the authenticated admin
+
         ]);
 
         return redirect(route('admin.text.index'))->with('success', 'New Text Created Successfully.');
