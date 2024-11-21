@@ -37,12 +37,19 @@ class AuthController extends Controller
         }
         $user = Auth::user();
 
+
+
         if ($user->status == 0) {
             return $this->error('', 'Your account is not activated!', 401);
         }
-
+        
         if ($user->is_changed_password == 0) {
             return $this->error($user, 'You have to change password', 200);
+        }
+
+        if($user->roles[0]['id'] != self::PLAYER_ROLE)
+        {
+            return $this->error('', 'You do not have permissions', 200);
         }
 
         UserLog::create([
