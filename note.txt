@@ -62,7 +62,7 @@ SET GLOBAL innodb_status_output_locks=ON;
 
 
 # Set the ownership of the entire project directory to www-data user and group
-chown -R www-data:www-data /var/www/html/bossi_a
+chown -R www-data:www-data /var/www/html/slot_multi_banner_prod
 
 # Set directory permissions to allow access
 chmod -R 755 /var/www/html/bossi_a

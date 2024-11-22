@@ -25,6 +25,7 @@ use App\Http\Controllers\Api\V1\Webhook\RewardController;
 use App\Http\Controllers\Api\V1\WithDrawRequestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\V1\Monitor\DataVisualizationController;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -76,3 +77,7 @@ Route::get('gameType', [GameController::class, 'gameType']);
 Route::get('hotgamelist', [GameController::class, 'HotgameList']);
 Route::get('gamelist/{provider_id}/{game_type_id}/', [GameController::class, 'gameList']);
 Route::get('gameFilter', [GameController::class, 'gameFilter']);
+
+// DataVisualize for real time Monitoring
+Route::get('/visual-bets', [DataVisualizationController::class, 'VisualizeBet']); // Fetch all bets
+Route::get('/visual-results', [DataVisualizationController::class, 'VisualizeResult']); // Fetch all results
