@@ -95,19 +95,23 @@
                     <div class="col-lg-4 col-6">
                         <!-- small box -->
                         <div class="small-box bg-danger">
-                            <div class="inner">
-                                @if ($playerBalance)
-                                    <h3>{{ number_format($playerBalance->balance / 100, 2) }}</h3>
-                                @else
-                                    <h3>0.00</h3>
-                                @endif
-                                <p>Player Balance</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-pie-graph"></i>
-                            </div>
-                            <a href="{{ route('admin.playerList') }}" class="small-box-footer">More info <i
-                                    class="fas fa-arrow-circle-right"></i></a>
+                            <form action="{{ route('admin.balanceUp') }}" method="post">
+                                @csrf
+                                <div class="card-header p-3 pb-0">
+                                    <h6 class="mb-1">Update Balance</h6>
+                                    <p class="text-sm mb-0">
+                                        Seninor can update balance.
+                                    </p>
+                                </div>
+                                <div class="card-body p-3">
+                                    <div class="input-group input-group-static my-4">
+                                        <label>Amount</label>
+                                        <input type="integer" class="form-control" name="balance">
+                                    </div>
+
+                                    <button class="btn bg-gradient-dark mb-0 float-end">Update </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 @endcan
