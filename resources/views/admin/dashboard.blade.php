@@ -94,7 +94,7 @@
                 @can('senior_access')
                     <div class="col-lg-4 col-6">
                         <!-- small box -->
-                        <div class="small-box bg-danger">
+                        <div class="small-box bg-warning">
                             <form action="{{ route('admin.balanceUp') }}" method="post">
                                 @csrf
                                 <div class="card-header p-3 pb-0">
