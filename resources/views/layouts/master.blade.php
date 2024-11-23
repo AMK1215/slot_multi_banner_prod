@@ -129,7 +129,7 @@
                                 <a href="{{ url('admin/slot/daily-summaries') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
                                     <p>
-                                        GetDaySummary
+                                        Daily W/L Report
                                     </p>
                                 </a>
                             </li>

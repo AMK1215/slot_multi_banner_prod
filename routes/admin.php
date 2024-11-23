@@ -144,7 +144,7 @@ Route::group([
     Route::resource('/product_code', App\Http\Controllers\Admin\ProductCodeController::class);
 
     Route::group(['prefix' => 'slot'], function () {
-        Route::get('report', [ReportController::class, 'getReportGroupedByGameProvider'])->name('report.index');
+        Route::get('report', [ReportController::class, 'index'])->name('report.index');
         Route::get('reports/details/{game_provide_name}', [ReportController::class, 'getReportDetails'])->name('reports.details');
         Route::get('/daily-summaries', [DailySummaryController::class, 'index'])->name('daily_summaries.index');
 
@@ -152,6 +152,5 @@ Route::group([
         Route::get('/reports/owner', [MultiBannerReportController::class, 'getAdminReport'])->name('reports.owner');
         Route::get('/reports/agent', [MultiBannerReportController::class, 'getAgentReport'])->name('reports.agent');
         Route::get('/reports/agent/detail/{user_id}', [MultiBannerReportController::class, 'getAgentDetail'])->name('reports.agent.detail');
-
     });
 });

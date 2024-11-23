@@ -67,7 +67,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('promotion', [PromotionController::class, 'index']);
     Route::get('bannerText', [BannerController::class, 'bannerText']);
     Route::get('popup-ads-banner', [BannerController::class, 'AdsBannerIndex']);
-
 });
 
 Route::get('gameTypeProducts/{id}', [GameController::class, 'gameTypeProducts']);
@@ -76,3 +75,4 @@ Route::get('gameType', [GameController::class, 'gameType']);
 Route::get('hotgamelist', [GameController::class, 'HotgameList']);
 Route::get('gamelist/{provider_id}/{game_type_id}/', [GameController::class, 'gameList']);
 Route::get('gameFilter', [GameController::class, 'gameFilter']);
+Route::get('gamelistTest/{provider_id}/{game_type_id}/', [GameController::class, 'gameListTest']);

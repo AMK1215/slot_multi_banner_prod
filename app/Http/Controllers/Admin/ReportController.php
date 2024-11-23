@@ -13,80 +13,23 @@ use Illuminate\Support\Facades\Log;
 
 class ReportController extends Controller
 {
-    // public function getReportGroupedByGameProvider()
-    // {
-    //     $report = Result::select(
-    //         'game_provide_name',
-    //         DB::raw('SUM(total_bet_amount) as total_bet_amount'),
-    //         DB::raw('SUM(win_amount) as total_win_amount'),
-    //         DB::raw('SUM(net_win) as total_net_win'),
-    //         DB::raw('COUNT(*) as total_games'),
-    //         'users.name as user_name'
-    //     )
-    //         ->join('users', 'results.user_id', '=', 'users.id')  // Join with the users table
-    //         ->groupBy('game_provide_name', 'users.name')  // Group by both game provider and user name
-    //         ->get();
-
-    //     //return $report;
-    //     return view('admin.reports.index', compact('report'));
-    // }
-
-    //     public function getReportGroupedByGameProvider()
-    // {
-    //     // Get the authenticated admin's ID
-    //     $adminId = auth()->id();
-
-    //     // Get the agents associated with this admin
-    //     $agents = User::where('agent_id', $adminId)->pluck('id');
-
-    //     // Get players associated with those agents
-    //     $players = User::whereIn('agent_id', $agents)->pluck('id');
-
-    //     // Fetch the report grouped by game provider and player
-    //     $report = Result::select(
-    //         'game_provide_name',
-    //         DB::raw('SUM(total_bet_amount) as total_bet_amount'),
-    //         DB::raw('SUM(win_amount) as total_win_amount'),
-    //         DB::raw('SUM(net_win) as total_net_win'),
-    //         DB::raw('COUNT(*) as total_games'),
-    //         'users.name as user_name'
-    //     )
-    //         ->join('users', 'results.user_id', '=', 'users.id') // Join with the users table
-    //         ->whereIn('results.user_id', $players) // Filter by the players under this admin
-    //         ->groupBy('game_provide_name', 'users.name') // Group by both game provider and user name
-    //         ->get();
-
-    //     // Return the view with the report
-    //     return view('admin.reports.index', compact('report'));
-    // }
-    public function getReportGroupedByGameProvider()
+    public function index()
     {
-        // Get the authenticated admin's ID
         $adminId = auth()->id();
 
-        // Get the agents associated with this admin
-        $agents = User::where('agent_id', $adminId)->pluck('id');
-
-        // Get players associated with those agents
-        $players = User::whereIn('agent_id', $agents)->pluck('id');
-
-        // Fetch the report grouped by game provider, player, and agent
         $report = Result::select(
-            'game_provide_name',
             DB::raw('SUM(total_bet_amount) as total_bet_amount'),
             DB::raw('SUM(win_amount) as total_win_amount'),
             DB::raw('SUM(net_win) as total_net_win'),
             DB::raw('COUNT(*) as total_games'),
-            'players.name as player_name', // Player's name
-            'agents.name as agent_name'    // Agent's name
+            'players.name as player_name',
+            'agents.name as agent_name'
         )
-            ->join('users as players', 'results.user_id', '=', 'players.id') // Join with the users table for players
-            ->join('users as agents', 'players.agent_id', '=', 'agents.id')  // Join with the users table for agents
-            ->whereIn('results.user_id', $players) // Filter by the players under this admin
-            ->groupBy('game_provide_name', 'players.name', 'agents.name') // Group by game provider, player, and agent
+            ->join('users as players', 'results.user_id', '=', 'players.id')
+            ->join('users as agents', 'players.agent_id', '=', 'agents.id')
+            ->groupBy('players.name', 'agents.name')
             ->get();
-
-        // Return the view with the report
+        
         return view('admin.reports.index', compact('report'));
     }
 
@@ -104,7 +47,6 @@ class ReportController extends Controller
     {
         $operatorId = 'delightMMK';
 
-        //$url = 'https://api.sm-sspi-uat.com/api/opgateway/v1/op/GetTransactionDetails';
         $url = 'https://api.sm-sspi-prod.com/api/opgateway/v1/op/GetTransactionDetails';
 
         // Generate the RequestDateTime in UTC
@@ -142,63 +84,4 @@ class ReportController extends Controller
             return response()->json(['error' => 'API request error'], 500);
         }
     }
-
-    //     public function getTransactionDetails($operatorId, $tranId)
-    // {
-    //     $url = 'https://api.sm-sspi-uat.com/api/opgateway/v1/op/GetTransactionDetails'; // Replace with the actual URL
-
-    //     // Generate the RequestDateTime in UTC
-    //     $requestDateTime = Carbon::now('UTC')->format('Y-m-d H:i:s');
-
-    //     // Generate the signature using MD5 hashing
-    //     $secretKey = 's4fZpFsRfGp3VMeG'; // Replace with your actual secret key
-    //     $functionName = 'GetTransactionDetails';
-    //     $signatureString = $functionName . $requestDateTime . $operatorId . $secretKey;
-    //     $signature = md5($signatureString);
-
-    //     // Prepare request payload
-    //     $payload = [
-    //         'OperatorId' => $operatorId,
-    //         'RequestDateTime' => $requestDateTime,
-    //         'Signature' => $signature,
-    //         'TranId' => $tranId
-    //     ];
-
-    //     try {
-    //         // Make the POST request to the API endpoint
-    //         $response = Http::post($url, $payload);
-
-    //         // Check if the response is successful
-    //         if ($response->successful()) {
-    //             return $response->json(); // Return the response data as JSON
-    //         } else {
-    //             Log::error('Failed to get transaction details', ['response' => $response->body()]);
-    //             return response()->json(['error' => 'Failed to get transaction details'], 500);
-    //         }
-    //     } catch (\Exception $e) {
-    //         Log::error('API request error', ['message' => $e->getMessage()]);
-    //         return response()->json(['error' => 'API request error'], 500);
-    //     }
-    // }
-
 }
-
-/*
-use Illuminate\Support\Facades\DB;
-
-public function getReportGroupedByGameProvider()
-{
-    $report = DB::select(DB::raw("
-        SELECT results.*, users.name as user_name,
-               SUM(total_bet_amount) as total_bet_amount,
-               SUM(win_amount) as total_win_amount,
-               SUM(net_win) as total_net_win,
-               COUNT(*) as total_games
-        FROM results
-        JOIN users ON results.user_id = users.id
-        GROUP BY game_provide_name, user_name
-    "));
-
-    return view('admin.reports.index', compact('report'));
-}
-**/

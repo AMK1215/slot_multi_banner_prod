@@ -13,22 +13,10 @@ class BannerController extends Controller
 {
     use HttpResponses;
 
-    // public function index()
-    // {
-    //     $data = Banner::all();
-
-    //     return $this->success($data);
-    // }
-
     public function index()
     {
         $user = Auth::user();
-        //dd($user);
-
-        if (! $user) {
-            return $this->error(null, 'Unauthorized', 401);
-        }
-
+        
         // Determine the admin whose banners to fetch
         if ($user->parent) {
             // If the user has a parent (Agent or Player), go up the hierarchy
@@ -44,22 +32,10 @@ class BannerController extends Controller
         return $this->success($data, 'Banners retrieved successfully.');
     }
 
-    // public function bannerText()
-    // {
-    //     $data = BannerText::latest()->first();
-
-    //     return $this->success($data);
-    // }
     public function bannerText()
     {
         $user = Auth::user();
-        //dd($user);
 
-        if (! $user) {
-            return $this->error(null, 'Unauthorized', 401);
-        }
-
-        // Determine the admin whose banners to fetch
         if ($user->parent) {
             // If the user has a parent (Agent or Player), go up the hierarchy
             $admin = $user->parent->parent ?? $user->parent;
@@ -68,29 +44,16 @@ class BannerController extends Controller
             $admin = $user;
         }
 
-        // Fetch banners for the determined admin
-        $data = BannerText::where('admin_id', $admin->id)->get();
+        $data = BannerText::where('admin_id', $admin->id)->latest()->first();
 
         return $this->success($data, 'BannerTexts retrieved successfully.');
     }
-
-    // public function AdsBannerIndex()
-    // {
-    //     $data = BannerAds::latest()->first();
-
-    //     return $this->success($data);
-    // }
 
     public function AdsBannerIndex()
     {
         $user = Auth::user();
         //dd($user);
 
-        if (! $user) {
-            return $this->error(null, 'Unauthorized', 401);
-        }
-
-        // Determine the admin whose banners to fetch
         if ($user->parent) {
             // If the user has a parent (Agent or Player), go up the hierarchy
             $admin = $user->parent->parent ?? $user->parent;
@@ -100,7 +63,7 @@ class BannerController extends Controller
         }
 
         // Fetch banners for the determined admin
-        $data = BannerAds::where('admin_id', $admin->id)->get();
+        $data = BannerAds::where('admin_id', $admin->id)->latest()->first();
 
         return $this->success($data, 'BannerAds retrieved successfully.');
     }
