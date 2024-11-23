@@ -23,24 +23,26 @@ class ReportController extends Controller
             DB::raw('SUM(net_win) as total_net_win'),
             DB::raw('COUNT(*) as total_games'),
             'players.name as player_name',
-            'agents.name as agent_name'
+            'agents.name as agent_name',
+            'players.id as user_id'
         )
             ->join('users as players', 'results.user_id', '=', 'players.id')
             ->join('users as agents', 'players.agent_id', '=', 'agents.id')
-            ->groupBy('players.name', 'agents.name')
-            ->get();
+            ->groupBy('players.name', 'agents.name', 'players.id')
+            ->paginate(10)
+            ->withQueryString();;
         
         return view('admin.reports.index', compact('report'));
     }
 
-    public function getReportDetails($game_provide_name)
+    public function getReportDetails($player_id)
     {
-        $details = Result::where('game_provide_name', $game_provide_name)
+        $details = Result::where('user_id', $player_id)
             ->join('users', 'results.user_id', '=', 'users.id')
             ->select('results.*', 'users.name as user_name')
             ->get();
 
-        return view('admin.reports.detail', compact('details', 'game_provide_name'));
+        return view('admin.reports.detail', compact('details'));
     }
 
     public function getTransactionDetails($tranId)

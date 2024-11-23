@@ -30,18 +30,13 @@
                             <table id="mytable" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        {{-- <th>User Name</th> --}}
                                         <th>Player Name</th>
                                         <th>Game Name</th>
-                                        {{-- <th>Operator ID</th> --}}
                                         <th>History1</th>
                                         <th>History2</th>
-                                        <th>DateTime</th>
-                                        <th>Currency</th>
                                         <th>Bet</th>
                                         <th>Win</th>
                                         <th>NetWin</th>
-                                        {{-- <th>RoundID</th> --}}
                                         <th>TransactionDateTime</th>
                                     </tr>
                                 </thead>
@@ -71,8 +66,6 @@
                                                     {{ $detail->result_id }}
                                                 </a>
                                             </td>
-                                            <td>{{ $detail->request_date_time }}</td>
-                                            <td>{{ $detail->currency }}</td>
                                             <td>{{ number_format($detail->total_bet_amount, 2) }}</td>
                                             <td>{{ number_format($detail->win_amount, 2) }}</td>
                                             <td>{{ number_format($detail->net_win, 2) }}</td>
