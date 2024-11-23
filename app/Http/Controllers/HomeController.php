@@ -75,7 +75,7 @@ class HomeController extends Controller
     public function balanceUp(Request $request)
     {
         abort_if(
-            Gate::denies('admin_access'),
+            Gate::denies('senior_access'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot Access this page because you do not have permission'
         );
