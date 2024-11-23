@@ -44,7 +44,7 @@ class BannerController extends Controller
             $admin = $user;
         }
 
-        $data = BannerText::where('admin_id', $admin->id)->latest()->first();
+        $data = BannerText::where('admin_id', $admin->id)->get();
 
         return $this->success($data, 'BannerTexts retrieved successfully.');
     }
@@ -63,7 +63,7 @@ class BannerController extends Controller
         }
 
         // Fetch banners for the determined admin
-        $data = BannerAds::where('admin_id', $admin->id)->latest()->first();
+        $data = BannerAds::where('admin_id', $admin->id)->get();
 
         return $this->success($data, 'BannerAds retrieved successfully.');
     }
