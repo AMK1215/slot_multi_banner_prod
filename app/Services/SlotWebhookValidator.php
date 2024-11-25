@@ -30,7 +30,7 @@ class SlotWebhookValidator
 
     protected function __construct(protected SlotWebhookRequest $request)
     {
-        Log::info('SlotWebhookValidator initialized', ['request' => $request->all()]);
+        // Log::info('SlotWebhookValidator initialized', ['request' => $request->all()]);
     }
 
     public function validate()
@@ -56,7 +56,7 @@ class SlotWebhookValidator
             $this->requestTransactions[] = $requestTransaction;
 
             if (! in_array($this->request->getMethodName(), ['bet', 'buyin', 'buyout']) && $this->isNewWager($requestTransaction)) {
-                Log::warning('Invalid game ID detected', ['transaction' => $requestTransaction]);
+                // Log::warning('Invalid game ID detected', ['transaction' => $requestTransaction]);
 
                 return $this->response(StatusCode::BetTransactionNotFound);
             }

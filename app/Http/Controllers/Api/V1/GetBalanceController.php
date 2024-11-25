@@ -18,23 +18,23 @@ class GetBalanceController extends Controller
 {
     public function getBalance(SlotWebhookRequest $request)
     {
-        Log::info('GetBalance request initiated', ['request_data' => $request->all()]);
+        // Log::info('GetBalance request initiated', ['request_data' => $request->all()]);
 
         DB::beginTransaction();
         try {
             // Validate the request using the SlotWebhookValidator
-            Log::info('Starting validation process');
+            // Log::info('Starting validation process');
             $validator = SlotWebhookValidator::make($request)->validate();
 
             if ($validator->fails()) {
-                Log::warning('Validation failed', ['response' => $validator->getResponse()]);
+                // Log::warning('Validation failed', ['response' => $validator->getResponse()]);
 
                 return response()->json($validator->getResponse(), 200);
             } else {
                 Log::info('Validation passed, no failure detected');
             }
 
-            Log::info('Validation passed, preparing balance response');
+            // Log::info('Validation passed, preparing balance response');
             $balance = $request->getMember()->balanceFloat;
 
             // Use round() to ensure 4 decimal places while keeping it a number
@@ -47,7 +47,7 @@ class GetBalanceController extends Controller
                 $formattedBalance
             );
 
-            Log::info('Returning response', ['response' => $response]);
+            // Log::info('Returning response', ['response' => $response]);
 
             DB::commit();
 
