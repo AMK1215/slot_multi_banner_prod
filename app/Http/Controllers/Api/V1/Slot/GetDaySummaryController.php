@@ -17,13 +17,13 @@ class GetDaySummaryController extends Controller
 
         // Validate the signature
         $generatedSignature = $this->generateSignature($transactionData);
-        Log::info('Generated Signature', ['GeneratedSignature' => $generatedSignature]);
+        // Log::info('Generated Signature', ['GeneratedSignature' => $generatedSignature]);
 
         if ($generatedSignature !== $transactionData['Signature']) {
-            Log::warning('Signature validation failed', [
-                'transaction' => $transactionData,
-                'generated_signature' => $generatedSignature,
-            ]);
+            // Log::warning('Signature validation failed', [
+            //     'transaction' => $transactionData,
+            //     'generated_signature' => $generatedSignature,
+            // ]);
 
             return $this->buildErrorResponse(StatusCode::InvalidSignature);
         }
@@ -51,10 +51,10 @@ class GetDaySummaryController extends Controller
             return $this->buildSuccessResponse($providerData['Trans']);
         }
 
-        Log::error('Failed to retrieve data from provider', [
-            'status' => $response->status(),
-            'body' => $response->body(),
-        ]);
+        // Log::error('Failed to retrieve data from provider', [
+        //     'status' => $response->status(),
+        //     'body' => $response->body(),
+        // ]);
 
         return $this->buildErrorResponse(StatusCode::InternalServerError);
     }

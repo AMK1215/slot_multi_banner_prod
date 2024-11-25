@@ -29,13 +29,13 @@ class SlotWebhookService
         };
 
         // Log the response being built
-        Log::info('Building final response', [
-            'Status' => $responseCode->value,
-            'Description' => $description,
-            'ResponseDateTime' => $responseDateTime,
-            'AfterBalance' => $formattedBeforeBalance,
-            'BeforeBalance' => $formattedAfterBalance,
-        ]);
+        // Log::info('Building final response', [
+        //     'Status' => $responseCode->value,
+        //     'Description' => $description,
+        //     'ResponseDateTime' => $responseDateTime,
+        //     'AfterBalance' => $formattedBeforeBalance,
+        //     'BeforeBalance' => $formattedAfterBalance,
+        // ]);
 
         // Return the structured response as numbers with 4 decimal places
         return [

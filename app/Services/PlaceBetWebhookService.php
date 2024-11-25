@@ -24,13 +24,13 @@ class PlaceBetWebhookService
         $roundedNewBalance = round($newBalance, 4);
 
         // Log the response being built
-        Log::info('Building final response', [
-            'Status' => $responseCode->value,
-            'Description' => $description,
-            'ResponseDateTime' => $responseDateTime,
-            'OldBalance' => $roundedOldBalance,
-            'NewBalance' => $roundedNewBalance,
-        ]);
+        // Log::info('Building final response', [
+        //     'Status' => $responseCode->value,
+        //     'Description' => $description,
+        //     'ResponseDateTime' => $responseDateTime,
+        //     'OldBalance' => $roundedOldBalance,
+        //     'NewBalance' => $roundedNewBalance,
+        // ]);
 
         // Return the structured response with rounded balances
         return [

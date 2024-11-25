@@ -95,7 +95,7 @@ class GetDaySummaryRequest extends FormRequest
         ];
 
         // Log the transaction data for debugging
-        Log::info('Retrieved Transaction Data', ['transactionData' => $transactionData]);
+        // Log::info('Retrieved Transaction Data', ['transactionData' => $transactionData]);
 
         return $transactionData;
     }

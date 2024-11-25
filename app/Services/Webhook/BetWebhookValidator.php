@@ -79,19 +79,19 @@ class BetWebhookValidator
         $secretKey = $this->getSecretKey();
         $playerId = $this->request->getPlayerId();
 
-        Log::info('Generating signature', [
-            'method' => $method,
-            'roundId' => $roundId,
-            'betId' => $betId,
-            'requestTime' => $requestTime,
-            'operatorCode' => $operatorCode,
-            'secretKey' => $secretKey,
-            'playerId' => $playerId,
-        ]);
+        // Log::info('Generating signature', [
+        //     'method' => $method,
+        //     'roundId' => $roundId,
+        //     'betId' => $betId,
+        //     'requestTime' => $requestTime,
+        //     'operatorCode' => $operatorCode,
+        //     'secretKey' => $secretKey,
+        //     'playerId' => $playerId,
+        // ]);
 
         // Generate signature
         $signature = md5($method.$roundId.$betId.$requestTime.$operatorCode.$secretKey.$playerId);
-        Log::info('Generated signature', ['signature' => $signature]);
+        // Log::info('Generated signature', ['signature' => $signature]);
 
         return $this->request->getSignature() === $signature;
     }
@@ -167,7 +167,7 @@ class BetWebhookValidator
     protected function getSecretKey()
     {
         $secretKey = config('game.api.secret_key');
-        Log::info('Fetched secret key');
+        // Log::info('Fetched secret key');
 
         return $secretKey;
     }

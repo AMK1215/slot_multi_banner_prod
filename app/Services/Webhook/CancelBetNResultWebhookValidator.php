@@ -77,18 +77,18 @@ class CancelBetNResultWebhookValidator
         $secretKey = $this->getSecretKey();
         $playerId = $this->request->getPlayerId();
 
-        Log::info('Generating signature', [
-            'method' => $method,
-            'tranId' => $tranId,
-            'requestTime' => $requestTime,
-            'operatorCode' => $operatorCode,
-            'secretKey' => $secretKey,
-            'playerId' => $playerId,
-        ]);
+        // Log::info('Generating signature', [
+        //     'method' => $method,
+        //     'tranId' => $tranId,
+        //     'requestTime' => $requestTime,
+        //     'operatorCode' => $operatorCode,
+        //     'secretKey' => $secretKey,
+        //     'playerId' => $playerId,
+        // ]);
 
         // Generate signature
         $signature = md5($method.$tranId.$requestTime.$operatorCode.$secretKey.$playerId);
-        Log::info('Generated signature', ['signature' => $signature]);
+        // Log::info('Generated signature', ['signature' => $signature]);
 
         return $this->request->getSignature() === $signature;
     }
@@ -156,7 +156,7 @@ class CancelBetNResultWebhookValidator
     protected function getSecretKey()
     {
         $secretKey = config('game.api.secret_key');
-        Log::info('Fetched secret key');
+        // Log::info('Fetched secret key');
 
         return $secretKey;
     }
@@ -190,7 +190,7 @@ class CancelBetNResultWebhookValidator
     public function fails()
     {
         $fails = isset($this->response) && ! empty($this->response);
-        Log::info('Checking if validation fails', ['fails' => $fails]);
+        // Log::info('Checking if validation fails', ['fails' => $fails]);
 
         return $fails;
     }
