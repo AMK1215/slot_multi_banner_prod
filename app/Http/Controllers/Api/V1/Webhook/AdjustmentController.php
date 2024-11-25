@@ -24,22 +24,22 @@ class AdjustmentController extends Controller
 
         DB::beginTransaction();
         try {
-            Log::info('Starting handleAdjustment method for multiple transactions');
+            // Log::info('Starting handleAdjustment method for multiple transactions');
 
             foreach ($transactions as $transaction) {
                 // Retrieve the player
                 $player = User::where('user_name', $transaction['PlayerId'])->first();
                 if (! $player) {
-                    Log::warning('Invalid player detected', [
-                        'PlayerId' => $transaction['PlayerId'],
-                    ]);
+                    // Log::warning('Invalid player detected', [
+                    //     'PlayerId' => $transaction['PlayerId'],
+                    // ]);
 
                     return $this->buildErrorResponse(StatusCode::InvalidPlayerPassword, 0);
                 }
 
                 // Validate signature
                 $signature = $this->generateSignature($transaction);
-                Log::info('Adjustment Signature', ['GeneratedAdjustmentSignature' => $signature]);
+                // Log::info('Adjustment Signature', ['GeneratedAdjustmentSignature' => $signature]);
 
                 if ($signature !== $transaction['Signature']) {
                     Log::warning('Signature validation failed', [
@@ -53,9 +53,9 @@ class AdjustmentController extends Controller
                 // Check for duplicate transaction
                 $existingTransaction = Adjustment::where('tran_id', $transaction['TranId'])->first();
                 if ($existingTransaction) {
-                    Log::warning('Duplicate TranId detected', [
-                        'TranId' => $transaction['TranId'],
-                    ]);
+                    // Log::warning('Duplicate TranId detected', [
+                    //     'TranId' => $transaction['TranId'],
+                    // ]);
 
                     return $this->buildErrorResponse(StatusCode::DuplicateTransaction); // Return duplicate transaction error
                 }
@@ -88,11 +88,11 @@ class AdjustmentController extends Controller
                     'remark' => $transaction['Remark'],
                 ]);
 
-                Log::info('Adjustment transaction processed successfully', ['TranId' => $transaction['TranId']]);
+                // Log::info('Adjustment transaction processed successfully', ['TranId' => $transaction['TranId']]);
             }
 
             DB::commit();
-            Log::info('All Adjustment transactions committed successfully');
+            // Log::info('All Adjustment transactions committed successfully');
 
             return $this->buildSuccessResponse($newBalance);
         } catch (\Exception $e) {

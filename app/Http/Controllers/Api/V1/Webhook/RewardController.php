@@ -23,15 +23,15 @@ class RewardController extends Controller
 
         DB::beginTransaction();
         try {
-            Log::info('Starting handleReward method for multiple transactions');
+            // Log::info('Starting handleReward method for multiple transactions');
 
             foreach ($transactions as $transaction) {
                 // Retrieve player by PlayerId
                 $player = User::where('user_name', $transaction['PlayerId'])->first();
                 if (! $player) {
-                    Log::warning('Invalid player detected', [
-                        'PlayerId' => $transaction['PlayerId'],
-                    ]);
+                    // Log::warning('Invalid player detected', [
+                    //     'PlayerId' => $transaction['PlayerId'],
+                    // ]);
 
                     return $this->buildErrorResponse(StatusCode::InvalidPlayerPassword);
                 }
@@ -39,10 +39,10 @@ class RewardController extends Controller
                 // Validate signature
                 $signature = $this->generateSignature($transaction);
                 if ($signature !== $transaction['Signature']) {
-                    Log::warning('Signature validation failed', [
-                        'transaction' => $transaction,
-                        'generated_signature' => $signature,
-                    ]);
+                    // Log::warning('Signature validation failed', [
+                    //     'transaction' => $transaction,
+                    //     'generated_signature' => $signature,
+                    // ]);
 
                     return $this->buildErrorResponse(StatusCode::InvalidSignature);
                 }
@@ -50,9 +50,9 @@ class RewardController extends Controller
                 // Check for duplicate transaction
                 $existingTransaction = Reward::where('tran_id', $transaction['TranId'])->first();
                 if ($existingTransaction) {
-                    Log::warning('Duplicate TranId detected', [
-                        'TranId' => $transaction['TranId'],
-                    ]);
+                    // Log::warning('Duplicate TranId detected', [
+                    //     'TranId' => $transaction['TranId'],
+                    // ]);
                     $balance = $player->wallet->balanceFloat;
 
                     return $this->buildErrorResponse(StatusCode::DuplicateTransaction, $balance);
@@ -91,7 +91,7 @@ class RewardController extends Controller
             }
 
             DB::commit();
-            Log::info('All reward transactions committed successfully');
+            // Log::info('All reward transactions committed successfully');
 
             return $this->buildSuccessResponse($newBalance);
         } catch (\Exception $e) {

@@ -25,14 +25,14 @@ class ResultController extends Controller
 
         DB::beginTransaction();
         try {
-            Log::info('Starting handleResult method for multiple transactions');
+            // Log::info('Starting handleResult method for multiple transactions');
 
             foreach ($transactions as $transaction) {
                 $player = User::where('user_name', $transaction['PlayerId'])->first();
                 if (! $player) {
-                    Log::warning('Invalid player detected', [
-                        'PlayerId' => $transaction['PlayerId'],
-                    ]);
+                    // Log::warning('Invalid player detected', [
+                    //     'PlayerId' => $transaction['PlayerId'],
+                    // ]);
 
                     return $this->buildErrorResponse(StatusCode::InvalidPlayerPassword, 0);
                 }
@@ -40,12 +40,12 @@ class ResultController extends Controller
                 // Validate signature
                 $signature = $this->generateSignature($transaction);
                 //$signature = $this->generateSignature($transaction);
-                Log::info('Result Signature', ['GeneratedResultSignature' => $signature]);
+                // Log::info('Result Signature', ['GeneratedResultSignature' => $signature]);
                 if ($signature !== $transaction['Signature']) {
-                    Log::warning('Signature validation failed for transaction', [
-                        'transaction' => $transaction,
-                        'generated_signature' => $signature,
-                    ]);
+                    // Log::warning('Signature validation failed for transaction', [
+                    //     'transaction' => $transaction,
+                    //     'generated_signature' => $signature,
+                    // ]);
 
                     return $this->buildErrorResponse(StatusCode::InvalidSignature, $player->wallet->balanceFloat);
                 }
@@ -53,7 +53,7 @@ class ResultController extends Controller
                 // Check for duplicate ResultId
                 $existingTransaction = Result::where('result_id', $transaction['ResultId'])->first();
                 if ($existingTransaction) {
-                    Log::warning('Duplicate ResultId detected', ['ResultId' => $transaction['ResultId']]);
+                    // Log::warning('Duplicate ResultId detected', ['ResultId' => $transaction['ResultId']]);
                     $balance = $player->wallet->balanceFloat;
 
                     return $this->buildErrorResponse(StatusCode::DuplicateTransaction, $balance);
@@ -99,11 +99,11 @@ class ResultController extends Controller
                     'tran_date_time' => $transaction['TranDateTime'],
                 ]);
 
-                Log::info('Result transaction processed successfully', ['ResultId' => $transaction['ResultId']]);
+                // Log::info('Result transaction processed successfully', ['ResultId' => $transaction['ResultId']]);
             }
 
             DB::commit();
-            Log::info('All result transactions committed successfully');
+            // Log::info('All result transactions committed successfully');
 
             // Return the latest balance of the last processed player
             return $this->buildSuccessResponse($newBalance);

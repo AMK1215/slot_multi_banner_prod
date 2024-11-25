@@ -24,14 +24,14 @@ class BetNResultController extends Controller
     {
         DB::beginTransaction();
         try {
-            Log::info('Starting handleBetNResult method');
+            // Log::info('Starting handleBetNResult method');
 
             // Validate player
             $player = $request->getMember();
             if (! $player) {
-                Log::warning('Invalid player detected', [
-                    'PlayerId' => $request->getPlayerId(),
-                ]);
+                // Log::warning('Invalid player detected', [
+                //     'PlayerId' => $request->getPlayerId(),
+                // ]);
 
                 // Return Invalid Player response
                 return PlaceBetWebhookService::buildResponse(
@@ -42,38 +42,38 @@ class BetNResultController extends Controller
             }
 
             $oldBalance = $request->getMember()->balanceFloat;
-            Log::info('Retrieved player balance', ['old_balance' => $oldBalance]);
+            // Log::info('Retrieved player balance', ['old_balance' => $oldBalance]);
 
             // Perform validation using the validator class
             //$validator = BetNResultWebhookValidator::make($request)->validate();
             $validator = $request->check();
-            Log::info('Validator check passed');
+            // Log::info('Validator check passed');
             if ($validator->fails()) {
-                Log::warning('Validation failed');
+                // Log::warning('Validation failed');
 
                 return $this->buildErrorResponse(StatusCode::InvalidSignature);
             }
 
             // Check for sufficient balance
             if ($request->getBetAmount() > $oldBalance) {
-                Log::warning('Insufficient balance detected', [
-                    'bet_amount' => $request->getBetAmount(),
-                    'balance' => $oldBalance,
-                ]);
+                // Log::warning('Insufficient balance detected', [
+                //     'bet_amount' => $request->getBetAmount(),
+                //     'balance' => $oldBalance,
+                // ]);
 
                 return $this->buildErrorResponse(StatusCode::InsufficientBalance, $oldBalance);
             }
 
             // Check for duplicate TranId
             $existingTransaction = BetNResult::where('tran_id', $request->getTranId())->first();
-            Log::info('Retrieved player TransactionID', ['TransactionID' => $existingTransaction ? $existingTransaction->tran_id : 'No transaction found']);
+            // Log::info('Retrieved player TransactionID', ['TransactionID' => $existingTransaction ? $existingTransaction->tran_id : 'No transaction found']);
 
             DB::enableQueryLog();
             $existingTransaction = BetNResult::where('tran_id', $request->getTranId())->first();
-            Log::info('Query log:', DB::getQueryLog());
+            // Log::info('Query log:', DB::getQueryLog());
 
             if ($existingTransaction) {
-                Log::warning('Duplicate TranId detected', ['tran_id' => $request->getTranId()]);
+                // Log::warning('Duplicate TranId detected', ['tran_id' => $request->getTranId()]);
 
                 return $this->buildErrorResponse(StatusCode::DuplicateTransaction, $oldBalance);
             }
@@ -92,7 +92,7 @@ class BetNResultController extends Controller
 
             $tranDateTime = Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $request->getTranDateTime())->format('Y-m-d H:i:s');
 
-            Log::info('Storing transaction with TranId', ['TranId' => $request->getTranId()]);
+            // Log::info('Storing transaction with TranId', ['TranId' => $request->getTranId()]);
 
             // Create the transaction record
             BetNResult::create([
@@ -113,10 +113,10 @@ class BetNResultController extends Controller
                 //'new_balance' => round($newBalance, 4),
             ]);
 
-            Log::info('Transaction created successfully', ['new_balance' => $newBalance]);
+            // Log::info('Transaction created successfully', ['new_balance' => $newBalance]);
 
             DB::commit();
-            Log::info('Transaction committed successfully');
+            // Log::info('Transaction committed successfully');
 
             // Build a successful response
             return $this->buildSuccessResponse($newBalance);

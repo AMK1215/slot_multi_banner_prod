@@ -23,7 +23,7 @@ class CancelBetNResultController extends Controller
 
         DB::beginTransaction();
         try {
-            Log::info('Starting handleCancelBetNResult method for multiple transactions');
+            // Log::info('Starting handleCancelBetNResult method for multiple transactions');
 
             foreach ($transactions as $transaction) {
                 $player = User::where('user_name', $transaction['PlayerId'])->first();
@@ -40,7 +40,7 @@ class CancelBetNResultController extends Controller
                 }
 
                 $signature = $this->generateSignature($transaction);
-                Log::info('CancelBetNResult Signature', ['GeneratedCancelBetNResultSignature' => $signature]);
+                // Log::info('CancelBetNResult Signature', ['GeneratedCancelBetNResultSignature' => $signature]);
                 // if ($signature !== $transaction['Signature']) {
                 //     Log::warning('Signature validation failed', [
                 //         'transaction' => $transaction,
@@ -54,14 +54,14 @@ class CancelBetNResultController extends Controller
                 $existingTransaction = BetNResult::where('tran_id', $transaction['TranId'])->first();
 
                 if ($existingTransaction && $existingTransaction->status === 'processed') {
-                    Log::info('BetNResult already processed', ['TranId' => $transaction['TranId']]);
+                    // Log::info('BetNResult already processed', ['TranId' => $transaction['TranId']]);
 
                     return $this->buildErrorResponse(StatusCode::NotEligibleCancel); // 900300 status for already processed
                 }
 
                 // If the transaction is unprocessed or does not exist, mark it as processed and return success
                 if (! $existingTransaction || $existingTransaction->status !== 'processed') {
-                    Log::info('BetNResult unprocessed or not found, setting status to processed', ['TranId' => $transaction['TranId']]);
+                    // Log::info('BetNResult unprocessed or not found, setting status to processed', ['TranId' => $transaction['TranId']]);
 
                     // Mark the transaction as processed if it exists
                     if ($existingTransaction) {

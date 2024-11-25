@@ -25,15 +25,15 @@ class CancelBetNResultController extends Controller
 
         DB::beginTransaction();
         try {
-            Log::info('Starting handleBetNResult method for multiple transactions');
+            // Log::info('Starting handleBetNResult method for multiple transactions');
 
             foreach ($transactions as $transaction) {
                 // Get the player
                 $player = User::where('user_name', $transaction['PlayerId'])->first();
                 if (! $player) {
-                    Log::warning('Invalid player detected', [
-                        'PlayerId' => $transaction['PlayerId'],
-                    ]);
+                    // Log::warning('Invalid player detected', [
+                    //     'PlayerId' => $transaction['PlayerId'],
+                    // ]);
 
                     return PlaceBetWebhookService::buildResponse(
                         StatusCode::InvalidPlayerPassword,
@@ -68,10 +68,10 @@ class CancelBetNResultController extends Controller
 
                 // Check for sufficient balance
                 if ($transaction['BetAmount'] > $PlayerBalance) {
-                    Log::warning('Insufficient balance detected', [
-                        'BetAmount' => $transaction['BetAmount'],
-                        'balance' => $PlayerBalance,
-                    ]);
+                    // Log::warning('Insufficient balance detected', [
+                    //     'BetAmount' => $transaction['BetAmount'],
+                    //     'balance' => $PlayerBalance,
+                    // ]);
 
                     return $this->buildErrorResponse(StatusCode::InsufficientBalance, $PlayerBalance);
                 }
@@ -105,11 +105,11 @@ class CancelBetNResultController extends Controller
                     'cancelled_at' => now(),
                 ]);
 
-                Log::info('Transaction Refund processed successfully', ['TranId' => $transaction['TranId']]);
+                // Log::info('Transaction Refund processed successfully', ['TranId' => $transaction['TranId']]);
             }
 
             DB::commit();
-            Log::info('All transactions Refund committed successfully');
+            // Log::info('All transactions Refund committed successfully');
 
             // Build a successful response with the final balance of the last player
             return $this->buildSuccessResponse($NewBalance);
