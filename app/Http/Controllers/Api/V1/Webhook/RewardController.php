@@ -87,7 +87,7 @@ class RewardController extends Controller
                     'reward_detail' => $transaction['RewardDetail'] ?? null,
                 ]);
 
-                Log::info('Reward transaction processed successfully', ['TranId' => $transaction['TranId']]);
+                // Log::info('Reward transaction processed successfully', ['TranId' => $transaction['TranId']]);
             }
 
             DB::commit();
