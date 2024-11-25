@@ -31,7 +31,7 @@ class GetBalanceController extends Controller
 
                 return response()->json($validator->getResponse(), 200);
             } else {
-                Log::info('Validation passed, no failure detected');
+                // Log::info('Validation passed, no failure detected');
             }
 
             // Log::info('Validation passed, preparing balance response');

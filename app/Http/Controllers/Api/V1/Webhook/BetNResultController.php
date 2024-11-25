@@ -126,7 +126,7 @@ class BetNResultController extends Controller
             }
 
             DB::commit();
-            Log::info('All transactions committed successfully');
+            // Log::info('All transactions committed successfully');
 
             // Build a successful response with the final balance of the last player
             return $this->buildSuccessResponse($newBalance);
