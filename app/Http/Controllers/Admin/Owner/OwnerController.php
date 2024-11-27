@@ -349,9 +349,9 @@ class OwnerController extends Controller
 
         // Validate the input
         $request->validate([
+            'user_name' => 'nullable|string|max:255',
             'name' => 'required|string|max:255',
             'phone' => 'required|numeric|digits_between:10,15|unique:users,phone,'.$id,
-            'player_name' => 'nullable|string|max:255',
             'agent_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
