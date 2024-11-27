@@ -338,6 +338,7 @@ class OwnerController extends Controller
     // }
     public function update(Request $request, string $id)
     {
+        dd($request->all());
         abort_if(
             Gate::denies('owner_edit') || ! $this->ifChildOfParent($request->user()->id, $id),
             Response::HTTP_FORBIDDEN,
