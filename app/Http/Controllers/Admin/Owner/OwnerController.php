@@ -388,68 +388,68 @@ class OwnerController extends Controller
     //         ->with('success', 'Owner updated successfully!');
     // }
 
-    public function update(Request $request, string $id)
+        public function update(Request $request, string $id)
 {
-    // Log the request
     Log::info('Update method called.', ['request_data' => $request->all()]);
 
-    // Abort if user lacks permissions or is not a valid child of the parent
-    // abort_if(
-    //     Gate::denies('owner_edit') || !$this->ifChildOfParent($request->user()->id, $id),
-    //     Response::HTTP_FORBIDDEN,
-    //     '403 Forbidden | You cannot access this page because you do not have permission'
-    // );
+    // Check permissions
+    abort_if(
+        Gate::denies('owner_edit') || !$this->ifChildOfParent($request->user()->id, $id),
+        Response::HTTP_FORBIDDEN,
+        '403 Forbidden | You cannot access this page because you do not have permission'
+    );
 
-    // Find the user by ID
+    // Log permission passed
+    Log::info('Permission granted.');
+
+    // Find the user
     $user = User::findOrFail($id);
 
-    // Validate the request
+    // Validate input
+    Log::info('Validating request data.');
     $request->validate([
         'user_name' => 'nullable|string|max:255',
         'name' => 'required|string|max:255',
         'phone' => 'required|numeric|digits_between:10,15|unique:users,phone,' . $id,
         'agent_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
+    Log::info('Validation passed.');
 
-    // Handle the agent_logo upload
+    // Handle file upload
     if ($request->file('agent_logo')) {
+        Log::info('File uploaded.', [
+            'original_name' => $request->file('agent_logo')->getClientOriginalName(),
+            'size' => $request->file('agent_logo')->getSize(),
+        ]);
 
-         Log::info('Uploaded file details:', [
-        'original_name' => $request->file('agent_logo')->getClientOriginalName(),
-        'size' => $request->file('agent_logo')->getSize(),
-        'extension' => $request->file('agent_logo')->getClientOriginalExtension(),
-    ]);
-
-        Log::info('Agent logo uploaded.');
-
-        // Delete the old logo if it exists
+        // Delete old logo if exists
         if ($user->agent_logo && File::exists(public_path('assets/img/logo/' . $user->agent_logo))) {
             File::delete(public_path('assets/img/logo/' . $user->agent_logo));
         }
 
-        // Upload the new logo
+        // Upload new logo
         $image = $request->file('agent_logo');
         $filename = uniqid('logo') . '.' . $image->getClientOriginalExtension();
         $image->move(public_path('assets/img/logo/'), $filename);
-
-        // Update the logo field
         $user->agent_logo = $filename;
+    } else {
+        Log::info('No file uploaded for agent_logo.');
     }
 
-    // Update other fields
+    // Update fields
     $user->update([
+        'user_name' => $request->user_name ?? $user->user_name,
         'name' => $request->name,
         'phone' => $request->phone,
-        'user_name' => $request->user_name ?? $user->user_name,
-        'agent_logo' => $user->agent_logo, // Ensure agent_logo is set
+        'agent_logo' => $user->agent_logo, // Updated logo
     ]);
 
     Log::info('Owner updated successfully.', ['user' => $user]);
 
-    // Redirect back with success message
     return redirect()->back()
         ->with('success', 'Owner updated successfully!');
 }
+
 
 
     public function getChangePassword($id)
