@@ -413,6 +413,13 @@ class OwnerController extends Controller
 
     // Handle the agent_logo upload
     if ($request->file('agent_logo')) {
+
+         Log::info('Uploaded file details:', [
+        'original_name' => $request->file('agent_logo')->getClientOriginalName(),
+        'size' => $request->file('agent_logo')->getSize(),
+        'extension' => $request->file('agent_logo')->getClientOriginalExtension(),
+    ]);
+
         Log::info('Agent logo uploaded.');
 
         // Delete the old logo if it exists
