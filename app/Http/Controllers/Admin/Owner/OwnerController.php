@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Log;
+
 
 class OwnerController extends Controller
 {
@@ -336,55 +338,112 @@ class OwnerController extends Controller
     //     return redirect()->back()
     //         ->with('success', 'Owner Updated successfully');
     // }
+    // public function update(Request $request, string $id)
+    // {
+    //     dd($request->all());
+    //     abort_if(
+    //         Gate::denies('owner_edit') || ! $this->ifChildOfParent($request->user()->id, $id),
+    //         Response::HTTP_FORBIDDEN,
+    //         '403 Forbidden |You cannot Access this page because you do not have permission'
+    //     );
+
+    //     // Find the user to update
+    //     $user = User::findOrFail($id);
+
+    //     // Validate the input
+    //     $request->validate([
+    //         'user_name' => 'nullable|string|max:255',
+    //         'name' => 'required|string|max:255',
+    //         'phone' => 'required|numeric|digits_between:10,15|unique:users,phone,'.$id,
+    //         'agent_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    //     ]);
+
+    //     // Handle the logo file if uploaded
+    //     if ($request->file('agent_logo')) {
+    //         // Delete the old logo if it exists
+    //         if ($user->agent_logo && File::exists(public_path('assets/img/logo/'.$user->agent_logo))) {
+    //             File::delete(public_path('assets/img/logo/'.$user->agent_logo));
+    //         }
+
+    //         // Upload the new logo
+    //         $image = $request->file('agent_logo');
+    //         $ext = $image->getClientOriginalExtension();
+    //         $filename = uniqid('logo').'.'.$ext;
+    //         $image->move(public_path('assets/img/logo/'), $filename);
+
+    //         // Update the logo field
+    //         $user->agent_logo = $filename;
+    //     }
+
+    //     // Update other user fields
+    //     $user->update([
+    //         'user_name' => $request->player_name,
+    //         'name' => $request->name,
+    //         'phone' => $request->phone,
+    //         'agent_logo' => $user->agent_logo, // Set the updated logo
+    //     ]);
+
+    //     // Redirect back with a success message
+    //     return redirect()->back()
+    //         ->with('success', 'Owner updated successfully!');
+    // }
+
     public function update(Request $request, string $id)
-    {
-        dd($request->all());
-        abort_if(
-            Gate::denies('owner_edit') || ! $this->ifChildOfParent($request->user()->id, $id),
-            Response::HTTP_FORBIDDEN,
-            '403 Forbidden |You cannot Access this page because you do not have permission'
-        );
+{
+    // Log the request
+    Log::info('Update method called.', ['request_data' => $request->all()]);
 
-        // Find the user to update
-        $user = User::findOrFail($id);
+    // Abort if user lacks permissions or is not a valid child of the parent
+    abort_if(
+        Gate::denies('owner_edit') || !$this->ifChildOfParent($request->user()->id, $id),
+        Response::HTTP_FORBIDDEN,
+        '403 Forbidden | You cannot access this page because you do not have permission'
+    );
 
-        // Validate the input
-        $request->validate([
-            'user_name' => 'nullable|string|max:255',
-            'name' => 'required|string|max:255',
-            'phone' => 'required|numeric|digits_between:10,15|unique:users,phone,'.$id,
-            'agent_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+    // Find the user by ID
+    $user = User::findOrFail($id);
 
-        // Handle the logo file if uploaded
-        if ($request->file('agent_logo')) {
-            // Delete the old logo if it exists
-            if ($user->agent_logo && File::exists(public_path('assets/img/logo/'.$user->agent_logo))) {
-                File::delete(public_path('assets/img/logo/'.$user->agent_logo));
-            }
+    // Validate the request
+    $request->validate([
+        'user_name' => 'nullable|string|max:255',
+        'name' => 'required|string|max:255',
+        'phone' => 'required|numeric|digits_between:10,15|unique:users,phone,' . $id,
+        'agent_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
 
-            // Upload the new logo
-            $image = $request->file('agent_logo');
-            $ext = $image->getClientOriginalExtension();
-            $filename = uniqid('logo').'.'.$ext;
-            $image->move(public_path('assets/img/logo/'), $filename);
+    // Handle the agent_logo upload
+    if ($request->file('agent_logo')) {
+        Log::info('Agent logo uploaded.');
 
-            // Update the logo field
-            $user->agent_logo = $filename;
+        // Delete the old logo if it exists
+        if ($user->agent_logo && File::exists(public_path('assets/img/logo/' . $user->agent_logo))) {
+            File::delete(public_path('assets/img/logo/' . $user->agent_logo));
         }
 
-        // Update other user fields
-        $user->update([
-            'user_name' => $request->player_name,
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'agent_logo' => $user->agent_logo, // Set the updated logo
-        ]);
+        // Upload the new logo
+        $image = $request->file('agent_logo');
+        $filename = uniqid('logo') . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('assets/img/logo/'), $filename);
 
-        // Redirect back with a success message
-        return redirect()->back()
-            ->with('success', 'Owner updated successfully!');
+        // Update the logo field
+        $user->agent_logo = $filename;
     }
+
+    // Update other fields
+    $user->update([
+        'name' => $request->name,
+        'phone' => $request->phone,
+        'user_name' => $request->user_name ?? $user->user_name,
+        'agent_logo' => $user->agent_logo, // Ensure agent_logo is set
+    ]);
+
+    Log::info('Owner updated successfully.', ['user' => $user]);
+
+    // Redirect back with success message
+    return redirect()->back()
+        ->with('success', 'Owner updated successfully!');
+}
+
 
     public function getChangePassword($id)
     {

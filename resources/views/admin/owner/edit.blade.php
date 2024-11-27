@@ -29,7 +29,7 @@
                     </span>
                     </h3>
                 </div>
-                <form method="POST" action="{{ route('admin.owner.update', $owner->id) }}" enctype="multipart/form-data">
+                {{-- <form method="POST" action="{{ route('admin.owner.update', $owner->id) }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="card-body">
@@ -62,7 +62,41 @@
                     <div class="card-footer col-12 bg-white">
                         <button type="submit" class="btn btn-success float-right">Update</button>
                     </div>
+                </form> --}}
+
+                <form method="POST" action="{{ route('admin.owner.update', $owner->id) }}" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>OwnerId<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="user_name" value="{{ $owner->user_name }}"
+                                readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Name<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="name" value="{{ $owner->name }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="phone" value="{{ $owner->phone }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Owner Logo</label>
+                            <input type="file" class="form-control" name="agent_logo">
+                            @if ($owner->agent_logo)
+                                <img src="{{ asset('assets/img/logo/' . $owner->agent_logo) }}" alt="Logo"
+                                    width="100px">
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-success">Update</button>
+                    </div>
                 </form>
+
             </div>
 
         </div>
