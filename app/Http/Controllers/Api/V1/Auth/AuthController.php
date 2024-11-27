@@ -78,9 +78,17 @@ class AuthController extends Controller
             return $this->error($user, 'You have to change password', 200);
         }
 
-        if ($user->roles[0]['id'] != self::PLAYER_ROLE) {
-            return $this->error('', 'You do not have permission', 200);
+        // if ($user->roles[0]['id'] != self::PLAYER_ROLE) {
+        //     return $this->error('', 'You do not have permission', 200);
+        // }
+
+        // Ensure roles relationship is loaded
+        $user->load('roles');
+
+        if ($user->roles->isEmpty() || $user->roles[0]->id != self::PLAYER_ROLE) {
+         return $this->error('', 'You do not have permissions', 200);
         }
+
 
         UserLog::create([
             'ip_address' => $request->ip(),
