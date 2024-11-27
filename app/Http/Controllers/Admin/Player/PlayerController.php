@@ -118,7 +118,7 @@ class PlayerController extends Controller
                 ->with('successMessage', 'Player created successfully')
                 ->with('amount', $request->amount)
                 ->with('password', $request->password)
-                ->with('phone', $user->phone);
+                ->with('user_name', $user->user_name);
         } catch (\Exception $e) {
             Log::error('Error creating user: '.$e->getMessage());
 

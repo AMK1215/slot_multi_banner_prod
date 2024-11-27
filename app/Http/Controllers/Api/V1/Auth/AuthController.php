@@ -30,7 +30,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
 
-        $credentials = $request->only('phone', 'password');
+        $credentials = $request->only('user_name', 'password');
 
         if (! Auth::attempt($credentials)) {
             return $this->error('', 'Credentials do not match!', 401);
@@ -42,7 +42,7 @@ class AuthController extends Controller
         if ($user->status == 0) {
             return $this->error('', 'Your account is not activated!', 401);
         }
-        
+
         if ($user->is_changed_password == 0) {
             return $this->error($user, 'You have to change password', 200);
         }

@@ -89,7 +89,7 @@
 @section('script')
     <script>
         var successMessage = @json(session('successMessage'));
-        var phone = @json(session('phone'));
+        var user_name = @json(session('user_name'));
         var password = @json(session('password'));
         var amount = @json(session('amount'));
 
@@ -98,7 +98,7 @@
                 `
     <div>
         <button class="btn btn-primary btn-sm" data-toggle="modal"
-            data-phone="${phone}"
+            data-user_name="${user_name}"
             data-password="${password}"
             data-amount="${amount}"
             data-url="https://goldenjacks.pro/login"
@@ -109,13 +109,13 @@
         @endif
 
         function copyToClipboard(button) {
-            var phone = $(button).data('phone');
+            var user_name = $(button).data('user_name');
             var password = $(button).data('password');
             var amount = $(button).data('amount');
             var url = $(button).data('url');
 
             // var textToCopy = "Phone: " + phone + "\nPassword: " + password + "\nAmount: " + amount + "\nURL: " + url;
-            var textToCopy = "Phone: " + phone + "\nPassword: " + password + "\nAmount: " + amount;
+            var textToCopy = "Login ID: " + user_name + "\nPassword: " + password + "\nAmount: " + amount;
 
             navigator.clipboard.writeText(textToCopy).then(function() {
                 toastr.success("Credentials copied to clipboard!");
