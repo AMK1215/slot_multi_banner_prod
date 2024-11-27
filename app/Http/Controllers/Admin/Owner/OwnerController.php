@@ -374,9 +374,9 @@ class OwnerController extends Controller
 
         // Update other user fields
         $user->update([
+            'user_name' => $request->player_name,
             'name' => $request->name,
             'phone' => $request->phone,
-            'player_name' => $request->player_name,
             'agent_logo' => $user->agent_logo, // Set the updated logo
         ]);
 
