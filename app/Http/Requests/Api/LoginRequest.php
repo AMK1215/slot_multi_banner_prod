@@ -25,7 +25,7 @@ class LoginRequest extends FormRequest
         Log::info($this->all());
 
         return [
-            //'user_name' => ['required', 'regex:/^[0-9]+$/'],
+            //'phone' => ['required', 'regex:/^[0-9]+$/'],
             'user_name' => ['required', 'string', 'min:3'],
 
             'password' => ['required', 'string', 'min:6'],
