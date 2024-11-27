@@ -390,7 +390,7 @@ class OwnerController extends Controller
 
         public function update(Request $request, string $id)
 {
-    Log::info('Update method called.', ['request_data' => $request->all()]);
+    //Log::info('Update method called.', ['request_data' => $request->all()]);
 
     // Check permissions
     abort_if(
@@ -400,20 +400,20 @@ class OwnerController extends Controller
     );
 
     // Log permission passed
-    Log::info('Permission granted.');
+    //Log::info('Permission granted.');
 
     // Find the user
     $user = User::findOrFail($id);
 
     // Validate input
-    Log::info('Validating request data.');
+    //Log::info('Validating request data.');
     $request->validate([
         'user_name' => 'nullable|string|max:255',
         'name' => 'required|string|max:255',
         'phone' => 'required|numeric|digits_between:10,15|unique:users,phone,' . $id,
         'agent_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
-    Log::info('Validation passed.');
+    //Log::info('Validation passed.');
 
     // Handle file upload
     if ($request->file('agent_logo')) {
@@ -444,7 +444,7 @@ class OwnerController extends Controller
         'agent_logo' => $user->agent_logo, // Updated logo
     ]);
 
-    Log::info('Owner updated successfully.', ['user' => $user]);
+    //Log::info('Owner updated successfully.', ['user' => $user]);
 
     return redirect()->back()
         ->with('success', 'Owner updated successfully!');

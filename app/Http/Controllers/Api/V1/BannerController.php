@@ -27,7 +27,7 @@ class BannerController extends Controller
         }
 
         // Fetch banners for the determined admin
-        $data = Banner::where('admin_id', $admin->id)->latest()->first();
+        $data = Banner::where('admin_id', $admin->id)->get();
 
         return $this->success($data, 'Banners retrieved successfully.');
     }
