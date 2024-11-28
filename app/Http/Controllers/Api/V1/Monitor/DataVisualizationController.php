@@ -53,6 +53,31 @@ public function VisualizeResult()
     }
 }
 
+    public function getResultsData(Request $request)
+    {
+        try {
+            $adminId = auth()->id(); // Optional: for filtering based on admin
+
+            $report = Result::select(
+                DB::raw('SUM(total_bet_amount) as total_bet_amount'),
+                DB::raw('SUM(win_amount) as total_win_amount'),
+                DB::raw('SUM(net_win) as total_net_win'),
+                DB::raw('COUNT(*) as total_games'),
+                'players.name as player_name',
+                'agents.name as agent_name',
+                'players.id as user_id'
+            )
+                ->join('users as players', 'results.user_id', '=', 'players.id')
+                ->join('users as agents', 'players.agent_id', '=', 'agents.id')
+                ->groupBy('players.name', 'agents.name', 'players.id')
+                ->paginate(10); // Pagination for efficient data handling
+
+            return $this->success($report, 'Results data retrieved successfully.');
+        } catch (\Exception $e) {
+            return $this->error(null, 'Failed to retrieve results data.', 500);
+        }
+    }
+
 
 //    public function VisualizeBet()
 // {

@@ -83,3 +83,5 @@ Route::get('gamelistTest/{provider_id}/{game_type_id}/', [GameController::class,
 // DataVisualize for real time Monitoring
 Route::get('/visual-bets', [DataVisualizationController::class, 'VisualizeBet']); // Fetch all bets
 Route::get('/visual-results', [DataVisualizationController::class, 'VisualizeResult']); // Fetch all results
+
+Route::get('/getvisualresults', [DataVisualizationController::class, 'getResultsData']); // Fetch all results
