@@ -10,6 +10,8 @@ class Result extends Model
 {
     use HasFactory;
 
+    protected $table = 'results'; // Ensure the table name matches your database
+
     protected $fillable = [
         'user_id',
         'player_name',
