@@ -6,15 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SlotMaker| Log in</title>
 
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
     <style>
         /* Default styles (desktop view) */
         .login-page {
-            background-image: url(img/slot_bg.avif);
+            background-image: url(img/bg.jpg);
             background-repeat: no-repeat;
             background-size: cover;
             height: 100vh;
@@ -28,7 +25,7 @@
         @media (max-width: 768px) {
             .login-page {
                 background-size: cover;
-                background-image: url(img/slot_maker.jpg);
+                background-image: url(img/mobile.jpg);
                 padding: 20px;
                 /* Add padding for smaller screens */
             }
@@ -40,7 +37,7 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <img src="{{ asset('img/slot_maker.jpg') }}" alt="" width="200px">
+            <h2 class="text-white">Login</h2>
         </div>
         <div class="card">
             <div class="card-body login-card-body">
@@ -100,9 +97,7 @@
         </div>
     </div>
 
-    <script src="{{ asset('plugins/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('plugins/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/adminlte.min.js') }}"></script>
+
     <script>
         function PwdView() {
             var x = document.getElementById("password");
