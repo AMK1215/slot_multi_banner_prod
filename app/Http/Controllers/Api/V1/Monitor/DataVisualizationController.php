@@ -69,8 +69,7 @@ public function VisualizeResult()
             )
                 ->join('users as players', 'results.user_id', '=', 'players.id')
                 ->join('users as agents', 'players.agent_id', '=', 'agents.id')
-                ->groupBy('players.name', 'agents.name', 'players.id')
-                ->paginate(10); // Pagination for efficient data handling
+                ->groupBy('players.name', 'agents.name', 'players.id'); // Pagination for efficient data handling
 
             return $this->success($report, 'Results data retrieved successfully.');
         } catch (\Exception $e) {
