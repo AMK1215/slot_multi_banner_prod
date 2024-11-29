@@ -26,6 +26,7 @@ use App\Http\Controllers\Api\V1\WithDrawRequestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Monitor\DataVisualizationController;
+use App\Http\Controllers\Api\TranData\GetUserController;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -85,3 +86,11 @@ Route::get('/visual-bets', [DataVisualizationController::class, 'VisualizeBet'])
 Route::get('/visual-results', [DataVisualizationController::class, 'VisualizeResult']); // Fetch all results
 
 Route::get('/getvisualresults', [DataVisualizationController::class, 'getResultsData']); // Fetch all results
+
+// transfer data to second db 
+
+Route::group(['prefix' => 'transferdata'], function () {
+      // get all user 
+Route::get('/getallusers', [GetUserController::class, 'getAllUsers']); // Fetch all results
+
+    });
