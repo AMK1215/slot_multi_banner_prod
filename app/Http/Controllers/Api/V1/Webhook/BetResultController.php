@@ -31,7 +31,7 @@ class BetResultController extends Controller
             foreach ($transactions as $transaction) {
                 $player = User::where('user_name', $transaction['PlayerId'])->first();
                 if (! $player) {
-                    // Log::warning('Invalid player detected', ['PlayerId' => $transaction['PlayerId']]);
+                    Log::warning('Invalid player detected', ['PlayerId' => $transaction['PlayerId']]);
 
                     return $this->buildErrorResponse(StatusCode::InvalidPlayerPassword, 0);
                 }
@@ -182,7 +182,7 @@ class BetResultController extends Controller
                 'tran_date_time' => $transaction['TranDateTime'],
             ]);
 
-            // Log::info('Game result logged successfully', ['PlayerId' => $transaction['PlayerId'], 'ResultId' => $transaction['ResultId']]);
+            Log::info('Game result logged successfully', ['PlayerId' => $transaction['PlayerId'], 'ResultId' => $transaction['ResultId']]);
         } catch (\Exception $e) {
             Log::error('Failed to log game result', [
                 'PlayerId' => $transaction['PlayerId'],

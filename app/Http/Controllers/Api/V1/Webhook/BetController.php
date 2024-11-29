@@ -34,9 +34,9 @@ class BetController extends Controller
                 // Get the player
                 $player = User::where('user_name', $transaction['PlayerId'])->first();
                 if (! $player) {
-                    // Log::warning('Invalid player detected', [
-                    //     'PlayerId' => $transaction['PlayerId'],
-                    // ]);
+                    Log::warning('Invalid player detected', [
+                        'PlayerId' => $transaction['PlayerId'],
+                    ]);
 
                     return PlaceBetWebhookService::buildResponse(
                         StatusCode::InvalidPlayerPassword,
@@ -49,10 +49,10 @@ class BetController extends Controller
                 $signature = $this->generateSignature($transaction);
                 //Log::info('Bet Signature', ['GeneratedBetSignature' => $signature]);
                 if ($signature !== $transaction['Signature']) {
-                    // Log::warning('Signature validation failed', [
-                    //     'transaction' => $transaction,
-                    //     'generated_signature' => $signature,
-                    // ]);
+                    Log::warning('Signature validation failed', [
+                        'transaction' => $transaction,
+                        'generated_signature' => $signature,
+                    ]);
 
                     return $this->buildErrorResponse(StatusCode::InvalidSignature);
                 }
@@ -60,9 +60,9 @@ class BetController extends Controller
                 // Check for duplicate transaction
                 $existingTransaction = Bet::where('bet_id', $transaction['BetId'])->first();
                 if ($existingTransaction) {
-                    // Log::warning('Duplicate BetId detected', [
-                    //     'BetId' => $transaction['BetId'],
-                    // ]);
+                    Log::warning('Duplicate BetId detected', [
+                        'BetId' => $transaction['BetId'],
+                    ]);
                     $Balance = $request->getMember()->balanceFloat;
 
                     return $this->buildErrorResponse(StatusCode::DuplicateTransaction, $Balance);
@@ -72,10 +72,10 @@ class BetController extends Controller
 
                 // Check for sufficient balance
                 if ($transaction['BetAmount'] > $PlayerBalance) {
-                    //Log::warning('Insufficient balance detected', [
-                    // 'BetAmount' => $transaction['BetAmount'],
-                    // 'balance' => $PlayerBalance,
-                    // ]);
+                    Log::warning('Insufficient balance detected', [
+                    'BetAmount' => $transaction['BetAmount'],
+                    'balance' => $PlayerBalance,
+                    ]);
 
                     return $this->buildErrorResponse(StatusCode::InsufficientBalance, $PlayerBalance);
                 }
@@ -112,7 +112,7 @@ class BetController extends Controller
                     'tran_date_time' => Carbon::parse($transaction['TranDateTime'])->format('Y-m-d H:i:s'),
                 ]);
 
-                //Log::info('Bet Transaction  processed successfully', ['BetID' => $transaction['BetId']]);
+                Log::info('Bet Transaction  processed successfully', ['BetID' => $transaction['BetId']]);
             }
 
             DB::commit();

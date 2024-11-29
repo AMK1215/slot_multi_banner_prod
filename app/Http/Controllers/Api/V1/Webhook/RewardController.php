@@ -29,9 +29,9 @@ class RewardController extends Controller
                 // Retrieve player by PlayerId
                 $player = User::where('user_name', $transaction['PlayerId'])->first();
                 if (! $player) {
-                    // Log::warning('Invalid player detected', [
-                    //     'PlayerId' => $transaction['PlayerId'],
-                    // ]);
+                    Log::warning('Invalid player detected', [
+                        'PlayerId' => $transaction['PlayerId'],
+                    ]);
 
                     return $this->buildErrorResponse(StatusCode::InvalidPlayerPassword);
                 }
@@ -50,9 +50,9 @@ class RewardController extends Controller
                 // Check for duplicate transaction
                 $existingTransaction = Reward::where('tran_id', $transaction['TranId'])->first();
                 if ($existingTransaction) {
-                    // Log::warning('Duplicate TranId detected', [
-                    //     'TranId' => $transaction['TranId'],
-                    // ]);
+                    Log::warning('Duplicate TranId detected', [
+                        'TranId' => $transaction['TranId'],
+                    ]);
                     $balance = $player->wallet->balanceFloat;
 
                     return $this->buildErrorResponse(StatusCode::DuplicateTransaction, $balance);
@@ -87,7 +87,7 @@ class RewardController extends Controller
                     'reward_detail' => $transaction['RewardDetail'] ?? null,
                 ]);
 
-                // Log::info('Reward transaction processed successfully', ['TranId' => $transaction['TranId']]);
+                Log::info('Reward transaction processed successfully', ['TranId' => $transaction['TranId']]);
             }
 
             DB::commit();

@@ -30,9 +30,9 @@ class AdjustmentController extends Controller
                 // Retrieve the player
                 $player = User::where('user_name', $transaction['PlayerId'])->first();
                 if (! $player) {
-                    // Log::warning('Invalid player detected', [
-                    //     'PlayerId' => $transaction['PlayerId'],
-                    // ]);
+                    Log::warning('Invalid player detected', [
+                        'PlayerId' => $transaction['PlayerId'],
+                    ]);
 
                     return $this->buildErrorResponse(StatusCode::InvalidPlayerPassword, 0);
                 }
@@ -53,9 +53,9 @@ class AdjustmentController extends Controller
                 // Check for duplicate transaction
                 $existingTransaction = Adjustment::where('tran_id', $transaction['TranId'])->first();
                 if ($existingTransaction) {
-                    // Log::warning('Duplicate TranId detected', [
-                    //     'TranId' => $transaction['TranId'],
-                    // ]);
+                    Log::warning('Duplicate TranId detected', [
+                        'TranId' => $transaction['TranId'],
+                    ]);
 
                     return $this->buildErrorResponse(StatusCode::DuplicateTransaction); // Return duplicate transaction error
                 }
@@ -88,7 +88,7 @@ class AdjustmentController extends Controller
                     'remark' => $transaction['Remark'],
                 ]);
 
-                // Log::info('Adjustment transaction processed successfully', ['TranId' => $transaction['TranId']]);
+                Log::info('Adjustment transaction processed successfully', ['TranId' => $transaction['TranId']]);
             }
 
             DB::commit();

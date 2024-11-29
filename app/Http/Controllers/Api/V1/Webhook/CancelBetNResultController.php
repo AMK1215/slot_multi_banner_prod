@@ -54,14 +54,14 @@ class CancelBetNResultController extends Controller
                 $existingTransaction = BetNResult::where('tran_id', $transaction['TranId'])->first();
 
                 if ($existingTransaction && $existingTransaction->status === 'processed') {
-                    // Log::info('BetNResult already processed', ['TranId' => $transaction['TranId']]);
+                    Log::info('BetNResult already processed', ['TranId' => $transaction['TranId']]);
 
                     return $this->buildErrorResponse(StatusCode::NotEligibleCancel); // 900300 status for already processed
                 }
 
                 // If the transaction is unprocessed or does not exist, mark it as processed and return success
                 if (! $existingTransaction || $existingTransaction->status !== 'processed') {
-                    // Log::info('BetNResult unprocessed or not found, setting status to processed', ['TranId' => $transaction['TranId']]);
+                    Log::info('BetNResult unprocessed or not found, setting status to processed', ['TranId' => $transaction['TranId']]);
 
                     // Mark the transaction as processed if it exists
                     if ($existingTransaction) {
