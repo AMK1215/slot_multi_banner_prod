@@ -101,7 +101,7 @@
             data-user_name="${user_name}"
             data-password="${password}"
             data-amount="${amount}"
-            data-url="https://goldenjacks.pro/login"
+            data-url="https://panda666.info/login"
             onclick="copyToClipboard(this)">Copy</button>
     </div>`, {
                     allowHtml: true
@@ -115,7 +115,7 @@
             var url = $(button).data('url');
 
             // var textToCopy = "Phone: " + phone + "\nPassword: " + password + "\nAmount: " + amount + "\nURL: " + url;
-            var textToCopy = "Login ID: " + user_name + "\nPassword: " + password + "\nAmount: " + amount;
+            var textToCopy = "URL: " + url  + "\nLogin ID: " + user_name + "\nPassword: " + password + "\nAmount: " + amount;
 
             navigator.clipboard.writeText(textToCopy).then(function() {
                 toastr.success("Credentials copied to clipboard!");
