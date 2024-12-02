@@ -30,9 +30,9 @@ class ResultController extends Controller
             foreach ($transactions as $transaction) {
                 $player = User::where('user_name', $transaction['PlayerId'])->first();
                 if (! $player) {
-                    // Log::warning('Invalid player detected', [
-                    //     'PlayerId' => $transaction['PlayerId'],
-                    // ]);
+                    Log::warning('Invalid player detected', [
+                        'PlayerId' => $transaction['PlayerId'],
+                    ]);
 
                     return $this->buildErrorResponse(StatusCode::InvalidPlayerPassword, 0);
                 }
@@ -53,7 +53,7 @@ class ResultController extends Controller
                 // Check for duplicate ResultId
                 $existingTransaction = Result::where('result_id', $transaction['ResultId'])->first();
                 if ($existingTransaction) {
-                    // Log::warning('Duplicate ResultId detected', ['ResultId' => $transaction['ResultId']]);
+                    Log::warning('Duplicate ResultId detected', ['ResultId' => $transaction['ResultId']]);
                     $balance = $player->wallet->balanceFloat;
 
                     return $this->buildErrorResponse(StatusCode::DuplicateTransaction, $balance);
@@ -99,7 +99,7 @@ class ResultController extends Controller
                     'tran_date_time' => $transaction['TranDateTime'],
                 ]);
 
-                // Log::info('Result transaction processed successfully', ['ResultId' => $transaction['ResultId']]);
+                Log::info('Result transaction processed successfully', ['ResultId' => $transaction['ResultId']]);
             }
 
             DB::commit();

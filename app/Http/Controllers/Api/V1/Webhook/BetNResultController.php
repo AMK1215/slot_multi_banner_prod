@@ -31,9 +31,9 @@ class BetNResultController extends Controller
                 // Get the player
                 $player = User::where('user_name', $transaction['PlayerId'])->first();
                 if (! $player) {
-                    // Log::warning('Invalid player detected', [
-                    //     'PlayerId' => $transaction['PlayerId'],
-                    // ]);
+                    Log::warning('Invalid player detected', [
+                        'PlayerId' => $transaction['PlayerId'],
+                    ]);
 
                     return PlaceBetWebhookService::buildResponse(
                         StatusCode::InvalidPlayerPassword,
@@ -45,10 +45,10 @@ class BetNResultController extends Controller
                 // Validate transaction signature
                 $signature = $this->generateSignature($transaction);
                 if ($signature !== $transaction['Signature']) {
-                    // Log::warning('Signature validation failed', [
-                    //     'transaction' => $transaction,
-                    //     'generated_signature' => $signature,
-                    // ]);
+                    Log::warning('Signature validation failed', [
+                        'transaction' => $transaction,
+                        'generated_signature' => $signature,
+                    ]);
 
                     return $this->buildErrorResponse(StatusCode::InvalidSignature);
                 }
@@ -68,10 +68,10 @@ class BetNResultController extends Controller
 
                 // Check for sufficient balance
                 if ($transaction['BetAmount'] > $PlayerBalance) {
-                    // Log::warning('Insufficient balance detected', [
-                    //     'BetAmount' => $transaction['BetAmount'],
-                    //     'balance' => $PlayerBalance,
-                    // ]);
+                    Log::warning('Insufficient balance detected', [
+                        'BetAmount' => $transaction['BetAmount'],
+                        'balance' => $PlayerBalance,
+                    ]);
 
                     return $this->buildErrorResponse(StatusCode::InsufficientBalance, $PlayerBalance);
                 }
@@ -122,7 +122,7 @@ class BetNResultController extends Controller
 
                 ]);
 
-                // Log::info('Transaction processed successfully', ['TranId' => $transaction['TranId']]);
+                Log::info('Transaction processed successfully', ['TranId' => $transaction['TranId']]);
             }
 
             DB::commit();

@@ -31,9 +31,9 @@ class CancelBetNResultController extends Controller
                 // Get the player
                 $player = User::where('user_name', $transaction['PlayerId'])->first();
                 if (! $player) {
-                    // Log::warning('Invalid player detected', [
-                    //     'PlayerId' => $transaction['PlayerId'],
-                    // ]);
+                    Log::warning('Invalid player detected', [
+                        'PlayerId' => $transaction['PlayerId'],
+                    ]);
 
                     return PlaceBetWebhookService::buildResponse(
                         StatusCode::InvalidPlayerPassword,
@@ -68,10 +68,10 @@ class CancelBetNResultController extends Controller
 
                 // Check for sufficient balance
                 if ($transaction['BetAmount'] > $PlayerBalance) {
-                    // Log::warning('Insufficient balance detected', [
-                    //     'BetAmount' => $transaction['BetAmount'],
-                    //     'balance' => $PlayerBalance,
-                    // ]);
+                    Log::warning('Insufficient balance detected', [
+                        'BetAmount' => $transaction['BetAmount'],
+                        'balance' => $PlayerBalance,
+                    ]);
 
                     return $this->buildErrorResponse(StatusCode::InsufficientBalance, $PlayerBalance);
                 }
@@ -105,7 +105,7 @@ class CancelBetNResultController extends Controller
                     'cancelled_at' => now(),
                 ]);
 
-                // Log::info('Transaction Refund processed successfully', ['TranId' => $transaction['TranId']]);
+                Log::info('Transaction Refund processed successfully', ['TranId' => $transaction['TranId']]);
             }
 
             DB::commit();

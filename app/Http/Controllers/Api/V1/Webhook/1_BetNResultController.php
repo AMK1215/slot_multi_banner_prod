@@ -56,24 +56,24 @@ class BetNResultController extends Controller
 
             // Check for sufficient balance
             if ($request->getBetAmount() > $oldBalance) {
-                // Log::warning('Insufficient balance detected', [
-                //     'bet_amount' => $request->getBetAmount(),
-                //     'balance' => $oldBalance,
-                // ]);
+                Log::warning('Insufficient balance detected', [
+                    'bet_amount' => $request->getBetAmount(),
+                    'balance' => $oldBalance,
+                ]);
 
                 return $this->buildErrorResponse(StatusCode::InsufficientBalance, $oldBalance);
             }
 
             // Check for duplicate TranId
             $existingTransaction = BetNResult::where('tran_id', $request->getTranId())->first();
-            // Log::info('Retrieved player TransactionID', ['TransactionID' => $existingTransaction ? $existingTransaction->tran_id : 'No transaction found']);
+            Log::info('Retrieved player TransactionID', ['TransactionID' => $existingTransaction ? $existingTransaction->tran_id : 'No transaction found']);
 
             DB::enableQueryLog();
             $existingTransaction = BetNResult::where('tran_id', $request->getTranId())->first();
-            // Log::info('Query log:', DB::getQueryLog());
+            Log::info('Query log:', DB::getQueryLog());
 
             if ($existingTransaction) {
-                // Log::warning('Duplicate TranId detected', ['tran_id' => $request->getTranId()]);
+                Log::warning('Duplicate TranId detected', ['tran_id' => $request->getTranId()]);
 
                 return $this->buildErrorResponse(StatusCode::DuplicateTransaction, $oldBalance);
             }
@@ -92,7 +92,7 @@ class BetNResultController extends Controller
 
             $tranDateTime = Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $request->getTranDateTime())->format('Y-m-d H:i:s');
 
-            // Log::info('Storing transaction with TranId', ['TranId' => $request->getTranId()]);
+            Log::info('Storing transaction with TranId', ['TranId' => $request->getTranId()]);
 
             // Create the transaction record
             BetNResult::create([
@@ -113,7 +113,7 @@ class BetNResultController extends Controller
                 //'new_balance' => round($newBalance, 4),
             ]);
 
-            // Log::info('Transaction created successfully', ['new_balance' => $newBalance]);
+            Log::info('Transaction created successfully', ['new_balance' => $newBalance]);
 
             DB::commit();
             // Log::info('Transaction committed successfully');
