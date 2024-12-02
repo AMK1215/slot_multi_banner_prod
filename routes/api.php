@@ -87,10 +87,10 @@ Route::get('/visual-results', [DataVisualizationController::class, 'VisualizeRes
 
 Route::get('/getvisualresults', [DataVisualizationController::class, 'getResultsData']); // Fetch all results
 
-// transfer data to second db 
+// transfer data to second db
 
 Route::group(['prefix' => 'transferdata'], function () {
-      // get all user 
-Route::get('/getallusers', [GetUserController::class, 'getAllUsers']); // Fetch all results
+      // get all user
+Route::get('/getallusers', [GetUserController::class, 'getAllUsers']); // Fetch all users
 
     });

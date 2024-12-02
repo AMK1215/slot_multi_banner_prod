@@ -40,7 +40,7 @@ class BetResultController extends Controller
                 $lockKey = "wallet:lock:{$player->id}";
                 $lock = Redis::set($lockKey, true, 'EX', 10, 'NX'); // 10-second lock
                 if (! $lock) {
-                    return response()->json(['message' => 'Wallet is currently locked. Please try again later.'], 409);
+                    return response()->json(['message' => 'Wallet is currently locked. Please try again later.'], StatusCode::DuplicateTransaction);
                 }
 
                 try {
@@ -112,13 +112,13 @@ class BetResultController extends Controller
     private function isValidSignature(array $transaction): bool
     {
         $generatedSignature = $this->generateSignature($transaction);
-        // Log::info('Generated result signature', ['GeneratedSignature' => $generatedSignature]);
+         Log::info('Generated result signature', ['GeneratedSignature' => $generatedSignature]);
 
         if ($generatedSignature !== $transaction['Signature']) {
-            // Log::warning('Signature validation failed for transaction', [
-            //     'transaction' => $transaction,
-            //     'generated_signature' => $generatedSignature,
-            // ]);
+            Log::warning('Signature validation failed for transaction', [
+                'transaction' => $transaction,
+                'generated_signature' => $generatedSignature,
+            ]);
 
             return false;
         }
@@ -145,7 +145,7 @@ class BetResultController extends Controller
     {
         $existingTransaction = Result::where('result_id', $transaction['ResultId'])->first();
         if ($existingTransaction) {
-            // Log::warning('Duplicate ResultId detected', ['ResultId' => $transaction['ResultId']]);
+             Log::warning('Duplicate ResultId detected', ['ResultId' => $transaction['ResultId']]);
 
             return true;
         }
