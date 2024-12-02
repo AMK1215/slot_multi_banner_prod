@@ -163,9 +163,9 @@ class ResultWebhookRequest extends FormRequest
         }
 
         // Log the transactions for debugging
-        // Log::info('Retrieved Transactions', [
-        //     'transactions' => $transactions,
-        // ]);
+        Log::info('Retrieved Transactions', [
+            'transactions' => $transactions,
+        ]);
 
         return $transactions;
     }

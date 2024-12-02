@@ -25,7 +25,7 @@ class ResultController extends Controller
 
         DB::beginTransaction();
         try {
-            // Log::info('Starting handleResult method for multiple transactions');
+            Log::info('Starting handleResult method for multiple transactions');
 
             foreach ($transactions as $transaction) {
                 $player = User::where('user_name', $transaction['PlayerId'])->first();
@@ -40,12 +40,12 @@ class ResultController extends Controller
                 // Validate signature
                 $signature = $this->generateSignature($transaction);
                 //$signature = $this->generateSignature($transaction);
-                // Log::info('Result Signature', ['GeneratedResultSignature' => $signature]);
+                 Log::info('Result Signature', ['GeneratedResultSignature' => $signature]);
                 if ($signature !== $transaction['Signature']) {
-                    // Log::warning('Signature validation failed for transaction', [
-                    //     'transaction' => $transaction,
-                    //     'generated_signature' => $signature,
-                    // ]);
+                    Log::warning('Signature validation failed for transaction', [
+                        'transaction' => $transaction,
+                        'generated_signature' => $signature,
+                    ]);
 
                     return $this->buildErrorResponse(StatusCode::InvalidSignature, $player->wallet->balanceFloat);
                 }
