@@ -40,7 +40,7 @@ class BetResultController extends Controller
                 $lockKey = "wallet:lock:{$player->id}";
                 $lock = Redis::set($lockKey, true, 'EX', 10, 'NX'); // 10-second lock
                 if (! $lock) {
-                    return response()->json(['message' => 'Wallet is currently locked. Please try again later.'], StatusCode::DuplicateTransaction);
+                    return response()->json(['message' => 'Wallet is currently locked. Please try again later.'], StatusCode::DuplicateTransaction->value);
                 }
 
                 try {

@@ -66,10 +66,7 @@ class RewardController extends Controller
                     $transaction['Amount']
                 );
 
-                //$newBalance = $player->wallet->refreshBalance()->balanceFloat;
-                //$request->getMember()->wallet->refreshBalance();
 
-                //$newBalance = $request->getMember()->balanceFloat;
                 $newBalance = $player->wallet->refreshBalance()->balanceFloat;
 
 
@@ -137,3 +134,9 @@ class RewardController extends Controller
                    $transaction['OperatorId'].config('game.api.secret_key').$transaction['PlayerId']);
     }
 }
+
+
+//$newBalance = $player->wallet->refreshBalance()->balanceFloat;
+                //$request->getMember()->wallet->refreshBalance();
+
+                //$newBalance = $request->getMember()->balanceFloat;
