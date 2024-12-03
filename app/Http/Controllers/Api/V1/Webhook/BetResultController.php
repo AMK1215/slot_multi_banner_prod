@@ -41,22 +41,35 @@ class BetResultController extends Controller
                 $lock = Redis::set($lockKey, true, 'EX', 10, 'NX'); // 10-second lock
 
                 if (! $lock) {
-                return response()->json([
-                    'Status' => StatusCode::DuplicateTransaction->value,
-                    'Description' => 'Wallet is currently locked. Please try again later.',
-                ], 409); // Valid HTTP status code
+                    return $this->buildErrorResponse(StatusCode::DuplicateTransaction, $player->wallet->balanceFloat);
+                // return response()->json([
+                //     'Status' => StatusCode::DuplicateTransaction->value,
+                //     'Description' => 'Wallet is currently locked. Please try again later.',
+                // ], 409); // Valid HTTP status code
             }
-                // if (! $lock) {
-                //     return response()->json(['message' => 'Wallet is currently locked. Please try again later.'], StatusCode::DuplicateTransaction->value);
-                // }
 
                 try {
                     // Validate signature and prevent duplicate ResultId
-                    if (! $this->isValidSignature($transaction) || $this->isDuplicateResult($transaction)) {
-                        Redis::del($lockKey); // Release lock
+                    // if (! $this->isValidSignature($transaction) || $this->isDuplicateResult($transaction)) {
+                    //     Redis::del($lockKey); // Release lock
 
-                        return $this->buildErrorResponse(StatusCode::InvalidSignature, $player->wallet->balanceFloat);
-                    }
+                    //     return $this->buildErrorResponse(StatusCode::InvalidSignature, $player->wallet->balanceFloat);
+                    // }
+
+                    // Validate signature
+if (! $this->isValidSignature($transaction)) {
+    Redis::del($lockKey); // Release lock
+
+    return $this->buildErrorResponse(StatusCode::InvalidSignature, $player->wallet->balanceFloat);
+}
+
+// Prevent duplicate ResultId
+if ($this->isDuplicateResult($transaction)) {
+    Redis::del($lockKey); // Release lock
+
+    return $this->buildErrorResponse(StatusCode::DuplicateTransaction, $player->wallet->balanceFloat);
+}
+
 
                     // Process payout if WinAmount > 0
                     if ($transaction['WinAmount'] > 0) {
@@ -107,24 +120,24 @@ class BetResultController extends Controller
         ]);
     }
 
-    // private function buildErrorResponse(StatusCode $statusCode, float $balance = 0): JsonResponse
-    // {
-    //     return response()->json([
-    //         'Status' => $statusCode->value,
-    //         'Description' => $statusCode->name,
-    //         'Balance' => round($balance, 4),
-    //     ]);
-    // }
     private function buildErrorResponse(StatusCode $statusCode, float $balance = 0): JsonResponse
-{
-    $httpStatus = $this->mapToHttpStatus($statusCode);
+    {
+        return response()->json([
+            'Status' => $statusCode->value,
+            'Description' => $statusCode->name,
+            'Balance' => round($balance, 4),
+        ]);
+    }
+//     private function buildErrorResponse(StatusCode $statusCode, float $balance = 0): JsonResponse
+// {
+//     $httpStatus = $this->mapToHttpStatus($statusCode);
 
-    return response()->json([
-        'Status' => $statusCode->value,           // Custom status code in the body
-        'Description' => $statusCode->name,      // Custom status description
-        'Balance' => round($balance, 4),         // Player's balance
-    ], $httpStatus);                            // Valid HTTP status code in the header
-}
+//     return response()->json([
+//         'Status' => $statusCode->value,           // Custom status code in the body
+//         'Description' => $statusCode->name,      // Custom status description
+//         'Balance' => round($balance, 4),         // Player's balance
+//     ], $httpStatus);                            // Valid HTTP status code in the header
+// }
 
 private function mapToHttpStatus(StatusCode $statusCode): int
 {
