@@ -39,9 +39,16 @@ class BetResultController extends Controller
                 // Acquire a Redis lock for the player's wallet
                 $lockKey = "wallet:lock:{$player->id}";
                 $lock = Redis::set($lockKey, true, 'EX', 10, 'NX'); // 10-second lock
+
                 if (! $lock) {
-                    return response()->json(['message' => 'Wallet is currently locked. Please try again later.'], StatusCode::DuplicateTransaction->value);
-                }
+                return response()->json([
+                    'Status' => StatusCode::DuplicateTransaction->value,
+                    'Description' => 'Wallet is currently locked. Please try again later.',
+                ], 409); // Valid HTTP status code
+            }
+                // if (! $lock) {
+                //     return response()->json(['message' => 'Wallet is currently locked. Please try again later.'], StatusCode::DuplicateTransaction->value);
+                // }
 
                 try {
                     // Validate signature and prevent duplicate ResultId
@@ -100,14 +107,37 @@ class BetResultController extends Controller
         ]);
     }
 
+    // private function buildErrorResponse(StatusCode $statusCode, float $balance = 0): JsonResponse
+    // {
+    //     return response()->json([
+    //         'Status' => $statusCode->value,
+    //         'Description' => $statusCode->name,
+    //         'Balance' => round($balance, 4),
+    //     ]);
+    // }
     private function buildErrorResponse(StatusCode $statusCode, float $balance = 0): JsonResponse
-    {
-        return response()->json([
-            'Status' => $statusCode->value,
-            'Description' => $statusCode->name,
-            'Balance' => round($balance, 4),
-        ]);
-    }
+{
+    $httpStatus = $this->mapToHttpStatus($statusCode);
+
+    return response()->json([
+        'Status' => $statusCode->value,           // Custom status code in the body
+        'Description' => $statusCode->name,      // Custom status description
+        'Balance' => round($balance, 4),         // Player's balance
+    ], $httpStatus);                            // Valid HTTP status code in the header
+}
+
+private function mapToHttpStatus(StatusCode $statusCode): int
+{
+    return match ($statusCode) {
+        StatusCode::DuplicateTransaction,
+        StatusCode::InvalidSignature,
+        StatusCode::BetTransactionNotFound => 409, // Conflict
+        StatusCode::InternalServerError => 500,    // Internal Server Error
+        StatusCode::BadRequest => 400,            // Bad Request
+        default => 400,                           // Default to Bad Request
+    };
+}
+
 
     private function isValidSignature(array $transaction): bool
     {
