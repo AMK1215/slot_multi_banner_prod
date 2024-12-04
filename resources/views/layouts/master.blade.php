@@ -141,29 +141,29 @@
                                     </p>
                                 </a>
                             </li>
-                 
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tools"></i>
-                                <p>
-                                    Shan
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ url('admin/shan-report') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Win/Lose</p>
-                                    </a>
-                                </li>
 
-                            </ul>
-                        </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-tools"></i>
+                                    <p>
+                                        Shan
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/shan-report') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Win/Lose</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
                         @endcan
                         @can('owner_access')
                             <li class="nav-item">
-                                <a href="{{ url('admin/slot/report') }}" class="nav-link">
+                                <a href="{{ url('admin/slot/adminreport') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
                                     <p>
                                         W/L Report V1
