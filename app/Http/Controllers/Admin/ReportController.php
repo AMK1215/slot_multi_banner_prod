@@ -31,7 +31,7 @@ class ReportController extends Controller
             ->groupBy('players.name', 'agents.name', 'players.id')
             ->paginate(10)
             ->withQueryString();;
-        
+
         return view('admin.reports.index', compact('report'));
     }
 
@@ -42,7 +42,11 @@ class ReportController extends Controller
             ->select('results.*', 'users.name as user_name')
             ->get();
 
-        return view('admin.reports.detail', compact('details'));
+             // Calculate totals
+            $totalBet = $details->sum('total_bet_amount');
+            $totalWin = $details->sum('win_amount');
+            $totalNetWin = $details->sum('net_win');
+        return view('admin.reports.detail', compact('details', 'totalBet', 'totalWin', 'totalNetWin'));
     }
 
     public function getTransactionDetails($tranId)
