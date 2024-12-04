@@ -209,7 +209,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('admin/slot/report') }}" class="nav-link">
+                                <a href="{{ url('admin/slot/adminreport') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
                                     <p>
                                         W/L Report V1
