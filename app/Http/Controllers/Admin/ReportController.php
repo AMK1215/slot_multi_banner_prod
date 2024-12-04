@@ -70,7 +70,12 @@ class ReportController extends Controller
             ->paginate(10) // Paginate results to show 10 per page
             ->withQueryString(); // Preserve query string in pagination links
 
-        return view('admin.reports.index_report', compact('report'));
+            // Calculate totals
+        $totalBet = $report->sum('total_bet_amount');
+        $totalWin = $report->sum('total_win_amount');
+        $totalNetWin = $report->sum('total_net_win');
+
+        return view('admin.reports.index_report', compact('report', 'totalBet', 'totalWin', 'totalNetWin'));
     }
 
     public function getTransactionDetails($tranId)

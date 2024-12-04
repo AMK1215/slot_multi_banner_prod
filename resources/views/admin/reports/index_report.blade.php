@@ -62,6 +62,7 @@
                                         <th>Total Bet</th>
                                         <th>Total Win</th>
                                         <th>Total Net Win</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -78,6 +79,16 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
+
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="5" class="text-right">Total:</th>
+                                        <th>{{ number_format($totalBet, 2) }}</th>
+                                        <th>{{ number_format($totalWin, 2) }}</th>
+                                        <th>{{ number_format($totalNetWin, 2) }}</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
 
                             </table>
                             {{ $report->links() }}
