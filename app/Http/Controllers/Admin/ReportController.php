@@ -83,7 +83,8 @@ class ReportController extends Controller
     $details = Result::where('user_id', $playerId)
         ->join('users', 'results.user_id', '=', 'users.id')
         ->select('results.*', 'users.name as user_name')
-        ->paginate(10); // Paginate results to show 10 per page
+        ->get();
+        //->paginate(10); // Paginate results to show 10 per page
         // Calculate totals
         $totalBet = $details->sum('total_bet_amount');
         $totalWin = $details->sum('win_amount');
