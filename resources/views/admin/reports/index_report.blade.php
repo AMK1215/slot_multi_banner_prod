@@ -57,7 +57,7 @@
                                         <th>Agent Name</th>
 
                                         <th>Player Name</th>
-                                        <th>Total Games</th>
+                                        <th>TotalStakeCount</th>
 
                                         <th>Total Bet</th>
                                         <th>Total Win</th>
