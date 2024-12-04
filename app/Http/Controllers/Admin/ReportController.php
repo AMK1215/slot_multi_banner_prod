@@ -118,7 +118,7 @@ class ReportController extends Controller
     $totalWin = $report->sum('total_win_amount');
     $totalNetWin = $report->sum('total_net_win');
 
-    return view('agent.reports.agent_index_report', compact('report', 'totalBet', 'totalWin', 'totalNetWin'));
+    return view('admin.reports.agent_index_report', compact('report', 'totalBet', 'totalWin', 'totalNetWin'));
 }
 
 
