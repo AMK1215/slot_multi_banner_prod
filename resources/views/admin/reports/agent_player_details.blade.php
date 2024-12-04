@@ -36,6 +36,8 @@
                                         <th>Total Bet</th>
                                         <th>Win Amount</th>
                                         <th>Net Win</th>
+                                        <th>His-1</th>
+                                        <th>His-2</th>
                                         <th>Transaction Date</th>
                                     </tr>
                                 </thead>
@@ -48,6 +50,20 @@
                                             <td>{{ number_format($detail->total_bet_amount, 2) }}</td>
                                             <td>{{ number_format($detail->win_amount, 2) }}</td>
                                             <td>{{ number_format($detail->net_win, 2) }}</td>
+                                            <td>
+                                                <a href="javascript:void(0);"
+                                                    onclick="getTransactionDetails('{{ $detail->round_id }}')"
+                                                    style="color: blueviolet; text-decoration: underline;">
+                                                    {{ $detail->round_id }}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0);"
+                                                    onclick="getTransactionDetails('{{ $detail->result_id }}')"
+                                                    style="color: blueviolet; text-decoration: underline;">
+                                                    {{ $detail->result_id }}
+                                                </a>
+                                            </td>
                                             <td>{{ $detail->tran_date_time }}</td>
                                         </tr>
                                     @endforeach
