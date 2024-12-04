@@ -84,8 +84,12 @@ class ReportController extends Controller
         ->join('users', 'results.user_id', '=', 'users.id')
         ->select('results.*', 'users.name as user_name')
         ->paginate(10); // Paginate results to show 10 per page
+        // Calculate totals
+        $totalBet = $details->sum('total_bet_amount');
+        $totalWin = $details->sum('win_amount');
+        $totalNetWin = $details->sum('net_win');
 
-    return view('admin.reports.agent_player_details', compact('details'));
+    return view('admin.reports.agent_player_details', compact('details', 'totalBet', 'totalWin', 'totalNetWin'));
 }
 
     public function getTransactionDetails($tranId)

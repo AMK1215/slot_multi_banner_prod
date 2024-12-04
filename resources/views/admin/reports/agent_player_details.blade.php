@@ -30,6 +30,8 @@
                             <table id="mytable" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
+                                        <th>PlayerName</th>
+                                        <th>ProviderName</th>
                                         <th>Game Name</th>
                                         <th>Total Bet</th>
                                         <th>Win Amount</th>
@@ -40,6 +42,8 @@
                                 <tbody>
                                     @foreach ($details as $detail)
                                         <tr>
+                                            <td>{{ $detail->player_name }}</td>
+                                            <td>{{ $detail->game_provide_name }}</td>
                                             <td>{{ $detail->game_name }}</td>
                                             <td>{{ number_format($detail->total_bet_amount, 2) }}</td>
                                             <td>{{ number_format($detail->win_amount, 2) }}</td>
@@ -48,6 +52,15 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="5" class="text-right">Total:</th>
+                                        <th>{{ number_format($totalBet, 2) }}</th>
+                                        <th>{{ number_format($totalWin, 2) }}</th>
+                                        <th>{{ number_format($totalNetWin, 2) }}</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
                             </table>
                             {{ $details->links() }}
                         </div>
