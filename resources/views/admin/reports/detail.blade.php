@@ -31,6 +31,7 @@
                                 <thead>
                                     <tr>
                                         <th>Player Name</th>
+                                        <th>ProviderName</th>
                                         <th>Game Name</th>
                                         <th>History1</th>
                                         <th>History2</th>
@@ -45,6 +46,7 @@
                                         <tr>
                                             {{-- <td>{{ $detail->user_name }}</td> --}}
                                             <td>{{ $detail->player_name }}</td>
+                                            <td>{{ $detail->game_provide_name }}</td>
                                             <td>{{ $detail->game_name }}</td>
                                             {{-- <td>{{ $detail->operator_id }}</td> --}}
                                             {{-- <td><a href="https://delightmyanmar99.pro/api/transaction-details/{{ $detail->round_id }}"
