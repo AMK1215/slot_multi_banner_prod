@@ -54,14 +54,14 @@
                                                 <a href="javascript:void(0);"
                                                     onclick="getTransactionDetails('{{ $detail->round_id }}')"
                                                     style="color: blueviolet; text-decoration: underline;">
-                                                    {{ $detail->round_id }}
+                                                    History1
                                                 </a>
                                             </td>
                                             <td>
                                                 <a href="javascript:void(0);"
                                                     onclick="getTransactionDetails('{{ $detail->result_id }}')"
                                                     style="color: blueviolet; text-decoration: underline;">
-                                                    {{ $detail->result_id }}
+                                                    History2
                                                 </a>
                                             </td>
                                             <td>{{ $detail->tran_date_time }}</td>
