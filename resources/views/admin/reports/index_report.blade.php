@@ -62,6 +62,7 @@
                                         <th>Total Bet</th>
                                         <th>Total Win</th>
                                         <th>Total Net Win</th>
+                                        <th>Action</th>
 
                                     </tr>
                                 </thead>
@@ -76,6 +77,10 @@
                                             <td>{{ number_format($data->total_bet_amount, 2) }}</td>
                                             <td>{{ number_format($data->total_win_amount, 2) }}</td>
                                             <td>{{ number_format($data->total_net_win, 2) }}</td>
+                                            <td>
+                                                <a href="{{ route('admin.reports.player.details', $data->user_id) }}"
+                                                    class="btn btn-primary">Detail</a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

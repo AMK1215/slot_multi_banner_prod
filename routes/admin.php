@@ -147,6 +147,7 @@ Route::group([
         Route::get('report', [ReportController::class, 'index'])->name('report.index');
         Route::get('reports/details/{game_provide_name}', [ReportController::class, 'getReportDetails'])->name('reports.details');
         Route::get('adminreport', [ReportController::class, 'Reportindex'])->name('report.adminindex');
+        Route::get('reports/player/{playerId}', [ReportController::class, 'playerDetails'])->name('reports.player.details');
 
         Route::get('/daily-summaries', [DailySummaryController::class, 'index'])->name('daily_summaries.index');
 

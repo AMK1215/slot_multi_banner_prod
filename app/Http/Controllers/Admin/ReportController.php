@@ -78,6 +78,16 @@ class ReportController extends Controller
         return view('admin.reports.index_report', compact('report', 'totalBet', 'totalWin', 'totalNetWin'));
     }
 
+    public function playerDetails($playerId)
+{
+    $details = Result::where('user_id', $playerId)
+        ->join('users', 'results.user_id', '=', 'users.id')
+        ->select('results.*', 'users.name as user_name')
+        ->paginate(10); // Paginate results to show 10 per page
+
+    return view('admin.reports.agent_player_details', compact('details'));
+}
+
     public function getTransactionDetails($tranId)
     {
         $operatorId = 'delightMMK';
