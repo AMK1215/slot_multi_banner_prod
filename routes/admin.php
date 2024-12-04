@@ -149,6 +149,8 @@ Route::group([
         Route::get('adminreport', [ReportController::class, 'Reportindex'])->name('report.adminindex');
         Route::get('reports/player/{playerId}', [ReportController::class, 'playerDetails'])->name('reports.player.details');
 
+        Route::get('agentreport', [ReportController::class, 'AgentReportindex'])->name('report.agentindex');
+
         Route::get('/daily-summaries', [DailySummaryController::class, 'index'])->name('daily_summaries.index');
 
         Route::get('/reports/senior', [MultiBannerReportController::class, 'getSeniorReport'])->name('reports.senior');
