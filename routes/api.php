@@ -47,6 +47,9 @@ Route::post('Reward', [RewardController::class, 'handleReward']);
 
 Route::post('transactions', [ShanTransactionController::class, 'index'])->middleware('transaction');
 
+// for slot
+Route::post('/transaction-details/{tranId}', [TransactionController::class, 'getTransactionDetails']);
+
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('GameLogin', [LaunchGameController::class, 'LaunchGame']);
     Route::get('wager-logs', [WagerController::class, 'index']); //GSC
