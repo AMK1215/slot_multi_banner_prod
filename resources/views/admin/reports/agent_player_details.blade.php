@@ -62,7 +62,7 @@
                                     </tr>
                                 </tfoot>
                             </table>
-                            {{ $details->links() }}
+                            {{-- {{ $details->links() }} --}}
                         </div>
                         <!-- /.card-body -->
                     </div>
