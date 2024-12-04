@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\TranData;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
+use Illuminate\Http\Request;
 
 class GetUserController extends Controller
 {
@@ -27,5 +27,4 @@ class GetUserController extends Controller
             return $this->error(null, 'Failed to fetch users.', 500);
         }
     }
-
 }

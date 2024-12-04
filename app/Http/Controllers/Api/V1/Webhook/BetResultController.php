@@ -42,11 +42,11 @@ class BetResultController extends Controller
 
                 if (! $lock) {
                     return $this->buildErrorResponse(StatusCode::DuplicateTransaction, $player->wallet->balanceFloat);
-                // return response()->json([
-                //     'Status' => StatusCode::DuplicateTransaction->value,
-                //     'Description' => 'Wallet is currently locked. Please try again later.',
-                // ], 409); // Valid HTTP status code
-            }
+                    // return response()->json([
+                    //     'Status' => StatusCode::DuplicateTransaction->value,
+                    //     'Description' => 'Wallet is currently locked. Please try again later.',
+                    // ], 409); // Valid HTTP status code
+                }
 
                 try {
                     // Validate signature and prevent duplicate ResultId
@@ -57,19 +57,18 @@ class BetResultController extends Controller
                     // }
 
                     // Validate signature
-if (! $this->isValidSignature($transaction)) {
-    Redis::del($lockKey); // Release lock
+                    if (! $this->isValidSignature($transaction)) {
+                        Redis::del($lockKey); // Release lock
 
-    return $this->buildErrorResponse(StatusCode::InvalidSignature, $player->wallet->balanceFloat);
-}
+                        return $this->buildErrorResponse(StatusCode::InvalidSignature, $player->wallet->balanceFloat);
+                    }
 
-// Prevent duplicate ResultId
-if ($this->isDuplicateResult($transaction)) {
-    Redis::del($lockKey); // Release lock
+                    // Prevent duplicate ResultId
+                    if ($this->isDuplicateResult($transaction)) {
+                        Redis::del($lockKey); // Release lock
 
-    return $this->buildErrorResponse(StatusCode::DuplicateTransaction, $player->wallet->balanceFloat);
-}
-
+                        return $this->buildErrorResponse(StatusCode::DuplicateTransaction, $player->wallet->balanceFloat);
+                    }
 
                     // Process payout if WinAmount > 0
                     if ($transaction['WinAmount'] > 0) {
@@ -128,34 +127,33 @@ if ($this->isDuplicateResult($transaction)) {
             'Balance' => round($balance, 4),
         ]);
     }
-//     private function buildErrorResponse(StatusCode $statusCode, float $balance = 0): JsonResponse
-// {
-//     $httpStatus = $this->mapToHttpStatus($statusCode);
+    //     private function buildErrorResponse(StatusCode $statusCode, float $balance = 0): JsonResponse
+    // {
+    //     $httpStatus = $this->mapToHttpStatus($statusCode);
 
-//     return response()->json([
-//         'Status' => $statusCode->value,           // Custom status code in the body
-//         'Description' => $statusCode->name,      // Custom status description
-//         'Balance' => round($balance, 4),         // Player's balance
-//     ], $httpStatus);                            // Valid HTTP status code in the header
-// }
+    //     return response()->json([
+    //         'Status' => $statusCode->value,           // Custom status code in the body
+    //         'Description' => $statusCode->name,      // Custom status description
+    //         'Balance' => round($balance, 4),         // Player's balance
+    //     ], $httpStatus);                            // Valid HTTP status code in the header
+    // }
 
-private function mapToHttpStatus(StatusCode $statusCode): int
-{
-    return match ($statusCode) {
-        StatusCode::DuplicateTransaction,
-        StatusCode::InvalidSignature,
-        StatusCode::BetTransactionNotFound => 409, // Conflict
-        StatusCode::InternalServerError => 500,    // Internal Server Error
-        StatusCode::BadRequest => 400,            // Bad Request
-        default => 400,                           // Default to Bad Request
-    };
-}
-
+    private function mapToHttpStatus(StatusCode $statusCode): int
+    {
+        return match ($statusCode) {
+            StatusCode::DuplicateTransaction,
+            StatusCode::InvalidSignature,
+            StatusCode::BetTransactionNotFound => 409, // Conflict
+            StatusCode::InternalServerError => 500,    // Internal Server Error
+            StatusCode::BadRequest => 400,            // Bad Request
+            default => 400,                           // Default to Bad Request
+        };
+    }
 
     private function isValidSignature(array $transaction): bool
     {
         $generatedSignature = $this->generateSignature($transaction);
-         Log::info('Generated result signature', ['GeneratedSignature' => $generatedSignature]);
+        Log::info('Generated result signature', ['GeneratedSignature' => $generatedSignature]);
 
         if ($generatedSignature !== $transaction['Signature']) {
             Log::warning('Signature validation failed for transaction', [
@@ -188,7 +186,7 @@ private function mapToHttpStatus(StatusCode $statusCode): int
     {
         $existingTransaction = Result::where('result_id', $transaction['ResultId'])->first();
         if ($existingTransaction) {
-             Log::warning('Duplicate ResultId detected', ['ResultId' => $transaction['ResultId']]);
+            Log::warning('Duplicate ResultId detected', ['ResultId' => $transaction['ResultId']]);
 
             return true;
         }

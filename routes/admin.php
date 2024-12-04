@@ -146,6 +146,8 @@ Route::group([
     Route::group(['prefix' => 'slot'], function () {
         Route::get('report', [ReportController::class, 'index'])->name('report.index');
         Route::get('reports/details/{game_provide_name}', [ReportController::class, 'getReportDetails'])->name('reports.details');
+        Route::get('adminreport', [ReportController::class, 'Reportindex'])->name('report.adminindex');
+
         Route::get('/daily-summaries', [DailySummaryController::class, 'index'])->name('daily_summaries.index');
 
         Route::get('/reports/senior', [MultiBannerReportController::class, 'getSeniorReport'])->name('reports.senior');

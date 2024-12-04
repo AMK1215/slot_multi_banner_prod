@@ -30,7 +30,7 @@ class ReportController extends Controller
             ->join('users as agents', 'players.agent_id', '=', 'agents.id')
             ->groupBy('players.name', 'agents.name', 'players.id')
             ->paginate(10)
-            ->withQueryString();;
+            ->withQueryString();
 
         return view('admin.reports.index', compact('report'));
     }
@@ -42,11 +42,35 @@ class ReportController extends Controller
             ->select('results.*', 'users.name as user_name')
             ->get();
 
-             // Calculate totals
-            $totalBet = $details->sum('total_bet_amount');
-            $totalWin = $details->sum('win_amount');
-            $totalNetWin = $details->sum('net_win');
+        // Calculate totals
+        $totalBet = $details->sum('total_bet_amount');
+        $totalWin = $details->sum('win_amount');
+        $totalNetWin = $details->sum('net_win');
+
         return view('admin.reports.detail', compact('details', 'totalBet', 'totalWin', 'totalNetWin'));
+    }
+
+    public function Reportindex()
+    {
+        $adminId = auth()->id(); // Get the authenticated admin's ID
+
+        $report = Result::select(
+            DB::raw('SUM(results.total_bet_amount) as total_bet_amount'),
+            DB::raw('SUM(results.win_amount) as total_win_amount'),
+            DB::raw('SUM(results.net_win) as total_net_win'),
+            DB::raw('COUNT(results.id) as total_games'),
+            'players.name as player_name',
+            'agents.name as agent_name',
+            'players.id as user_id'
+        )
+            ->join('users as players', 'results.user_id', '=', 'players.id') // Join players with results
+            ->join('users as agents', 'players.agent_id', '=', 'agents.id') // Join agents with players
+            ->where('agents.agent_id', $adminId) // Filter agents belonging to the authenticated admin
+            ->groupBy('players.name', 'agents.name', 'players.id') // Group by player name, agent name, and player ID
+            ->paginate(10) // Paginate results to show 10 per page
+            ->withQueryString(); // Preserve query string in pagination links
+
+        return view('admin.reports.index_report', compact('report'));
     }
 
     public function getTransactionDetails($tranId)

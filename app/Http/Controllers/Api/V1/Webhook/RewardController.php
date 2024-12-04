@@ -66,9 +66,7 @@ class RewardController extends Controller
                     $transaction['Amount']
                 );
 
-
                 $newBalance = $player->wallet->refreshBalance()->balanceFloat;
-
 
                 // Create the reward record
                 $reward = Reward::create([
@@ -87,8 +85,8 @@ class RewardController extends Controller
                 ]);
 
                 Log::info('Reward transaction processed successfully', ['TranId' => $transaction['TranId']]);
-                if (!$reward) {
-                throw new \Exception('Failed to create reward record');
+                if (! $reward) {
+                    throw new \Exception('Failed to create reward record');
                 }
 
             }
@@ -135,8 +133,7 @@ class RewardController extends Controller
     }
 }
 
-
 //$newBalance = $player->wallet->refreshBalance()->balanceFloat;
-                //$request->getMember()->wallet->refreshBalance();
+//$request->getMember()->wallet->refreshBalance();
 
-                //$newBalance = $request->getMember()->balanceFloat;
+//$newBalance = $request->getMember()->balanceFloat;

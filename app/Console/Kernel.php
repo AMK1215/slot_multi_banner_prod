@@ -12,9 +12,6 @@ class Kernel extends ConsoleKernel
         Commands\DownloadGameImages::class,
     ];
 
-
-
-
     /**
      * Define the application's command schedule.
      */
