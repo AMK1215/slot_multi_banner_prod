@@ -153,7 +153,7 @@ class BetResultController extends Controller
     private function isValidSignature(array $transaction): bool
     {
         $generatedSignature = $this->generateSignature($transaction);
-        Log::info('Generated result signature', ['GeneratedSignature' => $generatedSignature]);
+        //Log::info('Generated result signature', ['GeneratedSignature' => $generatedSignature]);
 
         if ($generatedSignature !== $transaction['Signature']) {
             Log::warning('Signature validation failed for transaction', [

@@ -112,7 +112,7 @@ class BetController extends Controller
                     'tran_date_time' => Carbon::parse($transaction['TranDateTime'])->format('Y-m-d H:i:s'),
                 ]);
 
-                Log::info('Bet Transaction  processed successfully', ['BetID' => $transaction['BetId']]);
+                //Log::info('Bet Transaction  processed successfully', ['BetID' => $transaction['BetId']]);
             }
 
             DB::commit();
