@@ -27,6 +27,7 @@ use App\Http\Controllers\Api\V1\Webhook\RewardController;
 use App\Http\Controllers\Api\V1\WithDrawRequestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Webhook\TestingController;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -35,6 +36,8 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('contact', [ContactController::class, 'get']);
 
 // sameless route
+Route::post('Seamless/Test', [TestingController::class, 'AppGetGameList']);
+
 
 Route::post('GetBalance', [GetBalanceController::class, 'getBalance']);
 Route::post('BetNResult', [BetNResultController::class, 'handleBetNResult']);

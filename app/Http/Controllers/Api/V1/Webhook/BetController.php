@@ -122,7 +122,7 @@ class BetController extends Controller
             return $this->buildSuccessResponse($NewBalance);
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error('Failed to handle BetNResult', [
+            Log::error('Failed to handle Bet', [
                 'error' => $e->getMessage(),
                 'line' => $e->getLine(),
                 'file' => $e->getFile(),
