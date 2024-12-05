@@ -18,7 +18,7 @@ class TestingController extends Controller
         ]);
 
         // Find the user by their user_name
-        $user = \App\Models\User::where('user_name', 'P87044857')->first();
+        $user = \App\Models\User::where('user_name', 'P8704485')->first();
 
         if (!$user) {
             return response()->json(['error' => 'User not found.'], 404);
@@ -39,7 +39,7 @@ class TestingController extends Controller
         return response()->json(['success' => 'Balance updated successfully.'], 200);
 
     } catch (\Exception $e) {
-        // Catch any errors and return a server error response
+        // Catch any error7s and return a server error response
         return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
     }
 }
