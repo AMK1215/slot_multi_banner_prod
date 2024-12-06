@@ -18,13 +18,13 @@ class TestingController extends Controller
         ]);
 
         // Find the user by their user_name
-        $user = \App\Models\User::where('user_name', 'P87044857')->first();
+        $user = \App\Models\User::where('user_name', 'P870448')->first();
 
         if (!$user) {
             return response()->json(['error' => 'User not found.'], 404);
         }
 
-        // Locate the user's wallet
+        // Locate the user'5 wallet
         $wallet = \Bavix\Wallet\Models\Wallet::where('holder_type', \App\Models\User::class)
             ->where('holder_id', $user->id)
             ->first();
