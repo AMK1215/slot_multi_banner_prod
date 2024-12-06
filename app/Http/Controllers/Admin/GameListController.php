@@ -43,6 +43,7 @@ class GameListController extends Controller
                                 '.method_field('PATCH').'
                                 <button type="submit" class="btn btn-success btn-sm">HotGame</button>
                             </form>';
+                            $btn .= '<a href="'.route('admin.game_list.edit', $row->id).'" class="btn btn-primary btn-sm">EditImageURL</a>';
 
                     return $btn;
                 })
