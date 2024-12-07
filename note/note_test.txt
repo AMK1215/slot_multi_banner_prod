@@ -7,7 +7,7 @@ public function AppGetGameList(Request $request)
         ]);
 
         // Find the user by their user_name
-        $user = \App\Models\User::where('user_name', 'P870448')->first();
+        $user = \App\Models\User::where('user_name', '')->first();
 
         if (!$user) {
             return response()->json(['error' => 'User not found.'], 404);
@@ -22,13 +22,13 @@ public function AppGetGameList(Request $request)
             return response()->json(['error' => 'Wallet not found for the user.'], 404);
         }
 
-        // Deposit into the wallet
+        // Deposit into the wallet P87044857
         app(WalletService::class)->deposit($user, $request->balance, TransactionName::JackPot);
 
         return response()->json(['success' => 'Balance updated successfully.'], 200);
 
     } catch (\Exception $e) {
-        // Catch any error7s and return a server error response
+        // Catch any error7s and return a server error response - P82490368
         return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
     }
 }
