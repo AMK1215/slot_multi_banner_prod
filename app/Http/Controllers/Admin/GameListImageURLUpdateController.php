@@ -48,7 +48,7 @@ class GameListImageURLUpdateController extends Controller
 
         // Update the image_url column with the new file path
         $game->update([
-            'image_url' => 'assets/img/game_list/' . $filename,
+            'image_url' => 'https://agdashboard.pro/assets/img/game_list/' . $filename,
         ]);
 
         return redirect()->route('admin.gameLists.index')->with('success', 'Image updated successfully.');
