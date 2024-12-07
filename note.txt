@@ -6,7 +6,10 @@ php artisan make:migration add_admin_id_column_to_promotions_table --table=promo
 php -r "file_put_contents('/var/www/slot_multi_banner_prod/storage/logs/laravel.log', '');"
 // created dev branch for kzt
 
-tail -f /var/www/slot_multi_banner_prod/storage/logs/laravel.log
+tail -f /var/www/slot_multi_banner_prod/storage/logs/laravel.
+
+sudo nano /etc/php/8.3/fpm/php.ini
+
 sudo su ubuntu
 crontab -e
 
