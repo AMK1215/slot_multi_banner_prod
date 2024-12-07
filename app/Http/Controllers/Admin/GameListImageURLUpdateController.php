@@ -45,12 +45,14 @@ class GameListImageURLUpdateController extends Controller
     // }
     public function updateImageUrl(Request $request, $id)
 {
+    dd($request->all());
     $game = GameList::findOrFail($id);
 
     // Validate the request
     $request->validate([
         'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate as an image file
     ]);
+
 
     $image = $request->file('image');
 
