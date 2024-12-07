@@ -23,7 +23,23 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('admin.game_list.update_image_url', $gameList->id) }}"
+                                <form action="{{ route('admin.game_list.update_image_url', $gameList->id) }}" method="POST"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="custom-form-group">
+                                        <label for="image">Game Image</label>
+                                        <input type="file" class="form-control" name="image" required>
+                                    </div>
+                                    <div class="custom-form-group mt-3">
+                                        <img src="{{ asset($gameList->image_url) }}" alt="{{ $gameList->game_name }}"
+                                            width="100px">
+                                    </div>
+                                    <div class="custom-form-group mt-3">
+                                        <button class="btn btn-primary" type="submit">Update Image</button>
+                                    </div>
+                                </form>
+
+                                {{-- <form action="{{ route('admin.game_list.update_image_url', $gameList->id) }}"
                                     method="post">
                                     @csrf
 
@@ -39,7 +55,7 @@
                                     <div class="custom-form-group mt-3">
                                         <button class="btn btn-primary" type="submit">Update Game Image URL</button>
                                     </div>
-                                </form>
+                                </form> --}}
                             </div>
                         </div>
                     </div>
