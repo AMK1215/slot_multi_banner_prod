@@ -162,4 +162,39 @@ class ReportController extends Controller
             return response()->json(['error' => 'API request error'], 500);
         }
     }
+
+
+
+public function getResultsForUser($userName)
+{
+    // Fetch results data for the given user_name
+    $results = DB::table('results')
+        ->join('users', 'results.user_id', '=', 'users.id') // Join results with users table
+        ->where('users.user_name', $userName) // Filter by user_name
+        ->select(
+            'results.id',
+            'results.player_name',
+            'results.game_provide_name',
+            'results.game_name',
+            'results.operator_id',
+            'results.request_date_time',
+            'results.signature',
+            'results.player_id',
+            'results.currency',
+            'results.round_id',
+            'results.bet_ids',
+            'results.result_id',
+            'results.game_code',
+            'results.total_bet_amount',
+            'results.win_amount',
+            'results.net_win',
+            'results.tran_date_time',
+            'users.name as user_name'
+        )
+        ->get();
+
+    // Return the data as JSON
+    return response()->json($results);
+}
+
 }

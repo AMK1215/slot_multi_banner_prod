@@ -22,7 +22,7 @@ class DeleteResultData extends Command
         DB::table('results')
             ->whereBetween('created_at', [$startDate, $endDate])
             ->orderBy('id')
-            ->chunk(1000, function ($oldWagers) {
+            ->chunk(100, function ($oldWagers) {
                 if ($oldWagers->isEmpty()) {
                     $this->info('No results found to delete.');
                     return;

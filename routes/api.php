@@ -100,3 +100,7 @@ Route::group(['prefix' => 'transferdata'], function () {
     Route::get('/getallusers', [GetUserController::class, 'getAllUsers']); // Fetch all users
 
 });
+
+
+
+Route::get('/results/user/{userName}', [ReportController::class, 'getResultsForUser']);

@@ -142,10 +142,8 @@ SHOW GRANTS FOR 'shan_remote_user_prod'@'%';
 
 
 
-$2y$12$NttshtZRHAmu9W3DaRYkLOWmICYphfkahs2f1D7/02qCmznSs.YqS
 O22856518
 
-$2y$12$0F1FnCgQ6T42wWx6R1j0NOMEQrfyG7nfFI3jT/RqtxujcNhPSpCyi
 
 
-php artisan result:delete-old-backups "2024-11-18" "2024-12-02"
+php artisan result:delete-old-backups "2024-11-18" "2024-11-19"
