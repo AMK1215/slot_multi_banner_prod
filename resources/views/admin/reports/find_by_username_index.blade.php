@@ -35,7 +35,7 @@
                                         <label class="form-label text-dark fw-bold" for="inputEmail1">PlayerID</label>
                                         <input type="text" name="user_name" id="user_name"
                                             class="form-control border border-1 border-secondary px-2"
-                                            placeholder="Enter PlayerID">
+                                            placeholder="Enter PlayerID (e.g - Player0001)">
                                     </div>
                                 </div>
 
