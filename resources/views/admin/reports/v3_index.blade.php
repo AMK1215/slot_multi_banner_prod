@@ -36,7 +36,7 @@
                                         <th>Game Provider</th>
                                         <th>Game Name</th>
                                         {{-- <th>Operator ID</th> --}}
-                                        <th>Request Date Time</th>
+                                        {{-- <th>Request Date Time</th> --}}
                                         <th>Player ID</th>
                                         {{-- <th>Currency</th> --}}
                                         {{-- <th>Round ID</th> --}}
@@ -56,7 +56,7 @@
                                             <td>{{ $result->game_provide_name }}</td>
                                             <td>{{ $result->game_name }}</td>
                                             {{-- <td>{{ $result->operator_id }}</td> --}}
-                                            <td>{{ $result->request_date_time }}</td>
+                                            {{-- <td>{{ $result->request_date_time }}</td> --}}
                                             <td>{{ $result->player_id }}</td>
                                             {{-- <td>{{ $result->currency }}</td> --}}
                                             {{-- <td>{{ $result->round_id }}</td> --}}
