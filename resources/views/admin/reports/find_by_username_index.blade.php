@@ -78,7 +78,7 @@
                                                 {{-- <td>{{ $result->request_date_time }}</td> --}}
                                                 <td>{{ $result->player_id }}</td>
                                                 {{-- <td>{{ $result->currency }}</td> --}}
-                                                <td>{{ $result->round_id }}</td>
+                                                {{-- <td>{{ $result->round_id }}</td> --}}
                                                 <td>{{ $result->result_id }}</td>
                                                 <td>{{ $result->game_code }}</td>
                                                 <td>{{ number_format($result->total_bet_amount, 2) }}</td>
