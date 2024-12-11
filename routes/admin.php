@@ -165,5 +165,10 @@ Route::group([
 
         // report v3
         Route::get('/results/user/{userName}', [ReportController::class, 'getResultsForOnlyUser']);
+
+        // find by username
+        Route::get('/result-search', [ReportController::class, 'GetResult'])->name('');
+        Route::post('/results/search', [ReportController::class, 'FindByUserName'])->name('results.search');
+
     });
 });

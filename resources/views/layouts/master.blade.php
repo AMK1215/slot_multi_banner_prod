@@ -149,6 +149,14 @@
                                     </p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ url('admin/slot/result-search') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        W/L Report V4
+                                    </p>
+                                </a>
+                            </li>
 
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
@@ -184,6 +192,15 @@
                                     <i class="fas fa-users"></i>
                                     <p>
                                         W/L Report V2
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ url('admin/slot/result-search') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        W/L Report V3
                                     </p>
                                 </a>
                             </li>
@@ -230,6 +247,14 @@
                                     <i class="fas fa-users"></i>
                                     <p>
                                         W/L Report V2
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('admin/slot/result-search') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        W/L Report V3
                                     </p>
                                 </a>
                             </li>
