@@ -164,6 +164,6 @@ Route::group([
         Route::get('/reports/agent/detail/{user_id}', [MultiBannerReportController::class, 'getAgentDetail'])->name('reports.agent.detail');
 
         // report v3 
-        Route::get('/results/user/{userName}', [ReportController::class, 'getResultsForUser']);
+        Route::get('/results/user/{userName}', [ReportController::class, 'getResultsForOnlyUser']);
     });
 });
