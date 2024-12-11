@@ -141,6 +141,14 @@
                                     </p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ url('admin/slot/results/user/P87044857') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        W/L Report V3
+                                    </p>
+                                </a>
+                            </li>
 
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
