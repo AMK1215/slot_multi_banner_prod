@@ -35,17 +35,17 @@
                                         <th>Player Name</th>
                                         <th>Game Provider</th>
                                         <th>Game Name</th>
-                                        <th>Operator ID</th>
+                                        {{-- <th>Operator ID</th> --}}
                                         <th>Request Date Time</th>
                                         <th>Player ID</th>
-                                        <th>Currency</th>
-                                        <th>Round ID</th>
-                                        <th>Result ID</th>
-                                        <th>Game Code</th>
-                                        <th>Total Bet</th>
-                                        <th>Win Amount</th>
-                                        <th>Net Win</th>
-                                        <th>Transaction Date Time</th>
+                                        {{-- <th>Currency</th> --}}
+                                        {{-- <th>Round ID</th> --}}
+                                        <th>ResultID</th>
+                                        <th>GameCode</th>
+                                        <th>TotalBet</th>
+                                        <th>WinAmount</th>
+                                        <th>NetWin</th>
+                                        <th>DateTime</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -55,11 +55,11 @@
                                             <td>{{ $result->player_name }}</td>
                                             <td>{{ $result->game_provide_name }}</td>
                                             <td>{{ $result->game_name }}</td>
-                                            <td>{{ $result->operator_id }}</td>
+                                            {{-- <td>{{ $result->operator_id }}</td> --}}
                                             <td>{{ $result->request_date_time }}</td>
                                             <td>{{ $result->player_id }}</td>
-                                            <td>{{ $result->currency }}</td>
-                                            <td>{{ $result->round_id }}</td>
+                                            {{-- <td>{{ $result->currency }}</td> --}}
+                                            {{-- <td>{{ $result->round_id }}</td> --}}
                                             <td>{{ $result->result_id }}</td>
                                             <td>{{ $result->game_code }}</td>
                                             <td>{{ number_format($result->total_bet_amount, 2) }}</td>
