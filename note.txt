@@ -1,6 +1,6 @@
-php artisan migrate --path=/database/migrations/2024_10_14_042230_add_version_to_wallets_table.php
+php artisan migrate --path=/database/migrations/2024_12_12_030420_add_pp_hot_column_to_game_lists_table.php
 
-php artisan make:migration add_admin_id_column_to_promotions_table --table=promotions
+php artisan make:migration add_pp_hot_column_to_game_lists_table --table=game_lists
 
 // to remove laravel log
 php -r "file_put_contents('/var/www/slot_multi_banner_prod/storage/logs/laravel.log', '');"

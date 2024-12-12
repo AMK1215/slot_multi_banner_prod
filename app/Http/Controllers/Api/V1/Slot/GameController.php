@@ -72,6 +72,14 @@ class GameController extends Controller
         return $this->success(GameDetailResource::collection($gameLists), 'Hot Game Detail Successfully');
     }
 
+    public function PPHotgameList()
+    {
+        $gameLists = GameList::where('pp_hot', 1)
+            ->get();
+
+        return $this->success(GameDetailResource::collection($gameLists), 'Hot Game Detail Successfully');
+    }
+
     public function gameListTest($product_id, $game_type_id, Request $request)
     {
         $gameLists = GameList::with('product')

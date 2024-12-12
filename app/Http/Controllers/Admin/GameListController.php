@@ -29,6 +29,9 @@ class GameListController extends Controller
                 ->addColumn('status', function ($row) {
                     return $row->status == 1 ? 'Running Game' : 'Game is Closed';
                 })
+                ->addColumn('pp_hot', function ($row) {
+                    return $row->pp_hot == 1 ? 'PP Hot' : '--';
+                })
                 ->addColumn('hot_status', function ($row) {
                     return $row->hot_status == 1 ? 'This Game is Hot' : 'Game is Normal';
                 })
@@ -43,6 +46,13 @@ class GameListController extends Controller
                                 '.method_field('PATCH').'
                                 <button type="submit" class="btn btn-success btn-sm">HotGame</button>
                             </form>';
+
+                    $btn .= '<form action="'.route('admin.PPHotGame.toggleStatus', $row->id).'" method="POST" style="display:inline;">
+                                '.csrf_field().'
+                                '.method_field('PATCH').'
+                                <button type="submit" class="btn btn-warning btn-sm">PPHot</button>
+                            </form>';
+
                             $btn .= '<a href="'.route('admin.game_list.edit', $row->id).'" class="btn btn-primary btn-sm">EditImageURL</a>';
 
                     return $btn;
@@ -94,5 +104,14 @@ class GameListController extends Controller
         $game->save();
 
         return redirect()->route('admin.gameLists.index')->with('success', 'HotGame status updated successfully.');
+    }
+
+    public function PPHotGameStatus($id)
+    {
+        $game = GameList::findOrFail($id);
+        $game->pp_hot = $game->pp_hot == 1 ? 0 : 1;
+        $game->save();
+
+        return redirect()->route('admin.gameLists.index')->with('success', 'PP HotGame status updated successfully.');
     }
 }

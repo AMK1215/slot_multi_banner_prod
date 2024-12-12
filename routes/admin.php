@@ -77,6 +77,11 @@ Route::group([
     Route::patch('gameLists/{id}/toggleStatus', [GameListController::class, 'toggleStatus'])->name('gameLists.toggleStatus');
 
     Route::patch('hotgameLists/{id}/toggleStatus', [GameListController::class, 'HotGameStatus'])->name('HotGame.toggleStatus');
+
+    // pp hot 
+
+    Route::patch('pphotgameLists/{id}/toggleStatus', [GameListController::class, 'PPHotGameStatus'])->name('PPHotGame.toggleStatus');
+
     Route::get('game-list/{gameList}/edit', [GameListImageURLUpdateController::class, 'edit'])->name('game_list.edit');
     Route::post('/game-list/{id}/update-image-url', [GameListImageURLUpdateController::class, 'updateImageUrl'])->name('game_list.update_image_url');
 

@@ -58,12 +58,13 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th class="bg-success text-white">Game Type</th>
+                                            <th class="bg-success text-white">GameType</th>
                                             <th class="bg-danger text-white">Product</th>
-                                            <th class="bg-info text-white">Game Name</th>
+                                            <th class="bg-info text-white">GameName</th>
                                             <th class="bg-warning text-white">Image</th>
                                             <th class="bg-success text-white">Status</th>
-                                            <th class="bg-info text-white">Hot Status</th>
+                                            <th class="bg-success text-white">PPHot</th>
+                                            <th class="bg-info text-white">HotStatus</th>
                                             <th class="bg-warning text-white">Actions</th>
                                         </tr>
                                     </thead>
@@ -128,6 +129,10 @@
                     {
                         data: 'status',
                         name: 'status'
+                    },
+                    {
+                        data: 'pp_hot',
+                        name: 'pp_hot'
                     },
                     {
                         data: 'hot_status',
