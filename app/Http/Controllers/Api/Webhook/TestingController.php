@@ -10,8 +10,4 @@ use Illuminate\Support\Facades\DB;
 class TestingController extends Controller
 {
 
-
-
-
-
 }
