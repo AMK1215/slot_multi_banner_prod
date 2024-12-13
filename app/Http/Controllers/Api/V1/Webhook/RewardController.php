@@ -66,7 +66,9 @@ class RewardController extends Controller
                     $transaction['Amount']
                 );
 
-                $newBalance = $player->wallet->refreshBalance()->balanceFloat;
+                //$newBalance = $player->wallet->refreshBalance()->balanceFloat;
+                $player->wallet->refreshBalance();
+                $newBalance = $player->wallet->balanceFloat;
 
                 // Create the reward record
                 $reward = Reward::create([
