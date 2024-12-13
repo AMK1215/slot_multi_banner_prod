@@ -38,7 +38,7 @@ class BetResultController extends Controller
 
                 // Acquire a Redis lock for the player's wallet
                 $lockKey = "wallet:lock:{$player->id}";
-                $lock = Redis::set($lockKey, true, 'EX', 10, 'NX'); // 10-second lock
+                $lock = Redis::set($lockKey, true, 'EX', 1, 'NX'); // 1-second lock
 
                 if (! $lock) {
                     return $this->buildErrorResponse(StatusCode::DuplicateTransaction, $player->wallet->balanceFloat);
