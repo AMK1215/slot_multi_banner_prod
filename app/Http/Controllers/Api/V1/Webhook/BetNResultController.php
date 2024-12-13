@@ -122,7 +122,7 @@ class BetNResultController extends Controller
 
                 ]);
 
-                Log::info('Transaction processed successfully', ['TranId' => $transaction['TranId']]);
+                //Log::info('Transaction processed successfully', ['TranId' => $transaction['TranId']]);
             }
 
             DB::commit();
