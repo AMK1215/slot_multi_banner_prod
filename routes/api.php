@@ -25,9 +25,9 @@ use App\Http\Controllers\Api\V1\Webhook\CancelBetController;
 use App\Http\Controllers\Api\V1\Webhook\CancelBetNResultController;
 use App\Http\Controllers\Api\V1\Webhook\RewardController;
 use App\Http\Controllers\Api\V1\WithDrawRequestController;
+use App\Http\Controllers\Api\Webhook\TestingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\Webhook\TestingController;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -37,7 +37,6 @@ Route::get('contact', [ContactController::class, 'get']);
 
 // sameless route
 Route::post('Seamless/Test', [TestingController::class, 'AppGetGameList']);
-
 
 Route::post('GetBalance', [GetBalanceController::class, 'getBalance']);
 Route::post('BetNResult', [BetNResultController::class, 'handleBetNResult']);
@@ -101,7 +100,5 @@ Route::group(['prefix' => 'transferdata'], function () {
     Route::get('/getallusers', [GetUserController::class, 'getAllUsers']); // Fetch all users
 
 });
-
-
 
 Route::get('/results/user/{userName}', [ReportController::class, 'getResultsForUser']);

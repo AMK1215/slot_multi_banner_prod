@@ -25,6 +25,7 @@ class DeleteResultData extends Command
             ->chunk(100, function ($oldWagers) {
                 if ($oldWagers->isEmpty()) {
                     $this->info('No results found to delete.');
+
                     return;
                 }
 
@@ -36,7 +37,7 @@ class DeleteResultData extends Command
                     DB::statement('SET FOREIGN_KEY_CHECKS=1;');
                 });
 
-                $this->info(count($oldWagers) . ' results have been deleted.');
+                $this->info(count($oldWagers).' results have been deleted.');
             });
 
         $this->info('Result deletion completed successfully.');

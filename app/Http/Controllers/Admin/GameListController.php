@@ -53,7 +53,7 @@ class GameListController extends Controller
                                 <button type="submit" class="btn btn-warning btn-sm">PPHot</button>
                             </form>';
 
-                            $btn .= '<a href="'.route('admin.game_list.edit', $row->id).'" class="btn btn-primary btn-sm">EditImageURL</a>';
+                    $btn .= '<a href="'.route('admin.game_list.edit', $row->id).'" class="btn btn-primary btn-sm">EditImageURL</a>';
 
                     return $btn;
                 })

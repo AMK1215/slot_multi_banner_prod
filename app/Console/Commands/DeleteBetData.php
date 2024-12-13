@@ -25,6 +25,7 @@ class DeleteBetData extends Command
             ->chunk(100, function ($oldWagers) {
                 if ($oldWagers->isEmpty()) {
                     $this->info('No bet found to delete.');
+
                     return;
                 }
 
@@ -36,7 +37,7 @@ class DeleteBetData extends Command
                     DB::statement('SET FOREIGN_KEY_CHECKS=1;');
                 });
 
-                $this->info(count($oldWagers) . ' bets have been deleted.');
+                $this->info(count($oldWagers).' bets have been deleted.');
             });
 
         $this->info('bets deletion completed successfully.');

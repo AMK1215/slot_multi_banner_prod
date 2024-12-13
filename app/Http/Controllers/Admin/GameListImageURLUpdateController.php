@@ -3,59 +3,58 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Admin\GameList;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class GameListImageURLUpdateController extends Controller
 {
-
-     /**
+    /**
      * Display the list of games with images.
      */
     public function index()
     {
         $games = GameList::all(); // Retrieve all game records
+
         return view('admin.game_list_images', compact('games'));
     }
 
     /**
      * Update the image_url for a specific game.
      */
-
     public function edit(GameList $gameList)
     {
         return view('admin.game_list.edit', compact('gameList'));
     }
 
     public function updateImageUrl(Request $request, $id)
-{
-    $game = GameList::findOrFail($id);
+    {
+        $game = GameList::findOrFail($id);
 
-    // Validate the request
-    $request->validate([
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
-
-    $image = $request->file('image');
-
-    if ($image && $image->isValid()) {
-        // Use the original file name to store the image
-        $filename = $image->getClientOriginalName();
-
-        // Move the uploaded file to the public assets directory
-        $image->move(public_path('assets/img/game_list/'), $filename);
-
-        // Update the image_url column with the new file path
-        $game->update([
-            'image_url' => 'https://agdashboard.pro/assets/img/game_list/' . $filename,
+        // Validate the request
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        return redirect()->route('admin.gameLists.index')->with('success', 'Image updated successfully.');
-    }
+        $image = $request->file('image');
 
-    return redirect()->back()->withErrors('File upload failed.');
-}
+        if ($image && $image->isValid()) {
+            // Use the original file name to store the image
+            $filename = $image->getClientOriginalName();
+
+            // Move the uploaded file to the public assets directory
+            $image->move(public_path('assets/img/game_list/'), $filename);
+
+            // Update the image_url column with the new file path
+            $game->update([
+                'image_url' => 'https://agdashboard.pro/assets/img/game_list/'.$filename,
+            ]);
+
+            return redirect()->route('admin.gameLists.index')->with('success', 'Image updated successfully.');
+        }
+
+        return redirect()->back()->withErrors('File upload failed.');
+    }
 
     // public function updateImageUrl(Request $request, $id)
     // {
@@ -83,7 +82,6 @@ class GameListImageURLUpdateController extends Controller
     //         'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate as an image file
     //     ]);
 
-
     //     $image = $request->file('image');
 
     //     // Use the original file name to store the image
@@ -100,8 +98,6 @@ class GameListImageURLUpdateController extends Controller
     //     return redirect()->route('admin.gameLists.index')->with('success', 'Image updated successfully.');
     // }
 
-
-
     public function update(Request $request, $gameTypeId, $productId)
     {
         $image = $request->file('image');
@@ -114,5 +110,4 @@ class GameListImageURLUpdateController extends Controller
 
         return redirect()->route('admin.gametypes.index');
     }
-
 }
