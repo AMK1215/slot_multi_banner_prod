@@ -78,6 +78,17 @@ class BetResultController extends Controller
                             TransactionName::Payout,
                             $transaction['WinAmount']
                         );
+                        // Log successful payout
+                        Log::info('Payout processed successfully', [
+                            'PlayerID' => $transaction['PlayerId'],
+                            'WinAmount' => $transaction['WinAmount'],
+                        ]);
+                    } else {
+                        // Log case where no payout is necessary
+                        Log::info('No payout required', [
+                            'PlayerID' => $transaction['PlayerId'],
+                            'WinAmount' => $transaction['WinAmount'],
+                        ]);
                     }
 
                     // Refresh balance
