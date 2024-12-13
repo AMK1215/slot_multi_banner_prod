@@ -83,33 +83,34 @@ class BetResultController extends Controller
                             'PlayerID' => $transaction['PlayerId'],
                             'WinAmount' => $transaction['WinAmount'],
                         ]);
-                    } else {
-                        // Log case where no payout is necessary
-                        Log::info('No payout required', [
-                            'PlayerID' => $transaction['PlayerId'],
-                            'WinAmount' => $transaction['WinAmount'],
-                        ]);
                     }
+                    // } else {
+                    //     // Log case where no payout is necessary
+                    //     Log::info('No payout required', [
+                    //         'PlayerID' => $transaction['PlayerId'],
+                    //         'WinAmount' => $transaction['WinAmount'],
+                    //     ]);
+                    // }
 
-                    // Prepare the log data
-$logData = [
-    'PlayerID' => $transaction['PlayerId'],
-    'WinAmount' => $transaction['WinAmount'],
-    'GameName' => $transaction['GameName'] ?? 'Unknown Game', // Optional field for game name
-    'TransactionID' => $transaction['ResultId'] ?? 'N/A', // Optional field for transaction ID
-    'LogLevel' => 'INFO',
-    'Message' => $transaction['WinAmount'] > 0
-        ? 'Payout processed successfully'
-        : 'No payout required',
-    'Timestamp' => now()->toDateTimeString(),
-];
+                    // // Prepare the log data
+                    // $logData = [
+                    // 'PlayerID' => $transaction['PlayerId'],
+                    // 'WinAmount' => $transaction['WinAmount'],
+                    // 'GameCode' => $transaction['GameCode'] ?? 'Unknown Game', // Optional field for game name
+                    // 'TransactionID' => $transaction['ResultId'] ?? 'N/A', // Optional field for transaction ID
+                    // 'LogLevel' => 'INFO',
+                    // 'Message' => $transaction['WinAmount'] > 0
+                    // ? 'Payout processed successfully'
+                    // : 'No payout required',
+                    // 'Timestamp' => now()->toDateTimeString(),
+                    // ];
 
-// Log the data into the JSON file
-file_put_contents(
-    storage_path('logs/payout_logs.json'), // Path to the JSON log file
-    json_encode($logData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL, // JSON format with pretty print
-    FILE_APPEND // Append to the file without overwriting
-);
+                    // // Log the data into the JSON file
+                    // file_put_contents(
+                    // storage_path('logs/payout_logs.json'), // Path to the JSON log file
+                    // json_encode($logData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL, // JSON format with pretty print
+                    // FILE_APPEND // Append to the file without overwriting
+                    // );
 
 
                     // Refresh balance
