@@ -69,6 +69,9 @@ class ResultController extends Controller
                     );
                 }
 
+                Log::info('Transaction WinAmount successfully', ['WinAmount' => $transaction['WinAmount']]);
+
+
                 // Refresh player's balance after processing the transaction
                 $player->wallet->refreshBalance();
                 $newBalance = $player->wallet->balanceFloat;
