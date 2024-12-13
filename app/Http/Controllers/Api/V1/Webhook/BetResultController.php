@@ -91,6 +91,27 @@ class BetResultController extends Controller
                         ]);
                     }
 
+                    // Prepare the log data
+$logData = [
+    'PlayerID' => $transaction['PlayerId'],
+    'WinAmount' => $transaction['WinAmount'],
+    'GameName' => $transaction['GameName'] ?? 'Unknown Game', // Optional field for game name
+    'TransactionID' => $transaction['ResultId'] ?? 'N/A', // Optional field for transaction ID
+    'LogLevel' => 'INFO',
+    'Message' => $transaction['WinAmount'] > 0
+        ? 'Payout processed successfully'
+        : 'No payout required',
+    'Timestamp' => now()->toDateTimeString(),
+];
+
+// Log the data into the JSON file
+file_put_contents(
+    storage_path('logs/payout_logs.json'), // Path to the JSON log file
+    json_encode($logData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL, // JSON format with pretty print
+    FILE_APPEND // Append to the file without overwriting
+);
+
+
                     // Refresh balance
                     $player->wallet->refreshBalance();
                     $newBalance = $player->wallet->balanceFloat;
