@@ -108,12 +108,13 @@ class BetNResultController extends Controller
                     ]);
                     // Decrease balance by the absolute value of NetWin
                     $this->processTransfer($player, User::adminUser(), TransactionName::Loss, abs($netWin));
-                } else {
-                    // Log case where NetWin is zero
-                    Log::info('NetWin is zero, no balance adjustment required', [
-                        'PlayerID' => $transaction['PlayerId'],
-                    ]);
                 }
+                // else {
+                //     // Log case where NetWin is zero
+                //     Log::info('NetWin is zero, no balance adjustment required', [
+                //         'PlayerID' => $transaction['PlayerId'],
+                //     ]);
+                // }
 
                 // Refresh and get the updated balance
                 $request->getMember()->wallet->refreshBalance();
