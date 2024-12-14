@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Shan;
+namespace App\Http\Controllers\Api\V1\Shan;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\ReportTransaction;

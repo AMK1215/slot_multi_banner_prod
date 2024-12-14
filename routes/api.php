@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ReportController;
-use App\Http\Controllers\Api\Shan\ShanTransactionController;
+use App\Http\Controllers\Api\V1\Shan\ShanTransactionController;
 use App\Http\Controllers\Api\TranData\GetUserController;
 use App\Http\Controllers\Api\V1\Auth\AuthController;
 use App\Http\Controllers\Api\V1\Bank\BankController;
