@@ -141,19 +141,19 @@
                                     </p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ url('admin/slot/results/user/P87044857') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
                                     <p>
                                         W/L Report V3
                                     </p>
                                 </a>
-                            </li>
+                            </li> --}}
                             <li class="nav-item">
                                 <a href="{{ url('admin/slot/result-search') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
                                     <p>
-                                        W/L Report V4
+                                        W/L Report V3
                                     </p>
                                 </a>
                             </li>
@@ -213,6 +213,24 @@
                                     </p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-tools"></i>
+                                    <p>
+                                        Shan
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/shan-report') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Win/Lose</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
                         @endcan
                         @can('agent_index')
                             <li class="nav-item">
@@ -257,6 +275,25 @@
                                         W/L Report V3
                                     </p>
                                 </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-tools"></i>
+                                    <p>
+                                        Shan
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/shan-report') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Win/Lose</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
                             </li>
                         @endcan
                         @can('contact')
