@@ -287,7 +287,7 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="{{ url('admin/shan-report') }}" class="nav-link">
+                                        <a href="{{ url('admin/agent-shan-report') }}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Win/Lose</p>
                                         </a>
