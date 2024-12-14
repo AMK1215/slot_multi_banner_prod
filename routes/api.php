@@ -56,7 +56,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('GameLogin', [LaunchGameController::class, 'LaunchGame']);
     Route::get('wager-logs', [WagerController::class, 'index']); //GSC
     //Route::get('transactions', [TransactionController::class, 'index']);
-    Route::get('transactions', [TransactionController::class, 'index'])->middleware('transaction');
+    Route::get('shan-transactions', [TransactionController::class, 'index'])->middleware('transaction');
 
     Route::get('user', [AuthController::class, 'getUser']);
     Route::get('contact', [AuthController::class, 'getContact']);
