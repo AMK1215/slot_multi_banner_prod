@@ -61,6 +61,8 @@
 
                                 <thead>
                                     <tr>
+                                        <th>ID</th>
+                                        <th>Game Type ID</th>
                                         <th>Bet Amount</th>
                                         <th>Amount Changed</th>
                                         <th>Win/Lose Status</th>
@@ -70,6 +72,8 @@
                                 <tbody>
                                     @foreach ($userTransactions as $transaction)
                                         <tr>
+                                            <td>{{ $transaction->id }}</td>
+                                            <td>{{ $transaction->game_type_id == 1 ? 'Shan' : 'Slot' }}</td>
                                             <td>{{ $transaction->bet_amount }}</td>
                                             <td>{{ $transaction->amount_changed }}</td>
                                             <td>{{ $transaction->win_lose_status == 1 ? 'Win' : 'Lose' }}</td>
