@@ -74,14 +74,13 @@
                                         <tr>
                                             <td>{{ $transaction->id }}</td>
                                             <td>{{ $transaction->game_type_id == 1 ? 'Shan' : 'Slot' }}</td>
-                                            <td>{{ $transaction->bet_amount }}</td>
-                                            <td>{{ $transaction->transaction_amount }}</td>
+                                            <td>{{ number_format($transaction->bet_amount, 2) }}</td>
+                                            <td>{{ number_format($transaction->transaction_amount, 2) }}</td>
                                             <td>{{ $transaction->win_lose_status == 1 ? 'Win' : 'Lose' }}</td>
                                             <td>{{ $transaction->created_at }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
-
                                 <tfoot>
                                     <tr>
                                         <th colspan="2" class="text-right">Total:</th>
