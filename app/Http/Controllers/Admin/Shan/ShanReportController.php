@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\ReportTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class ShanReportController extends Controller
 {
@@ -85,6 +86,11 @@ public function show($user_id)
         ->orderByDesc('created_at')
         ->get();
 
+        // Get player name
+    $player = User::find($user_id);
+    $playerName = $player ? $player->user_name : 'Unknown';
+
+
     // Calculate Total Bet Amount
     $totalBet = $userTransactions->sum('bet_amount');
 
@@ -103,7 +109,8 @@ public function show($user_id)
         'user_id',
         'totalBet',
         'totalWin',
-        'totalLose'
+        'totalLose',
+        'playerName'
     ));
 }
 

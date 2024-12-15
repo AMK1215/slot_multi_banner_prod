@@ -62,6 +62,7 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
+                                        <th>PlayerID</th>
                                         <th>Game Type ID</th>
                                         <th>Bet Amount</th>
                                         <th>Amount Changed</th>
@@ -73,6 +74,7 @@
                                     @foreach ($userTransactions as $transaction)
                                         <tr>
                                             <td>{{ $transaction->id }}</td>
+                                            <td>{{ $playerName }}</td>
                                             <td>{{ $transaction->game_type_id == 1 ? 'Shan' : 'Slot' }}</td>
                                             <td>{{ number_format($transaction->bet_amount, 2) }}</td>
                                             <td>{{ number_format($transaction->transaction_amount, 2) }}</td>
@@ -83,7 +85,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="2" class="text-right">Total:</th>
+                                        <th colspan="3" class="text-right">Total:</th>
                                         <th>{{ number_format($totalBet, 2) }}</th>
                                         <th>{{ number_format($totalWin, 2) }}</th>
                                         <th>{{ number_format($totalLose, 2) }}</th>
