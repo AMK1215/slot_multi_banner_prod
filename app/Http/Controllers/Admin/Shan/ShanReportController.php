@@ -35,16 +35,49 @@ class ShanReportController extends Controller
         return view('admin.shan.reports.index', compact('reportTransactions'));
     }
 
-    public function show($user_id)
-    {
-        // Query to get all report transactions for a specific user
-        $userTransactions = ReportTransaction::where('user_id', $user_id)
-            ->orderByDesc('created_at')
-            ->get();
+    // public function show($user_id)
+    // {
+    //     // Query to get all report transactions for a specific user
+    //     $userTransactions = ReportTransaction::where('user_id', $user_id)
+    //         ->orderByDesc('created_at')
+    //         ->get();
 
-        // Pass the transactions and the user_id to the view
-        return view('admin.shan.reports.show', compact('userTransactions', 'user_id'));
-    }
+    //     // Pass the transactions and the user_id to the view
+    //     return view('admin.shan.reports.show', compact('userTransactions', 'user_id'));
+    // }
+
+    public function show($user_id)
+{
+    // Query to get all report transactions for a specific user
+    $userTransactions = ReportTransaction::where('user_id', $user_id)
+        ->orderByDesc('created_at')
+        ->get();
+
+    // Calculate Total Bet Amount
+    $totalBet = $userTransactions->sum('bet_amount');
+
+    // Calculate Total Win Amount (status = 1)
+    $totalWin = $userTransactions->filter(function ($transaction) {
+        return $transaction->win_lose_status == 1; // Win
+    })->sum('amount_changed');
+
+    // Calculate Total Lose Amount (status = 0)
+    $totalLose = $userTransactions->filter(function ($transaction) {
+        return $transaction->win_lose_status == 0; // Lose
+    })->sum(function ($transaction) {
+        return abs($transaction->amount_changed);
+    });
+
+    // Pass the transactions, user_id, and calculated totals to the view
+    return view('admin.shan.reports.show', compact(
+        'userTransactions',
+        'user_id',
+        'totalBet',
+        'totalWin',
+        'totalLose'
+    ));
+}
+
 
     public function ShanAgentReportIndex(Request $request)
     {

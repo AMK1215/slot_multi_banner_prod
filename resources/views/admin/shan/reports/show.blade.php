@@ -28,7 +28,7 @@
                         </div>
                         <div class="card-body">
                             <table id="mytable" class="table table-bordered table-hover">
-                                <thead>
+                                {{-- <thead>
                                     <tr>
                                         <th>ID</th>
                                         <th>Game Type ID</th>
@@ -57,7 +57,36 @@
                                             <td>{{ $transaction->created_at }}</td>
                                         </tr>
                                     @endforeach
+                                </tbody> --}}
+
+                                <thead>
+                                    <tr>
+                                        <th>Bet Amount</th>
+                                        <th>Amount Changed</th>
+                                        <th>Win/Lose Status</th>
+                                        <th>Created At</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($userTransactions as $transaction)
+                                        <tr>
+                                            <td>{{ $transaction->bet_amount }}</td>
+                                            <td>{{ $transaction->amount_changed }}</td>
+                                            <td>{{ $transaction->win_lose_status == 1 ? 'Win' : 'Lose' }}</td>
+                                            <td>{{ $transaction->created_at }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
+
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="2" class="text-right">Total:</th>
+                                        <th>{{ number_format($totalBet, 2) }}</th>
+                                        <th>{{ number_format($totalWin, 2) }}</th>
+                                        <th>{{ number_format($totalLose, 2) }}</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                         <!-- /.card-body -->
