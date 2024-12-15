@@ -75,7 +75,7 @@
                                             <td>{{ $transaction->id }}</td>
                                             <td>{{ $transaction->game_type_id == 1 ? 'Shan' : 'Slot' }}</td>
                                             <td>{{ $transaction->bet_amount }}</td>
-                                            <td>{{ $transaction->amount_changed }}</td>
+                                            <td>{{ $transaction->transaction_amount }}</td>
                                             <td>{{ $transaction->win_lose_status == 1 ? 'Win' : 'Lose' }}</td>
                                             <td>{{ $transaction->created_at }}</td>
                                         </tr>
