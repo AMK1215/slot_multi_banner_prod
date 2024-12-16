@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use App\Models\Admin\ReportTransaction;
+
+
 
 class TransactionController extends Controller
 {
@@ -75,5 +78,45 @@ class TransactionController extends Controller
 
             return response()->json(['error' => 'API request error'], 500);
         }
+    }
+
+     public function GetPlayerShanReport()
+    {
+        // Get the authenticated player's ID
+        $user_id = Auth::id();
+
+        // Query to get all report transactions for the authenticated user
+        $userTransactions = ReportTransaction::where('user_id', $user_id)
+            ->orderByDesc('created_at')
+            ->get();
+
+        // Get player name
+        $player = Auth::user();
+        $playerName = $player ? $player->user_name : 'Unknown';
+
+        // Calculate Total Bet Amount
+        $totalBet = $userTransactions->sum('bet_amount');
+
+        // Calculate Total Win Amount (win_lose_status = 1)
+        $totalWin = $userTransactions->where('win_lose_status', 1)->sum('transaction_amount');
+
+        // Calculate Total Lose Amount (win_lose_status = 0)
+        $totalLose = $userTransactions->where('win_lose_status', 0)
+            ->sum(function ($transaction) {
+                return abs($transaction->transaction_amount);
+            });
+
+        // Format the response data
+        $data = [
+            'user_id' => $user_id,
+            'player_name' => $playerName,
+            'total_bet' => $totalBet,
+            'total_win' => $totalWin,
+            'total_lose' => $totalLose,
+            'transactions' => $userTransactions,
+        ];
+
+        // Return a JSON success response using the HttpResponses trait
+        return $this->success($data, 'Shan Report retrieved successfully');
     }
 }
