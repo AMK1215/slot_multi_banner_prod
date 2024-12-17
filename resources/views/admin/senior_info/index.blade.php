@@ -45,6 +45,7 @@
                                         <th>#</th>
                                         <th>Owner Name</th>
                                         <th>OwnerBalance</th>
+                                        <th>AgentTotalBalance</th>
                                         <th>Agent Name</th>
                                         <th>AgentBalance</th>
                                         <th>Player Name</th>
@@ -100,6 +101,7 @@
                                             <td>{{ $count++ }}</td>
                                             <td>{{ $row['owner_name'] }}</td>
                                             <td>{{ $row['owner_balance'] }}</td>
+                                            <td>{{ $row['owner_agent_total_balance'] }}</td>
                                             <td>{{ $row['agent_name'] }}</td>
                                             <td>{{ $row['agent_balance'] }}</td>
                                             <td>{{ $row['player_name'] }}</td>
