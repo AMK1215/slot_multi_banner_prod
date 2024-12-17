@@ -28,6 +28,17 @@
                         </div>
 
                         <div class="card-body">
+                            <div class="mb-3">
+                                <h5>Total Balances</h5>
+                                <ul>
+                                    <li><strong>Total Owner Balance:</strong> {{ number_format($totalOwnerBalance, 2) }}
+                                    </li>
+                                    <li><strong>Total Agent Balance:</strong> {{ number_format($totalAgentBalance, 2) }}
+                                    </li>
+                                    <li><strong>Total Player Balance:</strong> {{ number_format($totalPlayerBalance, 2) }}
+                                    </li>
+                                </ul>
+                            </div>
                             <table id="seniorTable" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
