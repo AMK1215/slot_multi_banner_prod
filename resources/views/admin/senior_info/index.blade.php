@@ -28,14 +28,16 @@
                         </div>
 
                         <div class="card-body">
-                            <table id="" class="table table-bordered table-hover">
+                            <table id="seniorTable" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>#</th>
                                         <th>Owner Name</th>
                                         <th>OwnerBalance</th>
                                         <th>Agent Name</th>
+                                        <th>AgentBalance</th>
                                         <th>Player Name</th>
+                                        <table>PlayerBalance</table>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -49,9 +51,11 @@
                                                 <tr>
                                                     <td>{{ $count++ }}</td>
                                                     <td>{{ $owner->name }}</td>
-                                                    <td>{{ $owner->wallet()->balanceFloat }}</td>
+                                                    <td>{{ $owner->wallet->balanceFloat }}</td>
                                                     <td>{{ $agent->name }}</td>
+                                                    <td>{{ $agent->wallet->balanceFloat }}</td>
                                                     <td>{{ $player->name }}</td>
+                                                    <td>{{ $player->wallet->balanceFloat }}</td>
                                                 </tr>
                                             @endforeach
                                         @endforeach
@@ -67,4 +71,17 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('script')
+    <!-- jQuery -->
+    {{-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> --}}
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#seniorTable').DataTable();
+        });
+    </script>
 @endsection
