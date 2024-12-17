@@ -31,11 +31,11 @@
                             <div class="mb-3">
                                 <h5>Total Balances</h5>
                                 <ul>
-                                    <li><strong>Total Owner Balance:</strong> {{ number_format($totalOwnerBalance, 2) }}
+                                    <li><strong>Total Owner Balance:</strong> {{ $totalOwnerBalance }}
                                     </li>
-                                    <li><strong>Total Agent Balance:</strong> {{ number_format($totalAgentBalance, 2) }}
+                                    <li><strong>Total Agent Balance:</strong> {{ $totalAgentBalance }}
                                     </li>
-                                    <li><strong>Total Player Balance:</strong> {{ number_format($totalPlayerBalance, 2) }}
+                                    <li><strong>Total Player Balance:</strong> {{ $totalPlayerBalance }}
                                     </li>
                                 </ul>
                             </div>
