@@ -40,7 +40,7 @@
                                         <th>PlayerBalance</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                {{-- <tbody>
                                     @php $count = 1; @endphp
                                     @foreach ($senior->children as $owner)
                                         <!-- Owners -->
@@ -57,6 +57,27 @@
                                                     <td>{{ $player->name }}</td>
                                                     <td>{{ $player->wallet->balanceFloat ?? '0.00' }}</td>
                                                 </tr>
+                                            @endforeach
+                                        @endforeach
+                                    @endforeach
+                                </tbody> --}}
+                                <tbody>
+                                    @php $count = 1; @endphp
+                                    @foreach ($groupedData as $owner)
+                                        <!-- Owners -->
+                                        @foreach ($owner['agents'] as $agentsGroup)
+                                            @foreach ($agentsGroup as $agent)
+                                                @foreach ($agent['players'] as $player)
+                                                    <tr>
+                                                        <td>{{ $count++ }}</td>
+                                                        <td>{{ $owner['owner_name'] }}</td>
+                                                        <td>{{ $owner['owner_balance'] }}</td>
+                                                        <td>{{ $agent['agent_name'] }}</td>
+                                                        <td>{{ $agent['agent_balance'] }}</td>
+                                                        <td>{{ $player['player_name'] }}</td>
+                                                        <td>{{ $player['player_balance'] }}</td>
+                                                    </tr>
+                                                @endforeach
                                             @endforeach
                                         @endforeach
                                     @endforeach
