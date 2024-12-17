@@ -33,6 +33,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Owner Name</th>
+                                        <th>OwnerBalance</th>
                                         <th>Agent Name</th>
                                         <th>Player Name</th>
                                     </tr>
@@ -48,6 +49,7 @@
                                                 <tr>
                                                     <td>{{ $count++ }}</td>
                                                     <td>{{ $owner->name }}</td>
+                                                    <td>{{ $owner->wallet()->balanceFloat }}</td>
                                                     <td>{{ $agent->name }}</td>
                                                     <td>{{ $player->name }}</td>
                                                 </tr>
