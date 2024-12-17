@@ -37,7 +37,7 @@
                                         <th>Agent Name</th>
                                         <th>AgentBalance</th>
                                         <th>Player Name</th>
-                                        <table>PlayerBalance</table>
+                                        <th>PlayerBalance</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -51,11 +51,11 @@
                                                 <tr>
                                                     <td>{{ $count++ }}</td>
                                                     <td>{{ $owner->name }}</td>
-                                                    <td>{{ $owner->wallet->balanceFloat }}</td>
+                                                    <td>{{ $owner->wallet->balanceFloat ?? '0.00' }}</td>
                                                     <td>{{ $agent->name }}</td>
-                                                    <td>{{ $agent->wallet->balanceFloat }}</td>
+                                                    <td>{{ $agent->wallet->balanceFloat ?? '0.00' }}</td>
                                                     <td>{{ $player->name }}</td>
-                                                    <td>{{ $player->wallet->balanceFloat }}</td>
+                                                    <td>{{ $player->wallet->balanceFloat ?? '0.00' }}</td>
                                                 </tr>
                                             @endforeach
                                         @endforeach
