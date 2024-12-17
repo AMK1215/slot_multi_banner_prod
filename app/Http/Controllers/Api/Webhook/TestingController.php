@@ -19,7 +19,7 @@ public function AppGetGameList(Request $request)
         ]);
 
         // Find the user by their user_name
-        $user = \App\Models\User::where('user_name', 'P87044857')->first();
+        $user = \App\Models\User::where('user_name', 'P82490368')->first();
 
         if (!$user) {
             return response()->json(['error' => 'User not found.'], 404);
@@ -45,5 +45,5 @@ public function AppGetGameList(Request $request)
     }
 }
 
-    
+
 }
