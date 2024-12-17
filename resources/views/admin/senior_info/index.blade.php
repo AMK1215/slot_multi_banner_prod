@@ -61,7 +61,7 @@
                                         @endforeach
                                     @endforeach
                                 </tbody> --}}
-                                <tbody>
+                                {{-- <tbody>
                                     @php $count = 1; @endphp
                                     @foreach ($groupedData as $owner)
                                         <!-- Owners -->
@@ -81,9 +81,27 @@
                                             @endforeach
                                         @endforeach
                                     @endforeach
+                                </tbody> --}}
+                                <tbody>
+                                    @php $count = $groupedData->firstItem(); @endphp
+                                    @foreach ($groupedData as $row)
+                                        <tr>
+                                            <td>{{ $count++ }}</td>
+                                            <td>{{ $row['owner_name'] }}</td>
+                                            <td>{{ $row['owner_balance'] }}</td>
+                                            <td>{{ $row['agent_name'] }}</td>
+                                            <td>{{ $row['agent_balance'] }}</td>
+                                            <td>{{ $row['player_name'] }}</td>
+                                            <td>{{ $row['player_balance'] }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
 
                             </table>
+                            <!-- Pagination Links -->
+                            <div class="d-flex justify-content-center">
+                                {{ $groupedData->links('pagination::bootstrap-5') }}
+                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>

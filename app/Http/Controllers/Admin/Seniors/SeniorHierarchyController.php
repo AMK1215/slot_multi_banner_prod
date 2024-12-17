@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class SeniorHierarchyController extends Controller
 {
@@ -36,50 +37,129 @@ class SeniorHierarchyController extends Controller
 
     //     return view('admin.senior_info.index', ['senior' => $senior]);
     // }
-    public function GetSeniorHierarchy()
-    {
-        $senior_id = Auth::id(); // Authenticated user ID
+    // public function GetSeniorHierarchy()
+    // {
+    //     $senior_id = Auth::id(); // Authenticated user ID
 
-        // Fetch the authenticated user with hierarchical children
-        $senior = User::with([
-            'children' => function ($query) {
-                $query->with([
-                    'children' => function ($query) {
-                        $query->with('children');
-                    },
-                ]);
-            },
-        ])->find($senior_id);
+    //     // Fetch the authenticated user with hierarchical children
+    //     $senior = User::with([
+    //         'children' => function ($query) {
+    //             $query->with([
+    //                 'children' => function ($query) {
+    //                     $query->with('children');
+    //                 },
+    //             ]);
+    //         },
+    //     ])->find($senior_id);
 
-        // Check if the user exists and has the 'Senior' role
-        if (!$senior || !$senior->hasRole('Senior')) {
-            return redirect()->back()->with('error', 'You are not authorized to view this hierarchy information.');
-        }
+    //     // Check if the user exists and has the 'Senior' role
+    //     if (!$senior || !$senior->hasRole('Senior')) {
+    //         return redirect()->back()->with('error', 'You are not authorized to view this hierarchy information.');
+    //     }
 
-        // Group the data by Owner's Name and Agent's Name
-        $groupedData = $senior->children->map(function ($owner) {
-            return [
-                'owner_name' => $owner->name,
-                'owner_balance' => $owner->wallet->balanceFloat ?? '0.00',
-                'agents' => $owner->children->groupBy('name')->map(function ($agents) {
-                    return $agents->map(function ($agent) {
-                        return [
-                            'agent_name' => $agent->name,
-                            'agent_balance' => $agent->wallet->balanceFloat ?? '0.00',
-                            'players' => $agent->children->map(function ($player) {
-                                return [
-                                    'player_name' => $player->name,
-                                    'player_balance' => $player->wallet->balanceFloat ?? '0.00',
-                                ];
-                            }),
-                        ];
-                    });
-                }),
-            ];
-        });
+    //     // Group the data by Owner's Name and Agent's Name
+    //     $groupedData = $senior->children->map(function ($owner) {
+    //         return [
+    //             'owner_name' => $owner->name,
+    //             'owner_balance' => $owner->wallet->balanceFloat ?? '0.00',
+    //             'agents' => $owner->children->groupBy('name')->map(function ($agents) {
+    //                 return $agents->map(function ($agent) {
+    //                     return [
+    //                         'agent_name' => $agent->name,
+    //                         'agent_balance' => $agent->wallet->balanceFloat ?? '0.00',
+    //                         'players' => $agent->children->map(function ($player) {
+    //                             return [
+    //                                 'player_name' => $player->name,
+    //                                 'player_balance' => $player->wallet->balanceFloat ?? '0.00',
+    //                             ];
+    //                         }),
+    //                     ];
+    //                 });
+    //             }),
+    //         ];
+    //     });
 
-        return view('admin.senior_info.index', [
-            'groupedData' => $groupedData,
-        ]);
+    //     return view('admin.senior_info.index', [
+    //         'groupedData' => $groupedData,
+    //     ]);
+    // }
+
+    public function GetSeniorHierarchy(Request $request)
+{
+    $senior_id = Auth::id(); // Authenticated user ID
+
+    // Fetch the authenticated user with hierarchical children
+    $senior = User::with([
+        'children' => function ($query) {
+            $query->with([
+                'children' => function ($query) {
+                    $query->with('children');
+                },
+            ]);
+        },
+    ])->find($senior_id);
+
+    // Check if the user exists and has the 'Senior' role
+    if (!$senior || !$senior->hasRole('Senior')) {
+        return redirect()->back()->with('error', 'You are not authorized to view this hierarchy information.');
     }
+
+    // Group the data by Owner's Name and Agent's Name
+    $groupedData = $senior->children->map(function ($owner) {
+        return [
+            'owner_name' => $owner->name,
+            'owner_balance' => $owner->wallet->balanceFloat ?? '0.00',
+            'agents' => $owner->children->groupBy('name')->map(function ($agents) {
+                return $agents->map(function ($agent) {
+                    return [
+                        'agent_name' => $agent->name,
+                        'agent_balance' => $agent->wallet->balanceFloat ?? '0.00',
+                        'players' => $agent->children->map(function ($player) {
+                            return [
+                                'player_name' => $player->name,
+                                'player_balance' => $player->wallet->balanceFloat ?? '0.00',
+                            ];
+                        }),
+                    ];
+                });
+            }),
+        ];
+    });
+
+    // Flatten the data for pagination
+    $flattenedData = collect();
+    foreach ($groupedData as $owner) {
+        foreach ($owner['agents'] as $agentsGroup) {
+            foreach ($agentsGroup as $agent) {
+                foreach ($agent['players'] as $player) {
+                    $flattenedData->push([
+                        'owner_name' => $owner['owner_name'],
+                        'owner_balance' => $owner['owner_balance'],
+                        'agent_name' => $agent['agent_name'],
+                        'agent_balance' => $agent['agent_balance'],
+                        'player_name' => $player['player_name'],
+                        'player_balance' => $player['player_balance'],
+                    ]);
+                }
+            }
+        }
+    }
+
+    // Manual Pagination
+    $currentPage = LengthAwarePaginator::resolveCurrentPage();
+    $perPage = 10; // Number of records per page
+    $currentItems = $flattenedData->slice(($currentPage - 1) * $perPage, $perPage)->all();
+
+    $paginatedData = new LengthAwarePaginator(
+        $currentItems, 
+        $flattenedData->count(), 
+        $perPage, 
+        $currentPage, 
+        ['path' => $request->url(), 'query' => $request->query()]
+    );
+
+    return view('admin.senior_info.index', [
+        'groupedData' => $paginatedData,
+    ]);
+}
 }
