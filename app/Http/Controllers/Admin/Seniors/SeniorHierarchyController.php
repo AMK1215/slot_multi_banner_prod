@@ -164,108 +164,6 @@ class SeniorHierarchyController extends Controller
 // }
 
     
-// public function GetSeniorHierarchy(Request $request) 
-// {
-//     $senior_id = Auth::id(); // Authenticated user ID
-
-//     // Fetch the authenticated user with hierarchical children
-//     $senior = User::with([
-//         'children' => function ($query) {
-//             $query->with([
-//                 'children' => function ($query) {
-//                     $query->with('children');
-//                 },
-//             ]);
-//         },
-//     ])->find($senior_id);
-
-//     // Check if the user exists and has the 'Senior' role
-//     if (!$senior || !$senior->hasRole('Senior')) {
-//         return redirect()->back()->with('error', 'You are not authorized to view this hierarchy information.');
-//     }
-
-//     // Variables to store total balances
-//     $totalOwnerBalance = 0;
-//     $totalAgentBalance = 0;
-//     $totalPlayerBalance = 0;
-
-//     // Group the data by Owner's Name and Agent's Name
-//     $groupedData = $senior->children->map(function ($owner) use (&$totalOwnerBalance, &$totalAgentBalance, &$totalPlayerBalance) {
-//         // Add Owner balance
-//         $ownerBalance = $owner->wallet->balanceFloat ?? 0.00;
-//         $totalOwnerBalance += $ownerBalance;
-
-//         return [
-//             'owner_name' => $owner->name,
-//             'owner_balance' => $ownerBalance,
-//             'agents' => $owner->children->groupBy('name')->map(function ($agents) use (&$totalAgentBalance, &$totalPlayerBalance) {
-//                 return $agents->map(function ($agent) use (&$totalAgentBalance, &$totalPlayerBalance) {
-//                     // Add Agent balance
-//                     $agentBalance = $agent->wallet->balanceFloat ?? 0.00;
-//                     $totalAgentBalance += $agentBalance;
-
-//                     return [
-//                         'agent_name' => $agent->name,
-//                         'agent_balance' => $agentBalance,
-//                         'players' => $agent->children->map(function ($player) use (&$totalPlayerBalance) {
-//                             // Add Player balance
-//                             $playerBalance = $player->wallet->balanceFloat ?? 0.00;
-//                             $totalPlayerBalance += $playerBalance;
-
-//                             return [
-//                                 'player_name' => $player->name,
-//                                 'player_balance' => $playerBalance,
-//                             ];
-//                         }),
-//                     ];
-//                 });
-//             }),
-//         ];
-//     });
-
-//     // Flatten the data for pagination
-//     $flattenedData = collect();
-//     foreach ($groupedData as $owner) {
-//         foreach ($owner['agents'] as $agentsGroup) {
-//             foreach ($agentsGroup as $agent) {
-//                 foreach ($agent['players'] as $player) {
-//                     $flattenedData->push([
-//                         'owner_name' => $owner['owner_name'],
-//                         'owner_balance' => $owner['owner_balance'],
-//                         'agent_name' => $agent['agent_name'],
-//                         'agent_balance' => $agent['agent_balance'],
-//                         'player_name' => $player['player_name'],
-//                         'player_balance' => $player['player_balance'],
-//                     ]);
-//                 }
-//             }
-//         }
-//     }
-
-//     // Manual Pagination
-//     $currentPage = LengthAwarePaginator::resolveCurrentPage();
-//     $perPage = 10; // Number of records per page
-//     $currentItems = $flattenedData->slice(($currentPage - 1) * $perPage, $perPage)->all();
-
-//     $paginatedData = new LengthAwarePaginator(
-//         $currentItems, 
-//         $flattenedData->count(), 
-//         $perPage, 
-//         $currentPage, 
-//         ['path' => $request->url(), 'query' => $request->query()]
-//     );
-
-//     // Pass total balances to the view
-//     return view('admin.senior_info.index', [
-//         'groupedData' => $paginatedData,
-//         'totalOwnerBalance' => $totalOwnerBalance,
-//         'totalAgentBalance' => $totalAgentBalance,
-//         'totalPlayerBalance' => $totalPlayerBalance,
-//     ]);
-// }
-
-    
-
 public function GetSeniorHierarchy(Request $request) 
 {
     $senior_id = Auth::id(); // Authenticated user ID
@@ -291,68 +189,62 @@ public function GetSeniorHierarchy(Request $request)
     $totalAgentBalance = 0;
     $totalPlayerBalance = 0;
 
-    // Process the data hierarchy
+    // Group the data by Owner's Name and Agent's Name
     $groupedData = $senior->children->map(function ($owner) use (&$totalOwnerBalance, &$totalAgentBalance, &$totalPlayerBalance) {
-        // Owner balance
+        // Add Owner balance
         $ownerBalance = $owner->wallet->balanceFloat ?? 0.00;
         $totalOwnerBalance += $ownerBalance;
 
-        // Total agent balance under this owner
-        $ownerAgentTotalBalance = 0;
-
-        $agentsData = $owner->children->map(function ($agent) use (&$totalAgentBalance, &$totalPlayerBalance, &$ownerAgentTotalBalance) {
-            // Agent balance
-            $agentBalance = $agent->wallet->balanceFloat ?? 0.00;
-            $totalAgentBalance += $agentBalance;
-            $ownerAgentTotalBalance += $agentBalance; // Add to owner's agent total
-
-            // Players under the agent
-            $playersData = $agent->children->map(function ($player) use (&$totalPlayerBalance) {
-                $playerBalance = $player->wallet->balanceFloat ?? 0.00;
-                $totalPlayerBalance += $playerBalance;
-
-                return [
-                    'player_name' => $player->name,
-                    'player_balance' => number_format($playerBalance, 2),
-                ];
-            });
-
-            return [
-                'agent_name' => $agent->name,
-                'agent_balance' => number_format($agentBalance, 2),
-                'players' => $playersData,
-            ];
-        });
-
         return [
             'owner_name' => $owner->name,
-            'owner_balance' => number_format($ownerBalance, 2),
-            'owner_agent_total_balance' => number_format($ownerAgentTotalBalance, 2), // Total of all agents under this owner
-            'agents' => $agentsData,
+            'owner_balance' => $ownerBalance,
+            'agents' => $owner->children->groupBy('name')->map(function ($agents) use (&$totalAgentBalance, &$totalPlayerBalance) {
+                return $agents->map(function ($agent) use (&$totalAgentBalance, &$totalPlayerBalance) {
+                    // Add Agent balance
+                    $agentBalance = $agent->wallet->balanceFloat ?? 0.00;
+                    $totalAgentBalance += $agentBalance;
+
+                    return [
+                        'agent_name' => $agent->name,
+                        'agent_balance' => $agentBalance,
+                        'players' => $agent->children->map(function ($player) use (&$totalPlayerBalance) {
+                            // Add Player balance
+                            $playerBalance = $player->wallet->balanceFloat ?? 0.00;
+                            $totalPlayerBalance += $playerBalance;
+
+                            return [
+                                'player_name' => $player->name,
+                                'player_balance' => $playerBalance,
+                            ];
+                        }),
+                    ];
+                });
+            }),
         ];
     });
 
     // Flatten the data for pagination
     $flattenedData = collect();
     foreach ($groupedData as $owner) {
-        foreach ($owner['agents'] as $agent) {
-            foreach ($agent['players'] as $player) {
-                $flattenedData->push([
-                    'owner_name' => $owner['owner_name'],
-                    'owner_balance' => $owner['owner_balance'],
-                    'owner_agent_total_balance' => $owner['owner_agent_total_balance'],
-                    'agent_name' => $agent['agent_name'],
-                    'agent_balance' => $agent['agent_balance'],
-                    'player_name' => $player['player_name'],
-                    'player_balance' => $player['player_balance'],
-                ]);
+        foreach ($owner['agents'] as $agentsGroup) {
+            foreach ($agentsGroup as $agent) {
+                foreach ($agent['players'] as $player) {
+                    $flattenedData->push([
+                        'owner_name' => $owner['owner_name'],
+                        'owner_balance' => $owner['owner_balance'],
+                        'agent_name' => $agent['agent_name'],
+                        'agent_balance' => $agent['agent_balance'],
+                        'player_name' => $player['player_name'],
+                        'player_balance' => $player['player_balance'],
+                    ]);
+                }
             }
         }
     }
 
     // Manual Pagination
     $currentPage = LengthAwarePaginator::resolveCurrentPage();
-    $perPage = 10; // Records per page
+    $perPage = 10; // Number of records per page
     $currentItems = $flattenedData->slice(($currentPage - 1) * $perPage, $perPage)->all();
 
     $paginatedData = new LengthAwarePaginator(
@@ -363,14 +255,122 @@ public function GetSeniorHierarchy(Request $request)
         ['path' => $request->url(), 'query' => $request->query()]
     );
 
-    // Pass data to view
+    // Pass total balances to the view
     return view('admin.senior_info.index', [
         'groupedData' => $paginatedData,
-        'totalOwnerBalance' => number_format($totalOwnerBalance, 2),
-        'totalAgentBalance' => number_format($totalAgentBalance, 2),
-        'totalPlayerBalance' => number_format($totalPlayerBalance, 2),
+        'totalOwnerBalance' => $totalOwnerBalance,
+        'totalAgentBalance' => $totalAgentBalance,
+        'totalPlayerBalance' => $totalPlayerBalance,
     ]);
 }
+
+    
+
+// public function GetSeniorHierarchy(Request $request) 
+// {
+//     $senior_id = Auth::id(); // Authenticated user ID
+
+//     // Fetch the authenticated user with hierarchical children
+//     $senior = User::with([
+//         'children' => function ($query) {
+//             $query->with([
+//                 'children' => function ($query) {
+//                     $query->with('children');
+//                 },
+//             ]);
+//         },
+//     ])->find($senior_id);
+
+//     // Check if the user exists and has the 'Senior' role
+//     if (!$senior || !$senior->hasRole('Senior')) {
+//         return redirect()->back()->with('error', 'You are not authorized to view this hierarchy information.');
+//     }
+
+//     // Variables to store total balances
+//     $totalOwnerBalance = 0;
+//     $totalAgentBalance = 0;
+//     $totalPlayerBalance = 0;
+
+//     // Process the data hierarchy
+//     $groupedData = $senior->children->map(function ($owner) use (&$totalOwnerBalance, &$totalAgentBalance, &$totalPlayerBalance) {
+//         // Owner balance
+//         $ownerBalance = $owner->wallet->balanceFloat ?? 0.00;
+//         $totalOwnerBalance += $ownerBalance;
+
+//         // Total agent balance under this owner
+//         $ownerAgentTotalBalance = 0;
+
+//         $agentsData = $owner->children->map(function ($agent) use (&$totalAgentBalance, &$totalPlayerBalance, &$ownerAgentTotalBalance) {
+//             // Agent balance
+//             $agentBalance = $agent->wallet->balanceFloat ?? 0.00;
+//             $totalAgentBalance += $agentBalance;
+//             $ownerAgentTotalBalance += $agentBalance; // Add to owner's agent total
+
+//             // Players under the agent
+//             $playersData = $agent->children->map(function ($player) use (&$totalPlayerBalance) {
+//                 $playerBalance = $player->wallet->balanceFloat ?? 0.00;
+//                 $totalPlayerBalance += $playerBalance;
+
+//                 return [
+//                     'player_name' => $player->name,
+//                     'player_balance' => number_format($playerBalance, 2),
+//                 ];
+//             });
+
+//             return [
+//                 'agent_name' => $agent->name,
+//                 'agent_balance' => number_format($agentBalance, 2),
+//                 'players' => $playersData,
+//             ];
+//         });
+
+//         return [
+//             'owner_name' => $owner->name,
+//             'owner_balance' => number_format($ownerBalance, 2),
+//             'owner_agent_total_balance' => number_format($ownerAgentTotalBalance, 2), // Total of all agents under this owner
+//             'agents' => $agentsData,
+//         ];
+//     });
+
+//     // Flatten the data for pagination
+//     $flattenedData = collect();
+//     foreach ($groupedData as $owner) {
+//         foreach ($owner['agents'] as $agent) {
+//             foreach ($agent['players'] as $player) {
+//                 $flattenedData->push([
+//                     'owner_name' => $owner['owner_name'],
+//                     'owner_balance' => $owner['owner_balance'],
+//                     'owner_agent_total_balance' => $owner['owner_agent_total_balance'],
+//                     'agent_name' => $agent['agent_name'],
+//                     'agent_balance' => $agent['agent_balance'],
+//                     'player_name' => $player['player_name'],
+//                     'player_balance' => $player['player_balance'],
+//                 ]);
+//             }
+//         }
+//     }
+
+//     // Manual Pagination
+//     $currentPage = LengthAwarePaginator::resolveCurrentPage();
+//     $perPage = 10; // Records per page
+//     $currentItems = $flattenedData->slice(($currentPage - 1) * $perPage, $perPage)->all();
+
+//     $paginatedData = new LengthAwarePaginator(
+//         $currentItems, 
+//         $flattenedData->count(), 
+//         $perPage, 
+//         $currentPage, 
+//         ['path' => $request->url(), 'query' => $request->query()]
+//     );
+
+//     // Pass data to view
+//     return view('admin.senior_info.index', [
+//         'groupedData' => $paginatedData,
+//         'totalOwnerBalance' => number_format($totalOwnerBalance, 2),
+//         'totalAgentBalance' => number_format($totalAgentBalance, 2),
+//         'totalPlayerBalance' => number_format($totalPlayerBalance, 2),
+//     ]);
+// }
 
 
 }

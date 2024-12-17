@@ -31,11 +31,11 @@
                             <div class="mb-3">
                                 <h5>Total Balances</h5>
                                 <ul>
-                                    <li><strong>Total Owner Balance:</strong> {{ $totalOwnerBalance }}
+                                    <li><strong>Total Owner Balance:</strong> {{ number_format($totalOwnerBalance, 2) }}
                                     </li>
-                                    <li><strong>Total Agent Balance:</strong> {{ $totalAgentBalance }}
+                                    <li><strong>Total Agent Balance:</strong> {{ number_format($totalAgentBalance, 2) }}
                                     </li>
-                                    <li><strong>Total Player Balance:</strong> {{ $totalPlayerBalance }}
+                                    <li><strong>Total Player Balance:</strong> {{ number_format($totalPlayerBalance, 2) }}
                                     </li>
                                 </ul>
                             </div>
@@ -45,7 +45,7 @@
                                         <th>#</th>
                                         <th>Owner Name</th>
                                         <th>OwnerBalance</th>
-                                        <th>AgentTotalBalance</th>
+                                        {{-- <th>AgentTotalBalance</th> --}}
                                         <th>Agent Name</th>
                                         <th>AgentBalance</th>
                                         <th>Player Name</th>
@@ -101,7 +101,7 @@
                                             <td>{{ $count++ }}</td>
                                             <td>{{ $row['owner_name'] }}</td>
                                             <td>{{ $row['owner_balance'] }}</td>
-                                            <td>{{ $row['owner_agent_total_balance'] }}</td>
+                                            {{-- <td>{{ $row['owner_agent_total_balance'] }}</td> --}}
                                             <td>{{ $row['agent_name'] }}</td>
                                             <td>{{ $row['agent_balance'] }}</td>
                                             <td>{{ $row['player_name'] }}</td>
