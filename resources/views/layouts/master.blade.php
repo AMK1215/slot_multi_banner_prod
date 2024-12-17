@@ -110,6 +110,14 @@
                         </li>
                         @can('senior_access')
                             <li class="nav-item">
+                                <a href="{{ route('admin.SeniorHierarchy') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        SeniorHierarchy
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ route('admin.owner.index') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
                                     <p>

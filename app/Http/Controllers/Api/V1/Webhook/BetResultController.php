@@ -112,7 +112,6 @@ class BetResultController extends Controller
                     // FILE_APPEND // Append to the file without overwriting
                     // );
 
-
                     // Refresh balance
                     $player->wallet->refreshBalance();
                     $newBalance = $player->wallet->balanceFloat;

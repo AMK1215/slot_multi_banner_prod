@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Admin\ReportController;
-use App\Http\Controllers\Api\V1\Shan\ShanTransactionController;
 use App\Http\Controllers\Api\TranData\GetUserController;
 use App\Http\Controllers\Api\V1\Auth\AuthController;
 use App\Http\Controllers\Api\V1\Bank\BankController;
@@ -12,6 +11,7 @@ use App\Http\Controllers\Api\V1\GetAdminSiteLogoNameController;
 use App\Http\Controllers\Api\V1\GetBalanceController;
 use App\Http\Controllers\Api\V1\Monitor\DataVisualizationController;
 use App\Http\Controllers\Api\V1\PromotionController;
+use App\Http\Controllers\Api\V1\Shan\ShanTransactionController;
 use App\Http\Controllers\Api\V1\Slot\GameController;
 use App\Http\Controllers\Api\V1\Slot\GetDaySummaryController;
 use App\Http\Controllers\Api\V1\Slot\LaunchGameController;
@@ -58,7 +58,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Route::get('transactions', [TransactionController::class, 'index']);
     //Route::get('shan-transactions', [TransactionController::class, 'index'])->middleware('transaction');
     Route::get('shan-transactions', [TransactionController::class, 'GetPlayerShanReport']);
-
 
     Route::get('user', [AuthController::class, 'getUser']);
     Route::get('contact', [AuthController::class, 'getContact']);

@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin\Shan;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\ReportTransaction;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\User;
 
 class ShanReportController extends Controller
 {
@@ -47,74 +47,71 @@ class ShanReportController extends Controller
     //     return view('admin.shan.reports.show', compact('userTransactions', 'user_id'));
     // }
 
-//     public function show($user_id)
-// {
-//     // Query to get all report transactions for a specific user
-//     $userTransactions = ReportTransaction::where('user_id', $user_id)
-//         ->orderByDesc('created_at')
-//         ->get();
+    //     public function show($user_id)
+    // {
+    //     // Query to get all report transactions for a specific user
+    //     $userTransactions = ReportTransaction::where('user_id', $user_id)
+    //         ->orderByDesc('created_at')
+    //         ->get();
 
-//     // Calculate Total Bet Amount
-//     $totalBet = $userTransactions->sum('bet_amount');
+    //     // Calculate Total Bet Amount
+    //     $totalBet = $userTransactions->sum('bet_amount');
 
-//     // Calculate Total Win Amount (status = 1)
-//     $totalWin = $userTransactions->filter(function ($transaction) {
-//         return $transaction->win_lose_status == 1; // Win
-//     })->sum('transaction_amount');
+    //     // Calculate Total Win Amount (status = 1)
+    //     $totalWin = $userTransactions->filter(function ($transaction) {
+    //         return $transaction->win_lose_status == 1; // Win
+    //     })->sum('transaction_amount');
 
-//     // Calculate Total Lose Amount (status = 0)
-//     $totalLose = $userTransactions->filter(function ($transaction) {
-//         return $transaction->win_lose_status == 0; // Lose
-//     })->sum(function ($transaction) {
-//         return abs($transaction->transaction_amount);
-//     });
+    //     // Calculate Total Lose Amount (status = 0)
+    //     $totalLose = $userTransactions->filter(function ($transaction) {
+    //         return $transaction->win_lose_status == 0; // Lose
+    //     })->sum(function ($transaction) {
+    //         return abs($transaction->transaction_amount);
+    //     });
 
-//     // Pass the transactions, user_id, and calculated totals to the view
-//     return view('admin.shan.reports.show', compact(
-//         'userTransactions',
-//         'user_id',
-//         'totalBet',
-//         'totalWin',
-//         'totalLose'
-//     ));
-// }
+    //     // Pass the transactions, user_id, and calculated totals to the view
+    //     return view('admin.shan.reports.show', compact(
+    //         'userTransactions',
+    //         'user_id',
+    //         'totalBet',
+    //         'totalWin',
+    //         'totalLose'
+    //     ));
+    // }
 
-public function show($user_id)
-{
-    // Query to get all report transactions for a specific user
-    $userTransactions = ReportTransaction::where('user_id', $user_id)
-        ->orderByDesc('created_at')
-        ->get();
+    public function show($user_id)
+    {
+        // Query to get all report transactions for a specific user
+        $userTransactions = ReportTransaction::where('user_id', $user_id)
+            ->orderByDesc('created_at')
+            ->get();
 
         // Get player name
-    $player = User::find($user_id);
-    $playerName = $player ? $player->user_name : 'Unknown';
+        $player = User::find($user_id);
+        $playerName = $player ? $player->user_name : 'Unknown';
 
+        // Calculate Total Bet Amount
+        $totalBet = $userTransactions->sum('bet_amount');
 
-    // Calculate Total Bet Amount
-    $totalBet = $userTransactions->sum('bet_amount');
+        // Calculate Total Win Amount (win_lose_status = 1)
+        $totalWin = $userTransactions->where('win_lose_status', 1)->sum('transaction_amount');
 
-    // Calculate Total Win Amount (win_lose_status = 1)
-    $totalWin = $userTransactions->where('win_lose_status', 1)->sum('transaction_amount');
+        // Calculate Total Lose Amount (win_lose_status = 0)
+        $totalLose = $userTransactions->where('win_lose_status', 0)
+            ->sum(function ($transaction) {
+                return abs($transaction->transaction_amount);
+            });
 
-    // Calculate Total Lose Amount (win_lose_status = 0)
-    $totalLose = $userTransactions->where('win_lose_status', 0)
-        ->sum(function ($transaction) {
-            return abs($transaction->transaction_amount);
-        });
-
-    // Pass the data to the view
-    return view('admin.shan.reports.show', compact(
-        'userTransactions',
-        'user_id',
-        'totalBet',
-        'totalWin',
-        'totalLose',
-        'playerName'
-    ));
-}
-
-
+        // Pass the data to the view
+        return view('admin.shan.reports.show', compact(
+            'userTransactions',
+            'user_id',
+            'totalBet',
+            'totalWin',
+            'totalLose',
+            'playerName'
+        ));
+    }
 
     public function ShanAgentReportIndex(Request $request)
     {

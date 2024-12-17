@@ -62,50 +62,50 @@ class ShanTransactionController extends Controller
     //     return $this->success($results, 'Transaction Successful');
     // }
     public function index(Request $request): JsonResponse
-{
-    $validatedData = $request->validate([
-        'game_type_id' => 'required|integer',
-        'players' => 'required|array',
-        'players.*.player_id' => 'required|string',
-        'players.*.bet_amount' => 'required|numeric',
-        'players.*.amount_changed' => 'required|numeric',
-        'players.*.win_lose_status' => 'required|integer|in:0,1',
-    ]);
+    {
+        $validatedData = $request->validate([
+            'game_type_id' => 'required|integer',
+            'players' => 'required|array',
+            'players.*.player_id' => 'required|string',
+            'players.*.bet_amount' => 'required|numeric',
+            'players.*.amount_changed' => 'required|numeric',
+            'players.*.win_lose_status' => 'required|integer|in:0,1',
+        ]);
 
-    try {
-        DB::beginTransaction();
+        try {
+            DB::beginTransaction();
 
-        // Fetch the systemWallet as the banker
-        $banker = User::where('user_name', 'systemWallet')->first();
-        if (!$banker) {
-            return $this->error('', 'Banker (systemWallet) not found', 404);
-        }
-
-        $this->handleBankerTransaction($banker, [
-            'amount' => 100, // Adjust based on your logic
-            'is_final_turn' => true, // Adjust based on your logic
-        ], $validatedData['game_type_id']);
-
-        $results = [['player_id' => $banker->user_name, 'balance' => $banker->wallet->balance]];
-
-        // Handle player transactions
-        foreach ($validatedData['players'] as $playerData) {
-            $player = $this->getUserByUsername($playerData['player_id']);
-            if ($player) {
-                $this->handlePlayerTransaction($player, $playerData, $validatedData['game_type_id']);
-                $results[] = ['player_id' => $player->user_name, 'balance' => $player->wallet->balance];
+            // Fetch the systemWallet as the banker
+            $banker = User::where('user_name', 'systemWallet')->first();
+            if (! $banker) {
+                return $this->error('', 'Banker (systemWallet) not found', 404);
             }
+
+            $this->handleBankerTransaction($banker, [
+                'amount' => 100, // Adjust based on your logic
+                'is_final_turn' => true, // Adjust based on your logic
+            ], $validatedData['game_type_id']);
+
+            $results = [['player_id' => $banker->user_name, 'balance' => $banker->wallet->balance]];
+
+            // Handle player transactions
+            foreach ($validatedData['players'] as $playerData) {
+                $player = $this->getUserByUsername($playerData['player_id']);
+                if ($player) {
+                    $this->handlePlayerTransaction($player, $playerData, $validatedData['game_type_id']);
+                    $results[] = ['player_id' => $player->user_name, 'balance' => $player->wallet->balance];
+                }
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return $this->error('Transaction failed', $e->getMessage(), 500);
         }
 
-        DB::commit();
-    } catch (\Exception $e) {
-        DB::rollBack();
-        return $this->error('Transaction failed', $e->getMessage(), 500);
+        return $this->success($results, 'Transaction Successful');
     }
-
-    return $this->success($results, 'Transaction Successful');
-}
-
 
     private function getUserByUsername(string $username): ?User
     {
@@ -152,7 +152,6 @@ class ShanTransactionController extends Controller
         $player->wallet->save();
     }
 }
-
 
 // class ShanTransactionController extends Controller
 // {

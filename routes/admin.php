@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\PaymentTypeController;
 use App\Http\Controllers\Admin\Player\PlayerController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\Seniors\SeniorHierarchyController;
 use App\Http\Controllers\Admin\Shan\ShanReportController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\TransferLog\TransferLogController;
@@ -173,6 +174,8 @@ Route::group([
         // find by username
         Route::get('/result-search', [ReportController::class, 'GetResult'])->name('');
         Route::post('/results/search', [ReportController::class, 'FindByUserName'])->name('results.search');
+        // senior hierarchy
+        Route::get('/hierarchy', [SeniorHierarchyController::class, 'GetSeniorHierarchy'])->name('SeniorHierarchy');
 
     });
 });

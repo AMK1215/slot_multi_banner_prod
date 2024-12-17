@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TransactionResource;
+use App\Models\Admin\ReportTransaction;
 use App\Traits\HttpResponses;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -11,9 +12,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use App\Models\Admin\ReportTransaction;
-
-
 
 class TransactionController extends Controller
 {
@@ -80,7 +78,7 @@ class TransactionController extends Controller
         }
     }
 
-     public function GetPlayerShanReport()
+    public function GetPlayerShanReport()
     {
         // Get the authenticated player's ID
         $user_id = Auth::id();
