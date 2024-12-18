@@ -89,7 +89,6 @@ class AuthController extends Controller
          return $this->error('', 'You do not have permissions', 200);
         }
 
-
         UserLog::create([
             'ip_address' => $request->ip(),
             'user_id' => $user->id,
@@ -125,6 +124,7 @@ class AuthController extends Controller
             'agent_id' => $agent->id,
             'type' => UserType::Player,
         ]);
+        
         $user->roles()->sync(self::PLAYER_ROLE);
 
         return $this->success(new RegisterResource($user), 'User register successfully.');

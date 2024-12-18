@@ -10,10 +10,14 @@ use Illuminate\Support\Facades\Gate;
 
 class TransferLogController extends Controller
 {
+    protected const SUB_AGENT_ROlE = 'Sub Agent';
+
     public function index()
     {
         $this->authorize('transfer_log', User::class);
-        $transferLogs = Auth::user()->transactions()->with('targetUser')
+        $agent = $this->getAgent() ?? Auth::user();
+
+        $transferLogs = $agent->transactions()->with('targetUser')
             ->whereIn('transactions.type', ['withdraw', 'deposit'])
             ->whereIn('transactions.name', ['credit_transfer', 'debit_transfer'])
             ->latest()->paginate();
@@ -28,12 +32,26 @@ class TransferLogController extends Controller
             Response::HTTP_FORBIDDEN,
             '403 Forbidden | You cannot access this page because you do not have permission'
         );
+        $agent = $this->getAgent() ?? Auth::user();
 
-        $transferLogs = Auth::user()->transactions()->with('targetUser')
+        $transferLogs = $agent->transactions()->with('targetUser')
             ->whereIn('transactions.type', ['withdraw', 'deposit'])
             ->whereIn('transactions.name', ['credit_transfer', 'debit_transfer'])
             ->where('target_user_id', $id)->latest()->paginate();
 
         return view('admin.trans_log.detail', compact('transferLogs'));
+    }
+
+
+    private function isExistingAgent($userId)
+    {
+        $user = User::find($userId);
+    
+        return $user && $user->hasRole(self::SUB_AGENT_ROlE) ? $user->parent : null;
+    }
+    
+    private function getAgent()
+    {
+        return $this->isExistingAgent(Auth::id());
     }
 }

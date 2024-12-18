@@ -14,10 +14,14 @@ use Illuminate\Support\Facades\Auth;
 
 class DepositRequestController extends Controller
 {
+    protected const SUB_AGENT_ROlE = 'Sub Agent';
+
     public function index(Request $request)
     {
+        $agent = $this->getAgent() ?? Auth::user();
+
         $deposits = DepositRequest::with(['user', 'bank', 'agent'])
-            ->where('agent_id', Auth::id())
+            ->where('agent_id', $agent->id)
             ->when($request->filled('status') && $request->input('status') !== 'all', function ($query) use ($request) {
                 $query->where('status', $request->input('status'));
             })
@@ -30,7 +34,8 @@ class DepositRequestController extends Controller
     public function statusChangeIndex(Request $request, DepositRequest $deposit)
     {
         try {
-            $agent = Auth::user();
+            $agent = $this->getAgent() ?? Auth::user();
+            
             $player = User::find($request->player);
 
             if ($request->status == 1 && $agent->balanceFloat < $request->amount) {
@@ -72,5 +77,17 @@ class DepositRequestController extends Controller
     public function view(DepositRequest $deposit)
     {
         return view('admin.deposit_request.view', compact('deposit'));
+    }
+
+    private function isExistingAgent($userId)
+    {
+        $user = User::find($userId);
+    
+        return $user && $user->hasRole(self::SUB_AGENT_ROlE) ? $user->parent : null;
+    }
+    
+    private function getAgent()
+    {
+        return $this->isExistingAgent(Auth::id());
     }
 }

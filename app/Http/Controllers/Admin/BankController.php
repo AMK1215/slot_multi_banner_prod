@@ -6,18 +6,23 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BankRequest;
 use App\Models\Admin\Bank;
 use App\Models\PaymentType;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BankController extends Controller
 {
+    protected const SUB_AGENT_ROlE = 'Sub Agent';
+
     /**
      * Display a listing of the resource.
      */
     public function index(): View
     {
-        $banks = Bank::where('agent_id', Auth::id())->get();
+        $agent = $this->getAgent() ?? Auth::user();
+
+        $banks = Bank::where('agent_id', $agent->id)->get();
 
         return view('admin.bank.index', compact('banks'));
     }
@@ -37,8 +42,10 @@ class BankController extends Controller
      */
     public function store(BankRequest $request)
     {
+        $agent = $this->getAgent() ?? Auth::user();
+
         Bank::create([
-            'agent_id' => Auth::id(),
+            'agent_id' => $agent->id,
             'account_number' => $request->account_number,
             'account_name' => $request->account_name,
             'payment_type_id' => $request->payment_type_id,
@@ -84,5 +91,18 @@ class BankController extends Controller
 
         return redirect()->route('admin.bank.index')->with('success', 'Bank deleted successfully');
 
+    }
+
+        
+    private function isExistingAgent($userId)
+    {
+        $user = User::find($userId);
+    
+        return $user && $user->hasRole(self::SUB_AGENT_ROlE) ? $user->parent : null;
+    }
+    
+    private function getAgent()
+    {
+        return $this->isExistingAgent(Auth::id());
     }
 }

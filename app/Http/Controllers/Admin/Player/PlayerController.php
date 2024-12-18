@@ -26,6 +26,8 @@ class PlayerController extends Controller
 
     private const PLAYER_ROLE = 4;
 
+    protected const SUB_AGENT_ROlE = 'Sub Agent';
+
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;
@@ -42,11 +44,13 @@ class PlayerController extends Controller
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
         //kzt
+        $agent = $this->getAgent() ?? Auth::user();
+        
         $users = User::with('roles')
             ->whereHas('roles', function ($query) {
                 $query->where('role_id', self::PLAYER_ROLE);
             })
-            ->where('agent_id', auth()->id())
+            ->where('agent_id', $agent->id)
             ->orderBy('id', 'desc')
             ->get();
 
@@ -87,7 +91,8 @@ class PlayerController extends Controller
     {
         Gate::allows('player_store');
 
-        $agent = Auth::user();
+        $agent = $this->getAgent() ?? Auth::user();
+
         $inputs = $request->validated();
 
         if ($this->isExistingUserForAgent($request->phone, $agent->id)) {
@@ -229,7 +234,8 @@ class PlayerController extends Controller
             $inputs = $request->validated();
             $inputs['refrence_id'] = $this->getRefrenceId();
 
-            $agent = Auth::user();
+            $agent = $this->getAgent() ?? Auth::user();
+
             $cashIn = $inputs['amount'];
 
             if ($cashIn > $agent->balanceFloat) {
@@ -270,7 +276,8 @@ class PlayerController extends Controller
             $inputs = $request->validated();
             $inputs['refrence_id'] = $this->getRefrenceId();
 
-            $agent = Auth::user();
+            $agent = $this->getAgent() ?? Auth::user();
+
             $cashOut = $inputs['amount'];
 
             if ($cashOut > $player->balanceFloat) {
@@ -335,5 +342,17 @@ class PlayerController extends Controller
     {
         //return User::where('phone', $phone)->where('agent_id', $agent_id)->first();
         return User::where('phone', $phone)->where('agent_id', $agent_id)->exists();
+    }
+
+    private function isExistingAgent($userId)
+    {
+        $user = User::find($userId);
+
+        return $user && $user->hasRole(self::SUB_AGENT_ROlE) ? $user->parent : null;
+    }
+    
+    private function getAgent()
+    {
+        return $this->isExistingAgent(Auth::id());
     }
 }

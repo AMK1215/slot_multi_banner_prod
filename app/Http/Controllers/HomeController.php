@@ -40,6 +40,7 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         $role = $user->roles->pluck('title');
+        $permissions = $user->permissions->pluck('title'); 
 
         $totalBalance = DB::table('users')
             ->join('role_user', 'role_user.user_id', '=', 'users.id')
@@ -52,6 +53,9 @@ class HomeController extends Controller
                 return $query->where('users.agent_id', $user->id);
             })
             ->when($role[0] === 'Agent', function ($query) use ($user) {
+                return $query->where('users.agent_id', $user->id);
+            })
+            ->when($role[0] === 'Sub Agent', function ($query) use ($user) {
                 return $query->where('users.agent_id', $user->id);
             })
             ->select(DB::raw('SUM(wallets.balance) as balance'))

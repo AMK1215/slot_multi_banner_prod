@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Enums\TransactionName;
-use App\Enums\TransactionType;
 use App\Enums\UserType;
 use App\Models\User;
 use App\Services\WalletService;
