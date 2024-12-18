@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class TestingController extends Controller {
-
     public function AppGetGameList(Request $request)
 {
     try {
@@ -19,7 +18,7 @@ class TestingController extends Controller {
         ]);
 
         // Find the user by their user_name
-        $user = \App\Models\User::where('user_name', 'P82490368')->first();
+        $user = \App\Models\User::where('user_name', 'P87044857')->first();
 
         if (!$user) {
             return response()->json(['error' => 'User not found.'], 404);
