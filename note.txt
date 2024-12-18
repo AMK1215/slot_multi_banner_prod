@@ -146,9 +146,9 @@ O22856518
 
 
 
-php artisan result:delete-old-backups "2024-12-06" "2024-12-08"
+php artisan result:delete-old-backups "2024-12-08" "2024-12-10"
 
-php artisan bet:delete-old-backups "2024-12-07" "2024-12-08"
+php artisan bet:delete-old-backups "2024-12-08" "2024-12-10"
 
 
 {
