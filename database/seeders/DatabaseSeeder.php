@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
             YGRGameTableSeeder::class,
             FUNTAGameTableSeeder::class,
             SimplePlayGameTableSeeder::class,
+            //JDBGameTableSeeder::class,
 
         ]);
     }

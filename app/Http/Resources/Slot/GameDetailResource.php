@@ -37,6 +37,7 @@ class GameDetailResource extends JsonResource
             'game_provide_name' => $this->game_provide_name,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'pp_hot' => $this->pp_hot,
         ];
     }
 }

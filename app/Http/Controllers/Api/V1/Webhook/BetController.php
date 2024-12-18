@@ -73,8 +73,8 @@ class BetController extends Controller
                 // Check for sufficient balance
                 if ($transaction['BetAmount'] > $PlayerBalance) {
                     Log::warning('Insufficient balance detected', [
-                    'BetAmount' => $transaction['BetAmount'],
-                    'balance' => $PlayerBalance,
+                        'BetAmount' => $transaction['BetAmount'],
+                        'balance' => $PlayerBalance,
                     ]);
 
                     return $this->buildErrorResponse(StatusCode::InsufficientBalance, $PlayerBalance);
@@ -112,7 +112,7 @@ class BetController extends Controller
                     'tran_date_time' => Carbon::parse($transaction['TranDateTime'])->format('Y-m-d H:i:s'),
                 ]);
 
-                Log::info('Bet Transaction  processed successfully', ['BetID' => $transaction['BetId']]);
+                //Log::info('Bet Transaction  processed successfully', ['BetID' => $transaction['BetId']]);
             }
 
             DB::commit();
@@ -122,7 +122,7 @@ class BetController extends Controller
             return $this->buildSuccessResponse($NewBalance);
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error('Failed to handle BetNResult', [
+            Log::error('Failed to handle Bet', [
                 'error' => $e->getMessage(),
                 'line' => $e->getLine(),
                 'file' => $e->getFile(),

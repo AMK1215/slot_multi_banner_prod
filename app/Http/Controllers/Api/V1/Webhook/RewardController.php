@@ -66,13 +66,12 @@ class RewardController extends Controller
                     $transaction['Amount']
                 );
 
-                //$newBalance = $player->wallet->refreshBalance()->balanceFloat;
-                $request->getMember()->wallet->refreshBalance();
-
-                $newBalance = $request->getMember()->balanceFloat;
+                $newBalance = $player->wallet->refreshBalance()->balanceFloat;
+                // $player->wallet->refreshBalance();
+                // $newBalance = $player->wallet->balanceFloat;
 
                 // Create the reward record
-                Reward::create([
+                $reward = Reward::create([
                     'user_id' => $player->id,
                     'operator_id' => $transaction['OperatorId'],
                     'request_date_time' => $transaction['RequestDateTime'],
@@ -88,6 +87,10 @@ class RewardController extends Controller
                 ]);
 
                 Log::info('Reward transaction processed successfully', ['TranId' => $transaction['TranId']]);
+                if (! $reward) {
+                    throw new \Exception('Failed to create reward record');
+                }
+
             }
 
             DB::commit();
@@ -131,3 +134,8 @@ class RewardController extends Controller
                    $transaction['OperatorId'].config('game.api.secret_key').$transaction['PlayerId']);
     }
 }
+
+//$newBalance = $player->wallet->refreshBalance()->balanceFloat;
+//$request->getMember()->wallet->refreshBalance();
+
+//$newBalance = $request->getMember()->balanceFloat;

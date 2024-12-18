@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\DailySummaryController;
 use App\Http\Controllers\Admin\Deposit\DepositRequestController;
 use App\Http\Controllers\Admin\GameListController;
+use App\Http\Controllers\Admin\GameListImageURLUpdateController;
 use App\Http\Controllers\Admin\GameTypeProductController;
 use App\Http\Controllers\Admin\GetBetDetailController;
 use App\Http\Controllers\Admin\GSCReportController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\Admin\Player\PlayerController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\RolesController;
+use App\Http\Controllers\Admin\Seniors\SeniorHierarchyController;
 use App\Http\Controllers\Admin\Shan\ShanReportController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\TransferLog\TransferLogController;
@@ -83,6 +85,14 @@ Route::group([
     Route::patch('gameLists/{id}/toggleStatus', [GameListController::class, 'toggleStatus'])->name('gameLists.toggleStatus');
 
     Route::patch('hotgameLists/{id}/toggleStatus', [GameListController::class, 'HotGameStatus'])->name('HotGame.toggleStatus');
+
+    // pp hot
+
+    Route::patch('pphotgameLists/{id}/toggleStatus', [GameListController::class, 'PPHotGameStatus'])->name('PPHotGame.toggleStatus');
+
+    Route::get('game-list/{gameList}/edit', [GameListImageURLUpdateController::class, 'edit'])->name('game_list.edit');
+    Route::post('/game-list/{id}/update-image-url', [GameListImageURLUpdateController::class, 'updateImageUrl'])->name('game_list.update_image_url');
+
     // game list end
     Route::resource('agent', AgentController::class);
     Route::get('agent-cash-in/{id}', [AgentController::class, 'getCashIn'])->name('agent.getCashIn');
@@ -154,11 +164,26 @@ Route::group([
     Route::group(['prefix' => 'slot'], function () {
         Route::get('report', [ReportController::class, 'index'])->name('report.index');
         Route::get('reports/details/{game_provide_name}', [ReportController::class, 'getReportDetails'])->name('reports.details');
+        Route::get('adminreport', [ReportController::class, 'Reportindex'])->name('report.adminindex');
+        Route::get('reports/player/{playerId}', [ReportController::class, 'playerDetails'])->name('reports.player.details');
+
+        Route::get('agentreport', [ReportController::class, 'AgentReportindex'])->name('report.agentindex');
+
         Route::get('/daily-summaries', [DailySummaryController::class, 'index'])->name('daily_summaries.index');
 
         Route::get('/reports/senior', [MultiBannerReportController::class, 'getSeniorReport'])->name('reports.senior');
         Route::get('/reports/owner', [MultiBannerReportController::class, 'getAdminReport'])->name('reports.owner');
         Route::get('/reports/agent', [MultiBannerReportController::class, 'getAgentReport'])->name('reports.agent');
         Route::get('/reports/agent/detail/{user_id}', [MultiBannerReportController::class, 'getAgentDetail'])->name('reports.agent.detail');
+
+        // report v3
+        Route::get('/results/user/{userName}', [ReportController::class, 'getResultsForOnlyUser']);
+
+        // find by username
+        Route::get('/result-search', [ReportController::class, 'GetResult'])->name('');
+        Route::post('/results/search', [ReportController::class, 'FindByUserName'])->name('results.search');
+        // senior hierarchy
+        Route::get('/hierarchy', [SeniorHierarchyController::class, 'GetSeniorHierarchy'])->name('SeniorHierarchy');
+
     });
 });

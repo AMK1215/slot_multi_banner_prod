@@ -10,10 +10,10 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\GetDailySummary::class,
         Commands\DownloadGameImages::class,
+        Commands\DeleteResultData::class,
+        Commands\DeleteBetData::class,
+
     ];
-
-
-
 
     /**
      * Define the application's command schedule.
@@ -22,6 +22,15 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('summary:fetch')->dailyAt('00:01');
+        //$schedule->command('result:delete-old-backups {start_date} {end_date}');
+        // Schedule the deletion of old results with static dates
+        $startDate = '2024-11-18';
+        $endDate = '2024-11-19';
+        $schedule->command("result:delete-old-backups $startDate $endDate")->dailyAt('00:30');
+
+        $sDate = '2024-11-18';
+        $eDate = '2024-11-19';
+        $schedule->command("bet:delete-old-backups $sDate $eDate")->dailyAt('00:30');
 
     }
 

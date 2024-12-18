@@ -1,12 +1,15 @@
-php artisan migrate --path=/database/migrations/2024_10_14_042230_add_version_to_wallets_table.php
+php artisan migrate --path=/database/migrations/2024_12_12_030420_add_pp_hot_column_to_game_lists_table.php
 
-php artisan make:migration add_admin_id_column_to_promotions_table --table=promotions
+php artisan make:migration add_pp_hot_column_to_game_lists_table --table=game_lists
 
 // to remove laravel log
 php -r "file_put_contents('/var/www/slot_multi_banner_prod/storage/logs/laravel.log', '');"
 // created dev branch for kzt
 
-tail -f /var/www/slot_multi_banner_prod/storage/logs/laravel.log
+tail -f /var/www/slot_multi_banner_prod/storage/logs/laravel.
+
+sudo nano /etc/php/8.3/fpm/php.ini
+
 sudo su ubuntu
 crontab -e
 
@@ -137,3 +140,40 @@ SHOW GRANTS FOR 'shan_remote_user'@'1.2.165.234';
 SHOW GRANTS FOR 'shan_remote_user'@'52.77.209.90';
 SHOW GRANTS FOR 'shan_remote_user_prod'@'%';
 
+
+
+O22856518
+
+
+
+php artisan result:delete-old-backups "2024-12-08" "2024-12-10"
+
+php artisan bet:delete-old-backups "2024-12-08" "2024-12-10"
+
+
+{
+    "game_type_id": 1,
+    "players": [
+        {
+            "player_id": "5",
+            "player_name": "Alice",
+            "win_lose_status": 1,
+            "bet_amount": 100,
+            "amount_changed": 50
+        },
+        {
+            "player_id": "6",
+            "player_name": "Bob",
+            "win_lose_status": 0,
+            "bet_amount": 150,
+            "amount_changed": 20
+        },
+        {
+            "player_id": "7",
+            "player_name": "Charlie",
+            "win_lose_status": 1,
+            "bet_amount": 200,
+            "amount_changed": 80
+        }
+    ]
+}

@@ -266,4 +266,20 @@ class User extends Authenticatable implements Wallet
     {
         return $this->hasMany(Promotion::class, 'admin_id'); // Banners owned by this admin
     }
+
+    /**
+     * Recursive relationship to get all ancestors up to senior.
+     */
+    public function ancestors()
+    {
+        return $this->parent()->with('ancestors');
+    }
+
+    /**
+     * Recursive relationship to get all descendants down to players.
+     */
+    public function descendants()
+    {
+        return $this->children()->with('descendants');
+    }
 }

@@ -40,7 +40,7 @@ class ResultController extends Controller
                 // Validate signature
                 $signature = $this->generateSignature($transaction);
                 //$signature = $this->generateSignature($transaction);
-                 Log::info('Result Signature', ['GeneratedResultSignature' => $signature]);
+                Log::info('Result Signature', ['GeneratedResultSignature' => $signature]);
                 if ($signature !== $transaction['Signature']) {
                     Log::warning('Signature validation failed for transaction', [
                         'transaction' => $transaction,
@@ -68,6 +68,8 @@ class ResultController extends Controller
                         $transaction['WinAmount']
                     );
                 }
+
+                Log::info('Transaction WinAmount successfully', ['WinAmount' => $transaction['WinAmount']]);
 
                 // Refresh player's balance after processing the transaction
                 $player->wallet->refreshBalance();

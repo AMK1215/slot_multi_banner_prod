@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ReportController;
-use App\Http\Controllers\Api\Shan\ShanTransactionController;
+use App\Http\Controllers\Api\TranData\GetUserController;
 use App\Http\Controllers\Api\V1\Auth\AuthController;
 use App\Http\Controllers\Api\V1\Bank\BankController;
 use App\Http\Controllers\Api\V1\BannerController;
@@ -9,7 +9,9 @@ use App\Http\Controllers\Api\V1\ContactController;
 use App\Http\Controllers\Api\V1\DepositRequestController;
 use App\Http\Controllers\Api\V1\GetAdminSiteLogoNameController;
 use App\Http\Controllers\Api\V1\GetBalanceController;
+use App\Http\Controllers\Api\V1\Monitor\DataVisualizationController;
 use App\Http\Controllers\Api\V1\PromotionController;
+use App\Http\Controllers\Api\V1\Shan\ShanTransactionController;
 use App\Http\Controllers\Api\V1\Slot\GameController;
 use App\Http\Controllers\Api\V1\Slot\GetDaySummaryController;
 use App\Http\Controllers\Api\V1\Slot\LaunchGameController;
@@ -23,10 +25,9 @@ use App\Http\Controllers\Api\V1\Webhook\CancelBetController;
 use App\Http\Controllers\Api\V1\Webhook\CancelBetNResultController;
 use App\Http\Controllers\Api\V1\Webhook\RewardController;
 use App\Http\Controllers\Api\V1\WithDrawRequestController;
+use App\Http\Controllers\Api\Webhook\TestingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\Monitor\DataVisualizationController;
-use App\Http\Controllers\Api\TranData\GetUserController;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -35,6 +36,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('contact', [ContactController::class, 'get']);
 
 // sameless route
+Route::post('Seamless/Test', [TestingController::class, 'AppGetGameList']);
 
 Route::post('GetBalance', [GetBalanceController::class, 'getBalance']);
 Route::post('BetNResult', [BetNResultController::class, 'handleBetNResult']);
@@ -47,10 +49,15 @@ Route::post('Reward', [RewardController::class, 'handleReward']);
 
 Route::post('transactions', [ShanTransactionController::class, 'index'])->middleware('transaction');
 
+// for slot
+Route::post('/transaction-details/{tranId}', [TransactionController::class, 'getTransactionDetails']);
+
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('GameLogin', [LaunchGameController::class, 'LaunchGame']);
     Route::get('wager-logs', [WagerController::class, 'index']); //GSC
-    Route::get('transactions', [TransactionController::class, 'index']);
+    //Route::get('transactions', [TransactionController::class, 'index']);
+    //Route::get('shan-transactions', [TransactionController::class, 'index'])->middleware('transaction');
+    Route::get('shan-transactions', [TransactionController::class, 'GetPlayerShanReport']);
 
     Route::get('user', [AuthController::class, 'getUser']);
     Route::get('contact', [AuthController::class, 'getContact']);
@@ -77,6 +84,7 @@ Route::get('gameTypeProducts/{id}', [GameController::class, 'gameTypeProducts'])
 Route::get('allGameProducts', [GameController::class, 'allGameProducts']);
 Route::get('gameType', [GameController::class, 'gameType']);
 Route::get('hotgamelist', [GameController::class, 'HotgameList']);
+Route::get('pphotgamelist', [GameController::class, 'PPHotgameList']);
 Route::get('gamelist/{provider_id}/{game_type_id}/', [GameController::class, 'gameList']);
 Route::get('gameFilter', [GameController::class, 'gameFilter']);
 Route::get('gamelistTest/{provider_id}/{game_type_id}/', [GameController::class, 'gameListTest']);
@@ -90,7 +98,9 @@ Route::get('/getvisualresults', [DataVisualizationController::class, 'getResults
 // transfer data to second db
 
 Route::group(['prefix' => 'transferdata'], function () {
-      // get all user
-Route::get('/getallusers', [GetUserController::class, 'getAllUsers']); // Fetch all users
+    // get all user
+    Route::get('/getallusers', [GetUserController::class, 'getAllUsers']); // Fetch all users
 
-    });
+});
+
+Route::get('/results/user/{userName}', [ReportController::class, 'getResultsForUser']);

@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Log;
 
-
 class RewardWebhoodRequest extends FormRequest
 {
     /**

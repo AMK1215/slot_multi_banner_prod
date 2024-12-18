@@ -109,67 +109,91 @@
                             </a>
                         </li>
                         @can('senior_access')
-                        <li class="nav-item">
-                            <a href="{{ route('admin.owner.index') }}" class="nav-link">
-                                <i class="fas fa-users"></i>
-                                <p>
-                                    Owner List
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('admin/slot/daily-summaries') }}" class="nav-link">
-                                <i class="fas fa-users"></i>
-                                <p>
-                                    Daily W/L Report
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('admin/slot/report') }}" class="nav-link">
-                                <i class="fas fa-users"></i>
-                                <p>
-                                    W/L Report V1
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('admin/slot/reports/senior') }}" class="nav-link">
-                                <i class="fas fa-users"></i>
-                                <p>
-                                    W/L Report V2
-                                </p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.SeniorHierarchy') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        SeniorHierarchy
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.owner.index') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        Owner List
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('admin/slot/daily-summaries') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        Daily W/L Report
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('admin/slot/report') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        W/L Report V1
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('admin/slot/reports/senior') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        W/L Report V2
+                                    </p>
+                                </a>
+                            </li>
+                            {{-- <li class="nav-item">
+                                <a href="{{ url('admin/slot/results/user/P87044857') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        W/L Report V3
+                                    </p>
+                                </a>
+                            </li> --}}
+                            <li class="nav-item">
+                                <a href="{{ url('admin/slot/result-search') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        W/L Report V3
+                                    </p>
+                                </a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tools"></i>
-                                <p>
-                                    Shan
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ url('admin/shan-report') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Win/Lose</p>
-                                    </a>
-                                </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-tools"></i>
+                                    <p>
+                                        Shan
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/shan-report') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Win/Lose</p>
+                                        </a>
+                                    </li>
 
-                            </ul>
-                        </li>
+                                </ul>
+                            </li>
                         @endcan
                         @can('owner_access')
-                        <li class="nav-item">
-                            <a href="{{ url('admin/slot/report') }}" class="nav-link">
-                                <i class="fas fa-users"></i>
-                                <p>
-                                    W/L Report V1
-                                </p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="{{ url('admin/slot/adminreport') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        W/L Report V1
+                                    </p>
+                                </a>
+                            </li>
 
                         <li class="nav-item">
                             <a href="{{ url('admin/slot/reports/owner') }}" class="nav-link">
@@ -180,14 +204,41 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a href="{{ route('admin.GetOwnerPlayerList') }}" class="nav-link">
-                                <i class="fas fa-users"></i>
-                                <p>
-                                    Player List
-                                </p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="{{ url('admin/slot/result-search') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        W/L Report V3
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('admin.GetOwnerPlayerList') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        Player List
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-tools"></i>
+                                    <p>
+                                        Shan
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/shan-report') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Win/Lose</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
                         @endcan
                         @can('agent_index')
                         <li class="nav-item">
@@ -200,31 +251,58 @@
                         </li>
                         @endcan
                         @can('player_index')
-                        <li class="nav-item">
-                            <a href="{{ route('admin.player.index') }}" class="nav-link">
-                                <i class="fas fa-users"></i>
-                                <p>
-                                    Player List
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('admin/slot/report') }}" class="nav-link">
-                                <i class="fas fa-users"></i>
-                                <p>
-                                    W/L Report V1
-                                </p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.player.index') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        Player List
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('admin/slot/agentreport') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        W/L Report V1
+                                    </p>
+                                </a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a href="{{ url('admin/slot/reports/agent') }}" class="nav-link">
-                                <i class="fas fa-users"></i>
-                                <p>
-                                    W/L Report V2
-                                </p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="{{ url('admin/slot/reports/agent') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        W/L Report V2
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('admin/slot/result-search') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        W/L Report V3
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-tools"></i>
+                                    <p>
+                                        Shan
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('admin/agent-shan-report') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Win/Lose</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
                         @endcan
                         @can('contact')
                         <li class="nav-item">
