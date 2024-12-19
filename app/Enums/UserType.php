@@ -9,6 +9,7 @@ enum UserType: int
     case Agent = 30;
     case Player = 40;
     case SystemWallet = 50;
+    case subAgent = 60;
 
     public static function usernameLength(UserType $type)
     {
@@ -17,7 +18,8 @@ enum UserType: int
             self::Owner => 2,
             self::Agent => 3,
             self::Player => 4,
-            self::SystemWallet => 5
+            self::SystemWallet => 5,
+            self::subAgent => 6
         };
     }
 
@@ -26,6 +28,7 @@ enum UserType: int
         return match ($type) {
             self::Senior => self::Owner,
             self::Owner => self::Agent,
+            self::Agent => self::subAgent,
             self::Agent => self::Player,
             self::Player => self::Player
         };

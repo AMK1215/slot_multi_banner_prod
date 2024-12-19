@@ -54,6 +54,9 @@ class HomeController extends Controller
             ->when($role[0] === 'Agent', function ($query) use ($user) {
                 return $query->where('users.agent_id', $user->id);
             })
+            ->when($role[0] === 'Sub Agent', function ($query) use ($user) {
+                return $query->where('users.agent_id', $user->id);
+            })
             ->select(DB::raw('SUM(wallets.balance) as balance'))
             ->first();
 

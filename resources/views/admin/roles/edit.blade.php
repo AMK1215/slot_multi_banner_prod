@@ -1,187 +1,69 @@
-@extends('admin_layouts.app')
-@section('styles')
-<style>
-.transparent-btn {
- background: none;
- border: none;
- padding: 0;
- outline: none;
- cursor: pointer;
- box-shadow: none;
- appearance: none;
- /* For some browsers */
-}
-
-
-.custom-form-group {
- margin-bottom: 20px;
-}
-
-.custom-form-group label {
- display: block;
- margin-bottom: 5px;
- font-weight: bold;
- color: #555;
-}
-
-.custom-form-group input,
-.custom-form-group select {
- width: 100%;
- padding: 10px 15px;
- border: 1px solid #e1e1e1;
- border-radius: 5px;
- font-size: 16px;
- color: #333;
-}
-
-.custom-form-group input:focus,
-.custom-form-group select:focus {
- border-color: #d33a9e;
- box-shadow: 0 0 5px rgba(211, 58, 158, 0.5);
-}
-
-.submit-btn {
- background-color: #d33a9e;
- color: white;
- border: none;
- padding: 12px 20px;
- border-radius: 5px;
- cursor: pointer;
- font-size: 18px;
- font-weight: bold;
-}
-
-.submit-btn:hover {
- background-color: #b8328b;
-}
-</style>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/material-icons@1.13.12/iconfont/material-icons.min.css">
-@endsection
+@extends('layouts.master')
 @section('content')
-<div class="row">
- <div class="col-12">
-  <div class="container mb-3">
-   <a class="btn btn-icon btn-2 btn-primary float-end me-5" href="{{ route('admin.roles.index') }}">
-    <span class="btn-inner--icon mt-1"><i class="material-icons">arrow_back</i>Back</span>
-   </a>
-  </div>
-  <div class="container my-auto mt-5">
-   <div class="row">
-    <div class="col-lg-10 col-md-2 col-12 mx-auto">
-     <div class="card z-index-0 fadeIn3 fadeInBottom">
-      <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-       <div class="bg-gradient-primary shadow-primary border-radius-lg py-2 pe-1">
-        <h4 class="text-white font-weight-bolder text-center mb-2">Edit Role</h4>
-       </div>
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-12">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+          <li class="breadcrumb-item active">Edit Role</li>
+        </ol>
       </div>
-      <div class="card-body">
-       <form role="form" method="post" class="text-start" action="{{ route('admin.roles.update',$role->id) }}">
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="card col-lg-6 offset-lg-3 col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-10 offset-1"
+      style="border-radius: 15px;">
+      <div class="card-header">
+        <div class="card-title col-12">
+          <h5 class="d-inline fw-bold">
+            Edit Role
+          </h5>
+          <a href="{{ route('admin.roles.index') }}" class="btn btn-primary d-inline float-right">
+            <i class="fas fa-arrow-left mr-2"></i> Back
+          </a>
+        </div>
+      </div>
+      <form action="{{ route('admin.roles.update', $role->id) }}" method="POST">
         @csrf
         @method('PUT')
-        <div class="custom-form-group">
-         <label for="title">Role Name</label>
-         <input type="text" id="title" name="title" class="form-control" value="{{$role->title}}">
-        </div>
+        <div class="card-body mt-2">
+          <div class="row">
+            <div class="col-lg-12 offset-lg-0 col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-10 offset-1 ">
+              <div class="form-group">
+                <label>Role<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="title" value="{{ $role->title }}"
+                  >
+                @error('title')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
+              </div>
 
-        <div class="row custom-form-group">
-         <div class="col-12">
-          <label for="choices-role">Permission</label>
-          <select class="form-control" name="permissions[]" id="choices-tags-edit" multiple>
-           @foreach ($permissions as  $permission)
+              <div class="form-group">
+                <label>Permissions<span class="text-danger">*</span></label><br>
+                @foreach($permissions as $permission)
+                <input type="checkbox"
+                  name="permissions[]"
+                  value="{{$permission->id}}"
+                  {{ $role->permissions->contains('id', $permission->id) ? 'checked' : '' }}>
+                {{$permission->title}}
+                @endforeach
+              </div>
 
-           <option value="{{ $permission->id }}"
-            {{ in_array($permission->id, old('permissions', [])) ||
-              (isset($role) && $role->permissions->contains($permission->id)) ? 'selected' : '' }}>
-            {{ $permission->title }}
-           </option>
-           @endforeach
-          </select>
-         </div>
+            </div>
+          </div>
+
         </div>
-        <div class="custom-form-group">
-         <button class="btn btn-primary" type="submit">Edit</button>
+        <div class="card-footer col-12 bg-white">
+          <button type="submit" class="btn btn-success float-right">Submit</button>
         </div>
-       </form>
-      </div>
-     </div>
+      </form>
     </div>
-   </div>
   </div>
- </div>
-</div>
-
-@endsection
-@section('scripts')
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-
-<script src="{{ asset('admin_app/assets/js/plugins/choices.min.js') }}"></script>
-<script src="{{ asset('admin_app/assets/js/plugins/quill.min.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
-
-<script>
-if (document.getElementById('choices-tags-edit')) {
- var tags = document.getElementById('choices-tags-edit');
- const examples = new Choices(tags, {
-  removeItemButton: true
- });
-}
-</script>
-<script>
-if (document.getElementById('choices-roles')) {
- var role = document.getElementById('choices-roles');
- const examples = new Choices(role, {
-  removeItemButton: true
- });
-
- examples.setChoices(
-  [{
-    value: 'One',
-    label: 'Expired',
-    disabled: true
-   },
-   {
-    value: 'Two',
-    label: 'Out of Role',
-    selected: true
-   }
-  ],
-  'value',
-  'label',
-  false,
- );
-}
-// store role
-$(document).ready(function() {
- $('#submitForm').click(function(e) {
-  e.preventDefault();
-
-  $.ajax({
-   type: "POST",
-   url: "{{ route('admin.roles.store') }}",
-   data: $('form').serialize(),
-   success: function(response) {
-    Swal.fire({
-     icon: 'success',
-     background: 'hsl(230, 40%, 10%)',
-     title: 'Role created successfully',
-     showConfirmButton: false,
-     timer: 1500
-    });
-    // Reset the form after successful submission
-    $('form')[0].reset();
-   },
-   error: function(error) {
-    console.log(error);
-    Swal.fire({
-     icon: 'error',
-     title: 'Oops...',
-     background: 'hsl(230, 40%, 10%)',
-     text: 'Something went wrong!'
-    });
-   }
-  });
- });
-});
-</script>
+  </div>
+</section>
 @endsection

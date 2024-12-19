@@ -4,17 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ContactController extends Controller
 {
+    protected const SUB_AGENT_ROlE = 'Sub Agent';
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $contacts = Contact::where('agent_id', Auth::id())->get();
+        $agent = $this->getAgent() ?? Auth::user();
+
+        $contacts = Contact::where('agent_id', $agent->id)->get();
 
         return view('admin.contact.index', compact('contacts'));
     }
@@ -36,10 +40,12 @@ class ContactController extends Controller
             'name' => 'required',
             'value' => 'required',
         ]);
+        $agent = $this->getAgent() ?? Auth::user();
+
         Contact::create([
             'name' => $request->name,
             'value' => $request->value,
-            'agent_id' => Auth::id(),
+            'agent_id' => $agent->id
         ]);
 
         return redirect(route('admin.contact.index'))->with('success', 'New Contact Created Successfully.');
@@ -77,7 +83,6 @@ class ContactController extends Controller
         ]);
 
         return redirect(route('admin.contact.index'))->with('success', 'New Contact Updated Successfully.');
-
     }
 
     /**
@@ -88,6 +93,17 @@ class ContactController extends Controller
         $contact->delete();
 
         return redirect(route('admin.contact.index'))->with('success', 'New Contact Updated Successfully.');
+    }
 
+    private function isExistingAgent($userId)
+    {
+        $user = User::find($userId);
+
+        return $user && $user->hasRole(self::SUB_AGENT_ROlE) ? $user->parent : null;
+    }
+
+    private function getAgent()
+    {
+        return $this->isExistingAgent(Auth::id());
     }
 }

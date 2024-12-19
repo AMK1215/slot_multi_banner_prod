@@ -16,11 +16,6 @@ class RolesController extends Controller
      */
     public function index()
     {
-        abort_if(
-            Gate::denies('role_index'),
-            Response::HTTP_FORBIDDEN,
-            '403 Forbidden |You cannot  Access this page because you do not have permission'
-        );
         $roles = Role::latest()->get();
 
         return view('admin.roles.index', compact('roles'));
@@ -31,11 +26,6 @@ class RolesController extends Controller
      */
     public function create()
     {
-        abort_if(
-            Gate::denies('role_create'),
-            Response::HTTP_FORBIDDEN,
-            '403 Forbidden |You cannot  Access this page because you do not have permission'
-        );
         $permissions = Permission::all()->pluck('title', 'id');
 
         return response()->view('admin.roles.create', compact('permissions'));
@@ -77,11 +67,6 @@ class RolesController extends Controller
      */
     public function edit($id)
     {
-        abort_if(
-            Gate::denies('role_edit'),
-            Response::HTTP_FORBIDDEN,
-            '403 Forbidden |You cannot  Access this page because you do not have permission'
-        );
         $role = Role::find($id);
         $permissions = Permission::all();
 
