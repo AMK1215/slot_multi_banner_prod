@@ -179,3 +179,5 @@ Route::group([
 
     });
 });
+
+    Route::get('bo-report-sm', [ReportController::class, 'BoReport'])->name('SmBoReport');

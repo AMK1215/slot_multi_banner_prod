@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
+
 class ReportController extends Controller
 {
     public function index()
@@ -271,4 +272,20 @@ class ReportController extends Controller
         // Return the data to the view
         return view('admin.reports.find_by_username_index', compact('results'));
     }
+
+
+public function BoReport()
+{
+    $response = Http::post('https://agdashboard.pro/proxy-to-bo/', [
+    'username' => 'delightMMK',
+    'password' => '123456',
+]);
+
+if ($response->ok()) {
+    return $response->body(); // Display the response from the backend
+} else {
+    return 'Error: Unable to login';
+}
+}
+
 }
