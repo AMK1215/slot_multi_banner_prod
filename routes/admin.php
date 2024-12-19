@@ -27,6 +27,8 @@ use App\Http\Controllers\Admin\TransferLog\TransferLogController;
 use App\Http\Controllers\Admin\WithDraw\WithDrawRequestController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\RolesController;
+
 
 Route::group([
     'prefix' => 'admin',
@@ -37,6 +39,11 @@ Route::group([
     Route::post('balance-up', [HomeController::class, 'balanceUp'])->name('balanceUp');
     Route::get('logs/{id}', [HomeController::class, 'logs'])
         ->name('logs');
+
+         // Roles
+    Route::delete('roles/destroy', [RolesController::class, 'massDestroy'])->name('roles.massDestroy');
+    Route::resource('roles', RolesController::class);
+
     Route::get('/changePassword/{user}', [HomeController::class, 'changePassword'])->name('changePassword');
     Route::post('/updatePassword/{user}', [HomeController::class, 'updatePassword'])->name('updatePassword');
     Route::get('/player-list', [HomeController::class, 'playerList'])->name('playerList');
