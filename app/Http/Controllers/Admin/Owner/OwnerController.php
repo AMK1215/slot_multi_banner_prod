@@ -89,6 +89,7 @@ class OwnerController extends Controller
                 'agent_id' => Auth()->user()->id,
                 'type' => UserType::Owner,
                 'site_name' => $inputs['site_name'],
+                'site_link' => $inputs['site_link'],
             ]
         );
 
@@ -411,6 +412,8 @@ class OwnerController extends Controller
             'name' => 'required|string|max:255',
             'phone' => 'required|numeric|digits_between:10,15|unique:users,phone,'.$id,
             'agent_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'site_link' => 'nullable|string',
+
         ]);
         //Log::info('Validation passed.');
 
@@ -441,6 +444,8 @@ class OwnerController extends Controller
             'name' => $request->name,
             'phone' => $request->phone,
             'agent_logo' => $user->agent_logo, // Updated logo
+            //'site_link' => $user->site_link
+             'site_link' => $request->site_link,
         ]);
 
         //Log::info('Owner updated successfully.', ['user' => $user]);

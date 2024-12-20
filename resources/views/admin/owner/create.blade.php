@@ -79,6 +79,11 @@
                                         value="{{ old('site_name') }}">
                                 </div>
                                 <div class="form-group">
+                                    <label>Player Site Title</label>
+                                    <input type="text" class="form-control" name="site_link"
+                                        value="{{ old('site_link') }}">
+                                </div>
+                                <div class="form-group">
                                     <label>Owner logo</label>
                                     <input type="file" class="form-control" name="agent_logo">
                                     @error('phone')

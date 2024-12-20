@@ -83,6 +83,10 @@
                             <input type="text" class="form-control" name="phone" value="{{ $owner->phone }}" required>
                         </div>
                         <div class="form-group">
+                            <label>Player Site Title</label>
+                            <input type="text" class="form-control" name="site_link" value="{{ $owner->site_link }}">
+                        </div>
+                        <div class="form-group">
                             <label>Owner Logo</label>
                             <input type="file" class="form-control" name="agent_logo">
                             @if ($owner->agent_logo)
