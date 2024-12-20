@@ -46,6 +46,11 @@ Route::group([
 
     Route::get('/changePassword/{user}', [HomeController::class, 'changePassword'])->name('changePassword');
     Route::post('/updatePassword/{user}', [HomeController::class, 'updatePassword'])->name('updatePassword');
+
+     Route::get('/changeplayersite/{user}', [HomeController::class, 'changePlayerSite'])->name('changeSiteName');
+
+    Route::post('/updatePlayersite/{user}', [HomeController::class, 'updatePlayerSiteLink'])->name('updateSiteLink');
+
     Route::get('/player-list', [HomeController::class, 'playerList'])->name('playerList');
 
     // Players

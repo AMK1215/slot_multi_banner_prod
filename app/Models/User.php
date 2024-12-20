@@ -54,6 +54,7 @@ class User extends Authenticatable implements Wallet
         'referral_code',
         'agent_logo',
         'site_name',
+        'site_link'
     ];
 
     protected $dispatchesEvents = [

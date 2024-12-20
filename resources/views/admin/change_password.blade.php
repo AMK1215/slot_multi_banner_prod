@@ -8,7 +8,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                         <li class="breadcrumb-item active">Change Password</li>
                     </ol>
                 </div>
@@ -22,14 +22,14 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">
-                    <span >
-                   <a href="{{ route('home') }}" class="btn btn-primary">
-                       <i class="fas fa-arrow-left" style="font-size: 20px;"></i> Back
-                   </a>
-                </span>
+                        <span>
+                            <a href="{{ route('home') }}" class="btn btn-primary">
+                                <i class="fas fa-arrow-left" style="font-size: 20px;"></i> Back
+                            </a>
+                        </span>
                     </h3>
                 </div>
-                <form method="POST" action="{{ route('admin.updatePassword',$user->id) }}">
+                <form method="POST" action="{{ route('admin.updatePassword', $user->id) }}">
                     @csrf
                     <div class="card-body">
                         <div class="row">
@@ -42,7 +42,7 @@
                                     <label>Confirm Password<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="password_confirmation">
                                     @error('password')
-                                    <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
@@ -53,6 +53,8 @@
                     </div>
                 </form>
             </div>
+
+
         </div>
     </section>
 @endsection

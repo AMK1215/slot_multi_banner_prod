@@ -67,6 +67,14 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
+                                    <label>Player Site Link<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="site_link"
+                                        value="{{ $owner->site_link }}" readonly>
+                                    @error('site_link')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
                                     <label>Amount</label>
                                     <span
                                         class="badge badge-sm bg-gradient-success">{{ auth()->user()->balanceFloat }}</span>
@@ -92,6 +100,7 @@
         var user_name = @json(session('user_name'));
         var password = @json(session('password'));
         var amount = @json(session('amount'));
+        var site_link = @json(session('site_link'));
 
         @if (session()->has('successMessage'))
             toastr.success(successMessage +
@@ -101,7 +110,7 @@
             data-user_name="${user_name}"
             data-password="${password}"
             data-amount="${amount}"
-            data-url="https://panda666.info/login"
+            data-url="${site_link}"
             onclick="copyToClipboard(this)">Copy</button>
     </div>`, {
                     allowHtml: true
@@ -115,7 +124,7 @@
             var url = $(button).data('url');
 
             // var textToCopy = "Phone: " + phone + "\nPassword: " + password + "\nAmount: " + amount + "\nURL: " + url;
-            var textToCopy = "URL: " + url  + "\nLogin ID: " + user_name + "\nPassword: " + password + "\nAmount: " + amount;
+            var textToCopy = "URL: " + url + "\nLogin ID: " + user_name + "\nPassword: " + password + "\nAmount: " + amount;
 
             navigator.clipboard.writeText(textToCopy).then(function() {
                 toastr.success("Credentials copied to clipboard!");

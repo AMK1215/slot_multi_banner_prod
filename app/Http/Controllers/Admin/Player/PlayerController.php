@@ -45,7 +45,7 @@ class PlayerController extends Controller
         );
         //kzt
         $agent = $this->getAgent() ?? Auth::user();
-        
+
         $users = User::with('roles')
             ->whereHas('roles', function ($query) {
                 $query->where('role_id', self::PLAYER_ROLE);
@@ -80,8 +80,15 @@ class PlayerController extends Controller
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
         $player_name = $this->generateRandomString();
+        $agent = $this->getAgent() ?? Auth::user();
+        //$owner_id = User::where('agent_id', $agent->agent_id)->first();
+         // Get the related owner of the agent
+    $owner = User::where('id', $agent->agent_id)->first(); // Assuming `agent_id` refers to the owner's ID
 
-        return view('admin.player.create', compact('player_name'));
+    //return $owner;
+
+
+        return view('admin.player.create', compact('player_name', 'owner'));
     }
 
     /**
@@ -92,6 +99,8 @@ class PlayerController extends Controller
         Gate::allows('player_store');
 
         $agent = $this->getAgent() ?? Auth::user();
+
+
 
         $inputs = $request->validated();
 
@@ -111,6 +120,7 @@ class PlayerController extends Controller
                 'phone' => $inputs['phone'],
                 'agent_id' => $agent->id,
                 'type' => UserType::Player,
+                'site_link' => $inputs['site_link']
             ]);
 
             $user->roles()->sync(self::PLAYER_ROLE);
@@ -123,6 +133,7 @@ class PlayerController extends Controller
                 ->with('successMessage', 'Player created successfully')
                 ->with('amount', $request->amount)
                 ->with('password', $request->password)
+                ->with('site_link', $user->site_link)
                 ->with('user_name', $user->user_name);
         } catch (\Exception $e) {
             Log::error('Error creating user: '.$e->getMessage());
@@ -350,7 +361,7 @@ class PlayerController extends Controller
 
         return $user && $user->hasRole(self::SUB_AGENT_ROlE) ? $user->parent : null;
     }
-    
+
     private function getAgent()
     {
         return $this->isExistingAgent(Auth::id());

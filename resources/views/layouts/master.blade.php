@@ -222,6 +222,13 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link"
+                                    href="{{ route('admin.changeSiteName', \Illuminate\Support\Facades\Auth::id()) }}">
+                                    Update PlayerSiteLikn
+
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-tools"></i>
                                     <p>

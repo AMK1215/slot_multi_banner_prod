@@ -121,6 +121,11 @@ class HomeController extends Controller
         return view('admin.change_password', compact('user'));
     }
 
+    public function changePlayerSite(Request $request, User $user)
+    {
+        return view('admin.change_player_site', compact('user'));
+    }
+
     public function updatePassword(Request $request, User $user)
     {
         $request->validate([
@@ -131,6 +136,18 @@ class HomeController extends Controller
         ]);
 
         return redirect()->route('home')->with('success', 'Password has been changed Successfully.');
+    }
+
+    public function updatePlayerSiteLink(Request $request, User $user)
+    {
+        $request->validate([
+            'site_link' => 'required|string',
+        ]);
+        $user->update([
+            'site_link' => $request->site_link,
+        ]);
+
+        return redirect()->route('home')->with('success', 'Player Site Link has been changed Successfully.');
     }
 
     public function logs($id)

@@ -27,6 +27,7 @@ class PlayerRequest extends FormRequest
             'phone' => ['required', 'regex:/^[0-9]+$/', 'unique:users,phone'],
             'password' => 'required|min:6',
             'amount' => 'nullable|numeric',
+            'site_link' => ['required', 'string'],
         ];
     }
 }
