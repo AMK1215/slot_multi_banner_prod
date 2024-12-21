@@ -1,4 +1,4 @@
-php artisan migrate --path=/database/migrations/2024_12_12_030420_add_pp_hot_column_to_game_lists_table.php
+php artisan migrate --path=/database/migrations/2024_12_20_014723_add_site_link_column_to_users_table.php
 
 php artisan make:migration add_site_link_column_to_users_table --table=users
 
@@ -177,5 +177,8 @@ php artisan bet:delete-old-backups "2024-12-08" "2024-12-10"
         }
     ]
 }
+
+
+sudo certbot --nginx -d delightmyanmarmmk.xyz -d www.delightmyanmarmmk.xyz -d asaibetslot.online -d www.asaibetslot.online
 
 
