@@ -33,6 +33,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>TableID</th>
                                         <th>Agent Name</th>
                                         <th>AgentID</th>
                                         <th>AgentPhone</th>
@@ -44,6 +45,7 @@
                                     @foreach ($owner->agents as $index => $agent)
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
+                                            <td>{{ $agent->id }}</td>
                                             {{-- <td>{{ $agent->name }}</td> --}}
 
                                             <td>
