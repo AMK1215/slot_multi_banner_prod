@@ -188,6 +188,11 @@ Route::group([
         Route::post('/results/search', [ReportController::class, 'FindByUserName'])->name('results.search');
         // senior hierarchy
         Route::get('/hierarchy', [SeniorHierarchyController::class, 'GetSeniorHierarchy'])->name('SeniorHierarchy');
+        Route::get('/get-owners', [SeniorHierarchyController::class, 'getAllOwners'])->name('GetAllOwners');
+        Route::get('/owner/{id}/agents', [SeniorHierarchyController::class, 'getOwnerWithAgents'])->name('OwnerAgentDetail');
+        Route::get('/agent/{id}/players', [SeniorHierarchyController::class, 'getAgentWithPlayers'])->name('AgentPlayerDetail');
+
+
 
     });
 });

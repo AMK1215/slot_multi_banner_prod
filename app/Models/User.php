@@ -283,4 +283,12 @@ class User extends Authenticatable implements Wallet
     {
         return $this->children()->with('descendants');
     }
+
+    public function agents()
+{
+    return $this->hasMany(User::class, 'agent_id');
+}
+
+
+
 }

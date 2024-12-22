@@ -151,10 +151,10 @@ class SeniorHierarchyController extends Controller
 //     $currentItems = $flattenedData->slice(($currentPage - 1) * $perPage, $perPage)->all();
 
 //     $paginatedData = new LengthAwarePaginator(
-//         $currentItems, 
-//         $flattenedData->count(), 
-//         $perPage, 
-//         $currentPage, 
+//         $currentItems,
+//         $flattenedData->count(),
+//         $perPage,
+//         $currentPage,
 //         ['path' => $request->url(), 'query' => $request->query()]
 //     );
 
@@ -163,8 +163,8 @@ class SeniorHierarchyController extends Controller
 //     ]);
 // }
 
-    
-public function GetSeniorHierarchy(Request $request) 
+
+public function GetSeniorHierarchy(Request $request)
 {
     $senior_id = Auth::id(); // Authenticated user ID
 
@@ -248,10 +248,10 @@ public function GetSeniorHierarchy(Request $request)
     $currentItems = $flattenedData->slice(($currentPage - 1) * $perPage, $perPage)->all();
 
     $paginatedData = new LengthAwarePaginator(
-        $currentItems, 
-        $flattenedData->count(), 
-        $perPage, 
-        $currentPage, 
+        $currentItems,
+        $flattenedData->count(),
+        $perPage,
+        $currentPage,
         ['path' => $request->url(), 'query' => $request->query()]
     );
 
@@ -264,9 +264,91 @@ public function GetSeniorHierarchy(Request $request)
     ]);
 }
 
-    
+    public function getAllOwners()
+{
+    // Retrieve all owners with their agents and respective wallets
+    $owners = User::with(['agents.wallet']) // Load agents and their wallets
+        ->whereHas('roles', function ($query) {
+            $query->where('title', 'Owner'); // Filter only users with the Owner role
+        })
+        ->paginate(10);
 
-// public function GetSeniorHierarchy(Request $request) 
+    // Prepare the response data
+    $owners->getCollection()->transform(function ($owner) {
+        return [
+             'id' => $owner->id, // Include owner ID for linking
+            'owner_name' => $owner->name,
+            'owner_id' => $owner->user_name,
+            'owner_phone' => $owner->phone,
+            'total_balance' => $owner->agents->reduce(function ($carry, $agent) {
+                return $carry + ($agent->wallet->balance ?? 0); // Sum up agents' wallet balances
+            }, 0),
+        ];
+    });
+
+    // Return the response to the view
+    return view('admin.senior_info.owner_index', compact('owners'));
+}
+
+    public function getOwnerWithAgents($ownerId)
+{
+    // Retrieve a specific owner with their agents and wallets
+    $owner = User::with(['agents.wallet'])
+        ->where('id', $ownerId) // Filter by owner ID
+        ->firstOrFail();
+
+    // Count the total agents and calculate total balance
+    $totalAgents = $owner->agents->count();
+    $totalBalance = $owner->agents->reduce(function ($carry, $agent) {
+        return $carry + ($agent->wallet->balance ?? 0);
+    }, 0);
+
+    // Return the detail view with the owner information
+    return view('admin.senior_info.owner_detail', compact('owner', 'totalAgents', 'totalBalance'));
+}
+
+    public function getAgentWithPlayers($agentId)
+{
+    // Retrieve the agent with their related players
+    $agent = User::with('players.wallet') // Load players and their wallets
+        ->where('id', $agentId) // Filter by agent ID
+        ->firstOrFail();
+
+    // Return the view with agent and related players
+    return view('admin.senior_info.agent_detail', compact('agent'));
+}
+
+
+
+
+//     public function getAllOwners()
+// {
+//     // Retrieve all owners with their agents and respective wallets
+//     $owners = User::with(['agents.wallet']) // Load agents and their wallets
+//         ->whereHas('roles', function ($query) {
+//             $query->where('title', 'Owner'); // Filter only users with the Owner role
+//         })
+//         ->get();
+
+//     // Prepare the response data
+//     $data = $owners->map(function ($owner) {
+//         return [
+//             'owner_name' => $owner->name,
+//             'total_balance' => $owner->agents->reduce(function ($carry, $agent) {
+//                 return $carry + ($agent->wallet->balance ?? 0); // Sum up agents' wallet balances
+//             }, 0),
+//         ];
+//     });
+
+//     // Return the response as JSON
+//     //return response()->json($data);
+//     return view('admin.senior_info.owner_index', compact('data'));
+// }
+
+
+
+
+// public function GetSeniorHierarchy(Request $request)
 // {
 //     $senior_id = Auth::id(); // Authenticated user ID
 
@@ -356,10 +438,10 @@ public function GetSeniorHierarchy(Request $request)
 //     $currentItems = $flattenedData->slice(($currentPage - 1) * $perPage, $perPage)->all();
 
 //     $paginatedData = new LengthAwarePaginator(
-//         $currentItems, 
-//         $flattenedData->count(), 
-//         $perPage, 
-//         $currentPage, 
+//         $currentItems,
+//         $flattenedData->count(),
+//         $perPage,
+//         $currentPage,
 //         ['path' => $request->url(), 'query' => $request->query()]
 //     );
 

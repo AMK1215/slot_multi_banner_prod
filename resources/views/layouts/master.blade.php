@@ -118,6 +118,14 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{ route('admin.GetAllOwners') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        Owner with Agent
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ route('admin.owner.index') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
                                     <p>

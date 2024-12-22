@@ -2,6 +2,9 @@ php artisan migrate --path=/database/migrations/2024_12_22_030842_make_name_and_
 
 php artisan make:migration add_site_link_column_to_users_table --table=users
 
+php artisan make:migration make_name_and_phone_nullable_in_users_table --table=users
+
+
 // to remove laravel log
 php -r "file_put_contents('/var/www/slot_multi_banner_prod/storage/logs/laravel.log', '');"
 // created dev branch for kzt
