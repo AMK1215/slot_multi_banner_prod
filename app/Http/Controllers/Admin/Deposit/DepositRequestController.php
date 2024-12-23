@@ -35,7 +35,7 @@ class DepositRequestController extends Controller
     {
         try {
             $agent = $this->getAgent() ?? Auth::user();
-            
+
             $player = User::find($request->player);
 
             if ($request->status == 1 && $agent->balanceFloat < $request->amount) {
@@ -82,10 +82,10 @@ class DepositRequestController extends Controller
     private function isExistingAgent($userId)
     {
         $user = User::find($userId);
-    
+
         return $user && $user->hasRole(self::SUB_AGENT_ROlE) ? $user->parent : null;
     }
-    
+
     private function getAgent()
     {
         return $this->isExistingAgent(Auth::id());

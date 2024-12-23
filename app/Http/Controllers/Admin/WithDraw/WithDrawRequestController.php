@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class WithDrawRequestController extends Controller
 {
-    protected const SUB_AGENT_ROLE = 'Sub Agent' ;
+    protected const SUB_AGENT_ROLE = 'Sub Agent';
 
     public function index(Request $request)
     {
@@ -66,14 +66,14 @@ class WithDrawRequestController extends Controller
             return back()->with('error', $e->getMessage());
         }
     }
-    
+
     private function isExistingAgent($userId)
     {
         $user = User::find($userId);
-    
+
         return $user && $user->hasRole(self::SUB_AGENT_ROLE) ? $user->parent : null;
     }
-    
+
     private function getAgent()
     {
         return $this->isExistingAgent(Auth::id());

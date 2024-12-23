@@ -445,7 +445,7 @@ class OwnerController extends Controller
             'phone' => $request->phone,
             'agent_logo' => $user->agent_logo, // Updated logo
             //'site_link' => $user->site_link
-             'site_link' => $request->site_link,
+            'site_link' => $request->site_link,
         ]);
 
         //Log::info('Owner updated successfully.', ['user' => $user]);

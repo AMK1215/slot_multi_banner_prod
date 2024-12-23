@@ -82,11 +82,10 @@ class PlayerController extends Controller
         $player_name = $this->generateRandomString();
         $agent = $this->getAgent() ?? Auth::user();
         //$owner_id = User::where('agent_id', $agent->agent_id)->first();
-         // Get the related owner of the agent
-    $owner = User::where('id', $agent->agent_id)->first(); // Assuming `agent_id` refers to the owner's ID
+        // Get the related owner of the agent
+        $owner = User::where('id', $agent->agent_id)->first(); // Assuming `agent_id` refers to the owner's ID
 
-    //return $owner;
-
+        //return $owner;
 
         return view('admin.player.create', compact('player_name', 'owner'));
     }
@@ -99,8 +98,6 @@ class PlayerController extends Controller
         Gate::allows('player_store');
 
         $agent = $this->getAgent() ?? Auth::user();
-
-
 
         $inputs = $request->validated();
 
@@ -120,7 +117,7 @@ class PlayerController extends Controller
                 'phone' => $inputs['phone'],
                 'agent_id' => $agent->id,
                 'type' => UserType::Player,
-                'site_link' => $inputs['site_link']
+                'site_link' => $inputs['site_link'],
             ]);
 
             $user->roles()->sync(self::PLAYER_ROLE);

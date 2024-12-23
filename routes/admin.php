@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdsVedioController;
 use App\Http\Controllers\Admin\Agent\AgentController;
 use App\Http\Controllers\Admin\BankController;
 use App\Http\Controllers\Admin\BannerAds\BannerAdsController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\Admin\PaymentTypeController;
 use App\Http\Controllers\Admin\Player\PlayerController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\Seniors\SeniorHierarchyController;
 use App\Http\Controllers\Admin\Shan\ShanReportController;
 use App\Http\Controllers\Admin\TransactionController;
@@ -27,8 +29,6 @@ use App\Http\Controllers\Admin\TransferLog\TransferLogController;
 use App\Http\Controllers\Admin\WithDraw\WithDrawRequestController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\RolesController;
-
 
 Route::group([
     'prefix' => 'admin',
@@ -40,14 +40,14 @@ Route::group([
     Route::get('logs/{id}', [HomeController::class, 'logs'])
         ->name('logs');
 
-         // Roles
+    // Roles
     Route::delete('roles/destroy', [RolesController::class, 'massDestroy'])->name('roles.massDestroy');
     Route::resource('roles', RolesController::class);
 
     Route::get('/changePassword/{user}', [HomeController::class, 'changePassword'])->name('changePassword');
     Route::post('/updatePassword/{user}', [HomeController::class, 'updatePassword'])->name('updatePassword');
 
-     Route::get('/changeplayersite/{user}', [HomeController::class, 'changePlayerSite'])->name('changeSiteName');
+    Route::get('/changeplayersite/{user}', [HomeController::class, 'changePlayerSite'])->name('changeSiteName');
 
     Route::post('/updatePlayersite/{user}', [HomeController::class, 'updatePlayerSiteLink'])->name('updateSiteLink');
 
@@ -67,6 +67,9 @@ Route::group([
     Route::get('/players-list', [PlayerController::class, 'player_with_agent'])->name('playerListForAdmin');
 
     Route::resource('banners', BannerController::class);
+
+    Route::resource('video-upload', AdsVedioController::class);
+
     Route::resource('adsbanners', BannerAdsController::class);
     Route::resource('text', BannerTextController::class);
     Route::resource('/promotions', PromotionController::class);
@@ -192,9 +195,7 @@ Route::group([
         Route::get('/owner/{id}/agents', [SeniorHierarchyController::class, 'getOwnerWithAgents'])->name('OwnerAgentDetail');
         Route::get('/agent/{id}/players', [SeniorHierarchyController::class, 'getAgentWithPlayers'])->name('AgentPlayerDetail');
 
-
-
     });
 });
 
-    Route::get('bo-report-sm', [ReportController::class, 'BoReport'])->name('SmBoReport');
+Route::get('bo-report-sm', [ReportController::class, 'BoReport'])->name('SmBoReport');

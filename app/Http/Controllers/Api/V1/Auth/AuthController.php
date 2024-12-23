@@ -121,7 +121,7 @@ class AuthController extends Controller
             'agent_id' => $agent->id,
             'type' => UserType::Player,
         ]);
-        
+
         $user->roles()->sync(self::PLAYER_ROLE);
 
         return $this->success(new RegisterResource($user), 'User register successfully.');

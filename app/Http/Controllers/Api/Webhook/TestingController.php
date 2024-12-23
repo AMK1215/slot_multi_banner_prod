@@ -8,8 +8,4 @@ use App\Services\WalletService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class TestingController extends Controller {
-
-
-
-}
+class TestingController extends Controller {}

@@ -18,7 +18,6 @@ class SubAccountController extends Controller
     /**
      * Display a listing of the resource.
      */
-
     protected const SUB_AGENT_ROlE = 6;
 
     public function index()
@@ -30,7 +29,7 @@ class SubAccountController extends Controller
             ->where('agent_id', auth()->id())
             ->orderBy('id', 'desc')
             ->get();
-       
+
         return view('admin.sub_acc.index', compact('users'));
     }
 
@@ -56,7 +55,7 @@ class SubAccountController extends Controller
                 'phone' => $request->phone,
                 'password' => Hash::make($request->password),
                 'type' => UserType::subAgent,
-                'agent_id' => Auth::id()
+                'agent_id' => Auth::id(),
             ]);
             $agent->roles()->sync(self::SUB_AGENT_ROlE);
         } catch (Exception $e) {
@@ -92,7 +91,7 @@ class SubAccountController extends Controller
 
         $user->update([
             'name' => $request->name,
-            'phone' => $request->phone
+            'phone' => $request->phone,
         ]);
 
         return redirect()->route('admin.subacc.index');
@@ -130,11 +129,10 @@ class SubAccountController extends Controller
             ->with('username', $agent->user_name);
     }
 
-
     private function generateRandomString()
     {
         $randomNumber = mt_rand(10000000, 99999999);
 
-        return 'A' . $randomNumber;
+        return 'A'.$randomNumber;
     }
 }

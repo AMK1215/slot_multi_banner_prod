@@ -433,6 +433,12 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
+                                        <a href="{{ route('admin.video-upload.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>AdsVideo</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a href="{{ route('admin.adsbanners.index') }}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Banner Ads</p>

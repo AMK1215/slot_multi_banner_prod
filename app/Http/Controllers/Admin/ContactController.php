@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class ContactController extends Controller
 {
     protected const SUB_AGENT_ROlE = 'Sub Agent';
+
     /**
      * Display a listing of the resource.
      */
@@ -45,7 +46,7 @@ class ContactController extends Controller
         Contact::create([
             'name' => $request->name,
             'value' => $request->value,
-            'agent_id' => $agent->id
+            'agent_id' => $agent->id,
         ]);
 
         return redirect(route('admin.contact.index'))->with('success', 'New Contact Created Successfully.');

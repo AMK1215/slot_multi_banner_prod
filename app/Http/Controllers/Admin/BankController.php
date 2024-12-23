@@ -93,14 +93,13 @@ class BankController extends Controller
 
     }
 
-        
     private function isExistingAgent($userId)
     {
         $user = User::find($userId);
-    
+
         return $user && $user->hasRole(self::SUB_AGENT_ROlE) ? $user->parent : null;
     }
-    
+
     private function getAgent()
     {
         return $this->isExistingAgent(Auth::id());

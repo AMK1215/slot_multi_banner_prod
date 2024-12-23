@@ -54,7 +54,7 @@ class User extends Authenticatable implements Wallet
         'referral_code',
         'agent_logo',
         'site_name',
-        'site_link'
+        'site_link',
     ];
 
     protected $dispatchesEvents = [
@@ -285,10 +285,7 @@ class User extends Authenticatable implements Wallet
     }
 
     public function agents()
-{
-    return $this->hasMany(User::class, 'agent_id');
-}
-
-
-
+    {
+        return $this->hasMany(User::class, 'agent_id');
+    }
 }
