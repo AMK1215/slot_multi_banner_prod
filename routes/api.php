@@ -36,8 +36,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('contact', [ContactController::class, 'get']);
 
 // sameless route
-Route::post('Seamless/Test', [TestingController::class, 'AppGetGameList']);
-
+Route::post('Seamless/Test', [TransactionController::class, 'SystemWalletTest']);
 Route::post('GetBalance', [GetBalanceController::class, 'getBalance']);
 Route::post('BetNResult', [BetNResultController::class, 'handleBetNResult']);
 Route::post('CancelBetNResult', [CancelBetNResultController::class, 'handleCancelBetNResult']);
