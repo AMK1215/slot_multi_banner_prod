@@ -72,6 +72,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('withdrawlog', [WithDrawRequestController::class, 'log']);
     Route::get('sitelogo-name', [GetAdminSiteLogoNameController::class, 'GetSiteLogoAndSiteName']);
     Route::get('banner', [BannerController::class, 'index']);
+    Route::get('videoads', [BannerController::class, 'ApiVideoads']);
     Route::get('promotion', [PromotionController::class, 'index']);
     Route::get('bannerText', [BannerController::class, 'bannerText']);
     Route::get('banner_Text', [BannerController::class, 'bannerTest']);
