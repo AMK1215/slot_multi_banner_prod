@@ -60,27 +60,27 @@ class HomeController extends Controller
             ->select(DB::raw('SUM(wallets.balance) as balance'))
             ->first();
 
-            // $playerBalance = DB::table('users')
-            //     ->join('wallets', 'wallets.holder_id', '=', 'users.id')
-            //     ->when($role[0] === 'Senior', function ($query) {
-            //         return $query->where('users.type', 40);
-            //     })
-            //     ->first();
-            $playerBalance = 0;
+            $playerBalance = DB::table('users')
+                ->join('wallets', 'wallets.holder_id', '=', 'users.id')
+                ->when($role[0] === 'Senior', function ($query) {
+                    return $query->where('users.type', 40);
+                })
+                ->first();
+    //         $playerBalance = 0;
 
-    // Check if the role is 'Owner', 'Senior', 'Agent', or 'Sub Agent'
-    if (in_array($role, ['Owner', 'Senior', 'Agent', 'Sub Agent'])) {
-        // Retrieve all agents related to the current user
-        $agents = DB::table('users')
-            ->where('agent_id', $user->id)
-            ->pluck('id'); // Get the IDs of related agents
+    // // Check if the role is 'Owner', 'Senior', 'Agent', or 'Sub Agent'
+    // if (in_array($role, ['Owner', 'Senior', 'Agent', 'Sub Agent'])) {
+    //     // Retrieve all agents related to the current user
+    //     $agents = DB::table('users')
+    //         ->where('agent_id', $user->id)
+    //         ->pluck('id'); // Get the IDs of related agents
 
-        // Retrieve players under these agents and sum their wallet balances
-        $playerBalance = DB::table('users as players')
-            ->join('wallets', 'wallets.holder_id', '=', 'players.id')
-            ->whereIn('players.agent_id', $agents) // Players under these agents
-            ->sum('wallets.balance'); // Sum their wallet balances
-    }
+    //     // Retrieve players under these agents and sum their wallet balances
+    //     $playerBalance = DB::table('users as players')
+    //         ->join('wallets', 'wallets.holder_id', '=', 'players.id')
+    //         ->whereIn('players.agent_id', $agents) // Players under these agents
+    //         ->sum('wallets.balance'); // Sum their wallet balances
+    // }
 
 
         return view('admin.dashboard', compact(
