@@ -85,16 +85,16 @@ class HomeController extends Controller
     // Calculate the total wallet balance for the authenticated user
     $totalBalance = DB::table('users')
         ->join('wallets', 'wallets.holder_id', '=', 'users.id')
-        ->when($role === 'Senior', function ($query) {
+        ->when($role[0] === 'Senior', function ($query) {
             return $query->where('users.agent_id', Auth::id());
         })
-        ->when($role === 'Owner', function ($query) use ($user) {
+        ->when($role[0] === 'Owner', function ($query) use ($user) {
             return $query->where('users.agent_id', $user->id);
         })
-        ->when($role === 'Agent', function ($query) use ($user) {
+        ->when($role[0] === 'Agent', function ($query) use ($user) {
             return $query->where('users.agent_id', $user->id);
         })
-        ->when($role === 'Sub Agent', function ($query) use ($user) {
+        ->when($role[0] === 'Sub Agent', function ($query) use ($user) {
             return $query->where('users.agent_id', $user->id);
         })
         ->select(DB::raw('SUM(wallets.balance) as balance'))
