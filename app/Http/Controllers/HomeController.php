@@ -81,27 +81,26 @@ class HomeController extends Controller
         //     }, 0);
         // }, 0);
 
-        // Player balance (total for all players under the owner)
-        $playerBalance = 0;
+         // Player balance (total for all players under the owner)
+    $playerBalance = 0;
 
-        if (in_array($role, ['Senior', 'Owner', 'Agent', 'Sub Agent'])) {
-            $ownerId = $user->id; // Authenticated user ID as owner
+    if (in_array($role, ['Senior', 'Owner', 'Agent', 'Sub Agent'])) {
+        $ownerId = $user->id; // Authenticated user ID as owner
 
-            // Retrieve the owner with their agents and players
-            $owner = User::with(['agents.players.wallet']) // Load agents, their players, and wallets
-                ->where('id', $ownerId)
-                ->first();
+        // Retrieve the owner with their agents and players
+        $owner = User::with(['agents.players.wallet']) // Load agents, their players, and wallets
+            ->where('id', $ownerId)
+            ->first();
 
-            if ($owner) {
-                // Calculate the total balance of all players related to the owner's agents
-                $playerBalance = $owner->agents->reduce(function ($carry, $agent) {
-                    return $carry + $agent->players->reduce(function ($innerCarry, $player) {
-                        return $innerCarry + ($player->wallet->balance ?? 0); // Sum up player wallet balances
-                    }, 0);
+        if ($owner) {
+            // Calculate the total balance of all players related to the owner's agents
+            $playerBalance = $owner->agents->reduce(function ($carry, $agent) {
+                return $carry + $agent->players->reduce(function ($innerCarry, $player) {
+                    return $innerCarry + ($player->wallet->balance ?? 0); // Sum up player wallet balances
                 }, 0);
-            }
+            }, 0);
         }
-
+    }
         return view('admin.dashboard', compact(
             'user',
             'totalBalance',
