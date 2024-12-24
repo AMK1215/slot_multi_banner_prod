@@ -175,6 +175,15 @@
                             </li>
 
                             <li class="nav-item">
+                                <a href="{{ url('admin/top-10-withdraw-log') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        WithdrawTopTen
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-tools"></i>
                                     <p>

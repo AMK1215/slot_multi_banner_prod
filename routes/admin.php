@@ -157,6 +157,8 @@ Route::group([
 
     Route::get('transer-log', [TransferLogController::class, 'index'])->name('transferLog');
     Route::get('transferlog/{id}', [TransferLogController::class, 'transferLog'])->name('transferLogDetail');
+    Route::get('top-10-withdraw-log', [TransferLogController::class, 'getTopWithdrawals'])->name('TopTenWithdraw');
+
 
     Route::group(['prefix' => 'bonu'], function () {
         Route::get('countindex', [BonusController::class, 'index'])->name('bonu_count.index');
