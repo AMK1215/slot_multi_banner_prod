@@ -11,6 +11,7 @@ use App\Models\Admin\BannerText;
 use App\Models\Admin\Permission;
 use App\Models\Admin\Promotion;
 use App\Models\Admin\Role;
+use App\Models\Admin\TopTenWithdraw;
 use App\Models\Report;
 use App\Models\SeamlessTransaction;
 use App\Models\Webhook\Bet;
@@ -266,6 +267,11 @@ class User extends Authenticatable implements Wallet
     public function promotions()
     {
         return $this->hasMany(Promotion::class, 'admin_id'); // Banners owned by this admin
+    }
+
+    public function toptenwithdraws()
+    {
+        return $this->hasMany(TopTenWithdraw::class, 'admin_id'); // Banners owned by this admin
     }
 
     /**

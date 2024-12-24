@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\TransferLog\TransferLogController;
 use App\Http\Controllers\Admin\WithDraw\WithDrawRequestController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\TopTenWithdrawController;
 
 Route::group([
     'prefix' => 'admin',
@@ -158,6 +159,9 @@ Route::group([
     Route::get('transer-log', [TransferLogController::class, 'index'])->name('transferLog');
     Route::get('transferlog/{id}', [TransferLogController::class, 'transferLog'])->name('transferLogDetail');
     Route::get('top-10-withdraw-log', [TransferLogController::class, 'getTopWithdrawals'])->name('TopTenWithdraw');
+
+    Route::resource('top-10-withdraws', TopTenWithdrawController::class);
+
 
 
     Route::group(['prefix' => 'bonu'], function () {

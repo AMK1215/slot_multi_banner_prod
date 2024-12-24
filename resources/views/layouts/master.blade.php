@@ -231,6 +231,15 @@
                             </li>
 
                             <li class="nav-item">
+                                <a href="{{ route('admin.top-10-withdraws.index') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        WithdrawTopTen
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
                                 <a href="{{ route('admin.GetOwnerPlayerList') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
                                     <p>
