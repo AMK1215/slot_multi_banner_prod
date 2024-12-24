@@ -182,6 +182,6 @@ php artisan bet:delete-old-backups "2024-12-08" "2024-12-10"
 }
 
 
-sudo certbot --nginx -d delightmyanmarmmk.xyz -d www.delightmyanmarmmk.xyz -d asaibetslot.online -d www.asaibetslot.online
+sudo certbot --nginx -d agdashboard.pro -d www.agdashboard.pro -d panda666.online -d www.panda666.online -d spiderman168.online -d www.spiderman168.online
 
 

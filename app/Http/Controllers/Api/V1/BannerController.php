@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\AdsVedio;
 use App\Models\Admin\Banner;
 use App\Models\Admin\BannerAds;
 use App\Models\Admin\BannerText;
 use App\Traits\HttpResponses;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Admin\AdsVedio;
 
 class BannerController extends Controller
 {
@@ -32,6 +32,7 @@ class BannerController extends Controller
 
         return $this->success($data, 'Banners retrieved successfully.');
     }
+
     public function ApiVideoads()
     {
         $user = Auth::user();
@@ -47,6 +48,7 @@ class BannerController extends Controller
 
         // Fetch banners for the determined admin
         $data = AdsVedio::where('admin_id', $admin->id)->get();
+
         return $this->success($data, 'AdsVedio retrieved successfully.');
     }
 
