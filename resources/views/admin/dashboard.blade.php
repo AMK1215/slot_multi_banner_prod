@@ -69,24 +69,27 @@
                 @endif
                 <!-- ./col -->
                 <!-- ./col -->
-                <div class="col-lg-4 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            @if ($playerBalance)
-                                <h3>{{ number_format($playerBalance->balance / 100, 2) }}</h3>
-                            @else
-                                <h3>0.00</h3>
-                            @endif
-                            <p>Player Balance</p>
+                @can('senior_access')
+                    <div class="col-lg-4 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                @if ($playerBalance)
+                                    <h3>{{ number_format($playerBalance->balance / 100, 2) }}</h3>
+                                @else
+                                    <h3>0.00</h3>
+                                @endif
+                                <p>Player Balance</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-pie-graph"></i>
+                            </div>
+                            <a href="{{ route('admin.playerList') }}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
                         </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="{{ route('admin.playerList') }}" class="small-box-footer">More info <i
-                                class="fas fa-arrow-circle-right"></i></a>
                     </div>
-                </div>
+                @endcan
+
                 <!-- ./col -->
 
                 {{-- senior balance update start  --}}
