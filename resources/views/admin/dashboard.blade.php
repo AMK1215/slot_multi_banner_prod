@@ -74,7 +74,7 @@
                     <div class="small-box bg-danger">
                         <div class="inner">
                             @if ($playerBalance)
-                                <h3>{{ number_format($playerBalance->player_balance / 100, 2) }}</h3>
+                                <h3>{{ number_format($playerBalance->balance / 100, 2) }}</h3>
                             @else
                                 <h3>0.00</h3>
                             @endif
