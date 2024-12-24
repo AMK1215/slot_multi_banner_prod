@@ -61,7 +61,7 @@ class TransferLogController extends Controller
     // Retrieve the top 10 withdrawals
     $topWithdrawals = DB::table('transactions')
         ->join('users', 'transactions.payable_id', '=', 'users.id') // Join with users to get the player's name
-        ->where('transactions.type', 'withdraw') // Only withdrawals
+        ->where('transactions.name', 'debit_transfer') // Only withdrawals
         ->where('transactions.confirmed', true) // Ensure the withdrawal is confirmed
         ->select('users.name as player_name', 'transactions.amount as withdraw_amount') // Select player's name and withdrawal amount
         ->orderByDesc('transactions.amount') // Order by withdrawal amount in descending order
