@@ -104,16 +104,16 @@ class HomeController extends Controller
     $playerBalance = DB::table('users as players')
         ->join('users as agents', 'players.agent_id', '=', 'agents.id')
         ->join('wallets', 'wallets.holder_id', '=', 'players.id')
-        ->when($role[0] === 'Senior', function ($query) use ($user) {
+        ->when($role[4] === 'Senior', function ($query) use ($user) {
             return $query->where('agents.agent_id', $user->id); // Senior's agents' players
         })
-        ->when($role[0] === 'Owner', function ($query) use ($user) {
+        ->when($role[4] === 'Owner', function ($query) use ($user) {
             return $query->where('agents.agent_id', $user->id); // Owner's agents' players
         })
-        ->when($role[0] === 'Agent', function ($query) use ($user) {
+        ->when($role[4] === 'Agent', function ($query) use ($user) {
             return $query->where('players.agent_id', $user->id); // Agent's players
         })
-        ->when($role[0] === 'Sub Agent', function ($query) use ($user) {
+        ->when($role[4] === 'Sub Agent', function ($query) use ($user) {
             return $query->where('players.agent_id', $user->id); // Sub Agent's players
         })
         ->select(DB::raw('SUM(wallets.balance) as player_balance'))
