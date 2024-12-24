@@ -50,7 +50,7 @@ class BannerController extends Controller
         // Fetch banners for the determined admin
         $data = TopTenWithdraw::where('admin_id', $admin->id)->get();
 
-        return $this->success($data, 'Banners retrieved successfully.');
+        return $this->success($data, 'TopTen Winner retrieved successfully.');
     }
 
     public function ApiVideoads()
