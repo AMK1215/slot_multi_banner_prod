@@ -2,11 +2,9 @@
 
 namespace App\Models\Admin;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-use App\Models\User;
-
 
 class TopTenWithdraw extends Model
 {
@@ -14,8 +12,7 @@ class TopTenWithdraw extends Model
 
     protected $primaryKey = 'id'; // or your actual primary key field
 
-
-     protected $fillable = [
+    protected $fillable = [
         'player_id',
         'amount',
         'admin_id',
