@@ -225,7 +225,7 @@
                         previous: '<i class="fas fa-angle-left"></i>'
                     }
                 },
-                pageLength: 500
+                pageLength: 7
             });
 
             console.log('DataTable initialized successfully');
