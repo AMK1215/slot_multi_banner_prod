@@ -76,6 +76,27 @@
                                     </div>
                                 </div>
                             </form>
+
+                            <div class="mt-4">
+                                <form action="{{ route('admin.gameLists.updateOrder') }}" method="POST" class="mb-3">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="order" class="form-label">Order Value</label>
+                                            <input type="text" name="order" id="order"
+                                                class="form-control @error('order') is-invalid @enderror"
+                                                placeholder="Enter new order value" required>
+                                            @error('order')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button type="submit" class="btn btn-primary btn-block mt-4">Update</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
                         </div>
                         <!-- /.card-body -->
                     </div>

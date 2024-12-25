@@ -173,4 +173,42 @@ class GameListController extends Controller
          return view('admin.game_list.search', compact('games'));
 
     }
+    public function updateAllOrder(Request $request)
+    {
+        // Validate the input
+        $request->validate([
+            'order' => 'required|integer',
+        ]);
+
+        // Get the new order value from the request
+        $newOrderValue = $request->input('order');
+
+        // Perform the bulk update
+        $updatedCount = GameList::query()->update(['order' => $newOrderValue]);
+
+        // Redirect back with a success message
+        return redirect()
+            ->back()
+            ->with('success', "Order column updated for all rows successfully. Updated rows: $updatedCount.");
+    }
+    // public function updateAllOrder(Request $request)
+    // {
+    //     // Validate the input
+    //     $request->validate([
+    //         'order' => 'required|integer',
+    //     ]);
+
+    //     // Get the new order value from the request
+    //     $newOrderValue = $request->input('order');
+
+    //     // Perform the bulk update
+    //     $updatedCount = GameList::query()->update(['order' => $newOrderValue]);
+
+    //     // Return a response
+    //     return response()->json([
+    //         'success' => true,
+    //         'message' => 'Order column updated for all rows successfully.',
+    //         'updated_rows' => $updatedCount,
+    //     ]);
+    // }
 }

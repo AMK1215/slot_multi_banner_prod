@@ -104,6 +104,7 @@ Route::group([
     Route::post('/game-lists/{id}/update-order', [GameListController::class, 'updateOrder'])->name('GameListOrderUpdate');
     Route::get('/game-lists/search', [GameListController::class, 'searchGames'])->name('gameLists.search');
     Route::get('/game-lists-search', [GameListController::class, 'GetsearchGames'])->name('gameLists.search_index');
+    Route::post('/game-lists/updateordercolumn', [GameListController::class, 'updateAllOrder'])->name('gameLists.updateOrder');
 
 
     // game list end
