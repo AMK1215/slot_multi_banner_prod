@@ -420,6 +420,7 @@
                             </a>
                         </li> --}}
                         @endcan
+                        @can('senior_access')
                         <li class="nav-item">
                             <a href="{{ route('admin.roles.index') }}" class="nav-link">
                                 <i class="fas fa-address-book"></i>
@@ -428,6 +429,7 @@
                                 </p>
                             </a>
                         </li>
+                        @endcan
                         @can('owner_access')
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
