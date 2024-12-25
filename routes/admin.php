@@ -24,12 +24,12 @@ use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\Seniors\SeniorHierarchyController;
 use App\Http\Controllers\Admin\Shan\ShanReportController;
+use App\Http\Controllers\Admin\TopTenWithdrawController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\TransferLog\TransferLogController;
 use App\Http\Controllers\Admin\WithDraw\WithDrawRequestController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\TopTenWithdrawController;
 
 Route::group([
     'prefix' => 'admin',
@@ -161,8 +161,6 @@ Route::group([
     Route::get('top-10-withdraw-log', [TransferLogController::class, 'getTopWithdrawals'])->name('TopTenWithdraw');
 
     Route::resource('top-10-withdraws', TopTenWithdrawController::class);
-
-
 
     Route::group(['prefix' => 'bonu'], function () {
         Route::get('countindex', [BonusController::class, 'index'])->name('bonu_count.index');

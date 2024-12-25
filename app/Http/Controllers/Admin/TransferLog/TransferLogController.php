@@ -6,9 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Gate;
 
 class TransferLogController extends Controller
 {
@@ -56,34 +55,33 @@ class TransferLogController extends Controller
         return $this->isExistingAgent(Auth::id());
     }
 
-//     public function getTopWithdrawals()
-// {
-//     // Retrieve the top 10 withdrawals
-//     $topWithdrawals = DB::table('transactions')
-//         ->join('users', 'transactions.payable_id', '=', 'users.id') // Join with users to get the player's name
-//         ->where('transactions.name', 'debit_transfer') // Only withdrawals
-//         ->where('transactions.confirmed', true) // Ensure the withdrawal is confirmed
-//         ->select('users.name as player_name', 'transactions.amount as withdraw_amount') // Select player's name and withdrawal amount
-//         ->orderByDesc('transactions.amount') // Order by withdrawal amount in descending order
-//         ->limit(10) // Limit to top 10
-//         ->get();
+    //     public function getTopWithdrawals()
+    // {
+    //     // Retrieve the top 10 withdrawals
+    //     $topWithdrawals = DB::table('transactions')
+    //         ->join('users', 'transactions.payable_id', '=', 'users.id') // Join with users to get the player's name
+    //         ->where('transactions.name', 'debit_transfer') // Only withdrawals
+    //         ->where('transactions.confirmed', true) // Ensure the withdrawal is confirmed
+    //         ->select('users.name as player_name', 'transactions.amount as withdraw_amount') // Select player's name and withdrawal amount
+    //         ->orderByDesc('transactions.amount') // Order by withdrawal amount in descending order
+    //         ->limit(10) // Limit to top 10
+    //         ->get();
 
-//     return view('admin.withdraw_top_ten', compact('topWithdrawals'));
-// }
-public function getTopWithdrawals()
-{
-    // Retrieve the top 10 withdrawals
-    $topWithdrawals = DB::table('transactions')
-        ->join('users', 'transactions.payable_id', '=', 'users.id') // Join with users to get the player's name
-        ->where('transactions.name', 'debit_transfer') // Only withdrawals
-        ->where('transactions.confirmed', true) // Ensure the withdrawal is confirmed
-        ->select('users.name as player_name', 'transactions.amount as withdraw_amount', 'transactions.created_at') // Select required fields
-        ->orderByDesc('transactions.amount') // Order by withdrawal amount in descending order
-        ->orderByDesc('transactions.created_at') // Get the latest transactions
-        ->limit(10) // Limit to top 10
-        ->get();
+    //     return view('admin.withdraw_top_ten', compact('topWithdrawals'));
+    // }
+    public function getTopWithdrawals()
+    {
+        // Retrieve the top 10 withdrawals
+        $topWithdrawals = DB::table('transactions')
+            ->join('users', 'transactions.payable_id', '=', 'users.id') // Join with users to get the player's name
+            ->where('transactions.name', 'debit_transfer') // Only withdrawals
+            ->where('transactions.confirmed', true) // Ensure the withdrawal is confirmed
+            ->select('users.name as player_name', 'transactions.amount as withdraw_amount', 'transactions.created_at') // Select required fields
+            ->orderByDesc('transactions.amount') // Order by withdrawal amount in descending order
+            ->orderByDesc('transactions.created_at') // Get the latest transactions
+            ->limit(10) // Limit to top 10
+            ->get();
 
-    return view('admin.withdraw_top_ten', compact('topWithdrawals'));
-}
-
+        return view('admin.withdraw_top_ten', compact('topWithdrawals'));
+    }
 }
