@@ -50,6 +50,7 @@ class GameController extends Controller
             ->where('product_id', $product_id)
             ->where('game_type_id', $game_type_id)
             ->where('status', 1)
+            ->OrderBy('order', 'asc')
             ->where('game_name', 'like', '%'.$request->name.'%')
             ->get();
 
