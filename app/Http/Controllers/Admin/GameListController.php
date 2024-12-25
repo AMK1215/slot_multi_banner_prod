@@ -167,7 +167,7 @@ class GameListController extends Controller
         // Execute query and get results
         $games = $query->get();
 
-         return view('admin.game_list.search', compact('games'));
+         return view('admin.game_list.search_index', compact('games'));
 
     }
 }
