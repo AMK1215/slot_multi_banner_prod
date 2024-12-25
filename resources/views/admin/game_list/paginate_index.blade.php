@@ -113,6 +113,7 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
+                                            <th class="bg-danger text-white">Order</th>
                                             <th class="bg-success text-white">Game Type</th>
                                             <th class="bg-danger text-white">Product</th>
                                             <th class="bg-info text-white">Game Name</th>
@@ -132,6 +133,7 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
+                                            <th class="bg-danger text-white">Order</th>
                                             <th class="bg-success text-white">GameType</th>
                                             <th class="bg-danger text-white">Product</th>
                                             <th class="bg-info text-white">GameName</th>
@@ -180,6 +182,10 @@
                         name: 'DT_RowIndex',
                         orderable: false,
                         searchable: false
+                    },
+                    {
+                        data: 'order',
+                        name: 'order'
                     },
                     {
                         data: 'game_type',

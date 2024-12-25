@@ -17,6 +17,9 @@ class GameListController extends Controller
 
             return Datatables::of($data)
                 ->addIndexColumn()
+                ->addColumn('order', function ($row) {
+                    return $row->order;
+                })
                 ->addColumn('game_type', function ($row) {
                     return $row->gameType->name ?? 'N/A';
                 })
