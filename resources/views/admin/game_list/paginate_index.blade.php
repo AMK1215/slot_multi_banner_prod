@@ -34,7 +34,81 @@
                             </h5>
                         </div>
                         <div class="card-body">
+                            <form action="{{ route('admin.gameLists.search') }}" method="GET" class="mb-3">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <input type="text" name="game_name" class="form-control"
+                                            placeholder="Search by Game Name" value="{{ request('game_name') }}">
+                                    </div>
+                                    {{-- <div class="col-md-2">
+                                        <input type="text" name="game_code" class="form-control"
+                                            placeholder="Search by Game Code" value="{{ request('game_code') }}">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select name="game_type" class="form-control">
+                                            <option value="">All Game Types</option>
+                                            <option value="1" {{ request('game_type') == 1 ? 'selected' : '' }}>Type 1
+                                            </option>
+                                            <option value="2" {{ request('game_type') == 2 ? 'selected' : '' }}>Type 2
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select name="status" class="form-control">
+                                            <option value="">All Status</option>
+                                            <option value="1" {{ request('status') == 1 ? 'selected' : '' }}>Active
+                                            </option>
+                                            <option value="0" {{ request('status') == 0 ? 'selected' : '' }}>Inactive
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select name="hot_status" class="form-control">
+                                            <option value="">Hot Status</option>
+                                            <option value="1" {{ request('hot_status') == 1 ? 'selected' : '' }}>Hot
+                                            </option>
+                                            <option value="0" {{ request('hot_status') == 0 ? 'selected' : '' }}>Not
+                                                Hot</option>
+                                        </select>
+                                    </div> --}}
+                                    <div class="col-md-1">
+                                        <button type="submit" class="btn btn-primary btn-block">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+
+
+
                             @can('admin_access')
+                                <div class="mt-4">
+
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Game Name</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @forelse ($games as $game)
+                                                <tr>
+                                                    <td>{{ $loop->iteration + $games->firstItem() - 1 }}</td>
+                                                    <td>{{ $game->game_name }}</td>
+                                                    <td>
+                                                        <a href="{{ route('admin.gameLists.edit', $game->id) }}"
+                                                            class="btn btn-sm btn-primary">Edit</a>
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="3" class="text-center">No games found.</td>
+                                                </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+
+                                </div>
                                 <table id="mytable" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>

@@ -402,6 +402,12 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
+                                        <a href="{{ route('admin.gameLists.search_index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Search GameList</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a href="{{ route('admin.gametypes.index') }}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>GSC GameProvider</p>
@@ -421,14 +427,14 @@
                         </li> --}}
                         @endcan
                         @can('senior_access')
-                        <li class="nav-item">
-                            <a href="{{ route('admin.roles.index') }}" class="nav-link">
-                                <i class="fas fa-address-book"></i>
-                                <p>
-                                    Role
-                                </p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.roles.index') }}" class="nav-link">
+                                    <i class="fas fa-address-book"></i>
+                                    <p>
+                                        Role
+                                    </p>
+                                </a>
+                            </li>
                         @endcan
                         @can('owner_access')
                             <li class="nav-item">

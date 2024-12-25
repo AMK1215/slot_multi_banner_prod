@@ -102,6 +102,9 @@ Route::group([
     Route::post('/game-list/{id}/update-image-url', [GameListImageURLUpdateController::class, 'updateImageUrl'])->name('game_list.update_image_url');
     Route::get('game-list-order/{gameList}/edit', [GameListController::class, 'GameListOrderedit'])->name('game_list_order.edit');
     Route::post('/game-lists/{id}/update-order', [GameListController::class, 'updateOrder'])->name('GameListOrderUpdate');
+    Route::get('/game-lists/search', [GameListController::class, 'searchGames'])->name('gameLists.search');
+    Route::get('/game-lists-search', [GameListController::class, 'GetsearchGames'])->name('gameLists.search_index');
+
 
     // game list end
     Route::resource('agent', AgentController::class);

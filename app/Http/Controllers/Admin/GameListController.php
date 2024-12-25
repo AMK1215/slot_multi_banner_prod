@@ -142,4 +142,32 @@ class GameListController extends Controller
         //     'data' => $gameList,
         // ]);
     }
+
+    public function GetsearchGames(Request $request)
+    {
+    return view('admin.game_list.search_index');
+    }
+
+    public function searchGames(Request $request)
+    {
+        // Validate search input (optional)
+        $request->validate([
+            'game_name' => 'nullable|string',
+        ]);
+
+        // Build query
+        $query = GameList::query();
+
+        // Add filters based on request inputs
+        if ($request->filled('game_name')) {
+            $query->where('game_name', 'LIKE', '%' . $request->input('game_name') . '%');
+        }
+
+
+        // Execute query and get results
+        $games = $query->get();
+
+         return view('admin.game_list.search', compact('games'));
+
+    }
 }
