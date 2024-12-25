@@ -100,6 +100,8 @@ Route::group([
 
     Route::get('game-list/{gameList}/edit', [GameListImageURLUpdateController::class, 'edit'])->name('game_list.edit');
     Route::post('/game-list/{id}/update-image-url', [GameListImageURLUpdateController::class, 'updateImageUrl'])->name('game_list.update_image_url');
+    Route::get('game-list-order/{gameList}/edit', [GameListController::class, 'GameListOrderedit'])->name('game_list_order.edit');
+    Route::post('/game-lists/{id}/update-order', [GameListController::class, 'updateOrder'])->name('GameListOrderUpdate');
 
     // game list end
     Route::resource('agent', AgentController::class);

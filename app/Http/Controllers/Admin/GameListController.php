@@ -54,6 +54,7 @@ class GameListController extends Controller
                             </form>';
 
                     $btn .= '<a href="'.route('admin.game_list.edit', $row->id).'" class="btn btn-primary btn-sm">EditImageURL</a>';
+                    $btn .= '<a href="'.route('admin.game_list_order.edit', $row->id).'" class="btn btn-primary btn-sm">Order</a>';
 
                     return $btn;
                 })
@@ -113,5 +114,32 @@ class GameListController extends Controller
         $game->save();
 
         return redirect()->route('admin.gameLists.index')->with('success', 'PP HotGame status updated successfully.');
+    }
+    public function GameListOrderedit(GameList $gameList)
+    {
+        return view('admin.game_list.order_edit', compact('gameList'));
+    }
+
+     public function updateOrder(Request $request, $id)
+    {
+        // Validate the form input
+        $request->validate([
+            'order' => 'required|integer|min:0',
+        ]);
+
+        // Find the game list record
+        $gameList = GameList::findOrFail($id);
+
+        // Update the order column
+        $gameList->order = $request->input('order');
+        $gameList->save();
+
+         return redirect()->route('admin.gameLists.index')->with('success', 'Game list order  updated successfully.');
+
+        // Return a response
+        // return response()->json([
+        //     'message' => 'Order updated successfully.',
+        //     'data' => $gameList,
+        // ]);
     }
 }
