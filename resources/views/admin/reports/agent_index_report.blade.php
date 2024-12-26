@@ -55,7 +55,7 @@
                                 <thead>
                                     <tr>
                                         <th>Agent Name</th>
-
+                                        <th>PlayerId</th>
                                         <th>Player Name</th>
                                         <th>TotalStakeCount</th>
                                         <th>Total Bet</th>
@@ -69,7 +69,7 @@
                                     @foreach ($report as $data)
                                         <tr>
                                             <td>{{ $data->agent_name }}</td>
-
+                                            <td>{{ $data->user_name }}</td>
                                             <td>{{ $data->player_name }}</td>
                                             <td>{{ $data->total_games }}</td>
 

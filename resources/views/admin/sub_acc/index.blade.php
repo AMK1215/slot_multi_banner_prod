@@ -30,7 +30,7 @@
                             <table id="mytable" class="table table-bordered table-hover">
                                 <thead>
                                     <th>#</th>
-                                    <th>PlayerID</th>
+                                    <th>SubAccId</th>
                                     <th>Name</th>
                                     <th>Phone</th>
                                     <th>Status</th>

@@ -26,9 +26,13 @@
                             <table id="mytable" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
+                                        <th>ID</th>
                                         <th>Date</th>
-                                        <th>To User</th>
+                                        <th>PlayerId</th>
+                                        <th>PlayerName</th>
+                                        <th>Old Balance</th>
                                         <th>Amount</th>
+                                        <th>New Balance</th>
                                         <th>Type</th>
                                         <th>Note</th>
                                     </tr>
@@ -36,16 +40,22 @@
                                 <tbody>
                                     @foreach ($transferLogs as $log)
                                         <tr>
+                                            <td>{{$loop->iteration}}</td>
                                             <td>
                                                 {{ $log->created_at }}
                                             </td>
+                                            <td>{{$log->targetUser->user_name}}</td>
                                             <td>{{ $log->targetUser->name }}</td>
+                                            <td>{{$log->old_balance}}</td>
+
                                             <td>
                                                 <div
                                                     class="d-flex align-items-center text-{{ $log->type == 'withdraw' ? 'success' : 'danger' }} text-gradient text-sm font-weight-bold ms-auto">
                                                     {{ number_format(abs($log->amountFloat)) }}
                                                 </div>
                                             </td>
+                                            <td>{{ $log->new_balance}}</td>
+
                                             <td>
                                                 @if ($log->type == 'deposit')
                                                     <p class="text-danger font-weight-bold">Withdraw</p>

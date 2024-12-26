@@ -21,8 +21,8 @@ class TransferLogController extends Controller
         $transferLogs = $agent->transactions()->with('targetUser')
             ->whereIn('transactions.type', ['withdraw', 'deposit'])
             ->whereIn('transactions.name', ['credit_transfer', 'debit_transfer'])
-            ->latest()->paginate();
-
+            ->orderby('transactions.id', 'desc')->get();
+        
         return view('admin.trans_log.index', compact('transferLogs'));
     }
 
@@ -38,7 +38,7 @@ class TransferLogController extends Controller
         $transferLogs = $agent->transactions()->with('targetUser')
             ->whereIn('transactions.type', ['withdraw', 'deposit'])
             ->whereIn('transactions.name', ['credit_transfer', 'debit_transfer'])
-            ->where('target_user_id', $id)->latest()->paginate();
+            ->where('target_user_id', $id)->orderBy('transactions.id', 'desc')->paginate();
 
         return view('admin.trans_log.detail', compact('transferLogs'));
     }

@@ -9,6 +9,7 @@ use App\Traits\HttpResponses;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class WithDrawRequestController extends Controller
 {
@@ -18,7 +19,7 @@ class WithDrawRequestController extends Controller
     {
         $request->validate([
             'account_name' => ['required', 'string'],
-            'amount' => ['required', 'integer', 'min: 3000'],
+            'amount' => ['required', 'integer', 'min: 10000'],
             'account_number' => ['required', 'regex:/^[0-9]+$/'],
             'payment_type_id' => ['required', 'integer'],
         ]);
@@ -27,6 +28,10 @@ class WithDrawRequestController extends Controller
         if ($request->amount > $player->balanceFloat) {
             return $this->error('', 'Insufficient Balance', 401);
         }
+        if ( $player && ! Hash::check($request->password, $player->password)) {
+            return $this->error('', 'လျို့ဝှက်နံပါတ်ကိုက်ညီမှု မရှိပါ။', 401);
+        }
+
         $withdraw = WithDrawRequest::create([
             'user_id' => $player->id,
             'agent_id' => $player->agent_id,

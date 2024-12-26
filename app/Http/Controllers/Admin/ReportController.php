@@ -7,12 +7,15 @@ use App\Models\User;
 use App\Models\Webhook\Result;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class ReportController extends Controller
 {
+    protected const SUB_AGENT_ROlE = 'Sub Agent';
+
     public function index()
     {
         $adminId = auth()->id();
@@ -95,7 +98,7 @@ class ReportController extends Controller
 
     public function AgentReportindex()
     {
-        $agentId = auth()->id(); // Get the authenticated agent's ID
+        $agent = $this->getAgent() ?? Auth::user();
 
         $report = Result::select(
             DB::raw('SUM(results.total_bet_amount) as total_bet_amount'),
@@ -104,12 +107,13 @@ class ReportController extends Controller
             DB::raw('COUNT(results.id) as total_games'),
             'players.name as player_name',
             'agents.name as agent_name',
-            'players.id as user_id'
+            'players.id as user_id',
+            'players.user_name as user_name'
         )
             ->join('users as players', 'results.user_id', '=', 'players.id') // Join players with results
             ->join('users as agents', 'players.agent_id', '=', 'agents.id') // Join agents with players
-            ->where('agents.id', $agentId) // Filter data for the authenticated agent only
-            ->groupBy('players.name', 'agents.name', 'players.id') // Group by player name, agent name, and player ID
+            ->where('agents.id', $agent->id) // Filter data for the authenticated agent only
+            ->groupBy('players.name', 'agents.name', 'players.id', 'players.user_name') // Group by player name, agent name, and player ID
             ->paginate(10) // Paginate results to show 10 per page
             ->withQueryString(); // Preserve query string in pagination links
 
@@ -284,5 +288,18 @@ class ReportController extends Controller
         } else {
             return 'Error: Unable to login';
         }
+    }
+
+
+    private function isExistingAgent($userId)
+    {
+        $user = User::find($userId);
+
+        return $user && $user->hasRole(self::SUB_AGENT_ROlE) ? $user->parent : null;
+    }
+
+    private function getAgent()
+    {
+        return $this->isExistingAgent(Auth::id());
     }
 }

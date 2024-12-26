@@ -20,8 +20,11 @@
 
                             <tr>
                                 <th>Date</th>
-                                <th>To User</th>
+                                <th>PlayerId</th>
+                                <th>PlayerName</th>
+                                <th>Old Balance</th>
                                 <th>Amount</th>
+                                <th>New Balance</th>
                                 <th>Type</th>
                             </tr>
                         </thead>
@@ -29,7 +32,9 @@
                             @foreach ($transferLogs as $log)
                                 <tr>
                                     <td>{{ $log->created_at }}</td>
+                                    <td>{{ $log->targetUser->user_name }}</td>
                                     <td>{{ $log->targetUser->name }}</td>
+                                    <th>{{ $log->old_balance}}</th>
                                     <td>
                                         @if ($log->type == 'withdraw')
                                             <p class="text-success font-weight-bold"> {{ abs($log->amountFloat) }}</p>
@@ -37,6 +42,7 @@
                                             <p class="text-danger font-weight-bold"> {{ abs($log->amountFloat) }}</p>
                                         @endif
                                     </td>
+                                    <td>{{ $log->new_balance}}</td>
                                     <td>
                                         @if ($log->type == 'deposit')
                                             <p class="text-danger font-weight-bold">Withdraw</p>

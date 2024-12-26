@@ -417,14 +417,14 @@
                             </li>
                         @endcan
                         @can('agent_access')
-                            {{-- <li class="nav-item">
+                            <li class="nav-item">
                             <a href="{{ route('admin.subacc.index') }}" class="nav-link">
                                 <i class="fas fa-address-book"></i>
                                 <p>
                                     Sub Account
                                 </p>
                             </a>
-                        </li> --}}
+                        </li>
                         @endcan
                         @can('senior_access')
                             <li class="nav-item">
@@ -542,6 +542,7 @@
                 "responsive": true,
                 "lengthChange": false,
                 "autoWidth": false,
+                "order": true,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         });
