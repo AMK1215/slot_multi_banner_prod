@@ -150,6 +150,14 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{ url('admin/slot/seniorbets') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        Bet
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ url('admin/slot/report') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
                                     <p>
@@ -426,13 +434,13 @@
                         @endcan
                         @can('agent_access')
                             <li class="nav-item">
-                            <a href="{{ route('admin.subacc.index') }}" class="nav-link">
-                                <i class="fas fa-address-book"></i>
-                                <p>
-                                    Sub Account
-                                </p>
-                            </a>
-                        </li>
+                                <a href="{{ route('admin.subacc.index') }}" class="nav-link">
+                                    <i class="fas fa-address-book"></i>
+                                    <p>
+                                        Sub Account
+                                    </p>
+                                </a>
+                            </li>
                         @endcan
                         @can('senior_access')
                             <li class="nav-item">

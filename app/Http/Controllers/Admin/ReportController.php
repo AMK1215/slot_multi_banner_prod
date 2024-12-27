@@ -328,6 +328,43 @@ class ReportController extends Controller
     return redirect()->back()->with('success', 'Results deleted successfully.');
 }
 
+public function getAllBets()
+{
+    // Retrieve all results with pagination (10 per page)
+    $results = DB::table('bets')
+        ->join('users', 'bets.user_id', '=', 'users.id') // Join with users to get related user data
+        ->select(
+            'bets.*',
+            'users.name as player_name', // Include player's name from users table
+            //'users.user_name as player_id'
+        )
+        ->paginate(10); // Paginate results with 10 per page
+
+    // Pass the results to the view
+    return view('admin.reports.senior.bet_index', compact('results'));
+        }
+
+        public function deleteBets(Request $request)
+{
+    // Validate the request
+    $request->validate([
+        'start_date' => 'required|date',
+        'end_date' => 'required|date|after_or_equal:start_date',
+    ]);
+
+    // Retrieve the date range
+    $startDate = $request->start_date;
+    $endDate = $request->end_date;
+
+    // Delete the results within the specified date range
+    DB::table('bets')
+        ->whereBetween('tran_date_time', [$startDate, $endDate])
+        ->delete();
+
+    // Redirect back with a success message
+    return redirect()->back()->with('success', 'Bets deleted successfully.');
+}
+
 
     private function isExistingAgent($userId)
     {

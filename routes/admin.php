@@ -202,8 +202,8 @@ Route::group([
         Route::get('/seniorresults', [ReportController::class, 'getAllResults'])->name('senior_results.index');
         Route::post('/senior/delete-results', [ReportController::class, 'deleteResults'])->name('senior.deleteResults');
 
-
-
+        Route::get('/seniorbets', [ReportController::class, 'getAllBets'])->name('senior_bet.index');
+        Route::post('/senior/delete-bets', [ReportController::class, 'deleteBets'])->name('senior.deleteBets');
         // report v3
         Route::get('/results/user/{userName}', [ReportController::class, 'getResultsForOnlyUser']);
 
