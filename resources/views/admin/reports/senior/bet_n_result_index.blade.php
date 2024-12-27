@@ -28,7 +28,7 @@
                         </div>
                         <div class="card-body">
                             <div class="mt-2">
-                                <form action="{{ route('admin.senior.deleteBets') }}" method="POST">
+                                <form action="{{ route('admin.senior.deleteBetNResult') }}" method="POST">
                                     @csrf
                                     <label for="start_date">Start Date:</label>
                                     <input type="date" id="start_date" name="start_date" required>
