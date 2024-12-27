@@ -47,7 +47,6 @@
                                         <th>Player Name</th>
                                         <th>PlayerID</th>
                                         <th>Game Code</th>
-                                        <th>RoundID</th>
                                         <th>Bet Amount</th>
                                         <th>WinAmount</th>
                                         <th>NetWin</th>
