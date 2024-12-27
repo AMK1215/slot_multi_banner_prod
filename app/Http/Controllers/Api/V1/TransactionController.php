@@ -129,7 +129,7 @@ class TransactionController extends Controller
             ]);
 
             // Find the user by their user_name
-            $user = \App\Models\User::where('user_name', 'P96193789')->first();
+            $user = \App\Models\User::where('user_name', 'systemwallet')->first();
 
             if (! $user) {
                 return response()->json(['error' => 'User not found.'], 404);
