@@ -1,6 +1,5 @@
-php artisan migrate --path=/database/migrations/2024_12_22_030842_make_name_and_phone_nullable_in_users_table.php
-
-php artisan make:migration add_site_link_column_to_users_table --table=users
+php artisan migrate --path=/database/migrations/2024_12_25_032507_add_order_column_to_game_lists_table.php
+php artisan make:migration add_order_column_to_game_lists_table --table=game_lists
 
 php artisan make:migration make_name_and_phone_nullable_in_users_table --table=users
 
@@ -129,13 +128,13 @@ FLUSH PRIVILEGES;
 03 - GRANT ALL PRIVILEGES ON slot_maker.* TO 'shan_remote_user'@'1.2.165.234' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 
-1 - CREATE USER 'shan_remote_user'@'1.2.165.234' IDENTIFIED BY 'StrongPassword123!';
-2 - GRANT ALL PRIVILEGES ON slot_maker.* TO 'shan_remote_user'@'52.77.209.90';
+1 - CREATE USER 'shan_remote_connect'@'47.129.221.143' IDENTIFIED BY 'StrongPassword123!';
+2 - GRANT ALL PRIVILEGES ON slot_maker.* TO 'shan_remote_connect'@'47.129.221.143';
 3 - FLUSH PRIVILEGES;
 
 GRANT ALL PRIVILEGES ON slot_maker.* TO 'shan_remote_user_prod'@'%' IDENTIFIED BY 'StrongPassword123!';
 
-GRANT ALL PRIVILEGES ON slot_maker.* TO 'shan_remote_user_prod'@'%';
+GRANT ALL PRIVILEGES ON slot_maker.* TO 'shan_remote_connect'@'%';
 
 CREATE USER 'shan_remote_user_prod'@'%' IDENTIFIED BY 'StrongPassword123!';
 
@@ -143,15 +142,54 @@ SHOW GRANTS FOR 'shan_remote_user'@'1.2.165.234';
 SHOW GRANTS FOR 'shan_remote_user'@'52.77.209.90';
 SHOW GRANTS FOR 'shan_remote_user_prod'@'%';
 
+ SHOW GRANTS FOR 'shan_remote_connect'@'47.129.221.143';
 
+## to check connect ##
+CREATE USER 'shan_remote_connect'@'103.121.227.231' IDENTIFIED BY 'StrongPassword123!';
+GRANT ALL PRIVILEGES ON slot_maker.* TO 'shan_remote_connect'@'103.121.227.231';
+FLUSH PRIVILEGES;
+
+CREATE USER 'shan_remote_connect'@'47.129.221.143' IDENTIFIED BY 'StrongPassword123!';
+GRANT ALL PRIVILEGES ON slot_maker.* TO 'shan_remote_connect'@'47.129.221.143';
+FLUSH PRIVILEGES;
+
+SELECT user, host FROM mysql.user WHERE user = 'shan_remote_connect';
+SELECT host, user, authentication_string FROM mysql.user WHERE user = 'shan_remote_connect';
+
+## confirm
+DROP USER 'shan_remote_connect'@'47.129.221.143';
+CREATE USER 'shan_remote_connect'@'https://ec2-47-129-221-143.ap-southeast-1.compute.amazonaws.com' IDENTIFIED BY 'StrongPassword123!';
+
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON slot_maker.users TO 'shan_remote_connect'@'https://ec2-47-129-221-143.ap-southeast-1.compute.amazonaws.com';
+FLUSH PRIVILEGES;
+
+SHOW GRANTS FOR 'shan_prod'@'%';
+
+GRANT SELECT ON slot_maker.users TO 'shan_remote_connect'@'https://ec2-47-129-221-143.ap-southeast-1.compute.amazonaws.com';
+FLUSH PRIVILEGES;
+
+
+CREATE USER 'shan_prod'@'ec2-47-129-221-143.ap-southeast-1.compute.amazonaws.com' IDENTIFIED BY 'StrongPassword123!';
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON slot_maker.users TO 'shan_remote_prod'@'ec2-47-129-221-143.ap-southeast-1.compute.amazonaws.com';
+
+FLUSH PRIVILEGES;
+DROP USER 'shan_remote_prod'@'ec2-47-129-221-143.ap-southeast-1.compute.amazonaws.com';
+
+CREATE USER 'shan_prod'@'%' IDENTIFIED BY 'StrongPassword123!';
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON slot_maker.users TO 'shan_prod'@'%';
+
+FLUSH PRIVILEGES;
 
 O22856518
 
 
 
-php artisan result:delete-old-backups "2024-12-08" "2024-12-10"
+php artisan result:delete-old-backups "2024-12-18" "2024-12-19"
 
-php artisan bet:delete-old-backups "2024-12-08" "2024-12-10"
+php artisan bet:delete-old-backups "2024-12-10" "2024-12-11"
 
 
 {

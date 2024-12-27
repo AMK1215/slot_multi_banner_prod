@@ -494,7 +494,7 @@
             "ImageUrl": "https://api-sg57.ppgames.net/game_pic/square/200/vs20xmascarol.png",
             "ProviderGameType": null,
             "ProviderCode": null
-        },
+        }, 71
         {
             "GameCode": "vs1024mjwinbns",
             "GameName": "Mahjong Wins Bonus",

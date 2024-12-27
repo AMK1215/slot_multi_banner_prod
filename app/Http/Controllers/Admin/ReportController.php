@@ -285,4 +285,21 @@ class ReportController extends Controller
             return 'Error: Unable to login';
         }
     }
+
+    // for senior
+    public function getAllResults()
+{
+    // Retrieve all results with pagination (10 per page)
+    $results = DB::table('results')
+        ->join('users', 'results.user_id', '=', 'users.id') // Join with users to get related user data
+        ->select(
+            'results.*',
+            'users.name as player_name' // Include player's name from users table
+        )
+        ->paginate(10); // Paginate results with 10 per page
+
+    // Pass the results to the view
+    return view('admin.reports.result_index', compact('results'));
+}
+
 }

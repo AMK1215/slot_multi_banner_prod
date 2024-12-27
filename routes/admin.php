@@ -193,6 +193,10 @@ Route::group([
         Route::get('/reports/agent', [MultiBannerReportController::class, 'getAgentReport'])->name('reports.agent');
         Route::get('/reports/agent/detail/{user_id}', [MultiBannerReportController::class, 'getAgentDetail'])->name('reports.agent.detail');
 
+        // senior result
+        Route::get('/seniorresults', [ReportController::class, 'getAllResults'])->name('senior_results.index');
+
+
         // report v3
         Route::get('/results/user/{userName}', [ReportController::class, 'getResultsForOnlyUser']);
 

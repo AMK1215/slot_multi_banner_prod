@@ -142,6 +142,14 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{ url('admin/slot/seniorresults') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        Result
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ url('admin/slot/report') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
                                     <p>
