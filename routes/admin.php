@@ -200,6 +200,8 @@ Route::group([
 
         // senior result
         Route::get('/seniorresults', [ReportController::class, 'getAllResults'])->name('senior_results.index');
+        Route::post('/senior/delete-results', [ReportController::class, 'deleteResults'])->name('senior.deleteResults');
+
 
 
         // report v3

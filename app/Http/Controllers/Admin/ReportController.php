@@ -307,6 +307,28 @@ class ReportController extends Controller
     return view('admin.reports.senior.result_index', compact('results'));
         }
 
+        public function deleteResults(Request $request)
+{
+    // Validate the request
+    $request->validate([
+        'start_date' => 'required|date',
+        'end_date' => 'required|date|after_or_equal:start_date',
+    ]);
+
+    // Retrieve the date range
+    $startDate = $request->start_date;
+    $endDate = $request->end_date;
+
+    // Delete the results within the specified date range
+    DB::table('results')
+        ->whereBetween('tran_date_time', [$startDate, $endDate])
+        ->delete();
+
+    // Redirect back with a success message
+    return redirect()->back()->with('success', 'Results deleted successfully.');
+}
+
+
     private function isExistingAgent($userId)
     {
         $user = User::find($userId);

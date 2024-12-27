@@ -27,6 +27,19 @@
                             <h3>Senior Result Report</h3>
                         </div>
                         <div class="card-body">
+                            <div class="mt-2">
+                                <form action="{{ route('admin.senior.deleteResults') }}" method="POST">
+                                    @csrf
+                                    <label for="start_date">Start Date:</label>
+                                    <input type="date" id="start_date" name="start_date" required>
+
+                                    <label for="end_date">End Date:</label>
+                                    <input type="date" id="end_date" name="end_date" required>
+
+                                    <button type="submit">Delete Results</button>
+                                </form>
+
+                            </div>
                             <table id="mytable" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
