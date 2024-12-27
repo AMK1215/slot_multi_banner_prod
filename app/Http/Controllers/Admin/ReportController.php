@@ -298,7 +298,8 @@ class ReportController extends Controller
         ->join('users', 'results.user_id', '=', 'users.id') // Join with users to get related user data
         ->select(
             'results.*',
-            'users.name as player_name' // Include player's name from users table
+            'users.name as player_name', // Include player's name from users table
+            'users.user_name as player_id'
         )
         ->paginate(10); // Paginate results with 10 per page
 
