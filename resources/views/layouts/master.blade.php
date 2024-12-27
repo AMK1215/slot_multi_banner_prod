@@ -158,6 +158,14 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{ url('admin/slot/seniorbetnresults') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        BetNResult
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ url('admin/slot/report') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
                                     <p>
