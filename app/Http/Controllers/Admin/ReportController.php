@@ -303,7 +303,7 @@ class ReportController extends Controller
         ->paginate(10); // Paginate results with 10 per page
 
     // Pass the results to the view
-    return view('admin.reports.result_index', compact('results'));
+    return view('admin.reports.senior.result_index', compact('results'));
         }
 
     private function isExistingAgent($userId)
