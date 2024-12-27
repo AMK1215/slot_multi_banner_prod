@@ -61,8 +61,13 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $credentials = $request->only('user_name', 'password');
+        $data = $request->validated();
 
+        $credentials = is_numeric($data['user_name'])
+            ? ['phone' => $data['user_name'], 'password' => $data['password']]
+            : ['user_name' => $data['user_name'], 'password' => $data['password']];
+
+ 
         if (! Auth::attempt($credentials)) {
             return $this->error('', 'Credentials do not match!', 401);
         }
@@ -208,7 +213,7 @@ class AuthController extends Controller
     {
         $randomNumber = mt_rand(10000000, 99999999);
 
-        return 'Pi'.$randomNumber;
+        return 'Pi' . $randomNumber;
     }
 
     private function isExistingUserForAgent($phone, $agent_id)

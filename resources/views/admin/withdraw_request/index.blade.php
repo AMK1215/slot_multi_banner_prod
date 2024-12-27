@@ -52,9 +52,9 @@
                                     <div class="col-md-3">
                                         <button class="btn btn-sm btn-primary" id="search" type="submit">Search</button>
                                         <a href="{{ route('admin.agent.withdraw') }}"
-                                            class="btn btn-link text-primary ms-auto border-0" data-bs-toggle="tooltip"
-                                            data-bs-placement="bottom" title="Refresh">
-                                            <i class="material-icons text-lg">refresh</i>
+                                            class="btn btn-link text-primary ms-auto border-0" 
+                                           >
+                                            <i class="fas fa-refresh text-lg">refresh</i>
                                         </a>
                                     </div>
                                 </div>
@@ -62,6 +62,7 @@
                             <table id="mytable" class="table table-bordered table-hover">
                                 <thead>
                                     <th>#</th>
+                                    <th>PlayerId</th>
                                     <th>PlayerName</th>
                                     <th>Requested Amount</th>
                                     <th>Payment Method</th>
@@ -75,6 +76,7 @@
                                     @foreach ($withdraws as $withdraw)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $withdraw->user->user_name}}</td>
                                             <td>
                                                 <span class="d-block">{{ $withdraw->user->name }}</span>
                                             </td>

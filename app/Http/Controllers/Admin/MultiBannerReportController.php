@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Webhook\Result;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MultiBannerReportController extends Controller
 {
+    protected const SUB_AGENT_ROlE = 'Sub Agent';
+
     public function getSeniorReport()
     {
         $seniorId = auth()->id();
@@ -70,10 +73,9 @@ class MultiBannerReportController extends Controller
 
     public function getAgentReport()
     {
-        $agentId = auth()->id();
-
+        $agent = $this->getAgent() ?? Auth::user();
         // Get all Players under this Agent
-        $players = User::where('agent_id', $agentId)->get();
+        $players = User::where('agent_id', $agent->id)->get();
 
         // Aggregate data for Players
         $results = Result::whereIn('user_id', $players->pluck('id'))
@@ -94,5 +96,18 @@ class MultiBannerReportController extends Controller
         $details = Result::where('user_id', $userId)->get();
 
         return view('admin.reports.agent.detail', compact('player', 'details'));
+    }
+
+
+    private function isExistingAgent($userId)
+    {
+        $user = User::find($userId);
+
+        return $user && $user->hasRole(self::SUB_AGENT_ROlE) ? $user->parent : null;
+    }
+
+    private function getAgent()
+    {
+        return $this->isExistingAgent(Auth::id());
     }
 }

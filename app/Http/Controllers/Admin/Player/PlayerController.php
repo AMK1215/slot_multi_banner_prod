@@ -233,7 +233,7 @@ class PlayerController extends Controller
     public function makeCashIn(TransferLogRequest $request, User $player)
     {
         abort_if(
-            Gate::denies('make_transfer') || ! $this->ifChildOfParent(request()->user()->id, $player->id),
+            Gate::denies('make_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -251,7 +251,12 @@ class PlayerController extends Controller
                 return redirect()->back()->with('error', 'You do not have enough balance to transfer!');
             }
 
-            app(WalletService::class)->transfer($agent, $player, $request->validated('amount'), TransactionName::CreditTransfer, ['note' => $request->note]);
+            app(WalletService::class)->transfer($agent, $player, $request->validated('amount'), 
+            TransactionName::CreditTransfer, [
+                'note' => $request->note,
+                'old_balance' => $player->balanceFloat,
+                'new_balance' => $player->balanceFloat + $request->amount
+            ]);
 
             return redirect()->back()
                 ->with('success', 'CashIn submitted successfully!');
@@ -264,7 +269,7 @@ class PlayerController extends Controller
     public function getCashOut(User $player)
     {
         abort_if(
-            Gate::denies('make_transfer') || ! $this->ifChildOfParent(request()->user()->id, $player->id),
+            Gate::denies('make_transfer'),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -275,7 +280,7 @@ class PlayerController extends Controller
     public function makeCashOut(TransferLogRequest $request, User $player)
     {
         abort_if(
-            Gate::denies('make_transfer') || ! $this->ifChildOfParent(request()->user()->id, $player->id),
+            Gate::denies('make_transfer') ,
             Response::HTTP_FORBIDDEN,
             '403 Forbidden |You cannot  Access this page because you do not have permission'
         );
@@ -293,7 +298,12 @@ class PlayerController extends Controller
                 return redirect()->back()->with('error', 'You do not have enough balance to transfer!');
             }
 
-            app(WalletService::class)->transfer($player, $agent, $request->validated('amount'), TransactionName::DebitTransfer, ['note' => $request->note]);
+            app(WalletService::class)->transfer($player, $agent, $request->validated('amount'), 
+            TransactionName::DebitTransfer, [
+                'note' => $request->note,
+                'old_balance' => $player->balanceFloat,
+                'new_balance' => $player->balanceFloat - $request->amount
+            ]);
 
             return redirect()->back()
                 ->with('success', 'CashOut submitted successfully!');

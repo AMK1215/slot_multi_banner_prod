@@ -26,9 +26,16 @@ class LoginRequest extends FormRequest
 
         return [
             //'phone' => ['required', 'regex:/^[0-9]+$/'],
-            'user_name' => ['required', 'string', 'min:3'],
+            'user_name' => ['required'],
 
             'password' => ['required', 'string', 'min:6'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'user_name.required' => 'Phone or User Name  is required.',
         ];
     }
 }

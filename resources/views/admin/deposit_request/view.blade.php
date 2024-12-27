@@ -24,7 +24,7 @@
                 <div class="col-12">
                     <div class="d-flex justify-content-end mb-3">
                         <a href="{{ route('admin.agent.deposit') }}" class="btn btn-primary " style="width: 100px;"><i
-                                class="fas fa-plus text-white  mr-2"></i>Back</a>
+                                class="fas fa-arrow-left text-white  mr-2"></i>Back</a>
                     </div>
                     <div class="card col-lg-6 offset-lg-3 col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-10 offset-1">
                         <!-- Card header -->
@@ -74,7 +74,7 @@
                                         <input type="text" class="form-control" name=""
                                             value="{{ $deposit->bank->paymentType->name }}" readonly>
                                     </div>
-                                    <div class="d-lg-flex">
+                                    <div class="d-lg-flex mt-5">
                                         <form action="{{ route('admin.agent.depositStatusreject', $deposit->id) }}"
                                             method="post">
                                             @csrf

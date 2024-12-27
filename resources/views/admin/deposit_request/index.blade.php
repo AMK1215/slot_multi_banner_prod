@@ -20,7 +20,7 @@
                 <div class="col-12">
                     <div class="d-flex justify-content-end mb-3">
                         <a href="{{ route('admin.agent.deposit') }}" class="btn btn-primary " style="width: 100px;"><i
-                                class="fas fa-plus text-white  mr-2"></i>Back</a>
+                                class="fas fa-arrow-left text-white  mr-2"></i>Back</a>
                     </div>
                     <div class="card " style="border-radius: 20px;">
                         <div class="card-header">
@@ -52,9 +52,8 @@
                                     <div class="col-md-3">
                                         <button class="btn btn-sm btn-primary" id="search" type="submit">Search</button>
                                         <a href="{{ route('admin.agent.deposit') }}"
-                                            class="btn btn-link text-primary ms-auto border-0" data-bs-toggle="tooltip"
-                                            data-bs-placement="bottom" title="Refresh">
-                                            <i class="material-icons text-lg">refresh</i>
+                                            class="btn btn-link text-primary ms-auto border-0" >
+                                            <i class="fas fa-refresh">refresh</i>
                                         </a>
                                     </div>
                                 </div>

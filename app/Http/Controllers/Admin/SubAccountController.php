@@ -105,6 +105,17 @@ class SubAccountController extends Controller
         //
     }
 
+    public function banSubAcc($id)
+    {
+        $user = User::find($id);
+        $user->update(['status' => $user->status == 1 ? 0 : 1]);
+
+        return redirect()->back()->with(
+            'success',
+            'User '.($user->status == 1 ? 'activate' : 'inactive').' successfully'
+        );
+    }
+
     public function getChangePassword($id)
     {
         $agent = User::find($id);
