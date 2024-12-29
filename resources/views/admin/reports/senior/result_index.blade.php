@@ -40,7 +40,7 @@
                                 </form>
 
                             </div>
-                            <table id="mytable" class="table table-bordered table-hover">
+                            <table id="seniorTable" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -103,7 +103,40 @@
 
     <script>
         $(document).ready(function() {
-            $('#mytable').DataTable();
+            $('#seniorTable').DataTable();
         });
+    </script>
+
+    <script>
+        if (document.getElementById('seniorTable')) {
+            const dataTableSearch = new simpleDatatables.DataTable("#seniorTable", {
+                searchable: true,
+                fixedHeight: false,
+                perPage: 7
+            });
+
+            document.querySelectorAll(".export").forEach(function(el) {
+                el.addEventListener("click", function(e) {
+                    var type = el.dataset.type;
+
+                    var data = {
+                        type: type,
+                        filename: "material-" + type,
+                    };
+
+                    if (type === "csv") {
+                        data.columnDelimiter = "|";
+                    }
+
+                    dataTableSearch.export(data);
+                });
+            });
+        };
+    </script>
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
     </script>
 @endsection
