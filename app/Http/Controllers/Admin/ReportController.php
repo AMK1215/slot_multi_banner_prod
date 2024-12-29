@@ -276,6 +276,26 @@ class ReportController extends Controller
         return view('admin.reports.find_by_username_index', compact('results'));
     }
 
+    public function deleteResult($id)
+{
+    try {
+        // Find the result by ID
+        $result = DB::table('results')->where('id', $id)->first();
+
+        if (!$result) {
+            return redirect()->back()->with('error', 'Result not found.');
+        }
+
+        // Delete the result
+        DB::table('results')->where('id', $id)->delete();
+
+        return redirect()->back()->with('success', 'Result deleted successfully.');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+    }
+}
+
+
     public function BoReport()
     {
         $response = Http::post('https://agdashboard.pro/proxy-to-bo/', [

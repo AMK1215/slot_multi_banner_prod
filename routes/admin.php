@@ -213,6 +213,7 @@ Route::group([
         // find by username
         Route::get('/result-search', [ReportController::class, 'GetResult'])->name('');
         Route::post('/results/search', [ReportController::class, 'FindByUserName'])->name('results.search');
+        Route::delete('/results/{id}/delete', [ReportController::class, 'deleteResult'])->name('results.delete');
         // senior hierarchy
         Route::get('/hierarchy', [SeniorHierarchyController::class, 'GetSeniorHierarchy'])->name('SeniorHierarchy');
         Route::get('/get-owners', [SeniorHierarchyController::class, 'getAllOwners'])->name('GetAllOwners');
