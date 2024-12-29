@@ -220,6 +220,24 @@ php artisan bet:delete-old-backups "2024-12-10" "2024-12-11"
 }
 
 
-sudo certbot --nginx -d agdashboard.pro -d www.agdashboard.pro -d panda666.online -d www.panda666.online -d spiderman168.online -d www.spiderman168.online
+sudo certbot --nginx -d delightmyanmarmmk.xyz -d www.delightmyanmarmmk.xyz -d superman788.online -d www.superman788.online -d asaibetslot.online -d www.asaibetslot.online
 
 
+
+1 - CREATE USER 'mksuperman'@'104.248.159.5' IDENTIFIED BY 'StrongPassword123!';
+2 - GRANT ALL PRIVILEGES ON superman.* TO 'mksuperman'@'104.248.159.5';
+3 - FLUSH PRIVILEGES;
+
+GRANT ALL PRIVILEGES ON slot_maker.* TO 'shan_remote_user_prod'@'%' IDENTIFIED BY 'StrongPassword123!';
+
+GRANT ALL PRIVILEGES ON slot_maker.* TO 'shan_remote_connect'@'%';
+
+CREATE USER 'mksuperman'@'104.248.159.5' IDENTIFIED BY 'StrongPassword123!';
+GRANT ALL PRIVILEGES ON mk_slot.* TO 'mksuperman'@'104.248.159.5';
+FLUSH PRIVILEGES;
+
+
+SHOW GRANTS FOR 'mksuperman'@'104.248.159.5';
+CREATE USER 'mksuperman'@'104.248.159.5' IDENTIFIED BY 'StrongPassword123!';
+GRANT ALL PRIVILEGES ON superman.* TO 'mksuperman'@'104.248.159.5';
+FLUSH PRIVILEGES;
