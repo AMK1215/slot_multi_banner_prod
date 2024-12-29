@@ -330,7 +330,9 @@ class ReportController extends Controller
         // Delete the result
         DB::table('results')->where('id', $id)->delete();
 
-        return redirect()->back()->with('success', 'Result deleted successfully.');
+         return redirect()->route('admin.ResultSearchIindex')->with('success', 'Result deleted successfully.');
+
+        //return redirect()->back()->with('success', 'Result deleted successfully.');
     } catch (\Exception $e) {
         return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
     }

@@ -211,7 +211,7 @@ Route::group([
         Route::get('/results/user/{userName}', [ReportController::class, 'getResultsForOnlyUser']);
 
         // find by username
-        Route::get('/result-search', [ReportController::class, 'GetResult'])->name('');
+        Route::get('/result-search', [ReportController::class, 'GetResult'])->name('ResultSearchIindex');
         Route::post('/results/search', [ReportController::class, 'FindByUserName'])->name('results.search');
         Route::delete('/results/{id}/delete', [ReportController::class, 'deleteResult'])->name('results.delete');
         // senior hierarchy
