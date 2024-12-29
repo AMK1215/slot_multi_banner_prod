@@ -321,7 +321,7 @@ class ReportController extends Controller
             'users.name as player_name', // Include player's name from users table
             'users.user_name as player_id'
         )
-        ->paginate(10); // Paginate results with 10 per page
+        ->paginate(200); // Paginate results with 10 per page
 
     // Pass the results to the view
     return view('admin.reports.senior.result_index', compact('results'));
