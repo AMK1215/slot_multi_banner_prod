@@ -112,7 +112,7 @@
             const dataTableSearch = new simpleDatatables.DataTable("#seniorTable", {
                 searchable: true,
                 fixedHeight: false,
-                perPage: 7
+                perPage: 200
             });
 
             document.querySelectorAll(".export").forEach(function(el) {
