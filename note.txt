@@ -237,7 +237,7 @@ GRANT ALL PRIVILEGES ON mk_slot.* TO 'mksuperman'@'104.248.159.5';
 FLUSH PRIVILEGES;
 
 
-SHOW GRANTS FOR 'mksuperman'@'104.248.159.5';
-CREATE USER 'mksuperman'@'104.248.159.5' IDENTIFIED BY 'StrongPassword123!';
-GRANT ALL PRIVILEGES ON superman.* TO 'mksuperman'@'104.248.159.5';
+SHOW GRANTS FOR 'mksuperman'@'139.59.91.201';
+CREATE USER 'mksuperman'@'139.59.91.201' IDENTIFIED BY 'StrongPassword123!';
+GRANT ALL PRIVILEGES ON superman.* TO 'mksuperman'@'139.59.91.201';
 FLUSH PRIVILEGES;

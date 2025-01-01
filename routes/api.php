@@ -28,6 +28,9 @@ use App\Http\Controllers\Api\V1\WithDrawRequestController;
 use App\Http\Controllers\Api\Webhook\TestingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\V1\Slot\GetGameProviderController;
+use App\Http\Controllers\Api\V1\Slot\GetGameListByProviderController;
+
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -45,6 +48,9 @@ Route::post('Result', [BetResultController::class, 'handleResult']);
 Route::post('CancelBet', [CancelBetController::class, 'handleCancelBet']);
 Route::post('Adjustment', [AdjustmentController::class, 'handleAdjustment']);
 Route::post('Reward', [RewardController::class, 'handleReward']);
+Route::post('GetGameProvider', [GetGameProviderController::class, 'fetchGameProviders']);
+Route::post('GetGameListByProvider', [GetGameListByProviderController::class, 'fetchGameListByProvider']);
+
 
 Route::post('transactions', [ShanTransactionController::class, 'index'])->middleware('transaction');
 
