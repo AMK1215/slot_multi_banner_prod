@@ -46,8 +46,7 @@
                 </li>
             </ul>
 
-            <!-- Right navbar links -->
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ms-auto">
                 <!--begin::Messages Dropdown Menu-->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-bs-toggle="dropdown" href="#">
@@ -59,7 +58,7 @@
                             <!--begin::Message-->
                             <div class="d-flex">
                                 <div class="flex-shrink-0">
-                                    <img src="../../dist/assets/img/user1-128x128.jpg" alt="User Avatar"
+                                    <img src="{{ asset('assets/img/user1-128x128.jpg') }}" alt="User Avatar"
                                         class="img-size-50 rounded-circle me-3" />
                                 </div>
                                 <div class="flex-grow-1">
@@ -80,7 +79,7 @@
                             <!--begin::Message-->
                             <div class="d-flex">
                                 <div class="flex-shrink-0">
-                                    <img src="../../dist/assets/img/user8-128x128.jpg" alt="User Avatar"
+                                    <img src="{{ asset('assets/img/user8-128x128.jpg') }}" alt="User Avatar"
                                         class="img-size-50 rounded-circle me-3" />
                                 </div>
                                 <div class="flex-grow-1">
@@ -103,7 +102,7 @@
                             <!--begin::Message-->
                             <div class="d-flex">
                                 <div class="flex-shrink-0">
-                                    <img src="../../dist/assets/img/user3-128x128.jpg" alt="User Avatar"
+                                    <img src="{{ asset('assets/img/user3-128x128.jpg') }}" alt="User Avatar"
                                         class="img-size-50 rounded-circle me-3" />
                                 </div>
                                 <div class="flex-grow-1">
@@ -126,6 +125,11 @@
                     </div>
                 </li>
                 <!--end::Messages Dropdown Menu-->
+            </ul>
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+
                 <li class="nav-item">
                     <a class="nav-link"
                         href="{{ route('admin.changePassword', \Illuminate\Support\Facades\Auth::id()) }}">
