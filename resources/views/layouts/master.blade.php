@@ -425,6 +425,12 @@
                                             <p>GSC GameList</p>
                                         </a>
                                     </li>
+                                    {{-- <li class="nav-item">
+                                        <a href="{{ route('admin.gamelistnew.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Add New GameList</p>
+                                        </a>
+                                    </li> --}}
                                     <li class="nav-item">
                                         <a href="{{ route('admin.gameLists.search_index') }}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
