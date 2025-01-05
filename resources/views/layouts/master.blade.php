@@ -46,7 +46,11 @@
                 </li>
             </ul>
 
-            <ul class="navbar-nav ms-auto">
+
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+
                 <!--begin::Messages Dropdown Menu-->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-bs-toggle="dropdown" href="#">
@@ -125,11 +129,6 @@
                     </div>
                 </li>
                 <!--end::Messages Dropdown Menu-->
-            </ul>
-
-            <!-- Right navbar links -->
-            <ul class="navbar-nav ml-auto">
-
                 <li class="nav-item">
                     <a class="nav-link"
                         href="{{ route('admin.changePassword', \Illuminate\Support\Facades\Auth::id()) }}">
@@ -137,9 +136,7 @@
 
                     </a>
                 </li>
-                <li class="nav-item">
-                    <p>something here</p>
-                </li>
+
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         | Balance: {{ number_format(auth()->user()->wallet->balanceFloat, 2) }}
