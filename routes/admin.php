@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\Shan\ShanReportController;
 use App\Http\Controllers\Admin\SubAccountController;
 use App\Http\Controllers\Admin\TopTenWithdrawController;
 use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\Admin\NewGameListController;
 use App\Http\Controllers\Admin\TransferLog\TransferLogController;
 use App\Http\Controllers\Admin\WithDraw\WithDrawRequestController;
 use App\Http\Controllers\HomeController;
@@ -106,6 +107,8 @@ Route::group([
     Route::get('/game-lists/search', [GameListController::class, 'searchGames'])->name('gameLists.search');
     Route::get('/game-lists-search', [GameListController::class, 'GetsearchGames'])->name('gameLists.search_index');
     Route::post('/game-lists/updateordercolumn', [GameListController::class, 'updateAllOrder'])->name('gameLists.updateOrder');
+
+    Route::resource('gamelistnew', NewGameListController::class);
 
 
     // game list end
