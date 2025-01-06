@@ -40,10 +40,10 @@ class PlayerDepositNotification extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'player_name' => $this->deposit->user->name,
+            'player_name' => $this->deposit->user->user_name,
             'amount' => $this->deposit->amount,
             'refrence_no' => $this->deposit->refrence_no,
-            'message' => "Player {$this->deposit->user->name} has deposited {$this->deposit->amount}."
+            'message' => "Player {$this->deposit->user->user_name} has deposited {$this->deposit->amount}."
         ];
     }
 
@@ -53,10 +53,10 @@ class PlayerDepositNotification extends Notification
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
-            'player_name' => $this->deposit->user->name,
+            'player_name' => $this->deposit->user->user_name,
             'amount' => $this->deposit->amount,
             'refrence_no' => $this->deposit->refrence_no,
-            'message' => "Player {$this->deposit->user->name} has deposited {$this->deposit->amount}."
+            'message' => "Player {$this->deposit->user->user_name} has deposited {$this->deposit->amount}."
         ]);
     }
 }
