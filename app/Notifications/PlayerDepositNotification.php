@@ -5,13 +5,13 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\BroadcastMessage;
-use Illuminate\Notifications\Messages\DatabaseMessage;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class PlayerDepositNotification extends Notification
+class PlayerDepositNotification extends Notification implements ShouldQueue, ShouldBroadcast
 {
-    use Queueable;
+     use Queueable, InteractsWithSockets;
 
     /**
      * Create a new notification instance.
@@ -58,5 +58,13 @@ class PlayerDepositNotification extends Notification
             'refrence_no' => $this->deposit->refrence_no,
             'message' => "Player {$this->deposit->user->user_name} has deposited {$this->deposit->amount}."
         ]);
+    }
+
+     /**
+     * Get the broadcast channel.
+     */
+    public function broadcastOn()
+    {
+        return new PrivateChannel('agent.' . $this->deposit->agent_id);
     }
 }
