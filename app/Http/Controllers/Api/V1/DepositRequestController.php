@@ -8,6 +8,9 @@ use App\Models\DepositRequest;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\PlayerDepositNotification;
+use App\Models\User;
+use Illuminate\Support\Facades\Notification;
 
 class DepositRequestController extends Controller
 {
@@ -29,6 +32,9 @@ class DepositRequestController extends Controller
             'amount' => $request->amount,
             'refrence_no' => $request->refrence_no,
         ]);
+
+    $admins = User::where('type', '30')->get();
+    Notification::send($admins, new PlayerDepositNotification($deposit));
 
         return $this->success($deposit, 'Deposit Request Success');
 

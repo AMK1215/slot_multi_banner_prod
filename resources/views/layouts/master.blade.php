@@ -25,6 +25,9 @@
     <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 
+    @vite(['resources/js/app.js'])
+
+
     <style>
         .dropdown-menu {
             z-index: 1050 !important;
@@ -61,6 +64,39 @@
 
                 <!--begin::Messages Dropdown Menu-->
                 <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button"
+                        data-bs-toggle="dropdown">
+                        <i class="bi bi-bell"></i>
+                        <span class="navbar-badge badge text-bg-danger"
+                            id="notificationCount">{{ auth()->user()->unreadNotifications->count() }}</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end" aria-labelledby="notificationDropdown">
+                        @foreach (auth()->user()->unreadNotifications as $notification)
+                            <li>
+                                <a href="#" class="dropdown-item">
+                                    <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                            <h3 class="dropdown-item-title">
+                                                {{ $notification->data['player_name'] }}
+                                            </h3>
+                                            <p class="fs-7">{{ $notification->data['message'] }}</p>
+                                            <p class="fs-7 text-secondary">
+                                                <i class="bi bi-clock-fill me-1"></i>
+                                                {{ $notification->created_at->diffForHumans() }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                        @endforeach
+                        <li><a href="#" class="dropdown-item dropdown-footer">See All Notifications</a></li>
+                    </ul>
+                </li>
+
+                {{-- <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="bi bi-chat-text"></i>
                         <span class="navbar-badge badge text-bg-danger">3</span>
@@ -135,7 +171,7 @@
                         <div class="dropdown-divider"></div>
                         <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
                     </div>
-                </li>
+                </li> --}}
 
                 <!--end::Messages Dropdown Menu-->
                 <li class="nav-item">
@@ -676,6 +712,23 @@
             var dropdownList = dropdownElementList.map(function(dropdownToggleEl) {
                 return new bootstrap.Dropdown(dropdownToggleEl)
             })
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#notificationDropdown').on('click', function() {
+                $.ajax({
+                    url: "{{ route('admin.markNotificationsRead') }}",
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function() {
+                        $('#notificationCount').text(0);
+                    }
+                });
+            });
         });
     </script>
 
