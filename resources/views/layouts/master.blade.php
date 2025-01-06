@@ -65,7 +65,7 @@
                 <!--begin::Messages Dropdown Menu-->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button"
-                        data-bs-toggle="dropdown">
+                        data-toggle="dropdown">
                         <i class="bi bi-bell"></i>
                         <span class="navbar-badge badge text-bg-danger"
                             id="notificationCount">{{ auth()->user()->unreadNotifications->count() }}</span>
