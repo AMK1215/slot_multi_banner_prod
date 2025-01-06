@@ -64,8 +64,6 @@
 
                 <!--begin::Messages Dropdown Menu-->
                 @can('deposit')
-
-
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle position-relative" href="#" id="notificationDropdown"
                             role="button" data-toggle="dropdown">

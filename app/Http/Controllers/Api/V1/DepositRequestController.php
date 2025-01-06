@@ -33,8 +33,13 @@ class DepositRequestController extends Controller
             'refrence_no' => $request->refrence_no,
         ]);
 
-    $admins = User::where('type', '30')->get();
-    Notification::send($admins, new PlayerDepositNotification($deposit));
+    // $admins = User::where('type', '30')->get();
+    // Notification::send($admins, new PlayerDepositNotification($deposit));
+     // Notify the player's agent
+    $agent = User::find($player->agent_id);
+    if ($agent) {
+        $agent->notify(new PlayerDepositNotification($deposit));
+    }
 
         return $this->success($deposit, 'Deposit Request Success');
 
