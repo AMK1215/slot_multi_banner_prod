@@ -93,19 +93,19 @@ class BetNResultController extends Controller
                 // Adjust the balance based on NetWin
                 if ($netWin > 0) {
                     // Log NetWin positive adjustment
-                    Log::info('NetWin is positive, increasing balance', [
-                        'PlayerID' => $transaction['PlayerId'],
-                        'NetWin' => $netWin,
-                    ]);
+                    // Log::info('NetWin is positive, increasing balance', [
+                    //     'PlayerID' => $transaction['PlayerId'],
+                    //     'NetWin' => $netWin,
+                    // ]);
                     // Increase balance by NetWin
                     $this->processTransfer(User::adminUser(), $player, TransactionName::Win, $netWin);
                 } elseif ($netWin < 0) {
                     // Log NetWin negative adjustment
-                    Log::info('NetWin is negative, decreasing balance', [
-                        'PlayerID' => $transaction['PlayerId'],
-                        'NetWin' => $netWin,
-                        'AbsoluteNetWin' => abs($netWin),
-                    ]);
+                    // Log::info('NetWin is negative, decreasing balance', [
+                    //     'PlayerID' => $transaction['PlayerId'],
+                    //     'NetWin' => $netWin,
+                    //     'AbsoluteNetWin' => abs($netWin),
+                    // ]);
                     // Decrease balance by the absolute value of NetWin
                     $this->processTransfer($player, User::adminUser(), TransactionName::Loss, abs($netWin));
                 }

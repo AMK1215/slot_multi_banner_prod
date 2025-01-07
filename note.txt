@@ -1,4 +1,4 @@
-php artisan migrate --path=/database/migrations/2024_12_25_032507_add_order_column_to_game_lists_table.php
+php artisan migrate --path=/database/migrations/2025_01_06_023427_create_notifications_table.php
 php artisan make:migration add_order_column_to_game_lists_table --table=game_lists
 
 php artisan make:migration make_name_and_phone_nullable_in_users_table --table=users
@@ -9,6 +9,34 @@ php -r "file_put_contents('/var/www/slot_multi_banner_prod/storage/logs/laravel.
 // created dev branch for kzt
 
 tail -f /var/www/slot_multi_banner_prod/storage/logs/laravel.
+
+sudo apt update && sudo apt install supervisor -y
+sudo nano /etc/supervisor/conf.d/laravel-queue.conf
+[program:laravel-queue]
+process_name=%(program_name)s_%(process_num)02d
+command=php /var/www/html/artisan queue:work --tries=3
+autostart=true
+autorestart=true
+numprocs=1
+redirect_stderr=true
+stdout_logfile=/var/log/laravel-queue.log
+
+--
+sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl start laravel-queue
+
+sudo tail -f /var/log/supervisor/supervisord.log
+
+sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl stop laravel-queue
+sudo supervisorctl start laravel-queue
+sudo supervisorctl status
+
+
+
+
 
 sudo nano /etc/php/8.3/fpm/php.ini
 

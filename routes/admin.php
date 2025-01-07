@@ -86,6 +86,12 @@ Route::group([
     Route::post('gametypes/{game_type_id}/product/{product_id}', [GameTypeProductController::class, 'update'])->name('gametypes.update');
     // provider Game Type End
 
+    Route::post('/mark-notifications-read', function() {
+    auth()->user()->unreadNotifications->markAsRead();
+    return response()->json(['success' => true]);
+    })->name('markNotificationsRead');
+
+
     Route::get('transaction-list', [TransactionController::class, 'index'])->name('transaction');
     // game list start
     Route::get('all-game-lists', [GameListController::class, 'index'])->name('gameLists.index');
