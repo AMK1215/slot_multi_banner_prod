@@ -23,7 +23,7 @@ class PlayerRequest extends FormRequest
     {
         return [
             'user_name' => ['required', 'string', 'unique:users,user_name'],
-            'name' => ['nullable', 'string', 'unique:users,name'],
+            'name' => ['nullable', 'string'],
             'phone' => ['nullable', 'regex:/^[0-9]+$/', 'unique:users,phone'],
             'password' => 'required|min:6',
             'amount' => 'nullable|numeric',
