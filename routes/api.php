@@ -87,16 +87,16 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('banner_Text', [BannerController::class, 'bannerTest']);
     Route::get('popup-ads-banner', [BannerController::class, 'AdsBannerIndex']);
     Route::get('ads-banner', [BannerController::class, 'AdsBannerTest']);
+    Route::get('gameTypeProducts/{id}', [GameController::class, 'gameTypeProducts']);
+    Route::get('allGameProducts', [GameController::class, 'allGameProducts']);
+    Route::get('gameType', [GameController::class, 'gameType']);
+    Route::get('hotgamelist', [GameController::class, 'HotgameList']);
+    Route::get('pphotgamelist', [GameController::class, 'PPHotgameList']);
+    Route::get('gamelist/{provider_id}/{game_type_id}/', [GameController::class, 'gameList']);
+    Route::get('gameFilter', [GameController::class, 'gameFilter']);
+    Route::get('gamelistTest/{provider_id}/{game_type_id}/', [GameController::class, 'gameListTest']);
 });
 
-Route::get('gameTypeProducts/{id}', [GameController::class, 'gameTypeProducts']);
-Route::get('allGameProducts', [GameController::class, 'allGameProducts']);
-Route::get('gameType', [GameController::class, 'gameType']);
-Route::get('hotgamelist', [GameController::class, 'HotgameList']);
-Route::get('pphotgamelist', [GameController::class, 'PPHotgameList']);
-Route::get('gamelist/{provider_id}/{game_type_id}/', [GameController::class, 'gameList']);
-Route::get('gameFilter', [GameController::class, 'gameFilter']);
-Route::get('gamelistTest/{provider_id}/{game_type_id}/', [GameController::class, 'gameListTest']);
 
 // DataVisualize for real time Monitoring
 Route::get('/visual-bets', [DataVisualizationController::class, 'VisualizeBet']); // Fetch all bets
