@@ -8,7 +8,7 @@ php artisan make:migration make_name_and_phone_nullable_in_users_table --table=u
 php -r "file_put_contents('/var/www/slot_multi_banner_prod/storage/logs/laravel.log', '');"
 // created dev branch for kzt
 
-tail -f /var/www/slot_multi_banner_prod/storage/logs/laravel.
+tail -f /var/www/slot_multi_banner_prod/storage/logs/laravel.log
 
 sudo apt update && sudo apt install supervisor -y
 sudo nano /etc/supervisor/conf.d/laravel-queue.conf

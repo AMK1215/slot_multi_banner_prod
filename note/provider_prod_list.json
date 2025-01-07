@@ -37,6 +37,11 @@
             "IsActive": true
         },
         {
+            "ProviderCode": "PGSOFT",
+            "ProviderName": "PGSoft",
+            "IsActive": true
+        },
+        {
             "ProviderCode": "FACHAI",
             "ProviderName": "FaChai",
             "IsActive": true
@@ -79,6 +84,16 @@
         {
             "ProviderCode": "SAG",
             "ProviderName": "SAGaming",
+            "IsActive": true
+        },
+        {
+            "ProviderCode": "R88",
+            "ProviderName": "Rich88",
+            "IsActive": true
+        },
+        {
+            "ProviderCode": "GPD",
+            "ProviderName": "GamingPanda",
             "IsActive": true
         }
     ]
