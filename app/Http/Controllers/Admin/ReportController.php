@@ -42,7 +42,7 @@ class ReportController extends Controller
     {
         $details = Result::where('user_id', $player_id)
             ->join('users', 'results.user_id', '=', 'users.id')
-            ->select('results.*', 'users.name as user_name')
+            ->select('results.*', 'users.user_name as user_name')
             ->get();
 
         // Calculate totals
