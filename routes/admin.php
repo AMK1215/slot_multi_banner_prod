@@ -222,7 +222,10 @@ Route::group([
         // find by username
         Route::get('/result-search', [ReportController::class, 'GetResult'])->name('ResultSearchIindex');
         Route::post('/results/search', [ReportController::class, 'FindByUserName'])->name('results.search');
-        Route::delete('/results/{id}/delete', [ReportController::class, 'deleteResult'])->name('results.delete');
+        //Route::delete('/results/{id}/delete', [ReportController::class, 'deleteResult'])->name('results.delete');
+        Route::delete('/admin/results/deleteMultiple', [ReportController::class, 'deleteMultiple'])->name('admin.results.deleteMultiple');
+        Route::delete('/admin/results/{id}', [ReportController::class, 'deleteResult'])->name('admin.results.delete');
+
         // senior hierarchy
         Route::get('/hierarchy', [SeniorHierarchyController::class, 'GetSeniorHierarchy'])->name('SeniorHierarchy');
         Route::get('/get-owners', [SeniorHierarchyController::class, 'getAllOwners'])->name('GetAllOwners');

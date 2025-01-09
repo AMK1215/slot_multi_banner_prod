@@ -338,6 +338,24 @@ class ReportController extends Controller
     }
 }
 
+public function deleteMultiple(Request $request)
+{
+    try {
+        // Check if IDs are provided
+        if (!$request->has('ids') || empty($request->ids)) {
+            return redirect()->back()->with('error', 'No results selected for deletion.');
+        }
+
+        // Delete all selected results
+        DB::table('results')->whereIn('id', $request->ids)->delete();
+
+        return redirect()->route('admin.ResultSearchIindex')->with('success', 'Selected results deleted successfully.');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+    }
+}
+
+
 
     public function BoReport()
     {

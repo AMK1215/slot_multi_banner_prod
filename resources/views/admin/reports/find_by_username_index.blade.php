@@ -47,25 +47,23 @@
 
                         <div class="card-body">
                             @if (!empty($results))
-                                <table id="" class="table table-bordered table-hover">
+                                {{-- <table id="" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>Player Name</th>
                                             <th>Game Provider</th>
                                             <th>Game Name</th>
-                                            {{-- <th>Operator ID</th>
-                                            <th>Request Date Time</th> --}}
+
                                             <th>Player ID</th>
-                                            {{-- <th>Currency</th> --}}
-                                            {{-- <th>Round ID</th> --}}
+
                                             <th>Result ID</th>
                                             <th>Game Code</th>
                                             <th>Total Bet</th>
                                             <th>Win Amount</th>
                                             <th>Net Win</th>
                                             <th>TransactionDateTime</th>
-                                            {{-- <th>Action</th> --}}
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -75,18 +73,16 @@
                                                 <td>{{ $result->player_name }}</td>
                                                 <td>{{ $result->game_provide_name }}</td>
                                                 <td>{{ $result->game_name }}</td>
-                                                {{-- <td>{{ $result->operator_id }}</td> --}}
-                                                {{-- <td>{{ $result->request_date_time }}</td> --}}
+
                                                 <td>{{ $result->player_id }}</td>
-                                                {{-- <td>{{ $result->currency }}</td> --}}
-                                                {{-- <td>{{ $result->round_id }}</td> --}}
+
                                                 <td>{{ $result->result_id }}</td>
                                                 <td>{{ $result->game_code }}</td>
                                                 <td>{{ number_format($result->total_bet_amount, 2) }}</td>
                                                 <td>{{ number_format($result->win_amount, 2) }}</td>
                                                 <td>{{ number_format($result->net_win, 2) }}</td>
                                                 <td>{{ $result->tran_date_time }}</td>
-                                                {{-- <td>
+                                                <td>
                                                     <form action="{{ route('admin.results.delete', $result->id) }}"
                                                         method="POST">
                                                         @csrf
@@ -94,11 +90,74 @@
                                                         <button type="submit" class="btn btn-danger"
                                                             onclick="return confirm('Are you sure you want to delete this result?')">Delete</button>
                                                     </form>
-                                                </td> --}}
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
-                                </table>
+                                </table> --}}
+
+                                <form id="deleteMultipleForm" action="{{ route('admin.results.deleteMultiple') }}"
+                                    method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th><input type="checkbox" id="selectAll"></th> {{-- Select All Checkbox --}}
+                                                <th>#</th>
+                                                <th>Player Name</th>
+                                                <th>Game Provider</th>
+                                                <th>Game Name</th>
+                                                <th>Player ID</th>
+                                                <th>Result ID</th>
+                                                <th>Game Code</th>
+                                                <th>Total Bet</th>
+                                                <th>Win Amount</th>
+                                                <th>Net Win</th>
+                                                <th>Transaction Date</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($results as $result)
+                                                <tr>
+                                                    <td>
+                                                        <input type="checkbox" name="ids[]" value="{{ $result->id }}"
+                                                            class="checkbox">
+                                                    </td>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $result->player_name }}</td>
+                                                    <td>{{ $result->game_provide_name }}</td>
+                                                    <td>{{ $result->game_name }}</td>
+                                                    <td>{{ $result->player_id }}</td>
+                                                    <td>{{ $result->result_id }}</td>
+                                                    <td>{{ $result->game_code }}</td>
+                                                    <td>{{ number_format($result->total_bet_amount, 2) }}</td>
+                                                    <td>{{ number_format($result->win_amount, 2) }}</td>
+                                                    <td>{{ number_format($result->net_win, 2) }}</td>
+                                                    <td>{{ $result->tran_date_time }}</td>
+                                                    <td>
+                                                        <form action="{{ route('admin.results.delete', $result->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger"
+                                                                onclick="return confirm('Are you sure you want to delete this result?')">
+                                                                Delete
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+
+                                    {{-- Delete Selected Button --}}
+                                    <button type="submit" class="btn btn-danger"
+                                        onclick="return confirm('Are you sure you want to delete selected results?')">
+                                        Delete Selected
+                                    </button>
+                                </form>
                             @endif
                         </div>
                         <!-- /.card-body -->
@@ -108,4 +167,13 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('script')
+    <script>
+        document.getElementById("selectAll").addEventListener("click", function() {
+            let checkboxes = document.querySelectorAll(".checkbox");
+            checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+        });
+    </script>
 @endsection
