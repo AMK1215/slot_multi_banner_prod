@@ -86,7 +86,7 @@
                                                 <td>{{ number_format($result->win_amount, 2) }}</td>
                                                 <td>{{ number_format($result->net_win, 2) }}</td>
                                                 <td>{{ $result->tran_date_time }}</td>
-                                                {{-- <td>
+                                                <td>
                                                     <form action="{{ route('admin.results.delete', $result->id) }}"
                                                         method="POST">
                                                         @csrf
@@ -94,7 +94,7 @@
                                                         <button type="submit" class="btn btn-danger"
                                                             onclick="return confirm('Are you sure you want to delete this result?')">Delete</button>
                                                     </form>
-                                                </td> --}}
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
