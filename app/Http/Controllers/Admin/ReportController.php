@@ -236,85 +236,85 @@ class ReportController extends Controller
         return view('admin.reports.find_by_username_index');
     }
 
+    // public function FindByUserName(Request $request)
+    // {
+    //     // Validate the incoming request
+    //     $request->validate([
+    //         'user_name' => 'required|string|exists:users,user_name', // Ensure 'user_name' is provided and exists in the 'users' table
+    //     ]);
+
+    //     // Fetch the user_name from the request
+    //     $userName = $request->input('user_name');
+
+    //     // Fetch results data for the given user_name
+    //     $results = DB::table('results')
+    //         ->join('users', 'results.user_id', '=', 'users.id') // Join results with users table
+    //         ->where('users.user_name', $userName) // Filter by user_name
+    //         ->select(
+    //             'results.id',
+    //             'results.player_name',
+    //             'results.game_provide_name',
+    //             'results.game_name',
+    //             'results.operator_id',
+    //             'results.request_date_time',
+    //             'results.signature',
+    //             'results.player_id',
+    //             'results.currency',
+    //             'results.round_id',
+    //             'results.bet_ids',
+    //             'results.result_id',
+    //             'results.game_code',
+    //             'results.total_bet_amount',
+    //             'results.win_amount',
+    //             'results.net_win',
+    //             'results.tran_date_time',
+    //             'users.name as user_name'
+    //         )
+    //         ->get();
+
+    //     // Return the data to the view
+    //     return view('admin.reports.find_by_username_index', compact('results'));
+    // }
     public function FindByUserName(Request $request)
-    {
-        // Validate the incoming request
-        $request->validate([
-            'user_name' => 'required|string|exists:users,user_name', // Ensure 'user_name' is provided and exists in the 'users' table
-        ]);
+{
+    // Validate the incoming request
+    $request->validate([
+        'user_name' => 'required|string|exists:users,user_name', // Ensure 'user_name' is provided and exists in the 'users' table
+    ]);
 
-        // Fetch the user_name from the request
-        $userName = $request->input('user_name');
+    // Fetch the user_name from the request
+    $userName = $request->input('user_name');
 
-        // Fetch results data for the given user_name
-        $results = DB::table('results')
-            ->join('users', 'results.user_id', '=', 'users.id') // Join results with users table
-            ->where('users.user_name', $userName) // Filter by user_name
-            ->select(
-                'results.id',
-                'results.player_name',
-                'results.game_provide_name',
-                'results.game_name',
-                'results.operator_id',
-                'results.request_date_time',
-                'results.signature',
-                'results.player_id',
-                'results.currency',
-                'results.round_id',
-                'results.bet_ids',
-                'results.result_id',
-                'results.game_code',
-                'results.total_bet_amount',
-                'results.win_amount',
-                'results.net_win',
-                'results.tran_date_time',
-                'users.name as user_name'
-            )
-            ->get();
+    // Fetch results data for the given user_name, ordered by tran_date_time in descending order
+    $results = DB::table('results')
+        ->join('users', 'results.user_id', '=', 'users.id') // Join results with users table
+        ->where('users.user_name', $userName) // Filter by user_name
+        ->select(
+            'results.id',
+            'results.player_name',
+            'results.game_provide_name',
+            'results.game_name',
+            'results.operator_id',
+            'results.request_date_time',
+            'results.signature',
+            'results.player_id',
+            'results.currency',
+            'results.round_id',
+            'results.bet_ids',
+            'results.result_id',
+            'results.game_code',
+            'results.total_bet_amount',
+            'results.win_amount',
+            'results.net_win',
+            'results.tran_date_time',
+            'users.name as user_name'
+        )
+        ->orderByDesc('results.tran_date_time') // Order by transaction date and time in descending order
+        ->get();
 
-        // Return the data to the view
-        return view('admin.reports.find_by_username_index', compact('results'));
-    }
-//     public function FindByUserName(Request $request)
-// {
-//     // Validate the incoming request
-//     $request->validate([
-//         'user_name' => 'required|string|exists:users,user_name', // Ensure 'user_name' is provided and exists in the 'users' table
-//     ]);
-
-//     // Fetch the user_name from the request
-//     $userName = $request->input('user_name');
-
-//     // Fetch results data for the given user_name, ordered by tran_date_time in descending order
-//     $results = DB::table('results')
-//         ->join('users', 'results.user_id', '=', 'users.id') // Join results with users table
-//         ->where('users.user_name', $userName) // Filter by user_name
-//         ->select(
-//             'results.id',
-//             'results.player_name',
-//             'results.game_provide_name',
-//             'results.game_name',
-//             'results.operator_id',
-//             'results.request_date_time',
-//             'results.signature',
-//             'results.player_id',
-//             'results.currency',
-//             'results.round_id',
-//             'results.bet_ids',
-//             'results.result_id',
-//             'results.game_code',
-//             'results.total_bet_amount',
-//             'results.win_amount',
-//             'results.net_win',
-//             'results.tran_date_time',
-//             'users.name as user_name'
-//         )
-//         ->orderByDesc('results.tran_date_time') // Order by transaction date and time in descending order
-//         ->get();
-
-//     // Return the data to the view
-//     return view('admin.reports.find_by_username_index', compact('results'));
-// }
+    // Return the data to the view
+    return view('admin.reports.find_by_username_index', compact('results'));
+}
 
 
     public function deleteResult($id)
