@@ -44,7 +44,6 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Player Name</th>
                                         <th>PlayerID</th>
                                         <th>Game Code</th>
                                         <th>Bet Amount</th>
@@ -57,7 +56,6 @@
                                     @foreach ($results as $index => $result)
                                         <tr>
                                             <td>{{ $results->firstItem() + $index }}</td> <!-- Adjust for pagination -->
-                                            <td>{{ $result->player_name }}</td>
                                             <td>{{ $result->player_id }}</td>
                                             <td>{{ $result->game_code }}</td>
                                             <td>{{ number_format($result->bet_amount, 2) }}</td>

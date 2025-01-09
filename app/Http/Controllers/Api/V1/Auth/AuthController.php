@@ -67,10 +67,11 @@ class AuthController extends Controller
             ? ['phone' => $data['user_name'], 'password' => $data['password']]
             : ['user_name' => $data['user_name'], 'password' => $data['password']];
 
- 
-        if (! Auth::attempt($credentials)) {
+
+        if (!Auth::attempt($credentials)) {
             return $this->error('', 'Credentials do not match!', 401);
         }
+
         $user = Auth::user();
 
         if ($user->status == 0) {
@@ -97,6 +98,7 @@ class AuthController extends Controller
             'user_id' => $user->id,
             'user_agent' => $request->userAgent(),
         ]);
+        $user->tokens()->delete();
 
         return $this->success(new UserResource($user), 'User login successfully.');
     }

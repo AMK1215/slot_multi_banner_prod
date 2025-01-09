@@ -45,7 +45,7 @@
                                     @foreach ($details as $detail)
                                         <tr>
                                             {{-- <td>{{ $detail->user_name }}</td> --}}
-                                            <td>{{ $detail->player_name }}</td>
+                                            <td>{{ $detail->user_name }}</td>
                                             <td>{{ $detail->game_provide_name }}</td>
                                             <td>{{ $detail->game_name }}</td>
                                             {{-- <td>{{ $detail->operator_id }}</td> --}}

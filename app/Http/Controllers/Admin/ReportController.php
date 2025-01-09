@@ -25,7 +25,7 @@ class ReportController extends Controller
             DB::raw('SUM(win_amount) as total_win_amount'),
             DB::raw('SUM(net_win) as total_net_win'),
             DB::raw('COUNT(*) as total_games'),
-            'players.name as player_name',
+            'players.user_name as player_name',
             'agents.name as agent_name',
             'players.id as user_id'
         )
@@ -42,7 +42,7 @@ class ReportController extends Controller
     {
         $details = Result::where('user_id', $player_id)
             ->join('users', 'results.user_id', '=', 'users.id')
-            ->select('results.*', 'users.name as user_name')
+            ->select('results.*', 'users.user_name as user_name')
             ->get();
 
         // Calculate totals
@@ -62,7 +62,7 @@ class ReportController extends Controller
             DB::raw('SUM(results.win_amount) as total_win_amount'),
             DB::raw('SUM(results.net_win) as total_net_win'),
             DB::raw('COUNT(results.id) as total_games'),
-            'players.name as player_name',
+            'players.user_name as player_name',
             'agents.name as agent_name',
             'players.id as user_id'
         )
@@ -105,7 +105,7 @@ class ReportController extends Controller
             DB::raw('SUM(results.win_amount) as total_win_amount'),
             DB::raw('SUM(results.net_win) as total_net_win'),
             DB::raw('COUNT(results.id) as total_games'),
-            'players.name as player_name',
+            'players.user_name as player_name',
             'agents.name as agent_name',
             'players.id as user_id',
             'players.user_name as user_name'
