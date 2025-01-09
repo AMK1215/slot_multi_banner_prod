@@ -47,7 +47,7 @@
 
                         <div class="card-body">
                             @if (!empty($results))
-                                {{-- <table id="" class="table table-bordered table-hover">
+                                <table id="" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -94,9 +94,9 @@
                                             </tr>
                                         @endforeach
                                     </tbody>
-                                </table> --}}
+                                </table>
 
-                                <form id="deleteMultipleForm" action="{{ route('admin.results.deleteMultiple') }}"
+                                {{-- <form id="deleteMultipleForm" action="{{ route('admin.results.deleteMultiple') }}"
                                     method="POST">
                                     @csrf
                                     @method('DELETE')
@@ -157,7 +157,7 @@
                                         onclick="return confirm('Are you sure you want to delete selected results?')">
                                         Delete Selected
                                     </button>
-                                </form>
+                                </form> --}}
                             @endif
                         </div>
                         <!-- /.card-body -->
