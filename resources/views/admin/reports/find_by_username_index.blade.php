@@ -47,7 +47,7 @@
 
                         <div class="card-body">
                             @if (!empty($results))
-                                {{-- <table id="" class="table table-bordered table-hover">
+                                <table id="" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -83,27 +83,27 @@
                                                 <td>{{ number_format($result->net_win, 2) }}</td>
                                                 <td>{{ $result->tran_date_time }}</td>
                                                 <td>
-                                                    <form action="{{ route('admin.results.delete', $result->id) }}"
+                                                    {{-- <form action="{{ route('admin.results.delete', $result->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger"
                                                             onclick="return confirm('Are you sure you want to delete this result?')">Delete</button>
-                                                    </form>
+                                                    </form> --}}
                                                 </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
-                                </table> --}}
+                                </table>
 
-                                <form id="deleteMultipleForm" action="{{ route('admin.results.deleteMultiple') }}"
+                                {{-- <form id="deleteMultipleForm" action="{{ route('admin.results.deleteMultiple') }}"
                                     method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th><input type="checkbox" id="selectAll"></th> {{-- Select All Checkbox --}}
+                                                <th><input type="checkbox" id="selectAll"></th>
                                                 <th>#</th>
                                                 <th>Player Name</th>
                                                 <th>Game Provider</th>
@@ -152,12 +152,12 @@
                                         </tbody>
                                     </table>
 
-                                    {{-- Delete Selected Button --}}
+
                                     <button type="submit" class="btn btn-danger"
                                         onclick="return confirm('Are you sure you want to delete selected results?')">
                                         Delete Selected
                                     </button>
-                                </form>
+                                </form> --}}
                             @endif
                         </div>
                         <!-- /.card-body -->
