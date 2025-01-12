@@ -118,12 +118,13 @@ class GameListController extends Controller
 
         return redirect()->route('admin.gameLists.index')->with('success', 'PP HotGame status updated successfully.');
     }
+
     public function GameListOrderedit(GameList $gameList)
     {
         return view('admin.game_list.order_edit', compact('gameList'));
     }
 
-     public function updateOrder(Request $request, $id)
+    public function updateOrder(Request $request, $id)
     {
         // Validate the form input
         $request->validate([
@@ -137,7 +138,7 @@ class GameListController extends Controller
         $gameList->order = $request->input('order');
         $gameList->save();
 
-         return redirect()->route('admin.gameLists.index')->with('success', 'Game list order  updated successfully.');
+        return redirect()->route('admin.gameLists.index')->with('success', 'Game list order  updated successfully.');
 
         // Return a response
         // return response()->json([
@@ -148,7 +149,7 @@ class GameListController extends Controller
 
     public function GetsearchGames(Request $request)
     {
-    return view('admin.game_list.search_index');
+        return view('admin.game_list.search_index');
     }
 
     public function searchGames(Request $request)
@@ -163,16 +164,16 @@ class GameListController extends Controller
 
         // Add filters based on request inputs
         if ($request->filled('game_name')) {
-            $query->where('game_name', 'LIKE', '%' . $request->input('game_name') . '%');
+            $query->where('game_name', 'LIKE', '%'.$request->input('game_name').'%');
         }
-
 
         // Execute query and get results
         $games = $query->get();
 
-         return view('admin.game_list.search', compact('games'));
+        return view('admin.game_list.search', compact('games'));
 
     }
+
     public function updateAllOrder(Request $request)
     {
         // Validate the input

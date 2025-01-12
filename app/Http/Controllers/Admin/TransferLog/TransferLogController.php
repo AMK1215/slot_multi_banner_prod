@@ -22,7 +22,7 @@ class TransferLogController extends Controller
             ->whereIn('transactions.type', ['withdraw', 'deposit'])
             ->whereIn('transactions.name', ['credit_transfer', 'debit_transfer'])
             ->orderby('transactions.id', 'desc')->get();
-        
+
         return view('admin.trans_log.index', compact('transferLogs'));
     }
 

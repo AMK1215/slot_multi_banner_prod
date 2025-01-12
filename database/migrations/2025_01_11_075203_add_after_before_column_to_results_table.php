@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('game_lists', function (Blueprint $table) {
-            $table->integer('order')->default(0);
+        Schema::table('results', function (Blueprint $table) {
+            $table->decimal('old_balance', 16, 4)->nullable()->after('tran_date_time');
+            $table->decimal('new_balance', 16, 4)->nullable()->after('old_balance');
         });
     }
 
@@ -21,8 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('game_lists', function (Blueprint $table) {
-            $table->dropColumn('order');
+        Schema::table('results', function (Blueprint $table) {
+            $table->dropColumn(['old_balance', 'new_balance']);
         });
     }
 };

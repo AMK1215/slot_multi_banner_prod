@@ -14,6 +14,8 @@ use App\Http\Controllers\Api\V1\PromotionController;
 use App\Http\Controllers\Api\V1\Shan\ShanTransactionController;
 use App\Http\Controllers\Api\V1\Slot\GameController;
 use App\Http\Controllers\Api\V1\Slot\GetDaySummaryController;
+use App\Http\Controllers\Api\V1\Slot\GetGameListByProviderController;
+use App\Http\Controllers\Api\V1\Slot\GetGameProviderController;
 use App\Http\Controllers\Api\V1\Slot\LaunchGameController;
 use App\Http\Controllers\Api\V1\TransactionController;
 use App\Http\Controllers\Api\V1\WagerController;
@@ -23,14 +25,12 @@ use App\Http\Controllers\Api\V1\Webhook\BetNResultController;
 use App\Http\Controllers\Api\V1\Webhook\BetResultController;
 use App\Http\Controllers\Api\V1\Webhook\CancelBetController;
 use App\Http\Controllers\Api\V1\Webhook\CancelBetNResultController;
+use App\Http\Controllers\Api\V1\Webhook\NewBetNResultController;
 use App\Http\Controllers\Api\V1\Webhook\RewardController;
 use App\Http\Controllers\Api\V1\WithDrawRequestController;
 use App\Http\Controllers\Api\Webhook\TestingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\Slot\GetGameProviderController;
-use App\Http\Controllers\Api\V1\Slot\GetGameListByProviderController;
-
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -41,7 +41,9 @@ Route::get('contact', [ContactController::class, 'get']);
 // sameless route
 Route::post('Seamless/Test', [TransactionController::class, 'SystemWalletTest']);
 Route::post('GetBalance', [GetBalanceController::class, 'getBalance']);
-Route::post('BetNResult', [BetNResultController::class, 'handleBetNResult']);
+//Route::post('BetNResult', [BetNResultController::class, 'handleBetNResult']);
+Route::post('BetNResult', [NewBetNResultController::class, 'handleBetNResult']);
+
 Route::post('CancelBetNResult', [CancelBetNResultController::class, 'handleCancelBetNResult']);
 Route::post('Bet', [BetController::class, 'handleBet']);
 Route::post('Result', [BetResultController::class, 'handleResult']);
@@ -50,7 +52,6 @@ Route::post('Adjustment', [AdjustmentController::class, 'handleAdjustment']);
 Route::post('Reward', [RewardController::class, 'handleReward']);
 Route::post('GetGameProvider', [GetGameProviderController::class, 'fetchGameProviders']);
 Route::post('GetGameListByProvider', [GetGameListByProviderController::class, 'fetchGameListByProvider']);
-
 
 Route::post('transactions', [ShanTransactionController::class, 'index'])->middleware('transaction');
 
@@ -96,7 +97,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('gameFilter', [GameController::class, 'gameFilter']);
     Route::get('gamelistTest/{provider_id}/{game_type_id}/', [GameController::class, 'gameListTest']);
 });
-
 
 // DataVisualize for real time Monitoring
 Route::get('/visual-bets', [DataVisualizationController::class, 'VisualizeBet']); // Fetch all bets

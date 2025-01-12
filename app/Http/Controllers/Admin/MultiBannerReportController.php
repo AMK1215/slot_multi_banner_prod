@@ -98,7 +98,6 @@ class MultiBannerReportController extends Controller
         return view('admin.reports.agent.detail', compact('player', 'details'));
     }
 
-
     private function isExistingAgent($userId)
     {
         $user = User::find($userId);

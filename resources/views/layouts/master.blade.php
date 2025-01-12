@@ -279,6 +279,14 @@
                         </li>
                         @can('senior_access')
                             <li class="nav-item">
+                                <a href="{{ route('admin.game.report') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        Win/LoseReport
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ route('admin.SeniorHierarchy') }}" class="nav-link">
                                     <i class="fas fa-users"></i>
                                     <p>

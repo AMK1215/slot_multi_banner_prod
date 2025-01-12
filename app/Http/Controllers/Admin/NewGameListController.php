@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Admin\GameList;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
+use App\Models\Admin\GameList;
 use App\Models\Admin\GameType;
 use App\Models\Admin\Product;
-
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class NewGameListController extends Controller
 {
@@ -56,25 +54,22 @@ class NewGameListController extends Controller
         //     'game_provide_name' => 'required|string|max:100',
         // ]);
         $validatedData = $request->validate([
-        'game_id' => 'required|integer',
-        'game_type_id' => 'required|exists:game_types,id',
-        'product_id' => 'required|exists:products,id',
-        'status' => 'required|boolean',
-        'game_code' => 'required|string|max:50',
-        'game_name' => 'required|string|max:100',
-        'game_type' => 'required|integer', // Add this line
-        'image_url' => 'nullable|string',
-        'method' => 'required|string',
-        'is_h5_support' => 'required',
-        'has_demo' => 'required',
-        'sequence' => 'required|integer',
-        'game_provide_code' => 'required|string|max:50',
-        'game_provide_name' => 'required|string|max:100',
-        'order' => 'required|integer'
-]);
-
-
-
+            'game_id' => 'required|integer',
+            'game_type_id' => 'required|exists:game_types,id',
+            'product_id' => 'required|exists:products,id',
+            'status' => 'required|boolean',
+            'game_code' => 'required|string|max:50',
+            'game_name' => 'required|string|max:100',
+            'game_type' => 'required|integer', // Add this line
+            'image_url' => 'nullable|string',
+            'method' => 'required|string',
+            'is_h5_support' => 'required',
+            'has_demo' => 'required',
+            'sequence' => 'required|integer',
+            'game_provide_code' => 'required|string|max:50',
+            'game_provide_name' => 'required|string|max:100',
+            'order' => 'required|integer',
+        ]);
 
         // Create the game list entry
         GameList::create($validatedData);
@@ -117,7 +112,7 @@ class NewGameListController extends Controller
         if ($request->hasFile('image')) {
             // Delete the old image
             if ($gameList->image_url) {
-                Storage::delete('public/' . $gameList->image_url);
+                Storage::delete('public/'.$gameList->image_url);
             }
 
             $path = $request->file('image')->store('game_logo', 'public');
@@ -137,7 +132,7 @@ class NewGameListController extends Controller
     {
         // Delete the image file
         if ($gameList->image_url) {
-            Storage::delete('public/' . $gameList->image_url);
+            Storage::delete('public/'.$gameList->image_url);
         }
 
         $gameList->delete();

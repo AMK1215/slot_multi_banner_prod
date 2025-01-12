@@ -28,7 +28,7 @@ class WithDrawRequestController extends Controller
         if ($request->amount > $player->balanceFloat) {
             return $this->error('', 'Insufficient Balance', 401);
         }
-        
+
         $withdraw = WithDrawRequest::create([
             'user_id' => $player->id,
             'agent_id' => $player->agent_id,
@@ -61,7 +61,7 @@ class WithDrawRequestController extends Controller
         if ($request->amount > $player->balanceFloat) {
             return $this->error('', 'Insufficient Balance', 401);
         }
-        if ( $player && ! Hash::check($request->password, $player->password)) {
+        if ($player && ! Hash::check($request->password, $player->password)) {
             return $this->error('', 'လျို့ဝှက်နံပါတ်ကိုက်ညီမှု မရှိပါ။', 401);
         }
 

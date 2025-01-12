@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('game_lists', function (Blueprint $table) {
-            $table->integer('order')->default(0);
+        Schema::table('bet_n_results', function (Blueprint $table) {
+            $table->string('game_name', 100)->nullable()->after('game_code'); // Add game_name column
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('game_lists', function (Blueprint $table) {
-            $table->dropColumn('order');
+        Schema::table('bet_n_results', function (Blueprint $table) {
+            $table->dropColumn('game_name'); // Rollback
         });
     }
 };

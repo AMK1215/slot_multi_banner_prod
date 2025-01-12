@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\GameTypeProductController;
 use App\Http\Controllers\Admin\GetBetDetailController;
 use App\Http\Controllers\Admin\GSCReportController;
 use App\Http\Controllers\Admin\MultiBannerReportController;
+use App\Http\Controllers\Admin\NewGameListController;
 use App\Http\Controllers\Admin\Owner\OwnerController;
 use App\Http\Controllers\Admin\PaymentTypeController;
 use App\Http\Controllers\Admin\Player\PlayerController;
@@ -27,10 +28,10 @@ use App\Http\Controllers\Admin\Shan\ShanReportController;
 use App\Http\Controllers\Admin\SubAccountController;
 use App\Http\Controllers\Admin\TopTenWithdrawController;
 use App\Http\Controllers\Admin\TransactionController;
-use App\Http\Controllers\Admin\NewGameListController;
 use App\Http\Controllers\Admin\TransferLog\TransferLogController;
 use App\Http\Controllers\Admin\WithDraw\WithDrawRequestController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NewReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -86,11 +87,11 @@ Route::group([
     Route::post('gametypes/{game_type_id}/product/{product_id}', [GameTypeProductController::class, 'update'])->name('gametypes.update');
     // provider Game Type End
 
-    Route::post('/mark-notifications-read', function() {
-    auth()->user()->unreadNotifications->markAsRead();
-    return response()->json(['success' => true]);
-    })->name('markNotificationsRead');
+    Route::post('/mark-notifications-read', function () {
+        auth()->user()->unreadNotifications->markAsRead();
 
+        return response()->json(['success' => true]);
+    })->name('markNotificationsRead');
 
     Route::get('transaction-list', [TransactionController::class, 'index'])->name('transaction');
     // game list start
@@ -115,7 +116,6 @@ Route::group([
     Route::post('/game-lists/updateordercolumn', [GameListController::class, 'updateAllOrder'])->name('gameLists.updateOrder');
 
     Route::resource('gamelistnew', NewGameListController::class);
-
 
     // game list end
     Route::resource('agent', AgentController::class);
@@ -193,6 +193,10 @@ Route::group([
     Route::resource('/product_code', App\Http\Controllers\Admin\ProductCodeController::class);
 
     Route::group(['prefix' => 'slot'], function () {
+
+        Route::get('/game-report', [NewReportController::class, 'getGameReport'])->name('game.report');
+        Route::get('/game-report/{player_id}/{game_code}', [NewReportController::class, 'getGameReportDetail'])->name('game.report.detail');
+
         Route::get('report', [ReportController::class, 'index'])->name('report.index');
         Route::get('reports/details/{game_provide_name}', [ReportController::class, 'getReportDetails'])->name('reports.details');
         Route::get('adminreport', [ReportController::class, 'Reportindex'])->name('report.adminindex');

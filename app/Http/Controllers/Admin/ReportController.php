@@ -276,86 +276,83 @@ class ReportController extends Controller
     //     return view('admin.reports.find_by_username_index', compact('results'));
     // }
     public function FindByUserName(Request $request)
-{
-    // Validate the incoming request
-    $request->validate([
-        'user_name' => 'required|string|exists:users,user_name', // Ensure 'user_name' is provided and exists in the 'users' table
-    ]);
+    {
+        // Validate the incoming request
+        $request->validate([
+            'user_name' => 'required|string|exists:users,user_name', // Ensure 'user_name' is provided and exists in the 'users' table
+        ]);
 
-    // Fetch the user_name from the request
-    $userName = $request->input('user_name');
+        // Fetch the user_name from the request
+        $userName = $request->input('user_name');
 
-    // Fetch results data for the given user_name, ordered by tran_date_time in descending order
-    $results = DB::table('results')
-        ->join('users', 'results.user_id', '=', 'users.id') // Join results with users table
-        ->where('users.user_name', $userName) // Filter by user_name
-        ->select(
-            'results.id',
-            'results.player_name',
-            'results.game_provide_name',
-            'results.game_name',
-            'results.operator_id',
-            'results.request_date_time',
-            'results.signature',
-            'results.player_id',
-            'results.currency',
-            'results.round_id',
-            'results.bet_ids',
-            'results.result_id',
-            'results.game_code',
-            'results.total_bet_amount',
-            'results.win_amount',
-            'results.net_win',
-            'results.tran_date_time',
-            'users.name as user_name'
-        )
-        ->orderByDesc('results.tran_date_time') // Order by transaction date and time in descending order
-        ->get();
+        // Fetch results data for the given user_name, ordered by tran_date_time in descending order
+        $results = DB::table('results')
+            ->join('users', 'results.user_id', '=', 'users.id') // Join results with users table
+            ->where('users.user_name', $userName) // Filter by user_name
+            ->select(
+                'results.id',
+                'results.player_name',
+                'results.game_provide_name',
+                'results.game_name',
+                'results.operator_id',
+                'results.request_date_time',
+                'results.signature',
+                'results.player_id',
+                'results.currency',
+                'results.round_id',
+                'results.bet_ids',
+                'results.result_id',
+                'results.game_code',
+                'results.total_bet_amount',
+                'results.win_amount',
+                'results.net_win',
+                'results.tran_date_time',
+                'users.name as user_name'
+            )
+            ->orderByDesc('results.tran_date_time') // Order by transaction date and time in descending order
+            ->get();
 
-    // Return the data to the view
-    return view('admin.reports.find_by_username_index', compact('results'));
-}
-
+        // Return the data to the view
+        return view('admin.reports.find_by_username_index', compact('results'));
+    }
 
     public function deleteResult($id)
-{
-    try {
-        // Find the result by ID
-        $result = DB::table('results')->where('id', $id)->first();
+    {
+        try {
+            // Find the result by ID
+            $result = DB::table('results')->where('id', $id)->first();
 
-        if (!$result) {
-            return redirect()->back()->with('error', 'Result not found.');
+            if (! $result) {
+                return redirect()->back()->with('error', 'Result not found.');
+            }
+
+            // Delete the result
+            DB::table('results')->where('id', $id)->delete();
+
+            return redirect()->route('admin.ResultSearchIindex')->with('success', 'Result deleted successfully.');
+
+            //return redirect()->back()->with('success', 'Result deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: '.$e->getMessage());
         }
-
-        // Delete the result
-        DB::table('results')->where('id', $id)->delete();
-
-         return redirect()->route('admin.ResultSearchIindex')->with('success', 'Result deleted successfully.');
-
-        //return redirect()->back()->with('success', 'Result deleted successfully.');
-    } catch (\Exception $e) {
-        return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
     }
-}
 
-public function deleteMultiple(Request $request)
-{
-    try {
-        // Check if IDs are provided
-        if (!$request->has('ids') || empty($request->ids)) {
-            return redirect()->back()->with('error', 'No results selected for deletion.');
+    public function deleteMultiple(Request $request)
+    {
+        try {
+            // Check if IDs are provided
+            if (! $request->has('ids') || empty($request->ids)) {
+                return redirect()->back()->with('error', 'No results selected for deletion.');
+            }
+
+            // Delete all selected results
+            DB::table('results')->whereIn('id', $request->ids)->delete();
+
+            return redirect()->route('admin.ResultSearchIindex')->with('success', 'Selected results deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: '.$e->getMessage());
         }
-
-        // Delete all selected results
-        DB::table('results')->whereIn('id', $request->ids)->delete();
-
-        return redirect()->route('admin.ResultSearchIindex')->with('success', 'Selected results deleted successfully.');
-    } catch (\Exception $e) {
-        return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
     }
-}
-
-
 
     public function BoReport()
     {
@@ -373,117 +370,115 @@ public function deleteMultiple(Request $request)
 
     // for senior
     public function getAllResults()
-{
-    // Retrieve all results with pagination (10 per page)
-    $results = DB::table('results')
-        ->join('users', 'results.user_id', '=', 'users.id') // Join with users to get related user data
-        ->select(
-            'results.*',
-            'users.name as player_name', // Include player's name from users table
-            'users.user_name as player_id'
-        )
-        ->paginate(200); // Paginate results with 10 per page
+    {
+        // Retrieve all results with pagination (10 per page)
+        $results = DB::table('results')
+            ->join('users', 'results.user_id', '=', 'users.id') // Join with users to get related user data
+            ->select(
+                'results.*',
+                'users.name as player_name', // Include player's name from users table
+                'users.user_name as player_id'
+            )
+            ->paginate(200); // Paginate results with 10 per page
 
-    // Pass the results to the view
-    return view('admin.reports.senior.result_index', compact('results'));
-        }
+        // Pass the results to the view
+        return view('admin.reports.senior.result_index', compact('results'));
+    }
 
-        public function deleteResults(Request $request)
-{
-    // Validate the request
-    $request->validate([
-        'start_date' => 'required|date',
-        'end_date' => 'required|date|after_or_equal:start_date',
-    ]);
+    public function deleteResults(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
 
-    // Retrieve the date range
-    $startDate = $request->start_date;
-    $endDate = $request->end_date;
+        // Retrieve the date range
+        $startDate = $request->start_date;
+        $endDate = $request->end_date;
 
-    // Delete the results within the specified date range
-    DB::table('results')
-        ->whereBetween('tran_date_time', [$startDate, $endDate])
-        ->delete();
+        // Delete the results within the specified date range
+        DB::table('results')
+            ->whereBetween('tran_date_time', [$startDate, $endDate])
+            ->delete();
 
-    // Redirect back with a success message
-    return redirect()->back()->with('success', 'Results deleted successfully.');
-}
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Results deleted successfully.');
+    }
 
-public function getAllBets()
-{
-    // Retrieve all results with pagination (10 per page)
-    $results = DB::table('bets')
-        ->join('users', 'bets.user_id', '=', 'users.id') // Join with users to get related user data
-        ->select(
-            'bets.*',
-            'users.name as player_name', // Include player's name from users table
-            //'users.user_name as player_id'
-        )
-        ->paginate(10); // Paginate results with 10 per page
+    public function getAllBets()
+    {
+        // Retrieve all results with pagination (10 per page)
+        $results = DB::table('bets')
+            ->join('users', 'bets.user_id', '=', 'users.id') // Join with users to get related user data
+            ->select(
+                'bets.*',
+                'users.name as player_name', // Include player's name from users table
+                //'users.user_name as player_id'
+            )
+            ->paginate(10); // Paginate results with 10 per page
 
-    // Pass the results to the view
-    return view('admin.reports.senior.bet_index', compact('results'));
-        }
+        // Pass the results to the view
+        return view('admin.reports.senior.bet_index', compact('results'));
+    }
 
-        public function deleteBets(Request $request)
-{
-    // Validate the request
-    $request->validate([
-        'start_date' => 'required|date',
-        'end_date' => 'required|date|after_or_equal:start_date',
-    ]);
+    public function deleteBets(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
 
-    // Retrieve the date range
-    $startDate = $request->start_date;
-    $endDate = $request->end_date;
+        // Retrieve the date range
+        $startDate = $request->start_date;
+        $endDate = $request->end_date;
 
-    // Delete the results within the specified date range
-    DB::table('bets')
-        ->whereBetween('tran_date_time', [$startDate, $endDate])
-        ->delete();
+        // Delete the results within the specified date range
+        DB::table('bets')
+            ->whereBetween('tran_date_time', [$startDate, $endDate])
+            ->delete();
 
-    // Redirect back with a success message
-    return redirect()->back()->with('success', 'Bets deleted successfully.');
-}
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Bets deleted successfully.');
+    }
 
     public function getAllJili()
-{
-    // Retrieve all results with pagination (10 per page)
-    $results = DB::table('bet_n_results')
-        ->join('users', 'bet_n_results.user_id', '=', 'users.id') // Join with users to get related user data
-        ->select(
-            'bet_n_results.*',
-            'users.name as player_name', // Include player's name from users table
-            'users.user_name as player_id'
-        )
-        ->paginate(10); // Paginate results with 10 per page
+    {
+        // Retrieve all results with pagination (10 per page)
+        $results = DB::table('bet_n_results')
+            ->join('users', 'bet_n_results.user_id', '=', 'users.id') // Join with users to get related user data
+            ->select(
+                'bet_n_results.*',
+                'users.name as player_name', // Include player's name from users table
+                'users.user_name as player_id'
+            )
+            ->paginate(10); // Paginate results with 10 per page
 
-    // Pass the results to the view
-    return view('admin.reports.senior.bet_n_result_index', compact('results'));
-        }
+        // Pass the results to the view
+        return view('admin.reports.senior.bet_n_result_index', compact('results'));
+    }
 
-        public function deleteJili(Request $request)
-{
-    // Validate the request
-    $request->validate([
-        'start_date' => 'required|date',
-        'end_date' => 'required|date|after_or_equal:start_date',
-    ]);
+    public function deleteJili(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
 
-    // Retrieve the date range
-    $startDate = $request->start_date;
-    $endDate = $request->end_date;
+        // Retrieve the date range
+        $startDate = $request->start_date;
+        $endDate = $request->end_date;
 
-    // Delete the results within the specified date range
-    DB::table('bet_n_results')
-        ->whereBetween('tran_date_time', [$startDate, $endDate])
-        ->delete();
+        // Delete the results within the specified date range
+        DB::table('bet_n_results')
+            ->whereBetween('tran_date_time', [$startDate, $endDate])
+            ->delete();
 
-    // Redirect back with a success message
-    return redirect()->back()->with('success', 'Bets deleted successfully.');
-}
-
-
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Bets deleted successfully.');
+    }
 
     private function isExistingAgent($userId)
     {

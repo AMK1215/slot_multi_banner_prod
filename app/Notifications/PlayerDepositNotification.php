@@ -2,21 +2,21 @@
 
 namespace App\Notifications;
 
+use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Notifications\Notification;
 
-class PlayerDepositNotification extends Notification implements ShouldQueue, ShouldBroadcast
+class PlayerDepositNotification extends Notification implements ShouldBroadcast, ShouldQueue
 {
-     use Queueable, InteractsWithSockets;
+    use InteractsWithSockets, Queueable;
 
     /**
      * Create a new notification instance.
      */
-     protected $deposit;
+    protected $deposit;
 
     /**
      * Create a new notification instance.
@@ -43,7 +43,7 @@ class PlayerDepositNotification extends Notification implements ShouldQueue, Sho
             'player_name' => $this->deposit->user->user_name,
             'amount' => $this->deposit->amount,
             'refrence_no' => $this->deposit->refrence_no,
-            'message' => "Player {$this->deposit->user->user_name} has deposited {$this->deposit->amount}."
+            'message' => "Player {$this->deposit->user->user_name} has deposited {$this->deposit->amount}.",
         ];
     }
 
@@ -56,15 +56,15 @@ class PlayerDepositNotification extends Notification implements ShouldQueue, Sho
             'player_name' => $this->deposit->user->user_name,
             'amount' => $this->deposit->amount,
             'refrence_no' => $this->deposit->refrence_no,
-            'message' => "Player {$this->deposit->user->user_name} has deposited {$this->deposit->amount}."
+            'message' => "Player {$this->deposit->user->user_name} has deposited {$this->deposit->amount}.",
         ]);
     }
 
-     /**
+    /**
      * Get the broadcast channel.
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('agent.' . $this->deposit->agent_id);
+        return new PrivateChannel('agent.'.$this->deposit->agent_id);
     }
 }

@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DepositLogResource;
 use App\Models\DepositRequest;
+use App\Models\User;
+use App\Notifications\PlayerDepositNotification;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Notifications\PlayerDepositNotification;
-use App\Models\User;
 use Illuminate\Support\Facades\Notification;
 
 class DepositRequestController extends Controller
@@ -33,13 +33,13 @@ class DepositRequestController extends Controller
             'refrence_no' => $request->refrence_no,
         ]);
 
-    // $admins = User::where('type', '30')->get();
-    // Notification::send($admins, new PlayerDepositNotification($deposit));
-     // Notify the player's agent
-    $agent = User::find($player->agent_id);
-    if ($agent) {
-        $agent->notify(new PlayerDepositNotification($deposit));
-    }
+        // $admins = User::where('type', '30')->get();
+        // Notification::send($admins, new PlayerDepositNotification($deposit));
+        // Notify the player's agent
+        $agent = User::find($player->agent_id);
+        if ($agent) {
+            $agent->notify(new PlayerDepositNotification($deposit));
+        }
 
         return $this->success($deposit, 'Deposit Request Success');
 

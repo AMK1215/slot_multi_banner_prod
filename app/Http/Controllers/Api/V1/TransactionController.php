@@ -120,8 +120,5 @@ class TransactionController extends Controller
         return $this->success($data, 'Shan Report retrieved successfully');
     }
 
-    public function SystemWalletTest(Request $request)
-    {
-
-    }
+    public function SystemWalletTest(Request $request) {}
 }
