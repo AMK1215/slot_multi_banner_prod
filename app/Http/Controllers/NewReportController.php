@@ -6,6 +6,7 @@ use App\Models\Admin\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+use Carbon\Carbon;
 
 
 class NewReportController extends Controller
@@ -24,6 +25,11 @@ class NewReportController extends Controller
         $report = unserialize(Cache::get($cacheKey)); // Retrieve and unserialize
     }
 
+    // DEBUG: Check if report is retrieved
+    if ($report->isEmpty()) {
+        dd("No data found", $report);
+    }
+
     return view('report.index', compact('report'));
 }
 
@@ -33,7 +39,7 @@ class NewReportController extends Controller
 private function fetchGameReport(Request $request)
 {
     // Define default start date: 01/12/2025 at 10:00 AM
-    $defaultStartDate = '01-12-2025';
+    $defaultStartDate = Carbon::create(2025, 12, 1, 10, 0, 0)->toDateTimeString();
 
     return DB::query()
         ->fromSub(function ($query) use ($request, $defaultStartDate) {
@@ -65,7 +71,7 @@ private function fetchGameReport(Request $request)
             $resultData = DB::table('results as r')
                 ->select(
                     'r.player_id',
-                    'r.player_name',
+                    DB::raw('COALESCE(NULLIF(r.player_name, ""), r.player_id) as player_name'),
                     'r.game_code',
                     'r.game_name',
                     'r.game_provide_name',
@@ -91,7 +97,7 @@ private function fetchGameReport(Request $request)
         }, 'combined_data')
         ->select(
             'player_id',
-            DB::raw('COALESCE(player_name, player_id) as player_name'),
+            DB::raw('COALESCE(NULLIF(player_name, ""), player_id) as player_name'),
             'game_code',
             DB::raw('COALESCE(game_name, game_code) as game_name'),
             'game_provide_name',
@@ -108,6 +114,8 @@ private function fetchGameReport(Request $request)
         ->orderByDesc('total_bets')
         ->paginate(10);
 }
+
+
 
 
 //     public function getGameReport(Request $request)
