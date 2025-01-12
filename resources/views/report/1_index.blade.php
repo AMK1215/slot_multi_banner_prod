@@ -7,7 +7,7 @@
 
     <title>Game Report</title>
 
-    <!-- Fonts & Bootstrap -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -63,25 +63,43 @@
                             <th>Name</th>
                             <th>Valid Turnover</th>
                             <th>Win/Loss</th>
-                            <th>Game Provider</th>
+                            <th>Commission</th>
+                            <th>Total P/L</th>
+                            <th>PT Win/Loss</th>
+                            <th>Comm.</th>
+                            <th>Total P/L</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($report as $data)
-                            <tr>
+                            <tr data-bs-toggle="collapse" data-bs-target="#row{{ $loop->index }}" class="clickable">
                                 <td>{{ $data->player_id }}</td>
                                 <td>{{ $data->player_name }}</td>
                                 <td>{{ number_format($data->total_bet_amount, 2) }}</td>
                                 <td class="{{ $data->total_net_win < 0 ? 'text-danger' : 'text-success' }}">
                                     {{ number_format($data->total_net_win, 2) }}
                                 </td>
-                                <td>{{ $data->game_provide_name }}</td>
+                                <td>{{ number_format($data->commission, 2) }}</td>
+                                <td>{{ number_format($data->total_net_win + $data->commission, 2) }}</td>
+                                <td>{{ number_format($data->pt_win_loss, 2) }}</td>
+                                <td>{{ number_format($data->pt_commission, 2) }}</td>
+                                <td>{{ number_format($data->pt_win_loss + $data->pt_commission, 2) }}</td>
                                 <td>
                                     <a href="{{ route('admin.game.report.detail', ['player_id' => $data->player_id, 'game_code' => $data->game_code]) }}"
                                         class="btn btn-primary btn-sm">
                                         Details
                                     </a>
+                                </td>
+                            </tr>
+
+                            <!-- Collapsible Row (Detailed Breakdown) -->
+                            <tr class="collapse" id="row{{ $loop->index }}">
+                                <td colspan="10">
+                                    <strong>Game Provider:</strong> {{ $data->game_provide_name }}<br>
+                                    <strong>Game Name:</strong> {{ $data->game_name }}<br>
+                                    <strong>Old Balance:</strong> {{ number_format($data->old_balance, 2) }}<br>
+                                    <strong>New Balance:</strong> {{ number_format($data->new_balance, 2) }}
                                 </td>
                             </tr>
                         @endforeach
@@ -97,14 +115,11 @@
     </div>
 
     <style>
-        .text-danger {
-            color: red;
-        }
-
-        .text-success {
-            color: green;
+        .clickable {
+            cursor: pointer;
         }
     </style>
+
 
 </body>
 

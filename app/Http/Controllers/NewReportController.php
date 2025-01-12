@@ -8,45 +8,127 @@ use Illuminate\Support\Facades\DB;
 
 class NewReportController extends Controller
 {
+
     public function getGameReport(Request $request)
-    {
-        $query = DB::table('bet_n_results as br')
-            ->leftJoin('results as r', function ($join) {
-                $join->on('br.player_id', '=', 'r.player_id')
-                    ->on('br.game_code', '=', 'r.game_code');
-            })
-            ->select(
-                'br.player_id',
-                DB::raw('COALESCE(r.player_name, br.player_id) as player_name'),
-                'br.game_code',
-                'br.game_name',
-                'br.provider_code as game_provide_name',
-                DB::raw('SUM(br.bet_amount) as total_bet_amount'),
-                DB::raw('SUM(br.win_amount) as total_win_amount'),
-                DB::raw('SUM(br.net_win) as total_net_win'),
-                DB::raw('SUM(br.commission_amount) as commission'),
-                DB::raw('SUM(r.win_amount) as pt_win_loss'),
-                DB::raw('SUM(r.commission_amount) as pt_commission'),
-                DB::raw('COALESCE(SUM(br.old_balance), 0) as old_balance'),
-                DB::raw('COALESCE(SUM(br.new_balance), 0) as new_balance')
-            )
-            ->groupBy('br.player_id', 'br.game_code', 'br.game_name', 'br.provider_code', 'r.player_name');
+{
+    // Fetch report data with pagination
+    $query = DB::query()
+        ->fromSub(function ($query) {
+            $betData = DB::table('bet_n_results as br')
+                ->select(
+                    'br.player_id',
+                    DB::raw('NULL as player_name'),
+                    'br.game_code',
+                    'br.game_name',
+                    'br.provider_code as game_provide_name',
+                    DB::raw('COUNT(br.id) as total_bets'),
+                    DB::raw('ROUND(SUM(br.bet_amount), 2) as total_bet_amount'),
+                    DB::raw('ROUND(SUM(br.win_amount), 2) as total_win_amount'),
+                    DB::raw('ROUND(SUM(br.net_win), 2) as total_net_win'),
+                    DB::raw('0 as total_results'),
+                    DB::raw('NULL as total_result_bet_amount'),
+                    DB::raw('NULL as total_result_win_amount'),
+                    DB::raw('NULL as total_result_net_win'),
+                    'br.created_at'
+                )
+                ->groupBy('br.player_id', 'br.game_code', 'br.game_name', 'br.provider_code', 'br.created_at');
 
-        // Apply filters
-        if ($request->has('start_date')) {
-            $query->whereDate('br.created_at', '>=', $request->start_date);
-        }
-        if ($request->has('end_date')) {
-            $query->whereDate('br.created_at', '<=', $request->end_date);
-        }
-        if ($request->has('user_id')) {
-            $query->where('br.player_id', $request->user_id);
-        }
+            $resultData = DB::table('results as r')
+                ->select(
+                    'r.player_id',
+                    'r.player_name',
+                    'r.game_code',
+                    'r.game_name',
+                    'r.game_provide_name',
+                    DB::raw('0 as total_bets'),
+                    DB::raw('NULL as total_bet_amount'),
+                    DB::raw('NULL as total_win_amount'),
+                    DB::raw('NULL as total_net_win'),
+                    DB::raw('COUNT(r.id) as total_results'),
+                    DB::raw('ROUND(SUM(r.total_bet_amount), 2) as total_result_bet_amount'),
+                    DB::raw('ROUND(SUM(r.win_amount), 2) as total_result_win_amount'),
+                    DB::raw('ROUND(SUM(r.net_win), 2) as total_result_net_win'),
+                    'r.created_at'
+                )
+                ->groupBy('r.player_id', 'r.game_code', 'r.game_name', 'r.game_provide_name', 'r.player_name', 'r.created_at');
 
-        $report = $query->paginate(10);
+            $query->from($betData)
+                ->unionAll($resultData);
+        }, 'combined_data')
+        ->select(
+            'player_id',
+            DB::raw('COALESCE(player_name, player_id) as player_name'),
+            'game_code',
+            DB::raw('COALESCE(game_name, game_code) as game_name'),
+            'game_provide_name',
+            DB::raw('SUM(total_bets) as total_bets'),
+            DB::raw('ROUND(SUM(total_bet_amount), 2) as total_bet_amount'),
+            DB::raw('ROUND(SUM(total_win_amount), 2) as total_win_amount'),
+            DB::raw('ROUND(SUM(total_net_win), 2) as total_net_win'),
+            DB::raw('SUM(total_results) as total_results'),
+            DB::raw('ROUND(SUM(total_result_bet_amount), 2) as total_result_bet_amount'),
+            DB::raw('ROUND(SUM(total_result_win_amount), 2) as total_result_win_amount'),
+            DB::raw('ROUND(SUM(total_result_net_win), 2) as total_result_net_win'),
+            'created_at'
+        )
+        ->groupBy('player_id', 'game_code', 'game_name', 'game_provide_name', 'player_name', 'created_at');
 
-        return view('report.index', compact('report'));
+    // Apply filters BEFORE paginating
+    if ($request->has('start_date')) {
+        $query->whereDate('created_at', '>=', $request->start_date);
     }
+    if ($request->has('end_date')) {
+        $query->whereDate('created_at', '<=', $request->end_date);
+    }
+    if ($request->has('user_id')) {
+        $query->where('player_id', $request->user_id);
+    }
+
+    // Paginate after filtering
+    $report = $query->orderByDesc('total_bets')->paginate(10);
+
+    return view('report.v2_report_index', compact('report'));
+}
+
+    // public function getGameReport(Request $request)
+    // {
+    //     $query = DB::table('bet_n_results as br')
+    //         ->leftJoin('results as r', function ($join) {
+    //             $join->on('br.player_id', '=', 'r.player_id')
+    //                 ->on('br.game_code', '=', 'r.game_code');
+    //         })
+    //         ->select(
+    //             'br.player_id',
+    //             DB::raw('COALESCE(r.player_name, br.player_id) as player_name'),
+    //             'br.game_code',
+    //             'br.game_name',
+    //             'br.provider_code as game_provide_name',
+    //             DB::raw('SUM(br.bet_amount) as total_bet_amount'),
+    //             DB::raw('SUM(br.win_amount) as total_win_amount'),
+    //             DB::raw('SUM(br.net_win) as total_net_win'),
+    //             DB::raw('SUM(br.commission_amount) as commission'),
+    //             DB::raw('SUM(r.win_amount) as pt_win_loss'),
+    //             DB::raw('SUM(r.commission_amount) as pt_commission'),
+    //             DB::raw('COALESCE(SUM(br.old_balance), 0) as old_balance'),
+    //             DB::raw('COALESCE(SUM(br.new_balance), 0) as new_balance')
+    //         )
+    //         ->groupBy('br.player_id', 'br.game_code', 'br.game_name', 'br.provider_code', 'r.player_name');
+
+    //     // Apply filters
+    //     if ($request->has('start_date')) {
+    //         $query->whereDate('br.created_at', '>=', $request->start_date);
+    //     }
+    //     if ($request->has('end_date')) {
+    //         $query->whereDate('br.created_at', '<=', $request->end_date);
+    //     }
+    //     if ($request->has('user_id')) {
+    //         $query->where('br.player_id', $request->user_id);
+    //     }
+
+    //     $report = $query->paginate(10);
+
+    //     return view('report.index', compact('report'));
+    // }
 
     public function getGameReportDetail($player_id, $game_code)
     {
