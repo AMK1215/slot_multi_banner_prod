@@ -12,6 +12,8 @@ use Carbon\Carbon;
 class NewReportController extends Controller
 {
 
+
+
     public function getGameReport(Request $request)
 {
     // Generate a unique cache key
@@ -25,11 +27,6 @@ class NewReportController extends Controller
         $report = unserialize(Cache::get($cacheKey)); // Retrieve and unserialize
     }
 
-    // DEBUG: Check if report is retrieved
-    if ($report->isEmpty()) {
-        dd("No data found", $report);
-    }
-
     return view('report.index', compact('report'));
 }
 
@@ -38,11 +35,8 @@ class NewReportController extends Controller
  */
 private function fetchGameReport(Request $request)
 {
-    // Define default start date: 01/12/2025 at 10:00 AM
-    $defaultStartDate = Carbon::create(2025, 12, 1, 10, 0, 0)->toDateTimeString();
-
     return DB::query()
-        ->fromSub(function ($query) use ($request, $defaultStartDate) {
+        ->fromSub(function ($query) use ($request) {
             $betData = DB::table('bet_n_results as br')
                 ->select(
                     'br.player_id',
@@ -59,11 +53,7 @@ private function fetchGameReport(Request $request)
                     DB::raw('NULL as total_result_win_amount'),
                     DB::raw('NULL as total_result_net_win')
                 )
-                ->when(
-                    $request->filled('start_date'),
-                    fn($q) => $q->where('br.created_at', '>=', $request->start_date),
-                    fn($q) => $q->where('br.created_at', '>=', $defaultStartDate) // Default to 01/12/2025 10:00 AM
-                )
+                ->when($request->filled('start_date'), fn($q) => $q->where('br.created_at', '>=', $request->start_date))
                 ->when($request->filled('end_date'), fn($q) => $q->where('br.created_at', '<=', $request->end_date))
                 ->when($request->filled('user_id'), fn($q) => $q->where('br.player_id', $request->user_id))
                 ->groupBy('br.player_id', 'br.game_code', 'br.game_name', 'br.provider_code');
@@ -71,7 +61,7 @@ private function fetchGameReport(Request $request)
             $resultData = DB::table('results as r')
                 ->select(
                     'r.player_id',
-                    DB::raw('COALESCE(NULLIF(r.player_name, ""), r.player_id) as player_name'),
+                    'r.player_name',
                     'r.game_code',
                     'r.game_name',
                     'r.game_provide_name',
@@ -84,11 +74,7 @@ private function fetchGameReport(Request $request)
                     DB::raw('ROUND(SUM(r.win_amount), 2) as total_result_win_amount'),
                     DB::raw('ROUND(SUM(r.net_win), 2) as total_result_net_win')
                 )
-                ->when(
-                    $request->filled('start_date'),
-                    fn($q) => $q->where('r.created_at', '>=', $request->start_date),
-                    fn($q) => $q->where('r.created_at', '>=', $defaultStartDate) // Default to 01/12/2025 10:00 AM
-                )
+                ->when($request->filled('start_date'), fn($q) => $q->where('r.created_at', '>=', $request->start_date))
                 ->when($request->filled('end_date'), fn($q) => $q->where('r.created_at', '<=', $request->end_date))
                 ->when($request->filled('user_id'), fn($q) => $q->where('r.player_id', $request->user_id))
                 ->groupBy('r.player_id', 'r.game_code', 'r.game_name', 'r.game_provide_name', 'r.player_name');
@@ -97,7 +83,7 @@ private function fetchGameReport(Request $request)
         }, 'combined_data')
         ->select(
             'player_id',
-            DB::raw('COALESCE(NULLIF(player_name, ""), player_id) as player_name'),
+            DB::raw('COALESCE(player_name, player_id) as player_name'),
             'game_code',
             DB::raw('COALESCE(game_name, game_code) as game_name'),
             'game_provide_name',
@@ -114,96 +100,6 @@ private function fetchGameReport(Request $request)
         ->orderByDesc('total_bets')
         ->paginate(10);
 }
-
-
-
-
-//     public function getGameReport(Request $request)
-// {
-//     // Generate a unique cache key
-//     $cacheKey = 'game_report_' . md5(json_encode($request->all()));
-
-//     // Check if the report exists in cache, otherwise fetch and store it
-//     if (!Cache::has($cacheKey)) {
-//         $report = $this->fetchGameReport($request);
-//         Cache::put($cacheKey, serialize($report), now()->addMinutes(5)); // Store serialized data
-//     } else {
-//         $report = unserialize(Cache::get($cacheKey)); // Retrieve and unserialize
-//     }
-
-//     return view('report.index', compact('report'));
-// }
-
-/**
- * Fetch the game report data.
- */
-// private function fetchGameReport(Request $request)
-// {
-//     return DB::query()
-//         ->fromSub(function ($query) use ($request) {
-//             $betData = DB::table('bet_n_results as br')
-//                 ->select(
-//                     'br.player_id',
-//                     DB::raw('NULL as player_name'),
-//                     'br.game_code',
-//                     'br.game_name',
-//                     'br.provider_code as game_provide_name',
-//                     DB::raw('COUNT(br.id) as total_bets'),
-//                     DB::raw('ROUND(SUM(br.bet_amount), 2) as total_bet_amount'),
-//                     DB::raw('ROUND(SUM(br.win_amount), 2) as total_win_amount'),
-//                     DB::raw('ROUND(SUM(br.net_win), 2) as total_net_win'),
-//                     DB::raw('0 as total_results'),
-//                     DB::raw('NULL as total_result_bet_amount'),
-//                     DB::raw('NULL as total_result_win_amount'),
-//                     DB::raw('NULL as total_result_net_win')
-//                 )
-//                 ->when($request->filled('start_date'), fn($q) => $q->where('br.created_at', '>=', $request->start_date))
-//                 ->when($request->filled('end_date'), fn($q) => $q->where('br.created_at', '<=', $request->end_date))
-//                 ->when($request->filled('user_id'), fn($q) => $q->where('br.player_id', $request->user_id))
-//                 ->groupBy('br.player_id', 'br.game_code', 'br.game_name', 'br.provider_code');
-
-//             $resultData = DB::table('results as r')
-//                 ->select(
-//                     'r.player_id',
-//                     'r.player_name',
-//                     'r.game_code',
-//                     'r.game_name',
-//                     'r.game_provide_name',
-//                     DB::raw('0 as total_bets'),
-//                     DB::raw('NULL as total_bet_amount'),
-//                     DB::raw('NULL as total_win_amount'),
-//                     DB::raw('NULL as total_net_win'),
-//                     DB::raw('COUNT(r.id) as total_results'),
-//                     DB::raw('ROUND(SUM(r.total_bet_amount), 2) as total_result_bet_amount'),
-//                     DB::raw('ROUND(SUM(r.win_amount), 2) as total_result_win_amount'),
-//                     DB::raw('ROUND(SUM(r.net_win), 2) as total_result_net_win')
-//                 )
-//                 ->when($request->filled('start_date'), fn($q) => $q->where('r.created_at', '>=', $request->start_date))
-//                 ->when($request->filled('end_date'), fn($q) => $q->where('r.created_at', '<=', $request->end_date))
-//                 ->when($request->filled('user_id'), fn($q) => $q->where('r.player_id', $request->user_id))
-//                 ->groupBy('r.player_id', 'r.game_code', 'r.game_name', 'r.game_provide_name', 'r.player_name');
-
-//             $query->from($betData)->unionAll($resultData);
-//         }, 'combined_data')
-//         ->select(
-//             'player_id',
-//             DB::raw('COALESCE(player_name, player_id) as player_name'),
-//             'game_code',
-//             DB::raw('COALESCE(game_name, game_code) as game_name'),
-//             'game_provide_name',
-//             DB::raw('SUM(total_bets) as total_bets'),
-//             DB::raw('ROUND(SUM(total_bet_amount), 2) as total_bet_amount'),
-//             DB::raw('ROUND(SUM(total_win_amount), 2) as total_win_amount'),
-//             DB::raw('ROUND(SUM(total_net_win), 2) as total_net_win'),
-//             DB::raw('SUM(total_results) as total_results'),
-//             DB::raw('ROUND(SUM(total_result_bet_amount), 2) as total_result_bet_amount'),
-//             DB::raw('ROUND(SUM(total_result_win_amount), 2) as total_result_win_amount'),
-//             DB::raw('ROUND(SUM(total_result_net_win), 2) as total_result_net_win')
-//         )
-//         ->groupBy('player_id', 'game_code', 'game_name', 'game_provide_name', 'player_name')
-//         ->orderByDesc('total_bets')
-//         ->paginate(10);
-// }
 
 
     // public function getGameReport(Request $request)
