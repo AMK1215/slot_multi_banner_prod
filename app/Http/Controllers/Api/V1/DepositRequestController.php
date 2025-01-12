@@ -18,21 +18,34 @@ class DepositRequestController extends Controller
 
     public function deposit(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'agent_payment_type_id' => ['required', 'integer'],
-            'amount' => ['required', 'integer', 'min: 3000'],
+            'amount' => ['required', 'integer', 'min: 1000'],
             'refrence_no' => ['required', 'digits:6'],
         ]);
         $player = Auth::user();
+        $image = null;
 
-        $deposit = DepositRequest::create([
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = uniqid('deposit') . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('assets/img/deposit/'), $filename);
+        }
+        
+        $depositData = [
             'agent_payment_type_id' => $request->agent_payment_type_id,
             'user_id' => $player->id,
             'agent_id' => $player->agent_id,
             'amount' => $request->amount,
             'refrence_no' => $request->refrence_no,
-        ]);
-
+        ];
+        
+        if ($image) {
+            $depositData['image'] = $filename;
+        }
+        
+        $deposit = DepositRequest::create($depositData);
+        
         // $admins = User::where('type', '30')->get();
         // Notification::send($admins, new PlayerDepositNotification($deposit));
         // Notify the player's agent
