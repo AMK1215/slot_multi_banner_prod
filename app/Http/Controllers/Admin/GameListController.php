@@ -23,9 +23,6 @@ class GameListController extends Controller
                 ->addColumn('game_type', function ($row) {
                     return $row->gameType->name ?? 'N/A';
                 })
-                ->addColumn('game_name', function ($row) {
-                    return $row->game_name;
-                })
                 ->addColumn('product', function ($row) {
                     return $row->product->provider_name ?? 'N/A';
                 })
