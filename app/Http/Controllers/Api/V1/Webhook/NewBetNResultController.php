@@ -93,26 +93,49 @@ class NewBetNResultController extends Controller
                     'ProviderName' => $provider_name,
                 ]);
                 // Create the transaction record
-                BetNResult::create([
-                    'user_id' => $player->id,
-                    'operator_id' => $transaction['OperatorId'],
-                    'request_date_time' => $transaction['RequestDateTime'],
-                    'signature' => $transaction['Signature'],
-                    'player_id' => $transaction['PlayerId'],
-                    'currency' => $transaction['Currency'],
-                    'tran_id' => $transaction['TranId'],
-                    'game_code' => $transaction['GameCode'],
-                    'game_name' => $game_name,
-                    'bet_amount' => $transaction['BetAmount'],
-                    'win_amount' => $transaction['WinAmount'],
-                    'net_win' => $netWin,
-                    'tran_date_time' => Carbon::parse($transaction['TranDateTime'])->format('Y-m-d H:i:s'),
-                    'provider_code' => $provider_name,
-                    'auth_token' => $transaction['AuthToken'] ?? 'default_password',
-                    'status' => 'processed',
-                    'old_balance' => $beforeBalance, // Store BEFORE balance
-                    'new_balance' => $afterBalance,  // Store AFTER balance
-                ]);
+                // BetNResult::create([
+                //     'user_id' => $player->id,
+                //     'operator_id' => $transaction['OperatorId'],
+                //     'request_date_time' => $transaction['RequestDateTime'],
+                //     'signature' => $transaction['Signature'],
+                //     'player_id' => $transaction['PlayerId'],
+                //     'currency' => $transaction['Currency'],
+                //     'tran_id' => $transaction['TranId'],
+                //     'game_code' => $transaction['GameCode'],
+                //     'game_name' => $game_name,
+                //     'bet_amount' => $transaction['BetAmount'],
+                //     'win_amount' => $transaction['WinAmount'],
+                //     'net_win' => $netWin,
+                //     'tran_date_time' => Carbon::parse($transaction['TranDateTime'])->format('Y-m-d H:i:s'),
+                //     'provider_code' => $provider_name,
+                //     'auth_token' => $transaction['AuthToken'] ?? 'default_password',
+                //     'status' => 'processed',
+                //     'old_balance' => $beforeBalance, // Store BEFORE balance
+                //     'new_balance' => $afterBalance,  // Store AFTER balance
+                // ]);
+                DB::table('bet_n_results')->insert([
+                'user_id' => $player->id,
+                'operator_id' => $transaction['OperatorId'],
+                'request_date_time' => $transaction['RequestDateTime'],
+                'signature' => $transaction['Signature'],
+                'player_id' => $transaction['PlayerId'],
+                'currency' => $transaction['Currency'],
+                'tran_id' => $transaction['TranId'],
+                'game_code' => $transaction['GameCode'],
+                'game_name' => $game_name,
+                'bet_amount' => $transaction['BetAmount'],
+                'win_amount' => $transaction['WinAmount'],
+                'net_win' => $netWin,
+                'tran_date_time' => Carbon::parse($transaction['TranDateTime'])->format('Y-m-d H:i:s'),
+                'provider_code' => $provider_name,
+                'auth_token' => $transaction['AuthToken'] ?? 'default_password',
+                'status' => 'processed',
+                'old_balance' => $beforeBalance,
+                'new_balance' => $afterBalance,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
 
                 Log::info('Transaction processed successfully', [
                     'TranId' => $transaction['TranId'],
