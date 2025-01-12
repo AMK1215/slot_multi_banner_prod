@@ -87,7 +87,10 @@
                                 <td>{{ number_format($data->old_balance, 2) }}</td>
                                 <td>{{ number_format($data->new_balance, 2) }}</td>
                                 {{-- <td>{{ $data->result_time }}</td> --}}
-                                <td>{{ $data->bet_time }}</td>
+                                {{-- <td>{{ $data->bet_time }}</td> --}}
+                                <td>{{ \Carbon\Carbon::parse($data->bet_time)->timezone('Asia/Yangon')->format('Y-m-d H:i:s') }}
+                                </td>
+
 
                             </tr>
                         @endforeach
