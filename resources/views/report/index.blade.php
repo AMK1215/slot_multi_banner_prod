@@ -1,111 +1,137 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Game Report</title>
-
-    <!-- Fonts & Bootstrap -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</head>
-
-<body>
-    <div class="container mt-4">
-        <!-- Report Header with Filters -->
-        <div class="card shadow-sm">
-            <div class="card-header bg-white">
-                <h5 class="mb-0">Game Report</h5>
-            </div>
-            <div class="card-body">
-                <form method="GET" action="{{ route('admin.game.report') }}">
-                    <div class="row">
-                        <!-- Date Range Filter -->
-                        <div class="col-md-3">
-                            <label for="start_date" class="form-label">Start Date</label>
-                            <input type="date" class="form-control" name="start_date"
-                                value="{{ request()->start_date }}">
-                        </div>
-                        <div class="col-md-3">
-                            <label for="end_date" class="form-label">End Date</label>
-                            <input type="date" class="form-control" name="end_date"
-                                value="{{ request()->end_date }}">
-                        </div>
-
-                        <!-- User ID Filter -->
-                        <div class="col-md-3">
-                            <label for="user_id" class="form-label">User ID</label>
-                            <input type="text" class="form-control" name="user_id" placeholder="Enter User ID"
-                                value="{{ request()->user_id }}">
-                        </div>
-
-                        <!-- Search Button -->
-                        <div class="col-md-3 d-flex align-items-end">
-                            <button type="submit" class="btn btn-primary w-100">Search</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Report Table -->
-        <div class="card mt-3 shadow-sm">
-            <div class="card-body">
-                <table class="table table-bordered table-hover">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>User ID</th>
-                            <th>Name</th>
-                            <th>Valid Turnover</th>
-                            <th>Win/Loss</th>
-                            <th>Game Provider</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($report as $data)
-                            <tr>
-                                <td>{{ $data->player_id }}</td>
-                                <td>{{ $data->player_name }}</td>
-                                <td>{{ number_format($data->total_bet_amount, 2) }}</td>
-                                <td class="{{ $data->total_net_win < 0 ? 'text-danger' : 'text-success' }}">
-                                    {{ number_format($data->total_net_win, 2) }}
-                                </td>
-                                <td>{{ $data->game_provide_name }}</td>
-                                <td>
-                                    <a href="{{ route('admin.game.report.detail', ['player_id' => $data->player_id, 'game_code' => $data->game_code]) }}"
-                                        class="btn btn-primary btn-sm">
-                                        Details
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-
-                <!-- Pagination -->
-                <div class="d-flex justify-content-center">
-                    {{ $report->links() }}
+@extends('layouts.master')
+@section('content')
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-12">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                        <li class="breadcrumb-item active">W/L Report</li>
+                    </ol>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <style>
-        .text-danger {
-            color: red;
-        }
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-end mb-3">
+                        <a href="{{ route('home') }}" class="btn btn-success " style="width: 100px;"><i
+                                class="fas fa-arrow-left text-white  mr-2"></i>Back</a>
+                    </div>
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0">Game Report</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="GET" action="{{ route('admin.game.report') }}">
+                                <div class="row">
+                                    <!-- Date Range Filter -->
+                                    <div class="col-md-3">
+                                        <label for="start_date" class="form-label">Start Date</label>
+                                        <input type="date" class="form-control" name="start_date"
+                                            value="{{ request()->start_date }}">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="end_date" class="form-label">End Date</label>
+                                        <input type="date" class="form-control" name="end_date"
+                                            value="{{ request()->end_date }}">
+                                    </div>
 
-        .text-success {
-            color: green;
-        }
-    </style>
+                                    <!-- User ID Filter -->
+                                    <div class="col-md-3">
+                                        <label for="user_id" class="form-label">User ID</label>
+                                        <input type="text" class="form-control" name="user_id"
+                                            placeholder="Enter User ID" value="{{ request()->user_id }}">
+                                    </div>
 
-</body>
+                                    <!-- Search Button -->
+                                    <div class="col-md-3 d-flex align-items-end">
+                                        <button type="submit" class="btn btn-primary w-100">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card " style="border-radius: 20px;">
 
-</html>
+
+                        <div class="card-body">
+                            <table id="" class="table table-bordered table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Player ID</th>
+                                        {{-- <th>Player Name</th> --}}
+                                        <th>Game Code</th>
+                                        <th>Game Name</th>
+                                        <th>Game Provider</th>
+                                        <th>Total Bets</th>
+                                        <th>Total Bet Amount</th>
+                                        <th>Total Win Amount</th>
+                                        <th>Total Net Win</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($report as $data)
+                                        <tr>
+                                            <td>{{ $data->player_id }}</td>
+                                            {{-- <td>{{ $data->player_name }}</td> --}}
+                                            <td>{{ $data->game_code }}</td>
+                                            <td>{{ $data->game_name }}</td>
+                                            <td>{{ $data->game_provide_name }}</td>
+                                            <td>
+                                                @if ($data->total_results == 0)
+                                                    {{ $data->total_bets }}
+                                                @else
+                                                    {{ $data->total_results }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($data->total_result_bet_amount == 0)
+                                                    {{ number_format($data->total_bet_amount, 2) }}
+                                                @else
+                                                    {{ number_format($data->total_result_bet_amount, 2) }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($data->total_result_bet_amount == 0)
+                                                    {{ number_format($data->total_win_amount, 2) }}
+                                                @else
+                                                    {{ number_format($data->total_result_win_amount, 2) }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($data->total_result_net_win == 0)
+                                                    {{ number_format($data->total_net_win, 2) }}
+                                                @else
+                                                    {{ number_format($data->total_result_net_win, 2) }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('admin.game.report.detail', ['player_id' => $data->player_id, 'game_code' => $data->game_code]) }}"
+                                                    class="btn btn-primary">
+                                                    Detail
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+
+                            <!-- Laravel Pagination Links -->
+                            <div class="d-flex justify-content-center">
+                                {{ $report->links() }}
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+        </div>
+    </section>
+@endsection
