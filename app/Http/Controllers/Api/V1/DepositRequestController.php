@@ -22,30 +22,37 @@ class DepositRequestController extends Controller
             'agent_payment_type_id' => ['required', 'integer'],
             'amount' => ['required', 'integer', 'min: 1000'],
             'refrence_no' => ['required', 'digits:6'],
-            'image' => ['required']
         ]);
         $player = Auth::user();
-        $image = $request->file('image');
-        $ext = $image->getClientOriginalExtension();
-        $filename = uniqid('deposit').'.'.$ext; 
-        $image->move(public_path('assets/img/deposit/'), $filename); 
+        $image = null;
 
-        $deposit = DepositRequest::create([
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = uniqid('deposit') . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('assets/img/deposit/'), $filename);
+        }
+        
+        $depositData = [
             'agent_payment_type_id' => $request->agent_payment_type_id,
             'user_id' => $player->id,
             'agent_id' => $player->agent_id,
             'amount' => $request->amount,
             'refrence_no' => $request->refrence_no,
-            'image' => $filename
-        ]);
-
+        ];
+        
+        if ($image) {
+            $depositData['image'] = $filename;
+        }
+        
+        $deposit = DepositRequest::create($depositData);
+        
         // $admins = User::where('type', '30')->get();
         // Notification::send($admins, new PlayerDepositNotification($deposit));
         // Notify the player's agent
-        $agent = User::find($player->agent_id);
-        if ($agent) {
-            $agent->notify(new PlayerDepositNotification($deposit));
-        }
+        // $agent = User::find($player->agent_id);
+        // if ($agent) {
+        //     $agent->notify(new PlayerDepositNotification($deposit));
+        // }
 
         return $this->success($deposit, 'Deposit Request Success');
 
