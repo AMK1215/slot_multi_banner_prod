@@ -49,10 +49,10 @@ class DepositRequestController extends Controller
         // $admins = User::where('type', '30')->get();
         // Notification::send($admins, new PlayerDepositNotification($deposit));
         // Notify the player's agent
-        // $agent = User::find($player->agent_id);
-        // if ($agent) {
-        //     $agent->notify(new PlayerDepositNotification($deposit));
-        // }
+        $agent = User::find($player->agent_id);
+        if ($agent) {
+            $agent->notify(new PlayerDepositNotification($deposit));
+        }
 
         return $this->success($deposit, 'Deposit Request Success');
 
