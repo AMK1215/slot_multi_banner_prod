@@ -30,7 +30,8 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Player Name</th>
-                                            <th>Email</th>
+                                            <th>PlayerId</th>
+                                            <th>AgentName</th>
                                             <th>Phone</th>
                                             <th>Status</th>
                                             <th>Balance</th>
@@ -43,7 +44,8 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $player->name }}</td>
-                                                    <td>{{ $player->email }}</td>
+                                                    <td>{{ $player->user_name }}</td>
+                                                    <td>{{$player->parent->name}}</td>
                                                     <td>{{ $player->phone }}</td>
                                                     <td>
                                                         @if ($player->status == 1)

@@ -101,9 +101,10 @@
                                 <a href="#" class="dropdown-item dropdown-footer text-center text-primary fw-bold">See
                                     All Notifications</a>
                             </li>
-                        @endcan
+                     
                     </ul>
                 </li>
+                   @endcan
 
                 {{-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button"
@@ -751,6 +752,7 @@
                 "lengthChange": false,
                 "autoWidth": false,
                 "order": true,
+                "pageLength": 5,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         });
