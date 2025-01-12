@@ -89,8 +89,8 @@
 			/*Endtime must be > current time*/
 			endtimeYear: 0,
 			endtimeMonth: 0,
-			endtimeDate: 1,
-			endtimeHours: 18,
+			endtimeDate: 0,
+			endtimeHours: 3,
 			endtimeMinutes: 0,
 			endtimeSeconds: 0,
 			timeZone: "" 
