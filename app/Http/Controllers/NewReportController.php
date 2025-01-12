@@ -33,7 +33,7 @@ class NewReportController extends Controller
 private function fetchGameReport(Request $request)
 {
     // Define default start date: 01/12/2025 at 10:00 AM
-    $defaultStartDate = '2025-01-12 10:00:00';
+    $defaultStartDate = '01-12-2025';
 
     return DB::query()
         ->fromSub(function ($query) use ($request, $defaultStartDate) {
