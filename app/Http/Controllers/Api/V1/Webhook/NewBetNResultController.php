@@ -82,9 +82,16 @@ class NewBetNResultController extends Controller
 
                 // Retrieve game information based on the game code
                 $game = GameList::where('game_code', $transaction['GameCode'])->first();
-                $game_name = $game ? $game->game_name : null;
-                $provider_name = $game ? $game->game_provide_name : null;
+                // $game_name = $game ? $game->game_name : null;
+                // $provider_name = $game ? $game->game_provide_name : null;
+                $game_name = $game ? $game->game_name : 'Unknown Game';
+                $provider_name = $game ? $game->game_provide_name : 'Unknown Provider';
 
+                Log::info('Transaction processed successfully', [
+                    'TranId' => $transaction['TranId'],
+                    'Game Name' => $game_name,
+                    'ProviderName' => $provider_name,
+                ]);
                 // Create the transaction record
                 BetNResult::create([
                     'user_id' => $player->id,
