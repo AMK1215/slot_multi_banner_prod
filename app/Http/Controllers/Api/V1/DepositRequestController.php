@@ -18,12 +18,17 @@ class DepositRequestController extends Controller
 
     public function deposit(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'agent_payment_type_id' => ['required', 'integer'],
-            'amount' => ['required', 'integer', 'min: 3000'],
+            'amount' => ['required', 'integer', 'min: 1000'],
             'refrence_no' => ['required', 'digits:6'],
+            'image' => ['required']
         ]);
         $player = Auth::user();
+        $image = $request->file('image');
+        $ext = $image->getClientOriginalExtension();
+        $filename = uniqid('deposit').'.'.$ext; 
+        $image->move(public_path('assets/img/deposit/'), $filename); 
 
         $deposit = DepositRequest::create([
             'agent_payment_type_id' => $request->agent_payment_type_id,
@@ -31,6 +36,7 @@ class DepositRequestController extends Controller
             'agent_id' => $player->agent_id,
             'amount' => $request->amount,
             'refrence_no' => $request->refrence_no,
+            'image' => $filename
         ]);
 
         // $admins = User::where('type', '30')->get();

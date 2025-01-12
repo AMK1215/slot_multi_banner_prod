@@ -118,7 +118,38 @@
                         </div>
                     </div>
                 @endcan
-
+                @can('owner_access')
+                    <div class="col-lg-4 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                    <h3>{{ $totalAgent }}</h3>
+                                <p>Total Agent</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-pie-graph"></i>
+                            </div>
+                            <a href="{{ route('admin.agent.index') }}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                @endcan
+                @can('owner_access')
+                    <div class="col-lg-4 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-primary">
+                            <div class="inner">
+                                    <h3>{{ $totalPlayer }}</h3>
+                                <p>Total Player</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-pie-graph"></i>
+                            </div>
+                            <a href="{{ route('admin.GetOwnerPlayerList') }}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                @endcan
                 <!-- ./col -->
 
                 {{-- senior balance update end --}}

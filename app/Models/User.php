@@ -245,7 +245,7 @@ class User extends Authenticatable implements Wallet
     public function Agentplayers()
     {
         return $this->children()->whereHas('roles', function ($query) {
-            $query->where('name', 'Player'); // Assuming you have roles for users
+            $query->where('role_id', self::PLAYER_ROLE);
         });
     }
 
