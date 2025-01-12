@@ -120,6 +120,6 @@ class NewReportController extends Controller
         // Fetch active product types
         $productTypes = Product::where('is_active', 1)->get();
 
-        return view('report.v2_report_detail', compact('details', 'productTypes'));
+        return view('report.detail', compact('details', 'productTypes'));
     }
 }
