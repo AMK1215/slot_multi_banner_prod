@@ -101,7 +101,7 @@
                                 <a href="#" class="dropdown-item dropdown-footer text-center text-primary fw-bold">See
                                     All Notifications</a>
                             </li>
-                     
+
                     </ul>
                 </li>
                    @endcan
@@ -491,6 +491,14 @@
                                     <i class="fas fa-users"></i>
                                     <p>
                                         Player List
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.agent.game.report') }}" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <p>
+                                        Win/LoseReport
                                     </p>
                                 </a>
                             </li>

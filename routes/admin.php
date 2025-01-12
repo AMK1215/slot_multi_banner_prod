@@ -195,6 +195,7 @@ Route::group([
     Route::group(['prefix' => 'slot'], function () {
 
         Route::get('/game-report', [NewReportController::class, 'getGameReport'])->name('game.report');
+        Route::get('/agent-game-report', [NewReportController::class, 'getGameAgentReport'])->name('agent.game.report');
         Route::get('/game-report/{player_id}/{game_code}', [NewReportController::class, 'getGameReportDetail'])->name('game.report.detail');
 
         Route::get('report', [ReportController::class, 'index'])->name('report.index');

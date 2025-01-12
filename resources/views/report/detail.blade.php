@@ -13,14 +13,25 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .sticky-top {
+            position: sticky;
+            top: 0;
+            z-index: 1020;
+            background-color: white;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container mt-4">
         <!-- Report Header with Filters -->
         <div class="card shadow-sm">
-            <div class="card-header bg-white">
-                <h5 class="mb-0">Game Report</h5>
+            <div class="card-header bg-white sticky-top shadow-sm">
+                <h5 class="mb-0 d-flex justify-content-between align-items-center">
+                    Game Report Detail
+                    <a href="{{ route('admin.game.report') }}" class="btn btn-primary">Back To Report</a>
+                </h5>
             </div>
             <div class="card-body">
                 <form method="GET" action="{{ route('admin.game.report') }}">
