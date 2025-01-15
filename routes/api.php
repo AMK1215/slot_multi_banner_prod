@@ -85,6 +85,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('promotion', [PromotionController::class, 'index']);
     Route::get('bannerText', [BannerController::class, 'bannerText']);
+    Route::get('winnerText', [BannerController::class, 'winnerText']);
     Route::get('banner_Text', [BannerController::class, 'bannerTest']);
     Route::get('popup-ads-banner', [BannerController::class, 'AdsBannerIndex']);
     Route::get('ads-banner', [BannerController::class, 'AdsBannerTest']);
