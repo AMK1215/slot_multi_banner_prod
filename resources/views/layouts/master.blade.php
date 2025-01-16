@@ -692,7 +692,12 @@
                                             <p>Promotions</p>
                                         </a>
                                     </li>
-
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.winner_text.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>WinnerText</p>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         @endcan

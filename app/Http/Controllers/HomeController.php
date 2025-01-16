@@ -73,16 +73,14 @@ class HomeController extends Controller
             })
             ->first();
         
-            return view('admin.maintain.index');
-
-        // return view('admin.dashboard', compact(
-        //     'user',
-        //     'totalBalance',
-        //     'role',
-        //     'playerBalance',
-        //     'totalAgent',
-        //     'totalPlayer'
-        // ));
+        return view('admin.dashboard', compact(
+            'user',
+            'totalBalance',
+            'role',
+            'playerBalance',
+            'totalAgent',
+            'totalPlayer'
+        ));
     }
 
     public function balanceUp(Request $request)

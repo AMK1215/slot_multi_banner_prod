@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\SubAccountController;
 use App\Http\Controllers\Admin\TopTenWithdrawController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\TransferLog\TransferLogController;
+use App\Http\Controllers\Admin\WinnerTextController;
 use App\Http\Controllers\Admin\WithDraw\WithDrawRequestController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewReportController;
@@ -76,6 +77,7 @@ Route::group([
 
     Route::resource('adsbanners', BannerAdsController::class);
     Route::resource('text', BannerTextController::class);
+    Route::resource('winner_text', WinnerTextController::class);
     Route::resource('/promotions', PromotionController::class);
     Route::resource('contact', ContactController::class);
     Route::resource('paymentTypes', PaymentTypeController::class);

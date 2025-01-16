@@ -8,6 +8,7 @@ use App\Models\Admin\Banner;
 use App\Models\Admin\BannerAds;
 use App\Models\Admin\BannerText;
 use App\Models\Admin\TopTenWithdraw;
+use App\Models\WinnerText;
 use App\Traits\HttpResponses;
 use Illuminate\Support\Facades\Auth;
 
@@ -142,5 +143,21 @@ class BannerController extends Controller
         $data = BannerText::where('admin_id', $admin->id)->latest()->first();
 
         return $this->success($data, 'BannerTexts retrieved successfully.');
+    }
+
+    public function winnerText()
+    {
+        $user = Auth::user();
+
+        if ($user->parent) {
+            $admin = $user->parent->parent ?? $user->parent;
+        } else {
+            $admin = $user;
+        }
+
+        $data = WinnerText::where('owner_id', $admin->id)->latest()->first();
+
+        return $this->success($data, 'Winner Text retrieved successfully.');
+
     }
 }

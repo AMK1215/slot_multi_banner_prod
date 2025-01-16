@@ -12,8 +12,14 @@ class AdminLogoMiddleware
     public function handle($request, Closure $next)
     {
         if (Auth::check()) {
-            $logoFilename = Auth::user()->agent_logo;
-            $siteName = Auth::user()->site_name ?? 'DelightMyanmar'; // Default site name
+            $user = Auth::user();
+
+            $logoFilename = $user->agent_logo;
+            if($user->hasRole('Agent')){
+                $siteName = 'Agent Dashboard';
+            }else{
+                $siteName = $user->site_name ?? 'DelightMyanmar'; // Default site name
+            }
 
             //Log::info('Auth User Logo:', ['logo' => $logoFilename]);
             //Log::info('Site Name:', ['site_name' => $siteName]);
