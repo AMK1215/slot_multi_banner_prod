@@ -1,4 +1,4 @@
-php artisan migrate --path=/database/migrations/2025_01_06_023427_create_notifications_table.php
+php artisan migrate --path=/database/migrations/2025_01_11_075203_add_after_before_column_to_results_table.php
 php artisan make:migration add_order_column_to_game_lists_table --table=game_lists
 
 php artisan make:migration make_name_and_phone_nullable_in_users_table --table=users
