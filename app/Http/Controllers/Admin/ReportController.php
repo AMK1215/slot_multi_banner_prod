@@ -24,14 +24,14 @@ class ReportController extends Controller
         return view('admin.reports.index', compact('report'));
     }
     
-    public function getReportDetails(Request $request, $player_id)
+    public function getReportDetails(Request $request, $playerId)
     {
 
-        $details = $this->getPlayerDetails($player_id, $request);
+        $details = $this->getPlayerDetails($playerId, $request);
 
         $productTypes = Product::where('is_active', 1)->get();
 
-        return view('admin.reports.detail', compact('details','productTypes' ));
+        return view('admin.reports.detail', compact('details','productTypes', 'playerId'));
     }
 
 
