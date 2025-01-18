@@ -153,12 +153,9 @@ class ReportController extends Controller
 
      private function getPlayerDetails($playerId, $request)
     {
-        // $startDate = $request->start_date ? Carbon::parse($request->start_date)->format('Y-m-d H:i') : Carbon::today()->startOfDay()->format('Y-m-d H:i');
-        // $endDate = $request->end_date ? Carbon::parse($request->end_date)->format('Y-m-d H:i') :  Carbon::today()->endOfDay()->format('Y-m-d H:i');
+        $startDate = $request->start_date ? Carbon::parse($request->start_date)->format('Y-m-d H:i') : Carbon::today()->startOfDay()->format('Y-m-d H:i');
+        $endDate = $request->end_date ? Carbon::parse($request->end_date)->format('Y-m-d H:i') :  Carbon::today()->endOfDay()->format('Y-m-d H:i');
         
-        $startDate = '2024-11-01 00:00:00';
-        $endDate =  '2025-01-14 23:59:59';
-
         $combinedSubquery = DB::table('results')
             ->select(
                 'user_id',
