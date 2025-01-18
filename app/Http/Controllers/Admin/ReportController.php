@@ -91,9 +91,9 @@ class ReportController extends Controller
 
     private function buildQuery(Request $request, $adminId)
     {
-        $startDate = $request->start_date ? Carbon::parse($request->start_date)->format('Y-m-d H:i') : Carbon::today()->startOfDay()->format('Y-m-d H:i');
-        $endDate = $request->end_date ? Carbon::parse($request->end_date)->format('Y-m-d H:i') :  Carbon::today()->endOfDay()->format('Y-m-d H:i');
-        
+        $startDate = $request->start_date ??  Carbon::today()->startOfDay()->toDateString();
+        $endDate = $request->end_date ?? Carbon::today()->endOfDay()->toDateString() ;
+
         $resultsSubquery = Result::select(
             'results.user_id',
             DB::raw('SUM(results.total_bet_amount) as total_bet_amount'),
@@ -102,7 +102,7 @@ class ReportController extends Controller
             DB::raw('COUNT(results.game_code) as total_count'),
         )
             ->groupBy('results.user_id')
-            ->whereBetween('results.created_at', [$startDate, $endDate]);
+            ->whereBetween('results.created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
 
         $betsSubquery = BetNResult::select(
             'bet_n_results.user_id',
@@ -113,7 +113,7 @@ class ReportController extends Controller
 
         )
             ->groupBy('bet_n_results.user_id')
-            ->whereBetween('bet_n_results.created_at', [$startDate, $endDate]);
+            ->whereBetween('bet_n_results.created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
 
         $query = DB::table('users as players')
             ->select(
@@ -153,9 +153,9 @@ class ReportController extends Controller
 
      private function getPlayerDetails($playerId, $request)
     {
-        $startDate = $request->start_date ? Carbon::parse($request->start_date)->format('Y-m-d H:i') : Carbon::today()->startOfDay()->format('Y-m-d H:i');
-        $endDate = $request->end_date ? Carbon::parse($request->end_date)->format('Y-m-d H:i') :  Carbon::today()->endOfDay()->format('Y-m-d H:i');
-        
+        $startDate = $request->start_date ??  Carbon::today()->startOfDay()->toDateString();
+        $endDate = $request->end_date ?? Carbon::today()->endOfDay()->toDateString() ;
+
         $combinedSubquery = DB::table('results')
             ->select(
                 'user_id',
@@ -169,7 +169,7 @@ class ReportController extends Controller
             )
             ->join('game_lists', 'game_lists.game_id', '=', 'results.game_code')
             ->join('products', 'products.id', '=', 'game_lists.product_id')
-            ->whereBetween('results.created_at', [$startDate, $endDate])
+            ->whereBetween('results.created_at', [$startDate . ' 00:00:00', $endDate .' 23:59:59'])
             ->when($request->product_id, fn ($query) => $query->where('products.id', $request->product_id))
             ->unionAll(
                 DB::table('bet_n_results')
@@ -185,7 +185,7 @@ class ReportController extends Controller
                     )
                     ->join('game_lists', 'game_lists.game_id', '=', 'bet_n_results.game_code')
                     ->join('products', 'products.id', '=', 'game_lists.product_id')
-                    ->whereBetween('bet_n_results.created_at', [$startDate, $endDate])
+                    ->whereBetween('bet_n_results.created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59'])
                     ->when($request->product_id, fn ($query) => $query->where('products.id', $request->product_id))
             );
 
