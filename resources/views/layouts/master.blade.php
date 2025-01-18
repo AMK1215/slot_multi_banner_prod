@@ -632,7 +632,7 @@
                                 </ul>
                             </li>
                         @endcan
-                        @can('agent_access')
+                        @can('agent_index')
                             <li class="nav-item">
                                 <a href="{{ route('admin.subacc.index') }}" class="nav-link">
                                     <i class="fas fa-address-book"></i>
