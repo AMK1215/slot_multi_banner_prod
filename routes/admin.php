@@ -201,7 +201,7 @@ Route::group([
         Route::get('/game-report/{player_id}/{game_code}', [NewReportController::class, 'getGameReportDetail'])->name('game.report.detail');
 
         Route::get('report', [ReportController::class, 'index'])->name('report.index');
-        Route::get('reports/details/{game_provide_name}', [ReportController::class, 'getReportDetails'])->name('reports.details');
+        Route::get('reports/details/{player_id}', [ReportController::class, 'getReportDetails'])->name('reports.details');
         Route::get('adminreport', [ReportController::class, 'Reportindex'])->name('report.adminindex');
         Route::get('reports/player/{playerId}', [ReportController::class, 'playerDetails'])->name('reports.player.details');
 

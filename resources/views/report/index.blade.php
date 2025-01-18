@@ -27,7 +27,7 @@
                             <h5 class="mb-0">Game Report</h5>
                         </div>
                         <div class="card-body">
-                            <form method="GET" action="{{ route('admin.game.report') }}">
+                            <form method="GET" action="{{ route('admin.slot.report.index') }}">
                                 <div class="row">
                                     <!-- Date Range Filter -->
                                     <div class="col-md-3">
@@ -79,40 +79,12 @@
                                     @foreach ($report as $data)
                                         <tr>
                                             <td>{{ $data->player_id }}</td>
-                                            {{-- <td>{{ $data->player_name }}</td> --}}
                                             <td>{{ $data->game_code }}</td>
                                             <td>{{ $data->game_name }}</td>
                                             <td>{{ $data->game_provide_name }}</td>
+                                            
                                             <td>
-                                                @if ($data->total_results == 0)
-                                                    {{ $data->total_bets }}
-                                                @else
-                                                    {{ $data->total_results }}
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($data->total_result_bet_amount == 0)
-                                                    {{ number_format($data->total_bet_amount, 2) }}
-                                                @else
-                                                    {{ number_format($data->total_result_bet_amount, 2) }}
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($data->total_result_bet_amount == 0)
-                                                    {{ number_format($data->total_win_amount, 2) }}
-                                                @else
-                                                    {{ number_format($data->total_result_win_amount, 2) }}
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($data->total_result_net_win == 0)
-                                                    {{ number_format($data->total_net_win, 2) }}
-                                                @else
-                                                    {{ number_format($data->total_result_net_win, 2) }}
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('admin.game.report.detail', ['player_id' => $data->player_id, 'game_code' => $data->game_code]) }}"
+                                                <a href="{{ route('admin.report.detail', ['player_id' => $data->player_id ]) }}"
                                                     class="btn btn-primary">
                                                     Detail
                                                 </a>

@@ -271,32 +271,34 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item menu-open">
-                            <a href="{{ route('home') }}" class="nav-link active">
+                            <a href="{{ route('home') }}" class="nav-link {{(Route::current()->getName() == 'home') ? 'active' : ''}}">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard
                                 </p>
                             </a>
                         </li>
-                        @can('senior_access')
-                            <li class="nav-item">
-                                <a href="{{ route('admin.game.report') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
+
+                        <li class="nav-item">
+                                <a href="{{ route('admin.report.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.report.index') ? 'active' : ''}}">
+                                <i class="fas fa-file-invoice"></i>
                                     <p>
                                         Win/LoseReport
                                     </p>
                                 </a>
                             </li>
+                        @can('senior_access')
+
                             <li class="nav-item">
-                                <a href="{{ route('admin.SeniorHierarchy') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
+                                <a href="{{ route('admin.SeniorHierarchy') }}" class="nav-link {{(Route::current()->getName() == 'admin.SeniorHierarchy') ? 'active' : ''}}">
+                                <i class="fas fa-info-circle"></i>
                                     <p>
                                         SeniorHierarchy
                                     </p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('admin.GetAllOwners') }}" class="nav-link">
+                                <a href="{{ route('admin.GetAllOwners') }}" class="nav-link {{(Route::current()->getName() == 'admin.GetAllOwners') ? 'active' : ''}}">
                                     <i class="fas fa-users"></i>
                                     <p>
                                         Owner with Agent
@@ -305,179 +307,32 @@
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('admin.owner.index') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
+                                <i class="fas fa-user"></i>
                                     <p>
                                         Owner List
                                     </p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('admin/slot/daily-summaries') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
+                                <a href="{{ route('admin.daily_summaries.index')}}" class="nav-link {{(Route::current()->getName() === 'admin.daily_summaries.index') ? 'active' : ''}}">
+                                <i class="fab fa-dochub"></i>
                                     <p>
                                         Daily W/L Report
                                     </p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('admin/slot/seniorresults') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
-                                    <p>
-                                        Result
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('admin/slot/seniorbets') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
-                                    <p>
-                                        Bet
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('admin/slot/seniorbetnresults') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
-                                    <p>
-                                        BetNResult
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('admin/slot/report') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
-                                    <p>
-                                        W/L Report V1
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('admin/slot/reports/senior') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
-                                    <p>
-                                        W/L Report V2
-                                    </p>
-                                </a>
-                            </li>
-                            {{-- <li class="nav-item">
-                                <a href="{{ url('admin/slot/results/user/P87044857') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
-                                    <p>
-                                        W/L Report V3
-                                    </p>
-                                </a>
-                            </li> --}}
-                            <li class="nav-item">
-                                <a href="{{ url('admin/slot/result-search') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
-                                    <p>
-                                        W/L Report V3
-                                    </p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{{ url('admin/top-10-withdraw-log') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
+                                <a href="{{ route('admin.TopTenWithdraw') }}" class="nav-link {{(Route::current()->getName() == 'admin.TopTenWithdraw') ? 'active' : ''}}">
+                                <i class="fas fa-swatchbook"></i>
                                     <p>
                                         WithdrawTopTen
                                     </p>
                                 </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-tools"></i>
-                                    <p>
-                                        Shan
-                                        <i class="fas fa-angle-left right"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="{{ url('admin/shan-report') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Win/Lose</p>
-                                        </a>
-                                    </li>
-
-                                </ul>
-                            </li>
-                        @endcan
-                        @can('owner_access')
-                            <li class="nav-item">
-                                <a href="{{ url('admin/slot/adminreport') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
-                                    <p>
-                                        W/L Report V1
-                                    </p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{{ url('admin/slot/reports/owner') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
-                                    <p>
-                                        W/L Report V2
-                                    </p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{{ url('admin/slot/result-search') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
-                                    <p>
-                                        W/L Report V3
-                                    </p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{{ route('admin.top-10-withdraws.index') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
-                                    <p>
-                                        WithdrawTopTen
-                                    </p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{{ route('admin.GetOwnerPlayerList') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
-                                    <p>
-                                        Player List
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link"
-                                    href="{{ route('admin.changeSiteName', \Illuminate\Support\Facades\Auth::id()) }}">
-                                    Update PlayerSiteLikn
-
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-tools"></i>
-                                    <p>
-                                        Shan
-                                        <i class="fas fa-angle-left right"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="{{ url('admin/shan-report') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Win/Lose</p>
-                                        </a>
-                                    </li>
-
-                                </ul>
                             </li>
                         @endcan
                         @can('agent_index')
                             <li class="nav-item">
-                                <a href="{{ route('admin.agent.index') }}" class="nav-link">
+                                <a href="{{ route('admin.agent.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.agent.index') ? 'active' : ''}}">
                                     <i class="fas fa-users"></i>
                                     <p>
                                         Agent List
@@ -485,71 +340,43 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('player_index')
-                            <li class="nav-item">
-                                <a href="{{ route('admin.player.index') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
+                        @can('owner_access')
+                        <li class="nav-item">
+                                <a href="{{ route('admin.GetOwnerPlayerList') }}" class="nav-link {{(Route::current()->getName() == 'admin.GetOwnerPlayerList') ? 'active' : ''}}">
+                                <i class="fas fa-user"></i>
                                     <p>
                                         Player List
                                     </p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('admin.agent.game.report') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
+                                <a href="{{ route('admin.top-10-withdraws.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.top-10-withdraws.index') ? 'active' : ''}}">
+                                <i class="fas fa-swatchbook"></i>
                                     <p>
-                                        Win/LoseReport
+                                        WithdrawTopTen
                                     </p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('admin/slot/agentreport') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
-                                    <p>
-                                        W/L Report V1
-                                    </p>
+                                <a href="{{ route('admin.changeSiteName', Auth::id()) }}" class="nav-link {{(Route::current()->getName() == 'admin.changeSiteName') ? 'active' : ''}}">
+                                    <i class="fas fa-link"></i>
+                                    <p>PlayerSiteLink</p>
                                 </a>
                             </li>
-
+                        @endcan
+                        @can('player_index')
                             <li class="nav-item">
-                                <a href="{{ url('admin/slot/reports/agent') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
+                                <a href="{{ route('admin.player.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.player.index') ? 'active' : ''}}">
+                                    <i class="fas fa-user"></i>
                                     <p>
-                                        W/L Report V2
+                                        Player List
                                     </p>
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('admin/slot/result-search') }}" class="nav-link">
-                                    <i class="fas fa-users"></i>
-                                    <p>
-                                        W/L Report V3
-                                    </p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-tools"></i>
-                                    <p>
-                                        Shan
-                                        <i class="fas fa-angle-left right"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="{{ url('admin/agent-shan-report') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Win/Lose</p>
-                                        </a>
-                                    </li>
-
-                                </ul>
                             </li>
                         @endcan
                         @can('contact')
                             <li class="nav-item">
-                                <a href="{{ route('admin.contact.index') }}" class="nav-link">
+                                <a href="{{ route('admin.contact.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.contact.index') ? 'active' : ''}}">
                                     <i class="fas fa-address-book"></i>
                                     <p>
                                         Contact
@@ -559,8 +386,8 @@
                         @endcan
                         @can('bank')
                             <li class="nav-item">
-                                <a href="{{ route('admin.bank.index') }}" class="nav-link">
-                                    <i class="fas fa-address-book"></i>
+                                <a href="{{ route('admin.bank.index') }}" class="nav-link  {{(Route::current()->getName() == 'admin.bank.index') ? 'active' : ''}}">
+                                <i class="fas fa-university"></i>
                                     <p>
                                         Bank
                                     </p>
@@ -569,8 +396,8 @@
                         @endcan
                         @can('withdraw')
                             <li class="nav-item">
-                                <a href="{{ route('admin.agent.withdraw') }}" class="nav-link">
-                                    <i class="fas fa-address-book"></i>
+                                <a href="{{ route('admin.agent.withdraw') }}" class="nav-link {{(Route::current()->getName() == 'admin.agent.withdraw') ? 'active' : ''}}">
+                                <i class="fas fa-comment-dollar"></i>
                                     <p>
                                         WithDraw Request
                                     </p>
@@ -579,8 +406,8 @@
                         @endcan
                         @can('deposit')
                             <li class="nav-item">
-                                <a href="{{ route('admin.agent.deposit') }}" class="nav-link">
-                                    <i class="fas fa-address-book"></i>
+                                <a href="{{ route('admin.agent.deposit') }}" class="nav-link {{(Route::current()->getName() == 'admin.agent.deposit') ? 'active' : ''}}">
+                                <i class="fab fa-dochub"></i>
                                     <p>
                                         Deposit Request
                                     </p>
@@ -588,8 +415,8 @@
                             </li>
                         @endcan
                         <li class="nav-item">
-                            <a href="{{ route('admin.transferLog') }}" class="nav-link">
-                                <i class="fas fa-address-book"></i>
+                            <a href="{{ route('admin.transferLog') }}" class="nav-link {{(Route::current()->getName() == 'admin.transferLog') ? 'active' : ''}}">
+                            <i class="fas fa-exchange-alt"></i>
                                 <p>
                                     Transaction Log
                                 </p>
@@ -597,8 +424,17 @@
                         </li>
                         @can('senior_access')
                             <li class="nav-item">
+                                <a href="{{ route('admin.roles.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.roles.index') ? 'active' : ''}}">
+                                <i class="far fa-registered"></i>
+                                    <p>
+                                        Role
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-tools"></i>
+                                    <i class="fas fa-tools"></i>
                                     <p>
                                         GSC Settings
                                         <i class="fas fa-angle-left right"></i>
@@ -606,25 +442,13 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.gameLists.index') }}" class="nav-link">
+                                        <a href="{{ route('admin.gameLists.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.gameLists.index') ? 'active' : ''}}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>GSC GameList</p>
                                         </a>
                                     </li>
-                                    {{-- <li class="nav-item">
-                                        <a href="{{ route('admin.gamelistnew.index') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Add New GameList</p>
-                                        </a>
-                                    </li> --}}
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.gameLists.search_index') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Search GameList</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.gametypes.index') }}" class="nav-link">
+                                        <a href="{{ route('admin.gametypes.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.gametypes.index') ? 'active' : ''}}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>GSC GameProvider</p>
                                         </a>
@@ -632,68 +456,77 @@
                                 </ul>
                             </li>
                         @endcan
-                        @can('agent_index')
+                        @can('agent_access')
                             <li class="nav-item">
-                                <a href="{{ route('admin.subacc.index') }}" class="nav-link">
-                                    <i class="fas fa-address-book"></i>
+                                <a href="{{ route('admin.subacc.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.subacc.index') ? 'active' : ''}}">
+                                <i class="fas fa-user-plus"></i>
                                     <p>
                                         Sub Account
                                     </p>
                                 </a>
                             </li>
                         @endcan
-                        @can('senior_access')
-                            <li class="nav-item">
-                                <a href="{{ route('admin.roles.index') }}" class="nav-link">
-                                    <i class="fas fa-address-book"></i>
+                            <li class="nav-item  {{ (Route::current()->getName() == 'admin.shan.reports.index') ? 'menu-open' : '' }}">
+                                <a href="" class="nav-link">
+                                <i class="fas fa-tools"></i>
                                     <p>
-                                        Role
+                                        Shan
+                                        <i class="fas fa-angle-left right"></i>
                                     </p>
                                 </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.shan.reports.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.shan.reports.index') ? 'active' : ''}}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Win/Lose</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
                             </li>
-                        @endcan
                         @can('owner_access')
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-tools"></i>
-                                    <p>
+
+                        <li class="nav-item {{ in_array(Route::currentRouteName(), ['admin.text.index', 'admin.banners.index', 'admin.video-upload.index', 'admin.adsbanners.index', 'admin.promotions.index', 'admin.winner_text.index']) ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link">
+                                <i class="fas fa-tools"></i>
+                                <p>
                                         General Settings
                                         <i class="fas fa-angle-left right"></i>
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.text.index') }}" class="nav-link">
+                                        <a href="{{ route('admin.text.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.text.index') ? 'active' : ''}}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>BannerText</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.banners.index') }}" class="nav-link">
+                                        <a href="{{ route('admin.banners.index') }}" class="nav-link  {{(Route::current()->getName() == 'admin.banners.index') ? 'active' : ''}}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Banner</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.video-upload.index') }}" class="nav-link">
+                                        <a href="{{ route('admin.video-upload.index') }}" class="nav-link  {{(Route::current()->getName() == 'admin.video-upload.index') ? 'active' : ''}}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>AdsVideo</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.adsbanners.index') }}" class="nav-link">
+                                        <a href="{{ route('admin.adsbanners.index') }}" class="nav-link  {{(Route::current()->getName() == 'admin.adsbanners.index') ? 'active' : ''}}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Banner Ads</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.promotions.index') }}" class="nav-link">
+                                        <a href="{{ route('admin.promotions.index') }}" class="nav-link  {{(Route::current()->getName() == 'admin.promotions.index') ? 'active' : ''}}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Promotions</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.winner_text.index') }}" class="nav-link">
+                                        <a href="{{ route('admin.winner_text.index') }}" class="nav-link  {{(Route::current()->getName() == 'admin.winner_text.index') ? 'active' : ''}}">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>WinnerText</p>
                                         </a>
@@ -765,22 +598,18 @@
                 "lengthChange": false,
                 "autoWidth": false,
                 "order": true,
-                "pageLength": 5,
+                "pageLength": 10,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         });
-    </script>
 
-    <script>
         document.addEventListener("DOMContentLoaded", function() {
             var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
             var dropdownList = dropdownElementList.map(function(dropdownToggleEl) {
                 return new bootstrap.Dropdown(dropdownToggleEl)
             })
         });
-    </script>
 
-    <script>
         $(document).ready(function() {
             $('#notificationDropdown').on('click', function() {
                 $.ajax({

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\TransactionName;
 use App\Models\PlaceBet;
 use Bavix\Wallet\Models\Transaction as ModelsTransaction;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -52,5 +53,19 @@ class Transaction extends ModelsTransaction
     public function targetUser()
     {
         return $this->belongsTo(User::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->created_at = Carbon::now('Asia/Yangon');
+            $model->updated_at = Carbon::now('Asia/Yangon');
+        });
+
+        static::updating(function ($model) {
+            $model->updated_at = Carbon::now('Asia/Yangon');
+        });
     }
 }

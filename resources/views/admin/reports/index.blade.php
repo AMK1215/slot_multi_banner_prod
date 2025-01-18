@@ -26,30 +26,30 @@
                     <div class="card-header">
                         <h3>Report</h3>
                     </div>
-                    <form role="form" class="text-start" action="{{ route('admin.shan.reports.index') }}" method="GET">
+                    <form role="form" class="text-start" action="{{ route('admin.report.index') }}" method="GET">
                         <div class="row ml-5">
                             <div class="col-lg-3">
                                 <div class="mb-3">
                                     <label class="form-label text-dark fw-bold" for="inputEmail1">From Date</label>
                                     <input type="date" class="form-control border border-1 border-secondary px-2"
-                                        id="inputEmail1" name="start_date">
+                                        name="start_date" value="{{request()->start_date }}">
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="mb-3">
                                     <label class="form-label text-dark fw-bold" for="inputEmail1">To Date</label>
                                     <input type="date" class="form-control border border-1 border-secondary px-2"
-                                        id="inputEmail1" name="end_date">
+                                        id="" name="end_date" value="{{request()->end_date }}">
                                 </div>
                             </div>
                             <div class="col-log-3">
                                 <button type="submit" class="btn btn-primary" style="margin-top: 32px;">Search</button>
-                                <a href="{{ route('admin.shan.reports.index') }}" class="btn btn-warning" style="margin-top: 32px;">Refresh</a>
+                                <a href="{{ route('admin.report.index') }}" class="btn btn-warning" style="margin-top: 32px;">Refresh</a>
                             </div>
                         </div>
                     </form>
                     <div class="card-body">
-                        <table id="" class="table table-bordered table-hover">
+                        <table id="mytable" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th>AgentName</th>
@@ -66,7 +66,7 @@
                                 <tr>
                                     <td>{{ $row->agent_name }}</td>
                                     <td>{{ $row->player_name }}</td>
-                                    <td>{{ $row->total_games }}</td>
+                                    <td>{{ $row->total_count }}</td>
                                     <td>{{ number_format($row->total_bet_amount, 2) }}</td>
                                     <td>{{ number_format($row->total_win_amount, 2) }}</td>
                                     <td>{{ number_format($row->total_net_win, 2) }}</td>
@@ -78,7 +78,6 @@
                             </tbody>
 
                         </table>
-                        {{ $report->links()}}
                     </div>
                     <!-- /.card-body -->
                 </div>

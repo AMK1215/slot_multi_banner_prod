@@ -73,54 +73,14 @@ class TopTenWithdrawController extends Controller
         return redirect(route('admin.top-10-withdraws.index'))->with('success', 'Marquee Text Updated Successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    // public function destroy(TopTenWithdraw $text)
-    // {
-    //     $text->delete();
-
-    //     return redirect()->back()->with('success', 'TopTenWithdraw  Deleted Successfully.');
-    // }
-    //     public function destroy(TopTenWithdraw $text)
-    // {
-    //     if (!$text) {
-    //         return redirect()->back()->with('error', 'TopTenWithdraw not found.');
-    //     }
-
-    //     try {
-    //         $text->delete();
-    //         return redirect()->back()->with('success', 'TopTenWithdraw Deleted Successfully.');
-    //     } catch (\Exception $e) {
-    //         return redirect()->back()->with('error', 'Error deleting TopTenWithdraw: ' . $e->getMessage());
-    //     }
-    // }
-
-    //     public function destroy(TopTenWithdraw $text)
-    // {
-    //     try {
-    //         $text->delete();
-    //         Log::info('Resolved TopTenWithdraw instance:', $text->toArray());
-    //         Log::info('TopTenWithdraw deleted successfully.', ['id' => $text->id]);
-    //         return redirect()->back()->with('success', 'TopTenWithdraw Deleted Successfully.');
-    //     } catch (\Exception $e) {
-    //         Log::error('Error deleting TopTenWithdraw: ' . $e->getMessage());
-    //         return redirect()->back()->with('error', 'Error deleting TopTenWithdraw.');
-    //     }
-    // }
-
     public function destroy($id)
     {
-        // Find the record or throw a 404 if not found
         $text = TopTenWithdraw::findOrFail($id);
 
-        // Log the resolved model for debugging
         Log::info('Deleting TopTenWithdraw:', $text->toArray());
 
-        // Delete the record
         $text->delete();
 
-        // Redirect back with a success message
         return redirect()->back()->with('success', 'TopTenWithdraw Deleted Successfully.');
     }
 }

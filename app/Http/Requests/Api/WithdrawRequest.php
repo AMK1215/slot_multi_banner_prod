@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class WithdrawRequest extends FormRequest
@@ -24,5 +25,19 @@ class WithdrawRequest extends FormRequest
         return [
             'amount' => ['required', 'integer', 'min:1'],
         ];
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->created_at = Carbon::now('Asia/Yangon');
+            $model->updated_at = Carbon::now('Asia/Yangon');
+        });
+
+        static::updating(function ($model) {
+            $model->updated_at = Carbon::now('Asia/Yangon');
+        });
     }
 }
