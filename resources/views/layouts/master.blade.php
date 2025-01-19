@@ -64,47 +64,47 @@
 
                 <!--begin::Messages Dropdown Menu-->
                 @can('deposit')
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle position-relative" href="#" id="notificationDropdown"
-                            role="button" data-toggle="dropdown">
-                            <i class="bi bi-bell"></i>
-                            <span class="navbar-badge badge bg-danger text-white rounded-circle"
-                                id="notificationCount">{{ auth()->user()->unreadNotifications->count() }}</span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end shadow-lg p-3 mb-5 bg-white rounded"
-                            aria-labelledby="notificationDropdown">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle position-relative" href="#" id="notificationDropdown"
+                        role="button" data-toggle="dropdown">
+                        <i class="bi bi-bell"></i>
+                        <span class="navbar-badge badge bg-danger text-white rounded-circle"
+                            id="notificationCount">{{ auth()->user()->unreadNotifications->count() }}</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end shadow-lg p-3 mb-5 bg-white rounded"
+                        aria-labelledby="notificationDropdown">
 
-                            @forelse (auth()->user()->unreadNotifications as $notification)
-                                <li class="notification-item">
-                                    <a href="#" class="dropdown-item d-flex align-items-start p-3"
-                                        style="background-color: #ffeeba; border-left: 4px solid #ff6f00; border-radius: 5px;">
-                                        <div class="flex-grow-1">
-                                            <h6 class="dropdown-item-title fw-bold text-dark">
-                                                {{ $notification->data['player_name'] }}
-                                            </h6>
-                                            <p class="fs-7 text-dark mb-1">{{ $notification->data['message'] }}</p>
-                                            <p class="fs-7 text-muted">
-                                                <i class="bi bi-clock-fill me-1"></i>
-                                                {{ $notification->created_at->diffForHumans() }}
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                            @empty
-                                <li class="dropdown-item text-center text-muted">No new notifications</li>
-                            @endforelse
+                        @forelse (auth()->user()->unreadNotifications as $notification)
+                        <li class="notification-item">
+                            <a href="#" class="dropdown-item d-flex align-items-start p-3"
+                                style="background-color: #ffeeba; border-left: 4px solid #ff6f00; border-radius: 5px;">
+                                <div class="flex-grow-1">
+                                    <h6 class="dropdown-item-title fw-bold text-dark">
+                                        {{ $notification->data['player_name'] }}
+                                    </h6>
+                                    <p class="fs-7 text-dark mb-1">{{ $notification->data['message'] }}</p>
+                                    <p class="fs-7 text-muted">
+                                        <i class="bi bi-clock-fill me-1"></i>
+                                        {{ $notification->created_at->diffForHumans() }}
+                                    </p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        @empty
+                        <li class="dropdown-item text-center text-muted">No new notifications</li>
+                        @endforelse
 
-                            <li>
-                                <a href="#" class="dropdown-item dropdown-footer text-center text-primary fw-bold">See
-                                    All Notifications</a>
-                            </li>
+                        <li>
+                            <a href="#" class="dropdown-item dropdown-footer text-center text-primary fw-bold">See
+                                All Notifications</a>
+                        </li>
 
                     </ul>
                 </li>
-                   @endcan
+                @endcan
 
                 {{-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button"
@@ -112,31 +112,31 @@
                         <i class="bi bi-bell"></i>
                         <span class="navbar-badge badge text-bg-danger"
                             id="notificationCount">{{ auth()->user()->unreadNotifications->count() }}</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end" aria-labelledby="notificationDropdown">
-                        @foreach (auth()->user()->unreadNotifications as $notification)
-                            <li>
-                                <a href="#" class="dropdown-item">
-                                    <div class="d-flex">
-                                        <div class="flex-grow-1">
-                                            <h3 class="dropdown-item-title">
-                                                {{ $notification->data['player_name'] }}
-                                            </h3>
-                                            <p class="fs-7">{{ $notification->data['message'] }}</p>
-                                            <p class="fs-7 text-secondary">
-                                                <i class="bi bi-clock-fill me-1"></i>
-                                                {{ $notification->created_at->diffForHumans() }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                        @endforeach
-                        <li><a href="#" class="dropdown-item dropdown-footer">See All Notifications</a></li>
-                    </ul>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end" aria-labelledby="notificationDropdown">
+                    @foreach (auth()->user()->unreadNotifications as $notification)
+                    <li>
+                        <a href="#" class="dropdown-item">
+                            <div class="d-flex">
+                                <div class="flex-grow-1">
+                                    <h3 class="dropdown-item-title">
+                                        {{ $notification->data['player_name'] }}
+                                    </h3>
+                                    <p class="fs-7">{{ $notification->data['message'] }}</p>
+                                    <p class="fs-7 text-secondary">
+                                        <i class="bi bi-clock-fill me-1"></i>
+                                        {{ $notification->created_at->diffForHumans() }}
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    @endforeach
+                    <li><a href="#" class="dropdown-item dropdown-footer">See All Notifications</a></li>
+                </ul>
                 </li> --}}
 
                 {{-- <li class="nav-item dropdown">
@@ -150,411 +150,436 @@
                             <div class="d-flex">
                                 <div class="flex-shrink-0">
                                     <img src="{{ asset('assets/img/user1-128x128.jpg') }}" alt="User Avatar"
-                                        class="img-size-50 rounded-circle me-3" />
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h3 class="dropdown-item-title">
-                                        Brad Diesel
-                                        <span class="float-end fs-7 text-danger"><i class="bi bi-star-fill"></i></span>
-                                    </h3>
-                                    <p class="fs-7">Call me whenever you can...</p>
-                                    <p class="fs-7 text-secondary">
-                                        <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                                    </p>
-                                </div>
-                            </div>
-                            <!--end::Message-->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <!--begin::Message-->
-                            <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                    <img src="{{ asset('assets/img/user8-128x128.jpg') }}" alt="User Avatar"
-                                        class="img-size-50 rounded-circle me-3" />
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h3 class="dropdown-item-title">
-                                        John Pierce
-                                        <span class="float-end fs-7 text-secondary">
-                                            <i class="bi bi-star-fill"></i>
-                                        </span>
-                                    </h3>
-                                    <p class="fs-7">I got your message bro</p>
-                                    <p class="fs-7 text-secondary">
-                                        <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                                    </p>
-                                </div>
-                            </div>
-                            <!--end::Message-->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <!--begin::Message-->
-                            <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                    <img src="{{ asset('assets/img/user3-128x128.jpg') }}" alt="User Avatar"
-                                        class="img-size-50 rounded-circle me-3" />
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h3 class="dropdown-item-title">
-                                        Nora Silvester
-                                        <span class="float-end fs-7 text-warning">
-                                            <i class="bi bi-star-fill"></i>
-                                        </span>
-                                    </h3>
-                                    <p class="fs-7">The subject goes here</p>
-                                    <p class="fs-7 text-secondary">
-                                        <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                                    </p>
-                                </div>
-                            </div>
-                            <!--end::Message-->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-                    </div>
-                </li> --}}
-
-                <!--end::Messages Dropdown Menu-->
-                <li class="nav-item">
-                    <a class="nav-link"
-                        href="{{ route('admin.changePassword', \Illuminate\Support\Facades\Auth::id()) }}">
-                        {{ auth()->user()->name }}
-
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        | Balance: {{ number_format(auth()->user()->wallet->balanceFloat, 2) }}
-                    </a>
-                </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="#"
-                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </a>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
-
-                </li>
-
-            </ul>
-        </nav>
-        <!-- /.navbar -->
-
-        <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <!-- Brand Logo -->
-            {{-- <a href="{{ route('home') }}" class="brand-link">
-            <img src="{{ asset('img/slot_maker.jpg') }}" alt="AdminLTE Logo"
-                class="brand-image img-circle elevation-3" style="opacity: .8">
-            <span class="brand-text font-weight-light">GoldenJack</span>
-            </a> --}}
-            <!-- Brand Logo -->
-            <a href="{{ route('home') }}" class="brand-link">
-                <img src="{{ $adminLogo }}" alt="Admin Logo" class="brand-image img-circle elevation-3"
-                    style="opacity: .8">
-                {{-- <span class="brand-text font-weight-light">GoldenJack</span> --}}
-                <span class="brand-text font-weight-light">{{ $siteName }}</span>
-            </a>
-
-
-            <!-- Sidebar -->
-            <div class="sidebar">
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
-                        <li class="nav-item menu-open">
-                            <a href="{{ route('home') }}" class="nav-link {{(Route::current()->getName() == 'home') ? 'active' : ''}}">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Dashboard
-                                </p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                                <a href="{{ route('admin.report.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.report.index') ? 'active' : ''}}">
-                                <i class="fas fa-file-invoice"></i>
-                                    <p>
-                                        Win/LoseReport
-                                    </p>
-                                </a>
-                            </li>
-                        @can('senior_access')
-
-                            <li class="nav-item">
-                                <a href="{{ route('admin.SeniorHierarchy') }}" class="nav-link {{(Route::current()->getName() == 'admin.SeniorHierarchy') ? 'active' : ''}}">
-                                <i class="fas fa-info-circle"></i>
-                                    <p>
-                                        SeniorHierarchy
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.GetAllOwners') }}" class="nav-link {{(Route::current()->getName() == 'admin.GetAllOwners') ? 'active' : ''}}">
-                                    <i class="fas fa-users"></i>
-                                    <p>
-                                        Owner with Agent
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.owner.index') }}" class="nav-link">
-                                <i class="fas fa-user"></i>
-                                    <p>
-                                        Owner List
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.daily_summaries.index')}}" class="nav-link {{(Route::current()->getName() === 'admin.daily_summaries.index') ? 'active' : ''}}">
-                                <i class="fab fa-dochub"></i>
-                                    <p>
-                                        Daily W/L Report
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.TopTenWithdraw') }}" class="nav-link {{(Route::current()->getName() == 'admin.TopTenWithdraw') ? 'active' : ''}}">
-                                <i class="fas fa-swatchbook"></i>
-                                    <p>
-                                        WithdrawTopTen
-                                    </p>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('agent_index')
-                            <li class="nav-item">
-                                <a href="{{ route('admin.agent.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.agent.index') ? 'active' : ''}}">
-                                    <i class="fas fa-users"></i>
-                                    <p>
-                                        Agent List
-                                    </p>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('owner_access')
-                        <li class="nav-item">
-                                <a href="{{ route('admin.GetOwnerPlayerList') }}" class="nav-link {{(Route::current()->getName() == 'admin.GetOwnerPlayerList') ? 'active' : ''}}">
-                                <i class="fas fa-user"></i>
-                                    <p>
-                                        Player List
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.top-10-withdraws.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.top-10-withdraws.index') ? 'active' : ''}}">
-                                <i class="fas fa-swatchbook"></i>
-                                    <p>
-                                        WithdrawTopTen
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.changeSiteName', Auth::id()) }}" class="nav-link {{(Route::current()->getName() == 'admin.changeSiteName') ? 'active' : ''}}">
-                                    <i class="fas fa-link"></i>
-                                    <p>PlayerSiteLink</p>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('player_index')
-                            <li class="nav-item">
-                                <a href="{{ route('admin.player.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.player.index') ? 'active' : ''}}">
-                                    <i class="fas fa-user"></i>
-                                    <p>
-                                        Player List
-                                    </p>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('contact')
-                            <li class="nav-item">
-                                <a href="{{ route('admin.contact.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.contact.index') ? 'active' : ''}}">
-                                    <i class="fas fa-address-book"></i>
-                                    <p>
-                                        Contact
-                                    </p>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('bank')
-                            <li class="nav-item">
-                                <a href="{{ route('admin.bank.index') }}" class="nav-link  {{(Route::current()->getName() == 'admin.bank.index') ? 'active' : ''}}">
-                                <i class="fas fa-university"></i>
-                                    <p>
-                                        Bank
-                                    </p>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('withdraw')
-                            <li class="nav-item">
-                                <a href="{{ route('admin.agent.withdraw') }}" class="nav-link {{(Route::current()->getName() == 'admin.agent.withdraw') ? 'active' : ''}}">
-                                <i class="fas fa-comment-dollar"></i>
-                                    <p>
-                                        WithDraw Request
-                                    </p>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('deposit')
-                            <li class="nav-item">
-                                <a href="{{ route('admin.agent.deposit') }}" class="nav-link {{(Route::current()->getName() == 'admin.agent.deposit') ? 'active' : ''}}">
-                                <i class="fab fa-dochub"></i>
-                                    <p>
-                                        Deposit Request
-                                    </p>
-                                </a>
-                            </li>
-                        @endcan
-                        <li class="nav-item">
-                            <a href="{{ route('admin.transferLog') }}" class="nav-link {{(Route::current()->getName() == 'admin.transferLog') ? 'active' : ''}}">
-                            <i class="fas fa-exchange-alt"></i>
-                                <p>
-                                    Transaction Log
-                                </p>
-                            </a>
-                        </li>
-                        @can('senior_access')
-                            <li class="nav-item">
-                                <a href="{{ route('admin.roles.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.roles.index') ? 'active' : ''}}">
-                                <i class="far fa-registered"></i>
-                                    <p>
-                                        Role
-                                    </p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="fas fa-tools"></i>
-                                    <p>
-                                        GSC Settings
-                                        <i class="fas fa-angle-left right"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.gameLists.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.gameLists.index') ? 'active' : ''}}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>GSC GameList</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.gametypes.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.gametypes.index') ? 'active' : ''}}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>GSC GameProvider</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endcan
-                        @can('agent_access')
-                            <li class="nav-item">
-                                <a href="{{ route('admin.subacc.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.subacc.index') ? 'active' : ''}}">
-                                <i class="fas fa-user-plus"></i>
-                                    <p>
-                                        Sub Account
-                                    </p>
-                                </a>
-                            </li>
-                        @endcan
-                            <li class="nav-item  {{ (Route::current()->getName() == 'admin.shan.reports.index') ? 'menu-open' : '' }}">
-                                <a href="" class="nav-link">
-                                <i class="fas fa-tools"></i>
-                                    <p>
-                                        Shan
-                                        <i class="fas fa-angle-left right"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.shan.reports.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.shan.reports.index') ? 'active' : ''}}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Win/Lose</p>
-                                        </a>
-                                    </li>
-
-                                </ul>
-                            </li>
-                        @can('owner_access')
-
-                        <li class="nav-item {{ in_array(Route::currentRouteName(), ['admin.text.index', 'admin.banners.index', 'admin.video-upload.index', 'admin.adsbanners.index', 'admin.promotions.index', 'admin.winner_text.index']) ? 'menu-open' : '' }}">
-                        <a href="#" class="nav-link">
-                                <i class="fas fa-tools"></i>
-                                <p>
-                                        General Settings
-                                        <i class="fas fa-angle-left right"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.text.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.text.index') ? 'active' : ''}}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>BannerText</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.banners.index') }}" class="nav-link  {{(Route::current()->getName() == 'admin.banners.index') ? 'active' : ''}}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Banner</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.video-upload.index') }}" class="nav-link  {{(Route::current()->getName() == 'admin.video-upload.index') ? 'active' : ''}}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>AdsVideo</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.adsbanners.index') }}" class="nav-link  {{(Route::current()->getName() == 'admin.adsbanners.index') ? 'active' : ''}}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Banner Ads</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.promotions.index') }}" class="nav-link  {{(Route::current()->getName() == 'admin.promotions.index') ? 'active' : ''}}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Promotions</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.winner_text.index') }}" class="nav-link  {{(Route::current()->getName() == 'admin.winner_text.index') ? 'active' : ''}}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>WinnerText</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endcan
-
-                </nav>
-                <!-- /.sidebar-menu -->
+                class="img-size-50 rounded-circle me-3" />
+    </div>
+    <div class="flex-grow-1">
+        <h3 class="dropdown-item-title">
+            Brad Diesel
+            <span class="float-end fs-7 text-danger"><i class="bi bi-star-fill"></i></span>
+        </h3>
+        <p class="fs-7">Call me whenever you can...</p>
+        <p class="fs-7 text-secondary">
+            <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
+        </p>
+    </div>
+    </div>
+    <!--end::Message-->
+    </a>
+    <div class="dropdown-divider"></div>
+    <a href="#" class="dropdown-item">
+        <!--begin::Message-->
+        <div class="d-flex">
+            <div class="flex-shrink-0">
+                <img src="{{ asset('assets/img/user8-128x128.jpg') }}" alt="User Avatar"
+                    class="img-size-50 rounded-circle me-3" />
             </div>
-            <!-- /.sidebar -->
-        </aside>
-
-        <div class="content-wrapper">
-
-            @yield('content')
+            <div class="flex-grow-1">
+                <h3 class="dropdown-item-title">
+                    John Pierce
+                    <span class="float-end fs-7 text-secondary">
+                        <i class="bi bi-star-fill"></i>
+                    </span>
+                </h3>
+                <p class="fs-7">I got your message bro</p>
+                <p class="fs-7 text-secondary">
+                    <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
+                </p>
+            </div>
         </div>
-        <footer class="main-footer">
-            <strong>Copyright &copy; 2024 <a href="">SlotMaker</a>.</strong>
-            All rights reserved.
-            <div class="float-right d-none d-sm-inline-block">
-                <b>Version</b> 3.2.0
+        <!--end::Message-->
+    </a>
+    <div class="dropdown-divider"></div>
+    <a href="#" class="dropdown-item">
+        <!--begin::Message-->
+        <div class="d-flex">
+            <div class="flex-shrink-0">
+                <img src="{{ asset('assets/img/user3-128x128.jpg') }}" alt="User Avatar"
+                    class="img-size-50 rounded-circle me-3" />
             </div>
-        </footer>
+            <div class="flex-grow-1">
+                <h3 class="dropdown-item-title">
+                    Nora Silvester
+                    <span class="float-end fs-7 text-warning">
+                        <i class="bi bi-star-fill"></i>
+                    </span>
+                </h3>
+                <p class="fs-7">The subject goes here</p>
+                <p class="fs-7 text-secondary">
+                    <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
+                </p>
+            </div>
+        </div>
+        <!--end::Message-->
+    </a>
+    <div class="dropdown-divider"></div>
+    <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+    </div>
+    </li> --}}
 
-        <aside class="control-sidebar control-sidebar-dark">
-        </aside>
+    <!--end::Messages Dropdown Menu-->
+    <li class="nav-item">
+        <a class="nav-link"
+            href="{{ route('admin.changePassword', \Illuminate\Support\Facades\Auth::id()) }}">
+            {{ auth()->user()->name }}
+
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+            | Balance: {{ number_format(auth()->user()->wallet->balanceFloat, 2) }}
+        </a>
+    </li>
+
+    <li class="nav-item dropdown">
+        <a class="nav-link" href="#"
+            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+            <i class="fas fa-sign-out-alt"></i>
+        </a>
+
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+        </form>
+
+    </li>
+
+    </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        {{-- <a href="{{ route('home') }}" class="brand-link">
+        <img src="{{ asset('img/slot_maker.jpg') }}" alt="AdminLTE Logo"
+            class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">GoldenJack</span>
+        </a> --}}
+        <!-- Brand Logo -->
+        <a href="{{ route('home') }}" class="brand-link">
+            <img src="{{ $adminLogo }}" alt="Admin Logo" class="brand-image img-circle elevation-3"
+                style="opacity: .8">
+            {{-- <span class="brand-text font-weight-light">GoldenJack</span> --}}
+            <span class="brand-text font-weight-light">{{ $siteName }}</span>
+        </a>
+
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
+                    <li class="nav-item menu-open">
+                        <a href="{{ route('home') }}" class="nav-link {{(Route::current()->getName() == 'home') ? 'active' : ''}}">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Dashboard
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('admin.report.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.report.index') ? 'active' : ''}}">
+                            <i class="fas fa-file-invoice"></i>
+                            <p>
+                                W/L Report
+                            </p>
+                        </a>
+                    </li>
+                    @can('agent_access')
+                    <li class="nav-item">
+                        <a href="{{ route('admin.reports.agent') }}" class="nav-link {{(Route::current()->getName() == 'admin.reports.owner') ? 'active' : ''}}">
+                            <i class="fas fa-file-invoice"></i>
+                            <p>
+                                W/L Report 2
+                            </p>
+                        </a>
+                    </li>
+                    @endcan
+                    @can('senior_access')
+                    <li class="nav-item">
+                        <a href="{{ route('admin.reports.senior') }}" class="nav-link {{(Route::current()->getName() == 'admin.reports.senior') ? 'active' : ''}}">
+                            <i class="fas fa-file-invoice"></i>
+                            <p>
+                                W/L Report 2
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.SeniorHierarchy') }}" class="nav-link {{(Route::current()->getName() == 'admin.SeniorHierarchy') ? 'active' : ''}}">
+                            <i class="fas fa-info-circle"></i>
+                            <p>
+                                SeniorHierarchy
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.GetAllOwners') }}" class="nav-link {{(Route::current()->getName() == 'admin.GetAllOwners') ? 'active' : ''}}">
+                            <i class="fas fa-users"></i>
+                            <p>
+                                Owner with Agent
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.owner.index') }}" class="nav-link">
+                            <i class="fas fa-user"></i>
+                            <p>
+                                Owner List
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.daily_summaries.index')}}" class="nav-link {{(Route::current()->getName() === 'admin.daily_summaries.index') ? 'active' : ''}}">
+                            <i class="fab fa-dochub"></i>
+                            <p>
+                                Daily W/L Report
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.TopTenWithdraw') }}" class="nav-link {{(Route::current()->getName() == 'admin.TopTenWithdraw') ? 'active' : ''}}">
+                            <i class="fas fa-swatchbook"></i>
+                            <p>
+                                WithdrawTopTen
+                            </p>
+                        </a>
+                    </li>
+                    @endcan
+                    @can('agent_index')
+                    <li class="nav-item">
+                        <a href="{{ route('admin.agent.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.agent.index') ? 'active' : ''}}">
+                            <i class="fas fa-users"></i>
+                            <p>
+                                Agent List
+                            </p>
+                        </a>
+                    </li>
+                    @endcan
+                    @can('owner_access')
+                    <li class="nav-item">
+                        <a href="{{ route('admin.reports.owner') }}" class="nav-link {{(Route::current()->getName() == 'admin.reports.owner') ? 'active' : ''}}">
+                            <i class="fas fa-file-invoice"></i>
+                            <p>
+                                W/L Report 2
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.GetOwnerPlayerList') }}" class="nav-link {{(Route::current()->getName() == 'admin.GetOwnerPlayerList') ? 'active' : ''}}">
+                            <i class="fas fa-user"></i>
+                            <p>
+                                Player List
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.top-10-withdraws.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.top-10-withdraws.index') ? 'active' : ''}}">
+                            <i class="fas fa-swatchbook"></i>
+                            <p>
+                                WithdrawTopTen
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.changeSiteName', Auth::id()) }}" class="nav-link {{(Route::current()->getName() == 'admin.changeSiteName') ? 'active' : ''}}">
+                            <i class="fas fa-link"></i>
+                            <p>PlayerSiteLink</p>
+                        </a>
+                    </li>
+                    @endcan
+                    @can('player_index')
+                    <li class="nav-item">
+                        <a href="{{ route('admin.player.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.player.index') ? 'active' : ''}}">
+                            <i class="fas fa-user"></i>
+                            <p>
+                                Player List
+                            </p>
+                        </a>
+                    </li>
+                    @endcan
+                    @can('contact')
+                    <li class="nav-item">
+                        <a href="{{ route('admin.contact.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.contact.index') ? 'active' : ''}}">
+                            <i class="fas fa-address-book"></i>
+                            <p>
+                                Contact
+                            </p>
+                        </a>
+                    </li>
+                    @endcan
+                    @can('bank')
+                    <li class="nav-item">
+                        <a href="{{ route('admin.bank.index') }}" class="nav-link  {{(Route::current()->getName() == 'admin.bank.index') ? 'active' : ''}}">
+                            <i class="fas fa-university"></i>
+                            <p>
+                                Bank
+                            </p>
+                        </a>
+                    </li>
+                    @endcan
+                    @can('withdraw')
+                    <li class="nav-item">
+                        <a href="{{ route('admin.agent.withdraw') }}" class="nav-link {{(Route::current()->getName() == 'admin.agent.withdraw') ? 'active' : ''}}">
+                            <i class="fas fa-comment-dollar"></i>
+                            <p>
+                                WithDraw Request
+                            </p>
+                        </a>
+                    </li>
+                    @endcan
+                    @can('deposit')
+                    <li class="nav-item">
+                        <a href="{{ route('admin.agent.deposit') }}" class="nav-link {{(Route::current()->getName() == 'admin.agent.deposit') ? 'active' : ''}}">
+                            <i class="fab fa-dochub"></i>
+                            <p>
+                                Deposit Request
+                            </p>
+                        </a>
+                    </li>
+                    @endcan
+                    <li class="nav-item">
+                        <a href="{{ route('admin.transferLog') }}" class="nav-link {{(Route::current()->getName() == 'admin.transferLog') ? 'active' : ''}}">
+                            <i class="fas fa-exchange-alt"></i>
+                            <p>
+                                Transaction Log
+                            </p>
+                        </a>
+                    </li>
+                    @can('senior_access')
+                    <li class="nav-item">
+                        <a href="{{ route('admin.roles.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.roles.index') ? 'active' : ''}}">
+                            <i class="far fa-registered"></i>
+                            <p>
+                                Role
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-tools"></i>
+                            <p>
+                                GSC Settings
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.gameLists.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.gameLists.index') ? 'active' : ''}}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>GSC GameList</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.gametypes.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.gametypes.index') ? 'active' : ''}}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>GSC GameProvider</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    @endcan
+                    @can('agent_access')
+                    <li class="nav-item">
+                        <a href="{{ route('admin.subacc.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.subacc.index') ? 'active' : ''}}">
+                            <i class="fas fa-user-plus"></i>
+                            <p>
+                                Sub Account
+                            </p>
+                        </a>
+                    </li>
+                    @endcan
+                    <li class="nav-item  {{ (Route::current()->getName() == 'admin.shan.reports.index') ? 'menu-open' : '' }}">
+                        <a href="" class="nav-link">
+                            <i class="fas fa-tools"></i>
+                            <p>
+                                Shan
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.shan.reports.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.shan.reports.index') ? 'active' : ''}}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Win/Lose</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    @can('owner_access')
+
+                    <li class="nav-item {{ in_array(Route::currentRouteName(), ['admin.text.index', 'admin.banners.index', 'admin.video-upload.index', 'admin.adsbanners.index', 'admin.promotions.index', 'admin.winner_text.index']) ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-tools"></i>
+                            <p>
+                                General Settings
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.text.index') }}" class="nav-link {{(Route::current()->getName() == 'admin.text.index') ? 'active' : ''}}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>BannerText</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.banners.index') }}" class="nav-link  {{(Route::current()->getName() == 'admin.banners.index') ? 'active' : ''}}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Banner</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.video-upload.index') }}" class="nav-link  {{(Route::current()->getName() == 'admin.video-upload.index') ? 'active' : ''}}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>AdsVideo</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.adsbanners.index') }}" class="nav-link  {{(Route::current()->getName() == 'admin.adsbanners.index') ? 'active' : ''}}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Banner Ads</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.promotions.index') }}" class="nav-link  {{(Route::current()->getName() == 'admin.promotions.index') ? 'active' : ''}}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Promotions</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.winner_text.index') }}" class="nav-link  {{(Route::current()->getName() == 'admin.winner_text.index') ? 'active' : ''}}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>WinnerText</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    @endcan
+
+            </nav>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+
+    <div class="content-wrapper">
+
+        @yield('content')
+    </div>
+    <footer class="main-footer">
+        <strong>Copyright &copy; 2024 <a href="">SlotMaker</a>.</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+            <b>Version</b> 3.2.0
+        </div>
+    </footer>
+
+    <aside class="control-sidebar control-sidebar-dark">
+    </aside>
     </div>
 
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
@@ -582,10 +607,10 @@
         var errorMessage = @json(session('error'));
         var successMessage = @json(session('success'));
 
-        @if (session()->has('success'))
-            toastr.success(successMessage)
-        @elseif (session()->has('error'))
-            toastr.error(errorMessage)
+        @if(session() -> has('success'))
+        toastr.success(successMessage)
+        @elseif(session() -> has('error'))
+        toastr.error(errorMessage)
         @endif
     </script>
     <script>
