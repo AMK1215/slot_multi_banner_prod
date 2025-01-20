@@ -112,7 +112,7 @@
                                 <tr>
                                     <th colspan="2" class="text-right">Total Amount:</th>
                                     <th></th>
-                                    <th colspan="7">
+                                    <th colspan="5">
                                         <span class="text-success">
                                             {{ number_format($depositTotal, 2) }}
                                         </span>
