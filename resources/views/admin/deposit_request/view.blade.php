@@ -32,7 +32,7 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-3">
+                            <div class="col-lg-4">
                                 <img src="{{ asset('assets/img/deposit/' . $deposit->image) }}" class="img-fluid rounded" alt="">
                             </div>
                             <div class="col-lg-6">

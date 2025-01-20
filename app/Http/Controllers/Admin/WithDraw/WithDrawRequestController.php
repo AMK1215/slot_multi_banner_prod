@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\WithDrawRequest;
 use App\Services\WalletService;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,15 +19,12 @@ class WithDrawRequestController extends Controller
     public function index(Request $request)
     {
         $agent = $this->getAgent() ?? Auth::user();
+        [$startDate, $endDate] = $this->parseDateRange($request);
 
-        $withdraws = WithDrawRequest::where('agent_id', $agent->id)
-            ->when($request->filled('status') && $request->input('status') !== 'all', function ($query) use ($request) {
-                $query->where('status', $request->input('status'));
-            })
-            ->orderBy('id', 'desc')
-            ->get();
-
-        return view('admin.withdraw_request.index', compact('withdraws'));
+        $withdraws = $this->getQuery($agent, $request, $startDate, $endDate)->get();
+        $withdrawTotal = $this->getQuery($agent, $request, $startDate, $endDate)->sum('amount');
+        
+        return view('admin.withdraw_request.index', compact('withdraws', 'withdrawTotal'));
     }
 
     public function statusChangeIndex(Request $request, WithDrawRequest $withdraw)
@@ -81,5 +79,28 @@ class WithDrawRequestController extends Controller
     private function getAgent()
     {
         return $this->isExistingAgent(Auth::id());
+    }
+
+    private function getQuery($agent, $request, $startDate, $endDate)
+    {
+        return WithDrawRequest::where('agent_id', $agent->id)
+            ->when($request->filled('status') && $request->input('status') !== 'all', function ($query) use ($request) {
+                $query->where('status', $request->input('status'));
+            })
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->orderBy('id', 'desc');
+    }
+
+    private function parseDateRange(Request $request): array
+    {
+        $startDate = $request->start_date
+            ? Carbon::parse($request->start_date)->startOfDay()
+            : Carbon::today()->startOfDay();
+
+        $endDate = $request->end_date
+            ? Carbon::parse($request->end_date)->endOfDay()
+            : Carbon::today()->endOfDay();
+
+        return [$startDate->format('Y-m-d H:i'), $endDate->format('Y-m-d H:i')];
     }
 }

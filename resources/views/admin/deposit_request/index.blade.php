@@ -28,36 +28,47 @@
                         </div>
 
                         <div class="card-body">
-                            <form action="{{ route('admin.agent.deposit') }}" method="GET">
-                                <div class="row mt-3">
-                                    <div class="col-md-3">
-                                        <div class="input-group input-group-static mb-4">
-                                            <label for="exampleFormControlSelect1" class="ms-0">Select Status</label>
-                                            <select class="form-control" id="" name="status">
-                                                <option value="all"
-                                                    {{ request()->get('status') == 'all' ? 'selected' : '' }}>All
-                                                </option>
-                                                <option value="0"
-                                                    {{ request()->get('status') == '0' ? 'selected' : '' }}>Pending
-                                                </option>
-                                                <option value="1"
-                                                    {{ request()->get('status') == '1' ? 'selected' : '' }}>Approved
-                                                </option>
-                                                <option value="2"
-                                                    {{ request()->get('status') == '2' ? 'selected' : '' }}>Rejected
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <button class="btn btn-sm btn-primary" id="search" type="submit">Search</button>
-                                        <a href="{{ route('admin.agent.deposit') }}"
-                                            class="btn btn-link text-primary ms-auto border-0" >
-                                            <i class="fas fa-refresh">refresh</i>
-                                        </a>
+                        <form action="{{ route('admin.agent.deposit') }}" method="GET">
+                            <div class="row ">
+                                <div class="col-lg-3">
+                                    <div class="mb-3">
+                                        <label class="form-label text-dark fw-bold" for="inputEmail1">Select Date</label>
+                                        <select class="form-control" id="" name="status">
+                                            <option value="all"
+                                                {{ request()->get('status') == 'all' ? 'selected' : '' }}>All
+                                            </option>
+                                            <option value="0"
+                                                {{ request()->get('status') == '0' ? 'selected' : '' }}>Pending
+                                            </option>
+                                            <option value="1"
+                                                {{ request()->get('status') == '1' ? 'selected' : '' }}>Approved
+                                            </option>
+                                            <option value="2"
+                                                {{ request()->get('status') == '2' ? 'selected' : '' }}>Rejected
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
-                            </form>
+                                <div class="col-lg-3">
+                                    <div class="mb-3">
+                                        <label class="form-label text-dark fw-bold" for="inputEmail1">From Date</label>
+                                        <input type="date" class="form-control border border-1 border-secondary px-2"
+                                            id="inputEmail1" name="start_date" value="{{ request()->start_date }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="mb-3">
+                                        <label class="form-label text-dark fw-bold" for="inputEmail1">End Date</label>
+                                        <input type="date" class="form-control border border-1 border-secondary px-2"
+                                            id="end_date" name="end_date" value="{{ request()->end_date }}">
+                                    </div>
+                                </div>
+                                <div class="col-log-3">
+                                    <button type="submit" class="btn btn-primary" style="margin-top: 32px;">Search</button>
+                                    <a href="{{ route('admin.agent.deposit') }}" class="btn btn-warning" style="margin-top: 32px;">Refresh</a>
+                                </div>
+                            </div>
+                        </form>
                             <table id="mytable" class="table table-bordered table-hover">
                                 <thead>
                                     <th>#</th>
@@ -79,11 +90,11 @@
                                             <td>{{ $deposit->bank->paymentType->name }}</td>
                                             <td>
                                                 @if ($deposit->status == 0)
-                                                    <span class="badge text-bg-warning text-warning mb-2">Pending</span>
+                                                    <span class="badge badge-warning mb-2">Pending</span>
                                                 @elseif ($deposit->status == 1)
-                                                    <span class="badge text-bg-success text-success mb-2">Approved</span>
+                                                    <span class="badge badge-success text-white mb-2">Approved</span>
                                                 @elseif ($deposit->status == 2)
-                                                    <span class="badge text-bg-danger text-danger mb-2">Rejected</span>
+                                                    <span class="badge badge-danger text-white mb-2">Rejected</span>
                                                 @endif
                                             </td>
                                             <td>{{ $deposit->created_at->setTimezone('Asia/Yangon')->format('d-m-Y H:i:s') }}
@@ -97,7 +108,17 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
-
+                                <tfoot>
+                                <tr>
+                                    <th colspan="2" class="text-right">Total Amount:</th>
+                                    <th></th>
+                                    <th colspan="7">
+                                        <span class="text-success">
+                                            {{ number_format($depositTotal, 2) }}
+                                        </span>
+                                    </th>
+                                </tr>
+                            </tfoot>
                             </table>
                         </div>
                         <!-- /.card-body -->

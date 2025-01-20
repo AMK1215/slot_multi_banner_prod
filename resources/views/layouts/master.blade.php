@@ -24,10 +24,6 @@
     <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
-
-    {{-- @vite(['resources/js/app.js']) --}}
-
-
     <style>
         .dropdown-menu {
             z-index: 1050 !important;
@@ -581,16 +577,16 @@
     <aside class="control-sidebar control-sidebar-dark">
     </aside>
     </div>
+    <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js')}}"></script>
+    <script src="{{asset('plugins/inputmask/jquery.inputmask.min.js')}}"></script>
+    <script src="{{asset('plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js')}}"></script>
 
-    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-    <script>
-        $.widget.bridge('uibutton', $.ui.button)
-    </script>
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
-    <script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
     <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <script src="{{ asset('js/adminlte.js') }}"></script>
@@ -623,9 +619,8 @@
                 "lengthChange": false,
                 "autoWidth": false,
                 "order": true,
-                "pageLength": 10,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                "pageLength": 10
+            });
         });
 
         document.addEventListener("DOMContentLoaded", function() {

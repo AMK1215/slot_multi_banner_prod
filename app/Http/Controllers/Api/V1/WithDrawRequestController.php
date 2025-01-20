@@ -19,7 +19,7 @@ class WithDrawRequestController extends Controller
     {
         $request->validate([
             'account_name' => ['required', 'string'],
-            'amount' => ['required', 'integer', 'min: 10000'],
+            'amount' => ['required', 'integer', 'min: 1'],
             'account_number' => ['required', 'regex:/^[0-9]+$/'],
             'payment_type_id' => ['required', 'integer'],
         ]);
