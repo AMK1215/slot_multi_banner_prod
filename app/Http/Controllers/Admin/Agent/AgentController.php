@@ -169,7 +169,9 @@ class AgentController extends Controller
         if (! Gate::allows('make_transfer')) {
             abort(403);
         }
-
+        $request->validate([
+            'amount' => 'required'
+        ]);
         try {
             $agent = User::findOrFail($id);
             $admin = Auth::user();
@@ -191,7 +193,9 @@ class AgentController extends Controller
         if (! Gate::allows('make_transfer')) {
             abort(403);
         }
-
+        $request->validate([
+            'amount' => 'required'
+        ]);
         try {
             $agent = User::findOrFail($id);
             $admin = Auth::user();

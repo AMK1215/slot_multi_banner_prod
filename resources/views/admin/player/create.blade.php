@@ -23,7 +23,7 @@
                         <h5 class="d-inline fw-bold">
                             Create Player
                         </h5>
-                        <a href="{{ route('admin.player.index') }}" class="btn btn-danger d-inline float-right">
+                        <a href="{{ route('admin.player.index') }}" class="btn btn-primary d-inline float-right">
                             <i class="fas fa-arrow-left mr-2"></i> Back
                         </a>
                     </div>

@@ -223,7 +223,11 @@
 
     <li class="nav-item">
         <a class="nav-link" data-toggle="dropdown" href="#">
+            @if(Auth::user()->hasRole('Sub Agent'))
+            | Balance: {{ number_format(auth()->user()->parent->wallet->balanceFloat, 2) }}
+            @else
             | Balance: {{ number_format(auth()->user()->wallet->balanceFloat, 2) }}
+            @endif
         </a>
     </li>
 
@@ -254,10 +258,11 @@
         </a> --}}
         <!-- Brand Logo -->
         <a href="{{ route('home') }}" class="brand-link">
+            @if(!Auth::user()->hasRole('Agent') && !Auth::user()->hasRole('Sub Agent'))
             <img src="{{ $adminLogo }}" alt="Admin Logo" class="brand-image img-circle elevation-3"
                 style="opacity: .8">
-            {{-- <span class="brand-text font-weight-light">GoldenJack</span> --}}
-            <span class="brand-text font-weight-light">{{ $siteName }}</span>
+            @endif
+            <span class="brand-text font-weight-light ml-2">{{ $siteName }}</span>
         </a>
 
 

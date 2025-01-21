@@ -15,7 +15,7 @@ class AdminLogoMiddleware
             $user = Auth::user();
 
             $logoFilename = $user->agent_logo;
-            if($user->hasRole('Agent')){
+            if($user->hasRole('Agent') || $user->hasRole('Sub Agent')){
                 $siteName = 'Agent Dashboard';
             }else{
                 $siteName = $user->site_name ?? 'DelightMyanmar'; // Default site name

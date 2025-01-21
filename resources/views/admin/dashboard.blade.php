@@ -23,7 +23,11 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
+                            @if(Auth::user()->hasRole('Sub Agent'))
+                            <h3>{{ number_format($user->parent->wallet->balanceFloat, 2) }}</h3>
+                            @else
                             <h3>{{ number_format($user->wallet->balanceFloat, 2) }}</h3>
+                            @endif
                             <p>Balance</p>
                         </div>
                         <div class="icon">

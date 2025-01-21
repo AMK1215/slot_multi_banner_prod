@@ -17,8 +17,6 @@ class TransferLogController extends Controller
 
     public function index(Request $request)
     {
-        $this->authorize('transfer_log', User::class);
-
         $agent = $this->getAgentOrCurrentUser();
 
         [$startDate, $endDate] = $this->parseDateRange($request);

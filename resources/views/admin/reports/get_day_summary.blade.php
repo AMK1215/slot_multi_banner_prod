@@ -65,7 +65,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="d-flex justify-content-end mb-3">
-                        <a href="{{ route('home') }}" class="btn btn-success" style="width: 100px;">
+                        <a href="{{ route('home') }}" class="btn btn-primary" style="width: 100px;">
                             <i class="fas fa-plus text-white mr-2"></i>Back
                         </a>
                     </div>
@@ -148,7 +148,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="d-flex justify-content-end mb-3">
-                        <a href="{{ route('home') }}" class="btn btn-success" style="width: 100px;">
+                        <a href="{{ route('home') }}" class="btn btn-primary" style="width: 100px;">
                             <i class="fas fa-plus text-white mr-2"></i>Back
                         </a>
                     </div>
