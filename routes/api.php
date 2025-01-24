@@ -32,6 +32,12 @@ use App\Http\Controllers\Api\V1\WithDrawRequestController;
 use App\Http\Controllers\Api\Webhook\TestingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\V1\Webhook\NewBetController;
+use App\Http\Controllers\Api\V1\Webhook\NewBetResultController;
+use App\Http\Controllers\Api\V1\Webhook\BetNResulNewController;
+
+
+
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -42,14 +48,19 @@ Route::get('contact', [ContactController::class, 'get']);
 // sameless route
 Route::post('Seamless/Test', [TransactionController::class, 'SystemWalletTest']);
 Route::post('GetBalance', [GetBalanceController::class, 'getBalance']);
-Route::post('BetNResult', [BetNResultController::class, 'handleBetNResult']);
+//Route::post('BetNResult', [BetNResultController::class, 'handleBetNResult']);
+Route::post('BetNResult', [BetNResulNewController::class, 'handleBetNResult']);
+
 //Route::post('BetNResult', [NewBetNResultController::class, 'handleBetNResult']);
 
 Route::post('CancelBetNResult', [CancelBetNResultController::class, 'handleCancelBetNResult']);
-Route::post('Bet', [BetController::class, 'handleBet']);
+//Route::post('Bet', [BetController::class, 'handleBet']);
+Route::post('Bet', [NewBetController::class, 'handleBet']);
 Route::post('PullLog', [PlaceBetWebhookController::class, 'PurseService']);
 Route::delete('TestBet', [PlaceBetWebhookController::class, 'BetTest']);
-Route::post('Result', [BetResultController::class, 'handleResult']);
+//Route::post('Result', [BetResultController::class, 'handleResult']);
+Route::post('Result', [NewBetResultController::class, 'handleResult']);
+
 Route::post('CancelBet', [CancelBetController::class, 'handleCancelBet']);
 Route::post('Adjustment', [AdjustmentController::class, 'handleAdjustment']);
 Route::post('Reward', [RewardController::class, 'handleReward']);
