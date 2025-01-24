@@ -56,7 +56,6 @@ Route::post('BetNResult', [BetNResulNewController::class, 'handleBetNResult']);
 Route::post('CancelBetNResult', [CancelBetNResultController::class, 'handleCancelBetNResult']);
 //Route::post('Bet', [BetController::class, 'handleBet']);
 Route::post('Bet', [NewBetController::class, 'handleBet']);
-Route::post('PullLog', [PlaceBetWebhookController::class, 'PurseService']);
 Route::delete('TestBet', [PlaceBetWebhookController::class, 'BetTest']);
 //Route::post('Result', [BetResultController::class, 'handleResult']);
 Route::post('Result', [NewBetResultController::class, 'handleResult']);
