@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\BannerController;
 use App\Http\Controllers\Api\V1\ContactController;
 use App\Http\Controllers\Api\V1\DepositRequestController;
 use App\Http\Controllers\Api\V1\GetAdminSiteLogoNameController;
+use App\Http\Controllers\Api\V1\NewVersion\PlaceBetWebhookController;
 use App\Http\Controllers\Api\V1\GetBalanceController;
 use App\Http\Controllers\Api\V1\Monitor\DataVisualizationController;
 use App\Http\Controllers\Api\V1\PromotionController;
@@ -46,6 +47,8 @@ Route::post('BetNResult', [BetNResultController::class, 'handleBetNResult']);
 
 Route::post('CancelBetNResult', [CancelBetNResultController::class, 'handleCancelBetNResult']);
 Route::post('Bet', [BetController::class, 'handleBet']);
+Route::post('PullLog', [PlaceBetWebhookController::class, 'PurseService']);
+Route::delete('TestBet', [PlaceBetWebhookController::class, 'BetTest']);
 Route::post('Result', [BetResultController::class, 'handleResult']);
 Route::post('CancelBet', [CancelBetController::class, 'handleCancelBet']);
 Route::post('Adjustment', [AdjustmentController::class, 'handleAdjustment']);
