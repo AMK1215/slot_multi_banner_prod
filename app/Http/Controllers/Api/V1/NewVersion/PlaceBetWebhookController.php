@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\Webhook\Traits\PlaceBetWebhook;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Slot\SlotWebhookRequest;
 use App\Models\User;
+use Illuminate\Support\Traits\Purse;
 use App\Services\Slot\SlotWebhookService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Redis;
 
 class PlaceBetWebhookController extends Controller
 {
-    use PlaceBetWebhook;
+    use PlaceBetWebhook, Purse;
 
     public function placeBetNew(SlotWebhookRequest $request)
     {
