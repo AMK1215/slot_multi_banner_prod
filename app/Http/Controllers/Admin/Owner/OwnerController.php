@@ -102,7 +102,7 @@ class OwnerController extends Controller
         if ($request->agent_logo) {
             $image = $request->file('agent_logo');
             $ext = $image->getClientOriginalExtension();
-            $filename = uniqid('logo').'.'.$ext; // Generate a unique filename
+            $filename = uniqid('logo') . '.' . $ext; // Generate a unique filename
             $image->move(public_path('assets/img/logo/'), $filename); // Save the file
             $userPrepare['agent_logo'] = $filename;
         }
@@ -142,7 +142,7 @@ class OwnerController extends Controller
     {
         $randomNumber = mt_rand(10000000, 99999999);
 
-        return 'O'.$randomNumber;
+        return 'O' . $randomNumber;
     }
 
     /**
@@ -301,92 +301,9 @@ class OwnerController extends Controller
 
         return redirect()->back()->with(
             'success',
-            'User '.($user->status == 1 ? 'activate' : 'inactive').' successfully'
+            'User ' . ($user->status == 1 ? 'activate' : 'inactive') . ' successfully'
         );
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    // public function update(Request $request, string $id)
-    // {
-    //     abort_if(
-    //         Gate::denies('owner_edit') || ! $this->ifChildOfParent($request->user()->id, $id),
-    //         Response::HTTP_FORBIDDEN,
-    //         '403 Forbidden |You cannot  Access this page because you do not have permission'
-    //     );
-
-    //     $user = User::find($id);
-
-    //     if ($request->file('agent_logo')) {
-    //         File::delete(public_path('assets/img/logo/'.$user->agent_logo));
-    //         // image
-    //         $image = $request->file('agent_logo');
-    //         $ext = $image->getClientOriginalExtension();
-    //         $filename = uniqid('banner').'.'.$ext; // Generate a unique filename
-    //         $image->move(public_path('assets/img/logo/'), $filename); // Save the file
-    //         $request->agent_logo = $filename;
-    //     }
-
-    //     $user->update([
-    //         'name' => $request->name,
-    //         'phone' => $request->phone,
-    //         'player_name' => $request->player_name,
-    //         'agent_logo' => $request->agent_logo,
-    //     ]);
-
-    //     return redirect()->back()
-    //         ->with('success', 'Owner Updated successfully');
-    // }
-    // public function update(Request $request, string $id)
-    // {
-    //     dd($request->all());
-    //     abort_if(
-    //         Gate::denies('owner_edit') || ! $this->ifChildOfParent($request->user()->id, $id),
-    //         Response::HTTP_FORBIDDEN,
-    //         '403 Forbidden |You cannot Access this page because you do not have permission'
-    //     );
-
-    //     // Find the user to update
-    //     $user = User::findOrFail($id);
-
-    //     // Validate the input
-    //     $request->validate([
-    //         'user_name' => 'nullable|string|max:255',
-    //         'name' => 'required|string|max:255',
-    //         'phone' => 'required|numeric|digits_between:10,15|unique:users,phone,'.$id,
-    //         'agent_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    //     ]);
-
-    //     // Handle the logo file if uploaded
-    //     if ($request->file('agent_logo')) {
-    //         // Delete the old logo if it exists
-    //         if ($user->agent_logo && File::exists(public_path('assets/img/logo/'.$user->agent_logo))) {
-    //             File::delete(public_path('assets/img/logo/'.$user->agent_logo));
-    //         }
-
-    //         // Upload the new logo
-    //         $image = $request->file('agent_logo');
-    //         $ext = $image->getClientOriginalExtension();
-    //         $filename = uniqid('logo').'.'.$ext;
-    //         $image->move(public_path('assets/img/logo/'), $filename);
-
-    //         // Update the logo field
-    //         $user->agent_logo = $filename;
-    //     }
-
-    //     // Update other user fields
-    //     $user->update([
-    //         'user_name' => $request->player_name,
-    //         'name' => $request->name,
-    //         'phone' => $request->phone,
-    //         'agent_logo' => $user->agent_logo, // Set the updated logo
-    //     ]);
-
-    //     // Redirect back with a success message
-    //     return redirect()->back()
-    //         ->with('success', 'Owner updated successfully!');
-    // }
 
     public function update(Request $request, string $id)
     {
@@ -410,7 +327,7 @@ class OwnerController extends Controller
         $request->validate([
             'user_name' => 'nullable|string|max:255',
             'name' => 'required|string|max:255',
-            'phone' => 'required|numeric|digits_between:10,15|unique:users,phone,'.$id,
+            'phone' => 'required|numeric|digits_between:10,15|unique:users,phone,' . $id,
             'agent_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'site_link' => 'nullable|string',
 
@@ -425,13 +342,13 @@ class OwnerController extends Controller
             ]);
 
             // Delete old logo if exists
-            if ($user->agent_logo && File::exists(public_path('assets/img/logo/'.$user->agent_logo))) {
-                File::delete(public_path('assets/img/logo/'.$user->agent_logo));
+            if ($user->agent_logo && File::exists(public_path('assets/img/logo/' . $user->agent_logo))) {
+                File::delete(public_path('assets/img/logo/' . $user->agent_logo));
             }
 
             // Upload new logo
             $image = $request->file('agent_logo');
-            $filename = uniqid('logo').'.'.$image->getClientOriginalExtension();
+            $filename = uniqid('logo') . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('assets/img/logo/'), $filename);
             $user->agent_logo = $filename;
         } else {
@@ -482,5 +399,24 @@ class OwnerController extends Controller
             ->with('success', 'Owner Change Password successfully')
             ->with('password', $request->password)
             ->with('username', $master->user_name);
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(User $owner)
+    {
+        if (! $owner) {
+            return redirect()->back()->with('error', 'Banner Not Found');
+        }
+
+        $agentIds = User::where('agent_id', $owner->id)->pluck('id');
+        User::whereIn('agent_id', $agentIds)->delete();
+      
+        User::where('agent_id', $owner->id)->delete();
+        $owner->delete();
+
+        return redirect()->back()->with('success', 'Banner Deleted.');
     }
 }
