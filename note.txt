@@ -251,6 +251,12 @@ php artisan bet:delete-old-backups "2024-12-10" "2024-12-11"
 
 sudo certbot --nginx -d delightmyanmarmmk.xyz -d www.delightmyanmarmmk.xyz -d superman788.online -d www.superman788.online -d asaibetslot.online -d www.asaibetslot.online
 
+sudo certbot --nginx -d agdashboard.pro -d www.agdashboard.pro -d panda666.online -d www.panda666.online -d spiderman168.online -d www.spiderman168.online -d bossi.live -d www.bossi.live
+
+agdashboard.pro www.agdashboard.pro panda666.online www.panda666.online spiderman168.online www.spiderman168.online
+
+sudo certbot --nginx -d agdashboard.pro -d www.agdashboard.pro -d panda666.online -d www.panda666.online -d spiderman168.online -d www.spiderman168.online -d bossi.live -d www.bossi.live
+
 
 
 1 - CREATE USER 'mksuperman'@'104.248.159.5' IDENTIFIED BY 'StrongPassword123!';
