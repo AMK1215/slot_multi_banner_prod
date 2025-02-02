@@ -28,12 +28,6 @@ class MultiBannerReportController extends Controller
             }
         ])
             ->where('agent_id', $seniorId)
-            ->whereHas('agents.players.results', function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('created_at', [$startDate, $endDate]);
-            })
-            ->orWhereHas('agents.players.betNResults', function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('created_at', [$startDate, $endDate]);
-            })
             ->get();
 
         $data = [];
@@ -78,16 +72,10 @@ class MultiBannerReportController extends Controller
             }
         ])
             ->where('agent_id', $ownerId)
-            ->whereHas('agents.players.results', function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('created_at', [$startDate, $endDate]);
-            })
-            ->orWhereHas('agents.players.betNResults', function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('created_at', [$startDate, $endDate]);
-            })
             ->get();
 
         $data = [];
-        
+
         foreach ($agents as $agent) {
             $totalBets = 0;
             $totalWins = 0;
