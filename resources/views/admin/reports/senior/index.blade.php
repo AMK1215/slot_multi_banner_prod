@@ -26,7 +26,7 @@
                     <div class="card-header">
                         @if (Auth::user()->hasRole('Senior'))
                         <h3>Owner Report</h3>
-                        @elseif(Auth::user()->role('Owner'))
+                        @elseif(Auth::user()->hasRole('Owner'))
                         <h3>Agent Report</h3>
                         @else
                         <h4>Sub Agent Report</h4>
@@ -38,7 +38,7 @@
                                 <tr>
                                 @if (Auth::user()->hasRole('Senior'))
                                     <th>Owner</th>
-                                @elseif(Auth::user()->role('Owner'))
+                                @elseif(Auth::user()->hasRole('Owner'))
                                     <th>Agent</th>
                                 @else
                                     <th>SubAgent</th>

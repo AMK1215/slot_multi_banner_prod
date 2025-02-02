@@ -369,15 +369,6 @@
                         @endcan
                         @can('owner_access')
                             <li class="nav-item">
-                                <a href="{{ route('admin.reports.owner') }}"
-                                    class="nav-link {{ Route::current()->getName() == 'admin.reports.owner' ? 'active' : '' }}">
-                                    <i class="fas fa-file-invoice"></i>
-                                    <p>
-                                        W/L Report 2
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a href="{{ route('admin.GetOwnerPlayerList') }}"
                                     class="nav-link {{ Route::current()->getName() == 'admin.GetOwnerPlayerList' ? 'active' : '' }}">
                                     <i class="fas fa-user"></i>
