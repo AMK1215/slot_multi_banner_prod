@@ -48,7 +48,7 @@
                             </tbody>
 
                         </table>
-                        {{$admins->links()}}
+                        
                     </div>
                     <!-- /.card-body -->
                 </div>

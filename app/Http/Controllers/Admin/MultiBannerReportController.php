@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Webhook\Result;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class MultiBannerReportController extends Controller
@@ -15,7 +16,25 @@ class MultiBannerReportController extends Controller
     {
         $seniorId = auth()->id();
 
-        $admins = User::with(['agents.players.results', 'agents.players.betNResults'])->where('agent_id', $seniorId)->paginate(10);
+        $startDate = $request->start_date ?? Carbon::today()->startOfDay()->toDateString();
+        $endDate = $request->end_date ?? Carbon::today()->endOfDay()->toDateString();
+
+        $admins = User::with([
+            'agents.players.results' => function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('created_at', [$startDate, $endDate]);
+            },
+            'agents.players.betNResults' => function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('created_at', [$startDate, $endDate]);
+            }
+        ])
+            ->where('agent_id', $seniorId)
+            ->whereHas('agents.players.results', function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('created_at', [$startDate, $endDate]);
+            })
+            ->orWhereHas('agents.players.betNResults', function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('created_at', [$startDate, $endDate]);
+            })
+            ->get();
 
         $data = [];
         foreach ($admins as $admin) {
@@ -25,7 +44,7 @@ class MultiBannerReportController extends Controller
 
             foreach ($admin->agents as $agent) {
                 foreach ($agent->players as $player) {
-                   
+
                     $totalBets += $player->results->sum('total_bet_amount') + $player->betNResults->sum('bet_amount');
                     $totalWins += $player->results->sum('win_amount') + $player->betNResults->sum('win_amount');
                     $totalNet += $player->results->sum('net_win') + $player->betNResults->sum('net_win');
@@ -47,9 +66,28 @@ class MultiBannerReportController extends Controller
     {
         $ownerId = auth()->id();
 
-        $agents = User::with(['agents.players.results', 'agents.players.betNResults'])->where('agent_id',  $ownerId)->get();
+        $startDate = $request->start_date ?? Carbon::today()->startOfDay()->toDateString();
+        $endDate = $request->end_date ?? Carbon::today()->endOfDay()->toDateString();
+
+        $agents = User::with([
+            'agents.players.results' => function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('created_at', [$startDate, $endDate]);
+            },
+            'agents.players.betNResults' => function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('created_at', [$startDate, $endDate]);
+            }
+        ])
+            ->where('agent_id', $ownerId)
+            ->whereHas('agents.players.results', function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('created_at', [$startDate, $endDate]);
+            })
+            ->orWhereHas('agents.players.betNResults', function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('created_at', [$startDate, $endDate]);
+            })
+            ->get();
 
         $data = [];
+        
         foreach ($agents as $agent) {
             $totalBets = 0;
             $totalWins = 0;
