@@ -17,32 +17,30 @@ class MultiBannerReportController extends Controller
     {
         $seniorId = auth()->id();
 
-        $admins = User::where('agent_id', $seniorId)->get();
+        $admins = User::with(['agents.players.results', 'agents.players.betNResults'])->where('agent_id',  $seniorId)->get();
 
         $data = [];
         foreach ($admins as $admin) {
-            $agents = User::where('agent_id', $admin->id)->get();
-
-            foreach ($agents as $agent) {
-                $players = User::where('agent_id', $agent->id)->get();
-
-                $results = Result::whereIn('user_id', $players->pluck('id'))
-                    ->selectRaw('SUM(total_bet_amount) as total_bets, SUM(win_amount) as total_wins, SUM(net_win) as total_net')
-                    ->first();
-                $betNResults = BetNResult::whereIn('user_id', $players->pluck('id'))
-                    ->selectRaw('SUM(bet_amount) as total_bets, SUM(win_amount) as total_wins, SUM(net_win) as total_net')
-                    ->first();
-
-                $data[] = [
-                    'admin_name' => $admin->name,
-                    'agent_name' => $agent->name,
-                    'total_bets' => ($results->total_bets ?? 0) + ($betNResults->total_bets ?? 0),
-                    'total_wins' => ($results->total_wins ?? 0) + ($betNResults->total_wins ?? 0),
-                    'total_net' => ($results->total_net ?? 0) + ($betNResults->total_net ?? 0),
-                ];
+            $totalBets = 0;
+            $totalWins = 0;
+            $totalNet = 0;
+        
+            foreach ($admin->agents as $agent) {
+                foreach ($agent->players as $player) {
+                    $totalBets += $player->results->sum('total_bet_amount') + $player->betNResults->sum('bet_amount');
+                    $totalWins += $player->results->sum('win_amount') + $player->betNResults->sum('win_amount');
+                    $totalNet += $player->results->sum('net_win') + $player->betNResults->sum('net_win');
+                }
             }
+        
+            $data[] = [
+                'admin_name' => $admin->name,
+                'total_bets' => $totalBets,
+                'total_wins' => $totalWins,
+                'total_net' => $totalNet,
+            ];
         }
-
+        
         return view('admin.reports.senior.index', compact('data'));
     }
 
@@ -89,7 +87,7 @@ class MultiBannerReportController extends Controller
             ->selectRaw('user_id, SUM(total_bet_amount) as total_bets, SUM(win_amount) as total_wins, SUM(net_win) as total_net')
             ->groupBy('user_id')
             ->get();
-        
+
         return view('admin.reports.agent.index', compact('results'));
     }
 

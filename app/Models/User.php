@@ -14,6 +14,8 @@ use App\Models\Admin\Role;
 use App\Models\Admin\TopTenWithdraw;
 use App\Models\SeamlessTransaction;
 use App\Models\Webhook\Bet;
+use App\Models\Webhook\BetNResult;
+use App\Models\Webhook\Result;
 use Bavix\Wallet\Interfaces\Wallet;
 use Bavix\Wallet\Traits\HasWalletFloat;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -157,10 +159,6 @@ class User extends Authenticatable implements Wallet
         return $this->hasMany(Wager::class);
     }
 
-    // public function parent()
-    // {
-    //     return $this->belongsTo(User::class, 'agent_id');
-    // }
 
     public function scopeRoleLimited($query)
     {
@@ -192,11 +190,6 @@ class User extends Authenticatable implements Wallet
         return $this->belongsTo(User::class, 'agent_id');
     }
 
-    // public function reports()
-    // {
-    //     return $this->hasMany(Report::class, 'agent_id');
-    // }
-
     public function banks(): HasMany
     {
         return $this->hasMany(Bank::class, 'agent_id');
@@ -212,13 +205,6 @@ class User extends Authenticatable implements Wallet
         return $this->hasMany(Bet::class, 'user_id');
     }
 
-    // Fetch agents created by an admin
-    // public function createdAgents()
-    // {
-    //     return $this->hasMany(User::class, 'agent_id');
-    // }
-
-    // Fetch players managed by an agent
     public function players()
     {
         return $this->hasMany(User::class, 'agent_id');
@@ -235,13 +221,11 @@ class User extends Authenticatable implements Wallet
         return $this->belongsTo(User::class, 'agent_id');
     }
 
-    // A user can have children (e.g., Admin has many Agents, or Agent has many Players)
     public function children()
     {
         return $this->hasMany(User::class, 'agent_id');
     }
 
-    // Get all players under an agent
     public function Agentplayers()
     {
         return $this->children()->whereHas('roles', function ($query) {
@@ -274,17 +258,11 @@ class User extends Authenticatable implements Wallet
         return $this->hasMany(TopTenWithdraw::class, 'admin_id'); // Banners owned by this admin
     }
 
-    /**
-     * Recursive relationship to get all ancestors up to senior.
-     */
     public function ancestors()
     {
         return $this->parent()->with('ancestors');
     }
 
-    /**
-     * Recursive relationship to get all descendants down to players.
-     */
     public function descendants()
     {
         return $this->children()->with('descendants');
@@ -293,5 +271,15 @@ class User extends Authenticatable implements Wallet
     public function agents()
     {
         return $this->hasMany(User::class, 'agent_id');
+    }
+
+    public function results()
+    {
+        return $this->hasMany(Result::class);
+    }
+
+    public function betNResults()
+    {
+        return $this->hasMany(BetNResult::class);
     }
 }

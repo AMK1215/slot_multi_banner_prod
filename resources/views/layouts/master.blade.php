@@ -290,19 +290,7 @@
                                 </p>
                             </a>
                         </li>
-                        @can('agent_access')
-                            <li class="nav-item">
-                                <a href="{{ route('admin.reports.agent') }}"
-                                    class="nav-link {{ Route::current()->getName() == 'admin.reports.owner' ? 'active' : '' }}">
-                                    <i class="fas fa-file-invoice"></i>
-                                    <p>
-                                        W/L Report 2
-                                    </p>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('senior_access')
-                            <li class="nav-item">
+                        <li class="nav-item">
                                 <a href="{{ route('admin.reports.senior') }}"
                                     class="nav-link {{ Route::current()->getName() == 'admin.reports.senior' ? 'active' : '' }}">
                                     <i class="fas fa-file-invoice"></i>
@@ -311,6 +299,7 @@
                                     </p>
                                 </a>
                             </li>
+                        @can('senior_access')
                             <li class="nav-item">
                                 <a href="{{ route('admin.SeniorHierarchy') }}"
                                     class="nav-link {{ Route::current()->getName() == 'admin.SeniorHierarchy' ? 'active' : '' }}">
