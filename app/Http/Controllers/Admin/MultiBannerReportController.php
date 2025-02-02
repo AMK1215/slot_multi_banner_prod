@@ -18,13 +18,13 @@ class MultiBannerReportController extends Controller
 
         $startDate = $request->start_date ?? Carbon::today()->startOfDay()->toDateString();
         $endDate = $request->end_date ?? Carbon::today()->endOfDay()->toDateString();
-
+      
         $admins = User::with([
             'agents.players.results' => function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('created_at', [$startDate, $endDate]);
+                $query->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
             },
             'agents.players.betNResults' => function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('created_at', [$startDate, $endDate]);
+                $query->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
             }
         ])
             ->where('agent_id', $seniorId)
@@ -46,7 +46,7 @@ class MultiBannerReportController extends Controller
             }
 
             $data[] = [
-                'admin_name' => $agent->name,
+                'admin_name' => $admin->name,
                 'total_bets' => $totalBets,
                 'total_wins' => $totalWins,
                 'total_net' => $totalNet,
@@ -65,10 +65,10 @@ class MultiBannerReportController extends Controller
 
         $agents = User::with([
             'agents.players.results' => function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('created_at', [$startDate, $endDate]);
+                $query->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
             },
             'agents.players.betNResults' => function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('created_at', [$startDate, $endDate]);
+                $query->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
             }
         ])
             ->where('agent_id', $ownerId)
