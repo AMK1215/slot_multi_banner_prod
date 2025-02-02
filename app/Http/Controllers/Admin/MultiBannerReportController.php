@@ -65,10 +65,10 @@ class MultiBannerReportController extends Controller
         $endDate = $request->end_date ?? Carbon::today()->endOfDay()->toDateString();
 
         $agents = User::with([
-            'agents.players.results' => function ($query) use ($startDate, $endDate) {
+            'players.results' => function ($query) use ($startDate, $endDate) {
                 $query->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
             },
-            'agents.players.betNResults' => function ($query) use ($startDate, $endDate) {
+            'players.betNResults' => function ($query) use ($startDate, $endDate) {
                 $query->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
             }
         ])
@@ -81,8 +81,7 @@ class MultiBannerReportController extends Controller
             $totalBets = 0;
             $totalWins = 0;
             $totalNet = 0;
-
-            foreach ($agent->agents as $player) {
+            foreach ($agent->players as $player) {
                 $totalBets += $player->results->sum('total_bet_amount') + $player->betNResults->sum('bet_amount');
                 $totalWins += $player->results->sum('win_amount') + $player->betNResults->sum('win_amount');
                 $totalNet += $player->results->sum('net_win') + $player->betNResults->sum('net_win');
@@ -103,14 +102,39 @@ class MultiBannerReportController extends Controller
     {
         $agent = $this->getAgent() ?? Auth::user();
 
-        $players = User::where('agent_id', $agent->id)->get();
+        $startDate = $request->start_date ?? Carbon::today()->startOfDay()->toDateString();
+        $endDate = $request->end_date ?? Carbon::today()->endOfDay()->toDateString();
 
-        $results = Result::whereIn('user_id', $players->pluck('id'))
-            ->selectRaw('user_id, SUM(total_bet_amount) as total_bets, SUM(win_amount) as total_wins, SUM(net_win) as total_net')
-            ->groupBy('user_id')
+        $players = User::with([
+            'results' => function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
+            },
+            'betNResults' => function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
+            }
+        ])
+            ->where('agent_id', $agent->id)
             ->get();
 
-        return view('admin.reports.agent.index', compact('results'));
+        $data = [];
+
+        foreach ($players as $player) {
+            $totalBets = 0;
+            $totalWins = 0;
+            $totalNet = 0;
+            $totalBets += $player->results->sum('total_bet_amount') + $player->betNResults->sum('bet_amount');
+            $totalWins += $player->results->sum('win_amount') + $player->betNResults->sum('win_amount');
+            $totalNet += $player->results->sum('net_win') + $player->betNResults->sum('net_win');
+
+
+            $data[] = [
+                'player_name' => $player->name,
+                'total_bets' => $totalBets,
+                'total_wins' => $totalWins,
+                'total_net' => $totalNet,
+            ];
+        }
+        return view('admin.reports.agent.index', compact('data'));
     }
 
     public function getAgentDetail($userId)

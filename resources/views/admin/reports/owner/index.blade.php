@@ -24,7 +24,7 @@
                 </div>
                 <div class="card " style="border-radius: 20px;">
                     <div class="card-header">
-                        <h3>Owner Report</h3>
+                        <h3>Agent Winlose Total Report</h3>
                     </div>
                     <form role="form" class="text-start" action="{{ route('admin.reports.owner') }}" method="GET">
                         <div class="row ml-5">

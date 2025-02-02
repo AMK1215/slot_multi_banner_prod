@@ -24,7 +24,7 @@
                 </div>
                 <div class="card " style="border-radius: 20px;">
                     <div class="card-header">
-                        <h3>Owner Winlose Total Report</h3>
+                        <h3>Senior Winlose Total Report</h3>
                     </div>
                     <form role="form" class="text-start" action="{{ route('admin.reports.senior') }}" method="GET">
                         <div class="row ml-5">
