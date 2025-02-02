@@ -20,7 +20,7 @@
                 <div class="col-12">
                     <div class="d-flex justify-content-end mb-3">
                         <a href="{{ route('home') }}" class="btn btn-primary " style="width: 100px;"><i
-                                class="fas fa-plus text-white  mr-2"></i>Back</a>
+                                class="fas fa-arrow-left text-white  mr-2"></i>Back</a>
                     </div>
                     <div class="card " style="border-radius: 20px;">
                         <div class="card-header">

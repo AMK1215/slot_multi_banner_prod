@@ -24,25 +24,13 @@
                 </div>
                 <div class="card " style="border-radius: 20px;">
                     <div class="card-header">
-                        @if (Auth::user()->hasRole('Senior'))
                         <h3>Owner Report</h3>
-                        @elseif(Auth::user()->hasRole('Owner'))
-                        <h3>Agent Report</h3>
-                        @else
-                        <h4>Sub Agent Report</h4>
-                        @endif
                     </div>
                     <div class="card-body">
                         <table id="mytable" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                @if (Auth::user()->hasRole('Senior'))
                                     <th>Owner</th>
-                                @elseif(Auth::user()->hasRole('Owner'))
-                                    <th>Agent</th>
-                                @else
-                                    <th>SubAgent</th>
-                                @endif
                                     <th>Total Bets</th>
                                     <th>Total Wins</th>
                                     <th>Total Net</th>
@@ -60,6 +48,7 @@
                             </tbody>
 
                         </table>
+                        {{$admins->links()}}
                     </div>
                     <!-- /.card-body -->
                 </div>
