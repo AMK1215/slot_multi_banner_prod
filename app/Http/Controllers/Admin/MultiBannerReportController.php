@@ -6,19 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Webhook\Result;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class MultiBannerReportController extends Controller
 {
     protected const SUB_AGENT_ROlE = 'Sub Agent';
 
-    public function getSeniorReport()
+    public function getSeniorReport(Request $request)
     {
         $seniorId = auth()->id();
 
         $startDate = $request->start_date ?? Carbon::today()->startOfDay()->toDateString();
         $endDate = $request->end_date ?? Carbon::today()->endOfDay()->toDateString();
-      
+
         $admins = User::with([
             'agents.players.results' => function ($query) use ($startDate, $endDate) {
                 $query->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
@@ -56,7 +57,7 @@ class MultiBannerReportController extends Controller
         return view('admin.reports.senior.index', compact('data', 'admins'));
     }
 
-    public function getOwnerReport()
+    public function getOwnerReport(Request $request)
     {
         $ownerId = auth()->id();
 
@@ -98,7 +99,7 @@ class MultiBannerReportController extends Controller
         return view('admin.reports.owner.index', compact('data'));
     }
 
-    public function getAgentReport()
+    public function getAgentReport(Request $request)
     {
         $agent = $this->getAgent() ?? Auth::user();
 
