@@ -373,7 +373,7 @@
                             class="nav-link {{ Route::current()->getName() == 'admin.reports.agent' ? 'active' : '' }}">
                             <i class="fas fa-file-invoice"></i>
                             <p>
-                                W/L Report 2
+                               W/L Report 2
                             </p>
                         </a>
                     </li>
