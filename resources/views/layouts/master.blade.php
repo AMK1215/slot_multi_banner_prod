@@ -356,7 +356,7 @@
                         </a>
                     </li>
                     @endcan
-                    @can('owner_index')
+                    @can('owner_access')
                     <li class="nav-item">
                         <a href="{{ route('admin.reports.owner') }}"
                             class="nav-link {{ Route::current()->getName() == 'admin.reports.owner' ? 'active' : '' }}">
@@ -367,7 +367,7 @@
                         </a>
                     </li>
                     @endcan
-                    @can('agent_access')
+                    @can('player_index')
                     <li class="nav-item">
                         <a href="{{ route('admin.reports.agent') }}"
                             class="nav-link {{ Route::current()->getName() == 'admin.reports.agent' ? 'active' : '' }}">
