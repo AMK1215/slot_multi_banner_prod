@@ -25,6 +25,7 @@ use App\Http\Controllers\Api\V1\Webhook\BetController;
 use App\Http\Controllers\Api\V1\Webhook\BetNResultController;
 use App\Http\Controllers\Api\V1\Webhook\BetResultController;
 use App\Http\Controllers\Api\V1\Webhook\CancelBetController;
+use App\Http\Controllers\Api\V1\Webhook\CancelBetNewVersionController;
 use App\Http\Controllers\Api\V1\Webhook\CancelBetNResultController;
 use App\Http\Controllers\Api\V1\Webhook\NewBetNResultController;
 use App\Http\Controllers\Api\V1\Webhook\RewardController;
@@ -60,7 +61,9 @@ Route::delete('TestBet', [PlaceBetWebhookController::class, 'BetTest']);
 //Route::post('Result', [BetResultController::class, 'handleResult']);
 Route::post('Result', [NewBetResultController::class, 'handleResult']);
 
-Route::post('CancelBet', [CancelBetController::class, 'handleCancelBet']);
+//Route::post('CancelBet', [CancelBetController::class, 'handleCancelBet']);
+Route::post('CancelBet', [CancelBetNewVersionController::class, 'handleCancelBet']);
+
 Route::post('Adjustment', [AdjustmentController::class, 'handleAdjustment']);
 Route::post('Reward', [RewardController::class, 'handleReward']);
 Route::post('GetGameProvider', [GetGameProviderController::class, 'fetchGameProviders']);

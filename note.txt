@@ -255,7 +255,7 @@ sudo certbot --nginx -d agdashboard.pro -d www.agdashboard.pro -d panda666.onlin
 
 agdashboard.pro www.agdashboard.pro panda666.online www.panda666.online spiderman168.online www.spiderman168.online
 
-sudo certbot --nginx -d agdashboard.pro -d www.agdashboard.pro -d panda666.online -d www.panda666.online -d spiderman168.online -d www.spiderman168.online -d bossi.live -d www.bossi.live
+sudo certbot --nginx -d agdashboard.pro -d www.agdashboard.pro -d panda666.online -d www.panda666.online -d spiderman168.online -d www.spiderman168.online -d bossi.live -d www.bossi.live -d maxwinagent.online -d www.maxwinagent.online
 
 
 
