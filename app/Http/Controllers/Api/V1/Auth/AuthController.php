@@ -92,12 +92,14 @@ class AuthController extends Controller
             return $this->error('', 'You do not have permissions', 200);
         }
 
+        $user->tokens()->delete();
+
+
         UserLog::create([
             'ip_address' => $request->ip(),
             'user_id' => $user->id,
             'user_agent' => $request->userAgent(),
         ]);
-        $user->tokens()->delete();
 
         return $this->success(new UserResource($user), 'User login successfully.');
     }
