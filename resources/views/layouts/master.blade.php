@@ -100,7 +100,7 @@
 
                         </ul>
                     </li>
-                    <!-- Add the audio element -->
+                    <!-- Add the audio sound element -->
                     <audio id="notificationSound" src="{{ asset('sounds/noti.wav') }}" preload="auto"></audio>
                 @endcan
 
