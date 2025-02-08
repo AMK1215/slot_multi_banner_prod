@@ -723,7 +723,8 @@
             }
 
             function checkForNewNotifications() {
-                fetch("{{ route('notifications.count') }}") // Blade syntax, ensure this is in a .blade.php file
+                fetch(
+                    "{{ route('admin.notifications.count') }}") // Blade syntax, ensure this is in a .blade.php file
                     .then(response => response.json())
                     .then(data => {
                         const newCount = data.count;
