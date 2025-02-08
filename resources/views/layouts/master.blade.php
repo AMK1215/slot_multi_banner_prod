@@ -697,8 +697,54 @@
         });
     </script>
 
-    <!-- JavaScript to play the sound -->
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const notificationSound = document.getElementById('notificationSound');
+            const notificationCount = document.getElementById('notificationCount');
+            let initialCount = parseInt(notificationCount.innerText) || 0;
+
+            document.addEventListener('click', function() {
+                const silentSound = new Audio(
+                    'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAESsAAABAAgAZGF0YQAAAAA='
+                );
+                silentSound.play().then(() => {
+                    console.log('Audio unlocked');
+                });
+            }, {
+                once: true
+            });
+
+            function playNotificationSound() {
+                if (notificationSound) {
+                    notificationSound.play().catch(error => {
+                        console.error('Error playing notification sound:', error);
+                    });
+                }
+            }
+
+            function checkForNewNotifications() {
+                fetch("{{ route('notifications.count') }}") // Blade syntax, ensure this is in a .blade.php file
+                    .then(response => response.json())
+                    .then(data => {
+                        const newCount = data.count;
+                        if (newCount > initialCount) {
+                            playNotificationSound();
+                            initialCount = newCount;
+                            notificationCount.innerText = newCount;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching notification count:', error);
+                    });
+            }
+
+            setInterval(checkForNewNotifications, 5000);
+        });
+    </script>
+
+
+    <!-- JavaScript to play the sound -->
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             const notificationSound = document.getElementById('notificationSound');
             const notificationCount = document.getElementById('notificationCount');
@@ -727,7 +773,59 @@
             // Check for new notifications every 10 seconds
             setInterval(checkForNewNotifications, 10000);
         });
-    </script>
+    </script> --}}
+
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const notificationSound = document.getElementById('notificationSound');
+            const notificationCount = document.getElementById('notificationCount');
+            let initialCount = parseInt(notificationCount.innerText) || 0;
+
+            document.addEventListener('click', function() {
+                const silentSound = new Audio(
+                    'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAESsAAABAAgAZGF0YQAAAAA='
+                    );
+                silentSound.play().then(() => {
+                    console.log('Audio unlocked');
+                });
+            }, {
+                once: true
+            }); // Only run once
+
+            // Function to play the notification sound
+            function playNotificationSound() {
+                if (notificationSound) {
+                    notificationSound.play().catch(error => {
+                        console.error('Error playing notification sound:', error);
+                    });
+                }
+            }
+
+
+
+            // Polling function to check for new notifications
+            function checkForNewNotifications() {
+                fetch(
+                        '{{ route('admin.notifications.count') }}'
+                        ) // Replace with your route to get the notification count
+                    .then(response => response.json())
+                    .then(data => {
+                        const newCount = data.count;
+                        if (newCount > initialCount) {
+                            playNotificationSound(); // Play sound if new notifications are found
+                            initialCount = newCount; // Update the initial count
+                            notificationCount.innerText = newCount; // Update the notification count in the UI
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching notification count:', error);
+                    });
+            }
+
+            // Check for new notifications every 5 seconds
+            setInterval(checkForNewNotifications, 5000);
+        });
+    </script> --}}
 
 </body>
 
