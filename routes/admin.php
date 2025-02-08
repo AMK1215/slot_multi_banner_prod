@@ -31,6 +31,7 @@ use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\TransferLog\TransferLogController;
 use App\Http\Controllers\Admin\WinnerTextController;
 use App\Http\Controllers\Admin\WithDraw\WithDrawRequestController;
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewReportController;
 use Illuminate\Support\Facades\Route;
@@ -94,6 +95,9 @@ Route::group([
 
         return response()->json(['success' => true]);
     })->name('markNotificationsRead');
+
+    Route::get('/notifications/count', [NotificationController::class, 'count'])->name('notifications.count');
+
 
     Route::get('transaction-list', [TransactionController::class, 'index'])->name('transaction');
     // game list start
