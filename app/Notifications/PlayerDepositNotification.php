@@ -63,8 +63,13 @@ class PlayerDepositNotification extends Notification implements ShouldBroadcast,
     /**
      * Get the broadcast channel.
      */
-    public function broadcastOn()
+    // public function broadcastOn()
+    // {
+    //     return new PrivateChannel('agent.'.$this->deposit->agent_id);
+    // }
+
+     public function broadcastOn()
     {
-        return new PrivateChannel('agent.'.$this->deposit->agent_id);
+        return new Channel('agent.' . $this->deposit->agent_id);
     }
 }

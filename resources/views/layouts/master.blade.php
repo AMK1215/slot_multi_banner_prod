@@ -101,7 +101,7 @@
                         </ul>
                     </li>
                     <!-- Add the audio sound element -->
-                    <audio id="notificationSound" src="{{ asset('sounds/noti.wav') }}" preload="auto"></audio>
+                    {{-- <audio id="notificationSound" src="{{ asset('sounds/noti.wav') }}" preload="auto"></audio> --}}
                 @endcan
 
                 {{-- <li class="nav-item dropdown">
@@ -697,7 +697,7 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             const notificationSound = document.getElementById('notificationSound');
             const notificationCount = document.getElementById('notificationCount');
@@ -741,7 +741,7 @@
 
             setInterval(checkForNewNotifications, 5000);
         });
-    </script>
+    </script> --}}
 
 
     <!-- JavaScript to play the sound -->
