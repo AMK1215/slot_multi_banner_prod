@@ -44,7 +44,7 @@
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $player->name }}</td>
                                             <td>{{ $player->user_name }}</td>
-                                            <td>{{ number_format($player->wallet->balance ?? 0, 2) }}</td>
+                                            <td>{{ number_format($player->wallet->balanceFloat ?? 0, 2) }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody </table>

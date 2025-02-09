@@ -38,7 +38,7 @@
                                         <th>Phone</th>
                                         <th>TotalBalance</th>
                                         <th>Action</th>
-                                        <th>AgentBalance</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -53,6 +53,7 @@
                                                 <a href="{{ route('admin.OwnerAgentDetail', $owner['id']) }}"
                                                     class="btn btn-primary">Detail</a>
                                             </td>
+
                                         </tr>
                                     @endforeach
                                 </tbody>
