@@ -120,17 +120,19 @@
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $agent->id }}</td>
                                             <td>
-                                                <a
-                                                    href="{{ route('admin.AgentPlayerDetail', $agent->id) }}">{{ $agent->name }}</a>
+                                                <a href="{{ route('admin.AgentPlayerDetail', ['id' => $agent->id]) }}">
+                                                    {{ $agent->name }}
+                                                </a>
                                             </td>
                                             <td>
-                                                <a
-                                                    href="{{ route('admin.AgentPlayerDetail', $agent->id) }}">{{ $agent->user_name }}</a>
+                                                <a href="{{ route('admin.AgentPlayerDetail', ['id' => $agent->id]) }}">
+                                                    {{ $agent->user_name }}
+                                                </a>
                                             </td>
                                             <td>{{ $agent->phone }}</td>
                                             <td>{{ number_format($agent->wallet->balance ?? 0, 2) }}</td>
                                             <td>
-                                                <a href="{{ route('admin.OwnerAgentDetail', ['ownerId' => $owner->id, 'agentId' => $agent->id]) }}"
+                                                <a href="{{ route('admin.OwnerAgentDetail', ['id' => $owner->id, 'agentId' => $agent->id]) }}"
                                                     class="btn btn-primary">
                                                     View Balance
                                                 </a>
