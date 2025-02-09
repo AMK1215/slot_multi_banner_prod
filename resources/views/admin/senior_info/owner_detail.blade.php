@@ -22,7 +22,7 @@
                         <a href="{{ route('admin.GetAllOwners') }}" class="btn btn-primary " style="width: 100px;"><i
                                 class="fas fa-arrow-left text-white  mr-2"></i>Back</a>
                     </div>
-                    {{-- <div class="card " style="border-radius: 20px;">
+                    <div class="card " style="border-radius: 20px;">
                         <div class="card-header">
                             <h3>Owner's Detail Hierarchy Information</h3>
                         </div>
@@ -73,7 +73,7 @@
 
                         </div>
 
-                    </div> --}}
+                    </div>
 
                     {{-- <div class="card" style="border-radius: 20px;">
                         <div class="card-header">
@@ -144,7 +144,7 @@
                         </div>
                     </div> --}}
 
-                    <div class="card" style="border-radius: 20px;">
+                    {{-- <div class="card" style="border-radius: 20px;">
                         <div class="card-header">
                             <h3>Owner's Detail Hierarchy Information</h3>
                         </div>
@@ -201,18 +201,17 @@
                                             <td>{{ $agent->phone }}</td>
                                             <td>{{ number_format($agent->wallet->balance ?? 0, 2) }}</td>
                                             <td>
-                                                {{-- <a href="{{ route('admin.OwnerAgentDetail', ['ownerId' => $owner->id]) }}?agentId={{ $agent->id }}"
+                                                <a href="{{ route('admin.OwnerAgentDetail', ['ownerId' => $owner->id]) }}?agentId={{ $agent->id }}"
                                                     class="btn btn-primary">
                                                     View Balance
-                                                </a> --}}
-                                                View Balance
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
             </div>
