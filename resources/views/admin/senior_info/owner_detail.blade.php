@@ -60,8 +60,10 @@
                                             </td>
                                             <td>{{ $agent->phone }}</td>
                                             {{-- <td>{{ number_format($agent->wallet->balance ?? 2) }}</td> --}}
-                                            <a href="{{ route('admin.AgentBalanceDetail', ['owner_id' => $owner->id, 'agent_id' => $agent->id]) }}"
-                                                class="btn btn-primary">AgentBalanceDetail</a>
+                                            <td>
+                                                <a href="{{ route('admin.AgentBalanceDetail', ['owner_id' => $owner->id, 'agent_id' => $agent->id]) }}"
+                                                    class="btn btn-primary">AgentBalanceDetail</a>
+                                            </td>
 
                                             <td>
                                                 <a href="{{ route('admin.AgentPlayerDetail', $agent->id) }}"

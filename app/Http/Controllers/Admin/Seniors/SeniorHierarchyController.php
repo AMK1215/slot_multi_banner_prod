@@ -310,7 +310,7 @@ class SeniorHierarchyController extends Controller
 {
     $agent = User::with('wallet')
         ->where('id', $agent_id)
-        ->where('parent_id', $owner_id) // Ensuring agent belongs to the owner
+        ->where('agent_id', $owner_id) // Ensuring agent belongs to the owner
         ->whereHas('roles', function ($query) {
             $query->where('title', 'Agent');
         })
