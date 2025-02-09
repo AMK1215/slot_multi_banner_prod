@@ -222,8 +222,8 @@ Route::group([
         Route::get('/seniorresults', [NewReportController::class, 'getAllResults'])->name('senior_results.index');
         Route::post('/senior/delete-results', [NewReportController::class, 'deleteResults'])->name('senior.deleteResults');
 
-        Route::get('/seniorbets', [ReportController::class, 'getAllBets'])->name('senior_bet.index');
-        Route::post('/senior/delete-bets', [ReportController::class, 'deleteBets'])->name('senior.deleteBets');
+        Route::get('/seniorbets', [NewReportController::class, 'getAllBets'])->name('senior_bet.index');
+        Route::post('/senior/delete-bets', [NewReportController::class, 'deleteBets'])->name('senior.deleteBets');
 
         Route::get('/seniorbetnresults', [ReportController::class, 'getAllJili'])->name('senior_bet.index');
         Route::post('/senior/delete-betnresults', [ReportController::class, 'deleteJili'])->name('senior.deleteBetNResult');

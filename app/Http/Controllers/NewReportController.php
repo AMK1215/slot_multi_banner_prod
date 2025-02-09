@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Webhook\Result;
+use App\Models\Webhook\Bet;
+
 
 
 class NewReportController extends Controller
@@ -44,6 +46,38 @@ class NewReportController extends Controller
             return redirect()->route('admin.senior_results.index')->with('error', 'No results found to delete.');
         }
     }
+
+
+    public function getAllBets()
+    {
+        // Fetch results with pagination (10 results per page)
+        $results = Bet::orderBy('created_at', 'asc')->paginate(10);
+
+        // Pass the results to the view
+        return view('admin.reports.senior.bet_index', compact('results'));
+    }
+
+    public function deleteBets(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
+
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        // Delete results within the specified date range
+        $deletedRows = Bet::whereBetween('created_at', [$startDate, $endDate])->delete();
+
+        if ($deletedRows) {
+            return redirect()->route('admin.senior_bet.index')->with('success', 'Bet deleted successfully.');
+        } else {
+            return redirect()->route('admin.senior_bet.index')->with('error', 'No Bet found to delete.');
+        }
+    }
+
 
 
 
