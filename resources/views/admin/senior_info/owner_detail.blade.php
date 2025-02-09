@@ -130,7 +130,7 @@
                                             <td>{{ $agent->phone }}</td>
                                             <td>{{ number_format($agent->wallet->balance ?? 0, 2) }}</td>
                                             <td>
-                                                <a href="{{ route('admin.AgentPlayerDetail', ['ownerId' => $owner->id, 'agentId' => $agent->id]) }}"
+                                                <a href="{{ route('admin.OwnerAgentDetail', ['ownerId' => $owner->id, 'agentId' => $agent->id]) }}"
                                                     class="btn btn-primary">
                                                     View Balance
                                                 </a>
