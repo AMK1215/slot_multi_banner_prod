@@ -8,11 +8,42 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-Use App\Models\User;
+use App\Models\User;
+use App\Models\Webhook\Result;
 
 
 class NewReportController extends Controller
 {
+
+    public function getAllResults()
+    {
+        // Fetch results with pagination (10 results per page)
+        $results = Result::orderBy('created_at', 'asc')->paginate(10);
+
+        // Pass the results to the view
+        return view('admin.reports.senior.result_index', compact('results'));
+    }
+
+    public function deleteResults(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
+
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        // Delete results within the specified date range
+        $deletedRows = Result::whereBetween('created_at', [$startDate, $endDate])->delete();
+
+        if ($deletedRows) {
+            return redirect()->route('admin.senior_results.index')->with('success', 'Results deleted successfully.');
+        } else {
+            return redirect()->route('admin.senior_results.index')->with('error', 'No results found to delete.');
+        }
+    }
 
 
 
