@@ -38,6 +38,7 @@
                                         <th>AgentID</th>
                                         <th>AgentPhone</th>
                                         <th>Wallet Balance</th>
+                                        <th>BalanceDetail</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -59,7 +60,7 @@
                                                     href="{{ route('admin.AgentPlayerDetail', $agent->id) }}">{{ $agent->user_name }}</a>
                                             </td>
                                             <td>{{ $agent->phone }}</td>
-                                            {{-- <td>{{ number_format($agent->wallet->balance ?? 2) }}</td> --}}
+                                            <td>{{ number_format($agent->wallet->balanceFloat ?? 2) }}</td>
                                             <td>
                                                 <a href="{{ route('admin.AgentBalanceDetail', ['owner_id' => $owner->id, 'agent_id' => $agent->id]) }}"
                                                     class="btn btn-primary">AgentBalanceDetail</a>

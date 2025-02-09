@@ -322,7 +322,7 @@ class SeniorHierarchyController extends Controller
         'agent_name' => $agent->name,
         'agent_username' => $agent->user_name,
         'agent_phone' => $agent->phone,
-        'wallet_balance' => $agent->wallet->balance ?? 0,
+        'wallet_balance' => $agent->wallet->balanceFloat ?? 0,
     ];
 
     return view('admin.agent_info.details', compact('agentData'));
