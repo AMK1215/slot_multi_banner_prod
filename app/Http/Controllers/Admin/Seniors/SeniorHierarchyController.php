@@ -307,7 +307,8 @@ class SeniorHierarchyController extends Controller
     // }
 
     // v2
-    public function getOwnerWithAgents($ownerId, $agentId = null)
+
+    public function getOwnerWithAgents($ownerId, Request $request)
 {
     // Retrieve a specific owner with their agents and wallets
     $owner = User::with(['agents.wallet'])
@@ -320,7 +321,8 @@ class SeniorHierarchyController extends Controller
         return $carry + ($agent->wallet->balance ?? 0);
     }, 0);
 
-    // If a specific agent ID is provided, fetch that agent's balance
+    // Fetch the specific agent's balance if agentId is provided in the query string
+    $agentId = $request->query('agentId'); // Get agentId from query string
     $specificAgentBalance = null;
     $specificAgent = null;
     if ($agentId) {
@@ -338,6 +340,37 @@ class SeniorHierarchyController extends Controller
         'agentId'
     ));
 }
+//     public function getOwnerWithAgents($ownerId, $agentId = null)
+// {
+//     // Retrieve a specific owner with their agents and wallets
+//     $owner = User::with(['agents.wallet'])
+//         ->where('id', $ownerId)
+//         ->firstOrFail();
+
+//     // Count the total agents and calculate total balance for all agents
+//     $totalAgents = $owner->agents->count();
+//     $totalBalance = $owner->agents->reduce(function ($carry, $agent) {
+//         return $carry + ($agent->wallet->balance ?? 0);
+//     }, 0);
+
+//     // If a specific agent ID is provided, fetch that agent's balance
+//     $specificAgentBalance = null;
+//     $specificAgent = null;
+//     if ($agentId) {
+//         $specificAgent = $owner->agents->firstWhere('id', $agentId);
+//         $specificAgentBalance = $specificAgent ? ($specificAgent->wallet->balance ?? 0) : null;
+//     }
+
+//     // Return the detail view with the owner information
+//     return view('admin.senior_info.owner_detail', compact(
+//         'owner',
+//         'totalAgents',
+//         'totalBalance',
+//         'specificAgentBalance',
+//         'specificAgent',
+//         'agentId'
+//     ));
+// }
 
     public function getAgentWithPlayers($agentId)
     {
