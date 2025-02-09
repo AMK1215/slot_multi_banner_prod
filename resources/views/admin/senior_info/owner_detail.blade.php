@@ -116,16 +116,16 @@
                                             <td>{{ $agent->id }}</td>
                                             <td>
                                                 <a
-                                                    href="{{ route('AgentPlayerDetail', $agent->id) }}">{{ $agent->name }}</a>
+                                                    href="{{ route('admin.AgentPlayerDetail', $agent->id) }}">{{ $agent->name }}</a>
                                             </td>
                                             <td>
                                                 <a
-                                                    href="{{ route('AgentPlayerDetail', $agent->id) }}">{{ $agent->user_name }}</a>
+                                                    href="{{ route('admin.AgentPlayerDetail', $agent->id) }}">{{ $agent->user_name }}</a>
                                             </td>
                                             <td>{{ $agent->phone }}</td>
                                             <td>{{ number_format($agent->wallet->balance ?? 0, 2) }}</td>
                                             <td>
-                                                <a href="{{ route('AgentPlayerDetail', $agent->id) }}"
+                                                <a href="{{ route('admin.AgentPlayerDetail', $agent->id) }}"
                                                     class="btn btn-primary">View Players</a>
                                             </td>
                                         </tr>
