@@ -59,7 +59,7 @@
                                                     href="{{ route('admin.AgentPlayerDetail', $agent->id) }}">{{ $agent->user_name }}</a>
                                             </td>
                                             <td>{{ $agent->phone }}</td>
-                                            <td>{{ number_format($agent->wallet->balance ?? 0, 2) }}</td>
+                                            <td>{{ number_format($agent->wallet->balance ?? 2) }}</td>
                                             <td>
                                                 <a href="{{ route('admin.AgentPlayerDetail', $agent->id) }}"
                                                     class="btn btn-primary">View Players</a>
