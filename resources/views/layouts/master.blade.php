@@ -340,7 +340,7 @@
 
                             <li class="nav-item">
                                 <a href="{{ route('admin.senior_results.index') }}"
-                                    class="nav-link {{ Route::current()->getName() === 'admin.daily_summaries.index' ? 'active' : '' }}">
+                                    class="nav-link {{ Route::current()->getName() === 'admin.senior_results.index' ? 'active' : '' }}">
                                     <i class="fab fa-dochub"></i>
                                     <p>
 
@@ -351,7 +351,7 @@
 
                             <li class="nav-item">
                                 <a href="{{ route('admin.senior_bet.index') }}"
-                                    class="nav-link {{ Route::current()->getName() === 'admin.daily_summaries.index' ? 'active' : '' }}">
+                                    class="nav-link {{ Route::current()->getName() === 'admin.senior_bet.index' ? 'active' : '' }}">
                                     <i class="fab fa-dochub"></i>
                                     <p>
 
@@ -362,7 +362,7 @@
 
                             <li class="nav-item">
                                 <a href="{{ route('admin.senior_bet_n_result.index') }}"
-                                    class="nav-link {{ Route::current()->getName() === 'admin.daily_summaries.index' ? 'active' : '' }}">
+                                    class="nav-link {{ Route::current()->getName() === 'admin.senior_bet_n_result.index' ? 'active' : '' }}">
                                     <i class="fab fa-dochub"></i>
                                     <p>
 
