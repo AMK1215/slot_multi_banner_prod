@@ -34,10 +34,11 @@
                                     <tr>
                                         <th>#</th>
                                         <th>OwnerID</th>
-                                        <th>Owner Name</th>
+                                        <th>OwnerName</th>
                                         <th>Phone</th>
-                                        <th>Total Balance</th>
+                                        <th>TotalBalance</th>
                                         <th>Action</th>
+                                        <th>AgentBalance</th>
                                     </tr>
                                 </thead>
                                 <tbody>

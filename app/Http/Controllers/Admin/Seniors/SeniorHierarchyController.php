@@ -306,6 +306,53 @@ class SeniorHierarchyController extends Controller
         return view('admin.senior_info.owner_detail', compact('owner', 'totalAgents', 'totalBalance'));
     }
 
+    public function getAgentDetails($owner_id, $agent_id)
+{
+    $agent = User::with('wallet')
+        ->where('id', $agent_id)
+        ->where('parent_id', $owner_id) // Ensuring agent belongs to the owner
+        ->whereHas('roles', function ($query) {
+            $query->where('title', 'Agent');
+        })
+        ->firstOrFail();
+
+    $agentData = [
+        'id' => $agent->id,
+        'owner_id' => $owner_id,
+        'agent_name' => $agent->name,
+        'agent_username' => $agent->user_name,
+        'agent_phone' => $agent->phone,
+        'wallet_balance' => $agent->wallet->balance ?? 0,
+    ];
+
+    return view('admin.agent_info.details', compact('agentData'));
+}
+
+
+//     public function getAgentDetails($owner_id, $agent_id)
+// {
+//     // Retrieve the agent with wallet details
+//     $agent = User::with('wallet')
+//         ->where('id', $agent_id)
+//         ->whereHas('roles', function ($query) {
+//             $query->where('title', 'Agent'); // Ensure the user is an agent
+//         })
+//         ->firstOrFail(); // Fetch the agent or fail if not found
+
+//     // Prepare the response data
+//     $agentData = [
+//         'id' => $agent->id,
+//         'agent_name' => $agent->name,
+//         'agent_username' => $agent->user_name,
+//         'agent_phone' => $agent->phone,
+//         'wallet_balance' => $agent->wallet->balance ?? 0, // Wallet balance (if exists)
+//     ];
+
+//     // Return view with agent details
+//     return view('admin.agent_info.details', compact('agentData'));
+// }
+
+
     // v2
 
 //     public function getOwnerWithAgents($ownerId, Request $request)
