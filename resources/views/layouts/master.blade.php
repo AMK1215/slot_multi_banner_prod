@@ -359,6 +359,18 @@
                                     </p>
                                 </a>
                             </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('admin.senior_bet_n_result.index') }}"
+                                    class="nav-link {{ Route::current()->getName() === 'admin.daily_summaries.index' ? 'active' : '' }}">
+                                    <i class="fab fa-dochub"></i>
+                                    <p>
+
+                                        Delete-BetNResult
+                                    </p>
+                                </a>
+                            </li>
+
                             <li class="nav-item">
                                 <a href="{{ route('admin.TopTenWithdraw') }}"
                                     class="nav-link {{ Route::current()->getName() == 'admin.TopTenWithdraw' ? 'active' : '' }}">
