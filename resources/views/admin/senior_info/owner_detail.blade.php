@@ -82,21 +82,26 @@
                         <div class="card-body">
                             <h4>Owner Information</h4>
                             <p><strong>Name:</strong> {{ $owner->name }}</p>
-                            <p><strong>Email:</strong> {{ $owner->email }}</p>
                             <p><strong>Phone:</strong> {{ $owner->phone }}</p>
 
                             <h4>Agents Summary</h4>
                             <p><strong>Total Agents:</strong> {{ $totalAgents }}</p>
                             <p><strong>Total Balance (All Agents):</strong> {{ number_format($totalBalance, 2) }}</p>
 
-                            @if ($agentId && $specificAgentBalance !== null)
-                                <h4>Specific Agent Balance</h4>
-                                <p><strong>Agent ID:</strong> {{ $agentId }}</p>
-                                <p><strong>Current Balance:</strong> {{ number_format($specificAgentBalance, 2) }}</p>
-                            @elseif ($agentId)
-                                <p>No agent found with ID {{ $agentId }}.</p>
+                            <!-- Display Specific Agent Balance if $agentId is provided -->
+                            @if ($agentId)
+                                <h4>Specific Agent Information</h4>
+                                @if ($specificAgent)
+                                    <p><strong>Agent Name:</strong> {{ $specificAgent->name }}</p>
+                                    <p><strong>Agent ID:</strong> {{ $specificAgent->user_name }}</p>
+                                    <p><strong>Agent Phone:</strong> {{ $specificAgent->phone }}</p>
+                                    <p><strong>Wallet Balance:</strong> {{ number_format($specificAgentBalance, 2) }}</p>
+                                @else
+                                    <p>No agent found with ID {{ $agentId }}.</p>
+                                @endif
                             @endif
 
+                            <h4>Agents List</h4>
                             <table id="seniorTable" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
@@ -116,17 +121,19 @@
                                             <td>{{ $agent->id }}</td>
                                             <td>
                                                 <a
-                                                    href="{{ route('admin.AgentPlayerDetail', $agent->id) }}">{{ $agent->name }}</a>
+                                                    href="{{ route('AgentPlayerDetail', $agent->id) }}">{{ $agent->name }}</a>
                                             </td>
                                             <td>
                                                 <a
-                                                    href="{{ route('admin.AgentPlayerDetail', $agent->id) }}">{{ $agent->user_name }}</a>
+                                                    href="{{ route('AgentPlayerDetail', $agent->id) }}">{{ $agent->user_name }}</a>
                                             </td>
                                             <td>{{ $agent->phone }}</td>
                                             <td>{{ number_format($agent->wallet->balance ?? 0, 2) }}</td>
                                             <td>
-                                                <a href="{{ route('admin.AgentPlayerDetail', $agent->id) }}"
-                                                    class="btn btn-primary">View Players</a>
+                                                <a href="{{ route('OwnerAgentDetail', ['ownerId' => $owner->id, 'agentId' => $agent->id]) }}"
+                                                    class="btn btn-primary">
+                                                    View Balance
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach

@@ -322,6 +322,7 @@ class SeniorHierarchyController extends Controller
 
     // If a specific agent ID is provided, fetch that agent's balance
     $specificAgentBalance = null;
+    $specificAgent = null;
     if ($agentId) {
         $specificAgent = $owner->agents->firstWhere('id', $agentId);
         $specificAgentBalance = $specificAgent ? ($specificAgent->wallet->balance ?? 0) : null;
@@ -333,6 +334,7 @@ class SeniorHierarchyController extends Controller
         'totalAgents',
         'totalBalance',
         'specificAgentBalance',
+        'specificAgent',
         'agentId'
     ));
 }
