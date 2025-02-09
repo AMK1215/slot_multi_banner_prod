@@ -288,23 +288,54 @@ class SeniorHierarchyController extends Controller
         // Return the response to the view
         return view('admin.senior_info.owner_index', compact('owners'));
     }
+    // v1
+    // public function getOwnerWithAgents($ownerId)
+    // {
+    //     // Retrieve a specific owner with their agents and wallets
+    //     $owner = User::with(['agents.wallet'])
+    //         ->where('id', $ownerId) // Filter by owner ID
+    //         ->firstOrFail();
 
-    public function getOwnerWithAgents($ownerId)
-    {
-        // Retrieve a specific owner with their agents and wallets
-        $owner = User::with(['agents.wallet'])
-            ->where('id', $ownerId) // Filter by owner ID
-            ->firstOrFail();
+    //     // Count the total agents and calculate total balance
+    //     $totalAgents = $owner->agents->count();
+    //     $totalBalance = $owner->agents->reduce(function ($carry, $agent) {
+    //         return $carry + ($agent->wallet->balance ?? 0);
+    //     }, 0);
 
-        // Count the total agents and calculate total balance
-        $totalAgents = $owner->agents->count();
-        $totalBalance = $owner->agents->reduce(function ($carry, $agent) {
-            return $carry + ($agent->wallet->balance ?? 0);
-        }, 0);
+    //     // Return the detail view with the owner information
+    //     return view('admin.senior_info.owner_detail', compact('owner', 'totalAgents', 'totalBalance'));
+    // }
 
-        // Return the detail view with the owner information
-        return view('admin.senior_info.owner_detail', compact('owner', 'totalAgents', 'totalBalance'));
+    // v2
+    public function getOwnerWithAgents($ownerId, $agentId = null)
+{
+    // Retrieve a specific owner with their agents and wallets
+    $owner = User::with(['agents.wallet'])
+        ->where('id', $ownerId)
+        ->firstOrFail();
+
+    // Count the total agents and calculate total balance for all agents
+    $totalAgents = $owner->agents->count();
+    $totalBalance = $owner->agents->reduce(function ($carry, $agent) {
+        return $carry + ($agent->wallet->balance ?? 0);
+    }, 0);
+
+    // If a specific agent ID is provided, fetch that agent's balance
+    $specificAgentBalance = null;
+    if ($agentId) {
+        $specificAgent = $owner->agents->firstWhere('id', $agentId);
+        $specificAgentBalance = $specificAgent ? ($specificAgent->wallet->balance ?? 0) : null;
     }
+
+    // Return the detail view with the owner information
+    return view('admin.senior_info.owner_detail', compact(
+        'owner',
+        'totalAgents',
+        'totalBalance',
+        'specificAgentBalance',
+        'agentId'
+    ));
+}
 
     public function getAgentWithPlayers($agentId)
     {
