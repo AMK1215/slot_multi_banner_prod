@@ -59,7 +59,7 @@
                             <th>Detail</th>
                         </thead>
                         <tbody>
-                            @foreach ($results as $result)
+                            @foreach ($report as $result)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
