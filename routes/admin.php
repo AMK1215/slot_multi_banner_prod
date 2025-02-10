@@ -252,7 +252,7 @@ Route::group([
     Route::group(['prefix' => 'reportv2'], function () {
         //v2 with backup
         Route::get('v2index', [ReportV2Controller::class, 'index'])->name('reportv2.index');
-        Route::get('/detail/{playerId}', [ReportV2Controller::class, 'detail'])->name('reportv2.detail');
+        Route::get('/detail/{playerId}', [ReportV2Controller::class, 'getReportDetails'])->name('reportv2.detail');
     });
 });
 
