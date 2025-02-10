@@ -19,7 +19,7 @@ class ReportV2Controller extends Controller
 
         $report = $this->buildQuery($request, $adminId);
 
-        return view('admin.report.v2.index', compact('report'));
+        return view('report.v2.index', compact('report'));
     }
 
     public function getReportDetails(Request $request, $playerId)
@@ -29,7 +29,7 @@ class ReportV2Controller extends Controller
 
         $productTypes = Product::where('is_active', 1)->get();
 
-        return view('admin.report.v2.detail', compact('details','productTypes', 'playerId'));
+        return view('report.v2.detail', compact('details','productTypes', 'playerId'));
     }
 
     private function buildQuery(Request $request, $adminId)
