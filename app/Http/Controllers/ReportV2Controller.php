@@ -72,7 +72,7 @@ class ReportV2Controller extends Controller
             )
             ->leftJoin('users as agents', 'players.agent_id', '=', 'agents.id')
             ->leftJoin('wallets', 'wallets.holder_id', '=', 'players.id')
-            ->leftJoinSub($resultsSubquery, 'result_backups', 'results.user_id', '=', 'players.id') // Fixed alias
+            ->leftJoinSub($resultsSubquery, 'result_backups', 'result_backups.user_id', '=', 'players.id') // Fixed alias
             ->leftJoinSub($betsSubquery, 'bets', 'bets.user_id', '=', 'players.id') // Fixed alias
             ->when($request->player_id, fn ($query) => $query->where('players.user_name', $request->player_id))
             ->where(function ($query) {
