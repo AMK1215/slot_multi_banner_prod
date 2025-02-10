@@ -393,7 +393,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{ route('admin.reports.owner') }}"
+                                <a href="{{ route('admin.reportv2.index') }}"
                                     class="nav-link {{ Route::current()->getName() == 'admin.reportv2.index' ? 'active' : '' }}">
                                     <i class="fas fa-file-invoice"></i>
                                     <p>
