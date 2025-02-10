@@ -96,8 +96,12 @@ class ReportV2Controller extends Controller
 
      private function getPlayerDetails($playerId, $request)
     {
-        $startDate = $request->start_date ??  Carbon::today()->startOfDay()->toDateString();
-        $endDate = $request->end_date ?? Carbon::today()->endOfDay()->toDateString() ;
+        // $startDate = $request->start_date ??  Carbon::today()->startOfDay()->toDateString();
+        // $endDate = $request->end_date ?? Carbon::today()->endOfDay()->toDateString() ;
+
+         $startDate = $request->start_date ? Carbon::parse($request->start_date)->format('Y-m-d H:i') : Carbon::today()->startOfMonth()->format('Y-m-d H:i');
+        $endDate = $request->end_date ? Carbon::parse($request->end_date)->format('Y-m-d H:i') : Carbon::today()->endOfMonth()->format('Y-m-d H:i');
+
 
         $combinedSubquery = DB::table('result_backups')
             ->select(
