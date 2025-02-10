@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class ArchiveOldResult extends Command
 {
@@ -15,8 +16,11 @@ class ArchiveOldResult extends Command
     public function handle()
     {
         // Define the date range from the start of the previous day to now
-        $startOfDay = now()->subDays(2)->startOfDay();
-        $endOfDay = now();
+        // $startOfDay = now()->subDays(2)->startOfDay();
+        // $endOfDay = now();
+        // Define the date range from 2025-02-02 00:00:00 to 2025-02-04 23:59:59
+    $startOfDay = Carbon::create(2025, 2, 2, 0, 0, 0);
+    $endOfDay = Carbon::create(2025, 2, 4, 23, 59, 59);
         // $startOfDay = now()->setTime(8, 30, 0); // Today at 9:00 AM
         // $endOfDay = now()->setTime(10, 0, 0); // Today at 10:00 AM
 
