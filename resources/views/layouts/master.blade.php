@@ -907,6 +907,7 @@
 
         // Bind to the event
         channel.bind('deposit.notify', function(data) {
+            console.log('New deposit notification:', data);
             // Update the notification count
             var notificationCount = parseInt($('#notificationCount').text());
             $('#notificationCount').text(notificationCount + 1);

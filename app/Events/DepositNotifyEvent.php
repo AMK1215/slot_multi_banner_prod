@@ -52,6 +52,8 @@ class DepositNotifyEvent implements ShouldBroadcast
         return new Channel('agent.' . $this->deposit->agent_id);
     }
 
+
+
     /**
      * The event's broadcast name.
      */
