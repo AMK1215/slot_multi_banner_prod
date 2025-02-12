@@ -33,7 +33,7 @@
         }
     </style>
 
-    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    {{-- <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <script>
         // Enable pusher logging - don't include this in production
@@ -47,7 +47,7 @@
         channel.bind('form-submit', function(data) {
             alert(JSON.stringify(data));
         });
-    </script>
+    </script> --}}
 </head>
 
 <body class="hold-transition login-page">
