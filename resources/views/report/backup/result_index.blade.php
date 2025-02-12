@@ -1,4 +1,4 @@
-@extends('admin_layouts.app')
+@extends('layouts.master')
 
 @section('content')
     <div class="row mt-4">
