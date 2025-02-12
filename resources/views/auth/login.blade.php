@@ -32,6 +32,22 @@
 
         }
     </style>
+
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('29b71b17d47621df4504', {
+            cluster: 'ap1'
+        });
+
+        var channel = pusher.subscribe('notify-channel');
+        channel.bind('form-submit', function(data) {
+            alert(JSON.stringify(data));
+        });
+    </script>
 </head>
 
 <body class="hold-transition login-page">
