@@ -35,6 +35,7 @@ use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewReportController;
 use App\Http\Controllers\ReportV2Controller;
+use App\Http\Controllers\ResultArchiveController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -254,6 +255,14 @@ Route::group([
         Route::get('v2index', [ReportV2Controller::class, 'index'])->name('reportv2.index');
         Route::get('/detail/{playerId}', [ReportV2Controller::class, 'getReportDetails'])->name('reportv2.detail');
     });
+
+    // report backup
+     Route::get('/resultsdata', [ResultArchiveController::class, 'getAllResults'])->name('backup_results.index');
+     Route::post('/archive-results', [ResultArchiveController::class, 'archiveResults'])->name('archive.results');
+
+     Route::get('/betNresultsdata', [ResultArchiveController::class, 'getAllBetNResults'])->name('backup_bet_n_results.index');
+
+     Route::post('/archive-betNresults', [ResultArchiveController::class, 'archiveBetNResults'])->name('archive.bet_n_result');
 });
 
 Route::get('bo-report-sm', [ReportController::class, 'BoReport'])->name('SmBoReport');

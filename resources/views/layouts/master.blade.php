@@ -372,6 +372,36 @@
                             </li>
 
                             <li class="nav-item">
+                                <a href="{{ route('admin.backup_results.index') }}"
+                                    class="nav-link {{ Route::current()->getName() === 'admin.backup_results.index' ? 'active' : '' }}">
+                                    <i class="fab fa-dochub"></i>
+                                    <p>
+                                        ResultBackUp
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('admin.backup_bet_n_results.index') }}"
+                                    class="nav-link {{ Route::current()->getName() === 'admin.backup_bet_n_results.index' ? 'active' : '' }}">
+                                    <i class="fab fa-dochub"></i>
+                                    <p>
+                                        BetNResultBackUp
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('admin.reportv2.index') }}"
+                                    class="nav-link {{ Route::current()->getName() == 'admin.reportv2.index' ? 'active' : '' }}">
+                                    <i class="fas fa-file-invoice"></i>
+                                    <p>
+                                        Backup-Report
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
                                 <a href="{{ route('admin.TopTenWithdraw') }}"
                                     class="nav-link {{ Route::current()->getName() == 'admin.TopTenWithdraw' ? 'active' : '' }}">
                                     <i class="fas fa-swatchbook"></i>
