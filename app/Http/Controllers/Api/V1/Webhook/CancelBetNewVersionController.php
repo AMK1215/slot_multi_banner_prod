@@ -14,11 +14,10 @@ use App\Traits\UseWebhook;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Traits\Purse;
 
 class CancelBetNewVersionController extends Controller
 {
-    use UseWebhook, Purse;
+    use UseWebhook;
 
     /**
      * Handle the cancellation of bet transactions.
@@ -33,7 +32,7 @@ class CancelBetNewVersionController extends Controller
         DB::beginTransaction();
         try {
             foreach ($transactions as $transaction) {
-                // Get the player
+                // Get the player id
                 $player = User::where('user_name', $transaction['PlayerId'])->first();
                 if (!$player) {
                     Log::warning('Invalid player detected', [
