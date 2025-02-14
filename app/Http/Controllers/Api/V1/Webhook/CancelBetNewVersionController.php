@@ -103,13 +103,7 @@ class CancelBetNewVersionController extends Controller
 
                     Log::info('BetCancel Transaction processed successfully', ['BetID' => $transaction['BetId']]);
                 }
-                // else {
-                //     Log::warning('Transaction not found or already cancelled', [
-                //         'BetId' => $transaction['BetId'],
-                //     ]);
 
-                //     return $this->buildErrorResponse(StatusCode::TransactionNotFound);
-                // }
             }
 
             DB::commit();
