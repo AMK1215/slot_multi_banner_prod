@@ -14,11 +14,10 @@ use App\Traits\UseWebhook;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Traits\Purse;
 
 class CancelBetNewVersionController extends Controller
 {
-    use UseWebhook, Purse;
+    use UseWebhook;
 
     /**
      * Handle the cancellation of bet transactions.
