@@ -23,10 +23,10 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            @if(Auth::user()->hasRole('Sub Agent'))
-                            <h3>{{ number_format($user->parent->wallet->balanceFloat, 2) }}</h3>
+                            @if (Auth::user()->hasRole('Sub Agent'))
+                                <h3>{{ number_format($user->parent->wallet->balanceFloat, 2) }}</h3>
                             @else
-                            <h3>{{ number_format($user->wallet->balanceFloat, 2) }}</h3>
+                                <h3>{{ number_format($user->wallet->balanceFloat, 2) }}</h3>
                             @endif
                             <p>Balance</p>
                         </div>
@@ -116,7 +116,7 @@
                                         <input type="integer" class="form-control" name="balance">
                                     </div>
 
-                                    <button class="btn bg-gradient-dark mb-0 float-end">Update </button>
+                                    <button class="btn bg-gradient-dark mb-0 float-end">SeninorUpdate </button>
                                 </div>
                             </form>
                         </div>
@@ -127,7 +127,7 @@
                         <!-- small box -->
                         <div class="small-box bg-warning">
                             <div class="inner">
-                                    <h3>{{ $totalAgent }}</h3>
+                                <h3>{{ $totalAgent }}</h3>
                                 <p>Total Agent</p>
                             </div>
                             <div class="icon">
@@ -143,7 +143,7 @@
                         <!-- small box -->
                         <div class="small-box bg-primary">
                             <div class="inner">
-                                    <h3>{{ $totalPlayer }}</h3>
+                                <h3>{{ $totalPlayer }}</h3>
                                 <p>Total Player</p>
                             </div>
                             <div class="icon">
