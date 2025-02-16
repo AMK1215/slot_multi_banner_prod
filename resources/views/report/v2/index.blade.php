@@ -52,7 +52,6 @@
                             <th>Account Balance</th>
                             <th>Valid Bet</th>
                             <th>Win/Lose Amt</th>
-                            <th>Profit & loss Amt</th>
                             <th>Detail</th>
                         </thead>
                         <tbody>
@@ -69,12 +68,7 @@
                                     <td> <span
                                             class="{{ $result->total_net_win > 1 ? 'text-success' : 'text-danger' }}">{{ number_format($result->total_net_win, 2) }}</span>
                                     </td>
-                                    <?php
-                                    $profit = $result->total_net_win + $result->bonus_amount;
-                                    ?>
-                                    <td> <span
-                                            class="{{ $profit > 1 ? 'text-success' : 'text-danger' }}">{{ number_format($profit, 2) }}</span>
-                                    </td>
+                                    
                                     <td><a href="{{ route('admin.reportv2.detail', $result->user_id) }}"
                                             class="btn btn-primary">Detail</a></td>
                                 </tr>
