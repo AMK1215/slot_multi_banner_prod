@@ -26,7 +26,7 @@
                     <div class="card-header">
                         <h3>BackUp Winlose Report</h3>
                     </div>
-                    <form role="form" class="text-start" action="{{ route('admin.reportv2.detail') }}" method="GET">
+                    <form role="form" class="text-start" action="{{ route('admin.reportv2.detail', $playerId) }}" method="GET">
                         <div class="row ml-5">
                             <div class="col-md-3">
                                 <div class="input-group input-group-static mb-4">
@@ -55,7 +55,7 @@
                             </div>
                             <div class="col-log-3">
                                 <button type="submit" class="btn btn-primary" style="margin-top: 32px;">Search</button>
-                                <a href="{{ route('admin.reportv2.detail') }}" class="btn btn-warning" style="margin-top: 32px;">Refresh</a>
+                                <a href="{{ route('admin.reportv2.detail', $playerId) }}" class="btn btn-warning" style="margin-top: 32px;">Refresh</a>
                             </div>
                         </div>
                     </form>
