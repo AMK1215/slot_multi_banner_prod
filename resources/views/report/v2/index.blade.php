@@ -1,61 +1,76 @@
 @extends('layouts.master')
 @section('content')
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header pb-0">
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-12">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                    <li class="breadcrumb-item active">W/L Report</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
 
-                    <div class="card-body">
-                        <h5 class="mb-0">Win/Lose Backup-Report</h5>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-end mb-3">
+                    <a href="{{ route('home') }}" class="btn btn-primary " style="width: 100px;"><i
+                            class="fas fa-arrow-left text-white  mr-2"></i>Back</a>
+                </div>
+                <div class="card " style="border-radius: 20px;">
+                    <div class="card-header">
+                        <h3>BackUp Winlose Report</h3>
                     </div>
-                    <form action="{{ route('admin.report.index') }}" method="GET">
-                        <div class="row mt-3">
-                            <div class="col-md-3">
-                                <div class="input-group input-group-static mb-4">
-                                    <label for="">PlayerId</label>
-                                    <input type="text" class="form-control" name="player_id"
-                                        value="{{ request()->player_id }}">
+                    <form role="form" class="text-start" action="{{ route('admin.reportv2.index') }}" method="GET">
+                        <div class="row ml-5">
+                            <div class="col-lg-3">
+                                <div class="mb-3">
+                                    <label class="form-label text-dark fw-bold" for="inputEmail1">PlayerId</label>
+                                    <input type="text" class="form-control border border-1 border-secondary px-2"
+                                        name="player_id" value="{{request()->player_id }}">
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="input-group input-group-static mb-4">
-                                    <label for="">StartDate</label>
-                                    <input type="datetime" class="form-control" name="start_date"
-                                        value="{{ request()->get('start_date') }}">
+                            <div class="col-lg-3">
+                                <div class="mb-3">
+                                    <label class="form-label text-dark fw-bold" for="inputEmail1">From Date</label>
+                                    <input type="date" class="form-control border border-1 border-secondary px-2"
+                                        name="start_date" value="{{request()->start_date }}">
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="input-group input-group-static mb-4">
-                                    <label for="">EndDate</label>
-                                    <input type="datetime" class="form-control" name="end_date"
-                                        value="{{ request()->get('end_date') }}">
+                            <div class="col-lg-3">
+                                <div class="mb-3">
+                                    <label class="form-label text-dark fw-bold" for="inputEmail1">To Date</label>
+                                    <input type="date" class="form-control border border-1 border-secondary px-2"
+                                        id="" name="end_date" value="{{request()->end_date }}">
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <button class="btn btn-sm btn-primary" id="search" type="submit">Search</button>
-                                <a href="{{ route('admin.reportv2.index') }}"
-                                    class="btn btn-link text-primary ms-auto border-0" data-bs-toggle="tooltip"
-                                    data-bs-placement="bottom" title="Refresh">
-                                    <i class="material-icons text-lg mt-0">refresh</i>
-                                </a>
+                            <div class="col-log-3">
+                                <button type="submit" class="btn btn-primary" style="margin-top: 32px;">Search</button>
+                                <a href="{{ route('admin.reportv2.index') }}" class="btn btn-warning" style="margin-top: 32px;">Refresh</a>
                             </div>
                         </div>
                     </form>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-flush" id="users-search">
-                        <thead class="thead-light">
-                            <th>#</th>
-                            <th>PlayerID</th>
-                            <th>Name</th>
-                            <th>Agent</th>
-                            <th>Account Balance</th>
-                            <th>Valid Bet</th>
-                            <th>Win/Lose Amt</th>
-                            <th>Detail</th>
-                        </thead>
-                        <tbody>
-                            @foreach ($report as $result)
+                    <div class="card-body">
+                        <table id="mytable" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>PlayerID</th>
+                                    <th>Name</th>
+                                    <th>Agent</th>
+                                    <th>Account Balance</th>
+                                    <th>Valid Bet</th>
+                                    <th>Win/Lose Amt</th>
+                                    <th>Detail</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($report as $result)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
@@ -68,35 +83,23 @@
                                     <td> <span
                                             class="{{ $result->total_net_win > 1 ? 'text-success' : 'text-danger' }}">{{ number_format($result->total_net_win, 2) }}</span>
                                     </td>
-                                    
+
                                     <td><a href="{{ route('admin.reportv2.detail', $result->user_id) }}"
                                             class="btn btn-primary">Detail</a></td>
                                 </tr>
-                            @endforeach
+                                @endforeach
 
 
-                        </tbody>
-                    </table>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                    <!-- /.card-body -->
                 </div>
+                <!-- /.card -->
             </div>
         </div>
     </div>
-@endsection
-@section('scripts')
-    <script>
-        if (document.getElementById('users-search')) {
-            const dataTableSearch = new simpleDatatables.DataTable("#users-search", {
-                searchable: true,
-                fixedHeight: false,
-                perPage: 7
-            });
-
-        };
-    </script>
-    <script>
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl)
-        })
-    </script>
+</section>
 @endsection
