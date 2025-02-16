@@ -38,7 +38,7 @@
                             </div>
                             <div class="col-md-3">
                                 <button class="btn btn-sm btn-primary" id="search" type="submit">Search</button>
-                                <a href="{{ route('admin.report.detail', $playerId) }}"
+                                <a href="{{ route('admin.reportv2.detail', $playerId) }}"
                                     class="btn btn-link text-primary ms-auto border-0" data-bs-toggle="tooltip"
                                     data-bs-placement="bottom" title="Refresh">
                                     <i class="material-icons text-lg mt-0">refresh</i>
