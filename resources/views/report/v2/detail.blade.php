@@ -9,7 +9,7 @@
                     <div class="card-body">
                         <h5 class="mb-0">Win/Lose Backup Report Details</h5>
                     </div>
-                    <form action="{{ route('admin.report.detail', $playerId) }}" method="GET">
+                    <form action="{{ route('admin.reportv2.detail', $playerId) }}" method="GET">
                         <div class="row mt-3">
                             <div class="col-md-3">
                                 <div class="input-group input-group-static mb-4">
