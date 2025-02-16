@@ -65,7 +65,6 @@
                                     <td>{{ $result->player_name }}</td>
                                     <td>{{ $result->agent_name }}</td>
                                     <td>{{ number_format($result->balance / 100, 2) }} </td>
-                                    <td>{{ number_format($result->withdraw_amount, 2) }}</td>
                                     <td>{{ number_format($result->total_bet_amount, 2) }}</td>
                                     <td> <span
                                             class="{{ $result->total_net_win > 1 ? 'text-success' : 'text-danger' }}">{{ number_format($result->total_net_win, 2) }}</span>
