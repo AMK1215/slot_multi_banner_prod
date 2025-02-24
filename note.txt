@@ -272,7 +272,19 @@ GRANT ALL PRIVILEGES ON mk_slot.* TO 'mksuperman'@'104.248.159.5';
 FLUSH PRIVILEGES;
 
 
-SHOW GRANTS FOR 'mksuperman'@'139.59.91.201';
+SHOW GRANTS FOR 'ponewine_java'@'13.250.117.236';
 CREATE USER 'mksuperman'@'139.59.91.201' IDENTIFIED BY 'StrongPassword123!';
 GRANT ALL PRIVILEGES ON superman.* TO 'mksuperman'@'139.59.91.201';
 FLUSH PRIVILEGES;
+
+
+
+CREATE USER 'ponewine_remote'@'13.250.117.236' IDENTIFIED BY 'StrongPassword123!';
+GRANT ALL PRIVILEGES ON pone_wine.* TO 'ponewine_remote'@'13.250.117.236';
+FLUSH PRIVILEGES;
+
+
+mysql -u ponewine_remote -p -h 104.248.156.130 -P 3306
+
+
+sudo certbot --nginx -d delightmyanmarthb.xyz -d www.delightmyanmarthb.xyz -d ponewine20x.xyz -d www.ponewine20x.xyz
