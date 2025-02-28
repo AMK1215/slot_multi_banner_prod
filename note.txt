@@ -287,4 +287,4 @@ FLUSH PRIVILEGES;
 mysql -u ponewine_remote -p -h 104.248.156.130 -P 3306
 
 
-sudo certbot --nginx -d delightmyanmarthb.xyz -d www.delightmyanmarthb.xyz -d ponewine20x.xyz -d www.ponewine20x.xyz
+sudo certbot --nginx -d delightmyanmarthb.xyz -d www.delightmyanmarthb.xyz -d ponewine20x.xyz -d www.ponewine20x.xyz -d lion11.online -d www.lion11.online -d ttt930sc.online -d www.ttt930sc.online
