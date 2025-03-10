@@ -39,7 +39,7 @@ class AgentController extends Controller
         }
 
         //kzt
-        $users = User::with('roles')
+        $users = User::with(['roles', 'children.results', 'children.betNResults'])
             ->whereHas('roles', function ($query) {
                 $query->where('role_id', self::AGENT_ROLE);
             })
